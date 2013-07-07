@@ -18,7 +18,7 @@ public class VectorTest extends TestCase {
         try {
             new Vector(0);
             fail();
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException e) {
             // success
         }
     }

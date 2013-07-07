@@ -32,8 +32,13 @@ public class MultiArray {
         dims_ = dims.clone();
         numDims_ = dims_.length;
         numVals_ = getDimensionProduct();
-        assert (numDims_ > 0) : "You must have > 0 dimension to use this class" ;
-        assert (numVals_ > 0) : "The product of the dimension lengths must be greater than 0. It was " + numVals_;
+        if (numDims_ <= 0) {
+            throw new IllegalArgumentException("You must have > 0 dimension to use this class");
+        }
+        if (numVals_ <= 0) {
+            throw new IllegalArgumentException(
+                    "The product of the dimension lengths must be greater than 0. It was " + numVals_);
+        }
         arrayData_ = new double[numVals_];
     }
 

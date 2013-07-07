@@ -83,7 +83,7 @@ public class FunctionInverterTest extends TestCase {
             inverter.createInverseFunction(new Range(0, 1.0));
             fail("did not expect to get here");
         }
-        catch (AssertionError e) {
+        catch (IllegalStateException e) {
             // success
         }
     }

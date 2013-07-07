@@ -19,7 +19,7 @@ public class MultiArrayTest extends TestCase {
         try {
             new MultiArray(dims);
             fail();
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException e) {
             // success
         }
     }
@@ -30,7 +30,7 @@ public class MultiArrayTest extends TestCase {
         try {
             new MultiArray(dims);
             fail();
-        } catch (AssertionError e) {
+        } catch (IllegalArgumentException e) {
             // success
         }
     }

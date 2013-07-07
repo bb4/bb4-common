@@ -15,7 +15,8 @@ public class Vector {
      * @param length  number of elements
      */
     public Vector(int length) {
-        assert length > 0 : "length must be at least 1";
+        if (length <= 0)
+            throw new IllegalArgumentException("length must be at least 1");
         data = new double[length];
     }
 

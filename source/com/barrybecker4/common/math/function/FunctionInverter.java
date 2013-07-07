@@ -46,10 +46,11 @@ public class FunctionInverter {
             double xval = (double)i/lengthm1;
             while (j < lengthm1 && func[j] <= xval) {
                 j++;
-                assert (func[j-1] <= func[j] + MathUtil.EPS):
-                        func[j-1] + " was not less than " + func[j]
+                if (func[j-1] > func[j] + MathUtil.EPS) {
+                       throw new IllegalStateException(func[j-1] + " was not less than " + func[j]
                        + ". That means the function was not monotonic as we assumed for func=" + Arrays.toString(func)
-                       + " at position="+ j;
+                       + " at position="+ j);
+                }
             }
 
             invFunc[i] = xRange.getMin();
