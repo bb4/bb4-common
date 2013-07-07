@@ -1,21 +1,104 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry Becker
 
-version = '1.0'
+apply plugin: 'java'
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
+apply plugin: 'project-report'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+defaultTasks 'build'
+	
+description = 'Common bb4 java code. Library project.'
+version = '1.1'
 project.archivesBaseName = 'bb4-common'
 
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repo1.maven.org/maven2/"
+        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+    }
+	
+	// temp publish location. Reaaly want to publish to Sonatype
+	flatDir {
+            name "fileRepo"
+            dirs "../repository"
+    }
+}
+	
 dependencies {
     compile 'commons-collections:commons-collections:3.2'
     compile 'commons-codec:commons-codec:1.7'
     compile 'java3d:vecmath:1.3.1'
+    testCompile 'junit:junit:3.+'
 }
 
 jar {
-    //baseName = 'bb4-common'
-    //archiveName = 'bb4-common-' + version + '.jar'
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',
             'Implementation-Version': version,
             provider: 'gradle'
     }
 }
+
+
+// all subprojects use this directory layout.
+sourceSets {
+    main {
+        java {
+            srcDir 'source'
+        }
+        resources {
+            srcDir 'source'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources {
+            srcDir 'test'
+        }
+    }
+}
+
+/** move all below to common gradle */
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+javadoc.doLast {
+    copy {
+        from sourceSets.main.allSource
+        into javadoc.destinationDir
+        include '**/package.png'
+    }
+}
+
+clean.doLast {
+    // project. is needed to disambiguate from the clean tasks existing delete.
+    project.delete(project.repositories.fileRepo.dirs)
+}
+
+
+task copyToLib(dependsOn: jar, type: Copy) {
+    description = "Copies the downloaded dependencies to the lib directory so they can be deployed (see webdeployment)"
+    into "build/libs"
+    from configurations.runtime
+}
+
