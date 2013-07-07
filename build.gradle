@@ -1,0 +1,21 @@
+// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// @author Barry Becker
+
+version = '1.0'
+project.archivesBaseName = 'bb4-common'
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2'
+    compile 'commons-codec:commons-codec:1.7'
+    compile 'java3d:vecmath:1.3.1'
+}
+
+jar {
+    //baseName = 'bb4-common'
+    //archiveName = 'bb4-common-' + version + '.jar'
+    manifest {
+        attributes 'Implementation-Title': 'Common code for all bb4 applications',
+            'Implementation-Version': version,
+            provider: 'gradle'
+    }
+}
