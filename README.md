@@ -5,13 +5,12 @@ This jar file along with the source and javadoc jars will be published to Sonaty
 other projects can easily depend on it.
 
 
-## How to Build
+### How to Build
 Type gradle at the root.
 
 Please direct questions to BarryBecker4@yahoo.com
 
-##
-License
+### License
 All source (unless otherwise specified in individual file) is provided under the [MIT License](http://www.opensource.org/licenses/MIT)
 
 
