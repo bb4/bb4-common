@@ -1,7 +1,8 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry Becker
 
-apply from: 'bb4.gradle'
+apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
+     //'bb4.gradle' //'http://github.com/barrybecker4/bb4-common/raw/master/bb4.gradle'
 
 defaultTasks 'build'
 
