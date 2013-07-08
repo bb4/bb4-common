@@ -1,12 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry Becker
 
-apply plugin: 'java'
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
-apply plugin: 'project-report'
-apply plugin: 'application'
-apply plugin: 'idea'
+apply from: 'bb4.gradle'
 
 defaultTasks 'build'
 
@@ -43,62 +38,4 @@ jar {
     }
 }
 
-
-// all subprojects use this directory layout.
-sourceSets {
-    main {
-        java {
-            srcDir 'source'
-        }
-        resources {
-            srcDir 'source'
-        }
-    }
-    test {
-        java {
-            srcDir 'test'
-        }
-        resources {
-            srcDir 'test'
-        }
-    }
-}
-
-/** move all below to common gradle */
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives jar
-    archives sourcesJar
-    archives javadocJar
-}
-
-javadoc.doLast {
-    copy {
-        from sourceSets.main.allSource
-        into javadoc.destinationDir
-        include '**/package.png'
-    }
-}
-
-clean.doLast {
-    // project. is needed to disambiguate from the clean tasks existing delete.
-    project.delete(project.repositories.fileRepo.dirs)
-}
-
-
-task copyToLib(dependsOn: jar, type: Copy) {
-    description = "Copies the downloaded dependencies to the lib directory so they can be deployed (see webdeployment)"
-    into "build/libs"
-    from configurations.runtime
-}
 
