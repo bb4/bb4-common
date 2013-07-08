@@ -2,5 +2,6 @@
 .project
 build/
 bin/
+classes/
 *.iml
 *.class
