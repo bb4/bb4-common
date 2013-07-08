@@ -3,7 +3,7 @@
 /**
  * This is common gradle build configuration for all bb4 projects.
  * Any project on github can include it using
- * apply from:'http://github.com/barrybecker4/bb4-common/raw/master/bb4.gradle'
+ * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
  */
 apply plugin: 'java'
 sourceCompatibility = '1.6'
@@ -33,6 +33,19 @@ sourceSets {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repo1.maven.org/maven2/"
+        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+    }
+}
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2'
+    compile 'java3d:vecmath:1.3.1'
+    testCompile 'junit:junit:3.+'
+}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources'
@@ -66,7 +79,6 @@ clean.doLast {
     // project. is needed to disambiguate from the clean tasks existing delete.
     project.delete(project.repositories.fileRepo.dirs)
 }
-
 
 task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
