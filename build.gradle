@@ -21,7 +21,6 @@ repositories {
         url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
     }
 
-
 	// temp publish location. Really want to publish to Sonatype
 	flatDir {
             name "fileRepo"

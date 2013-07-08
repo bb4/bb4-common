@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: Common code for all bb4 applications
-Implementation-Version: 1.1
-provider: gradle
-

@@ -1,7 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="com.barrybecker4.common.app.CommandLineOptionsTest" tests="1" failures="0" errors="0" timestamp="2013-07-07T16:14:42" hostname="Tesujisoft3" time="0.0020">
-  <properties/>
-  <testcase name="testCommandLineOptionsToString" classname="com.barrybecker4.common.app.CommandLineOptionsTest" time="0.0020"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

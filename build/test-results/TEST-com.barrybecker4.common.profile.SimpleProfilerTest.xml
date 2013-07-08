@@ -1,9 +1,0 @@
-<?xml version="1.1" encoding="UTF-8"?>
-<testsuite name="com.barrybecker4.common.profile.SimpleProfilerTest" tests="3" failures="0" errors="0" timestamp="2013-07-07T16:14:42" hostname="Tesujisoft3" time="0.038">
-  <properties/>
-  <testcase name="testProfilerTime" classname="com.barrybecker4.common.profile.SimpleProfilerTest" time="0.017"/>
-  <testcase name="testProfilerTimeWhenDisabled" classname="com.barrybecker4.common.profile.SimpleProfilerTest" time="0.01"/>
-  <testcase name="testProfilerLogging" classname="com.barrybecker4.common.profile.SimpleProfilerTest" time="0.011"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
