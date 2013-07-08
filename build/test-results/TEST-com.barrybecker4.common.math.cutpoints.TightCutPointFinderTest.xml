@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.barrybecker4.common.math.cutpoints.TightCutPointFinderTest" tests="2" failures="0" errors="0" timestamp="2013-07-07T16:14:42" hostname="Tesujisoft3" time="0.0">
+  <properties/>
+  <testcase name="testFindCutPoints" classname="com.barrybecker4.common.math.cutpoints.TightCutPointFinderTest" time="0.0"/>
+  <testcase name="testFindCutPointsWhenHighPresisionEndPoints" classname="com.barrybecker4.common.math.cutpoints.TightCutPointFinderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

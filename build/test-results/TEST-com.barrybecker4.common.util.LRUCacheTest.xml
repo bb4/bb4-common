@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.barrybecker4.common.util.LRUCacheTest" tests="2" failures="0" errors="0" timestamp="2013-07-07T16:14:42" hostname="Tesujisoft3" time="0.0010">
+  <properties/>
+  <testcase name="testNumEntries" classname="com.barrybecker4.common.util.LRUCacheTest" time="0.0010"/>
+  <testcase name="testEntryReplaced" classname="com.barrybecker4.common.util.LRUCacheTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

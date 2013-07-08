@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" tests="9" failures="0" errors="0" timestamp="2013-07-07T16:14:42" hostname="Tesujisoft3" time="0.0030">
+  <properties/>
+  <testcase name="testNiceNumbers1" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0010"/>
+  <testcase name="testNiceNumbers2" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0010"/>
+  <testcase name="testFracDigitsWhenIntegerEndPoints" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <testcase name="testFracDigitsWithHighMaxTicks" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <testcase name="testFracDigitsInThirdDecimalPlace200Ticks" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <testcase name="testFracDigitsInThirdDecimalPlace2Ticks" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <testcase name="testFracDigitsSixthDecimalPlace30Ticks" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <testcase name="testFracDigitsSixthDecimalPlace5Ticks" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0010"/>
+  <testcase name="testFracDigits4" classname="com.barrybecker4.common.math.cutpoints.NiceNumbersTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

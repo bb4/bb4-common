@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<testsuite name="com.barrybecker4.common.function.FunctionInverterTest" tests="6" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="Tesujisoft3" time="1.373213682317E9">
+  <properties/>
+  <testcase name="testInvertTrivialFunction" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0010"/>
+  <testcase name="testInvertSimple3Function" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0"/>
+  <testcase name="testInvertSimple6Function" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0"/>
+  <testcase name="testInvertSimple10Function" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0"/>
+  <testcase name="testLinearFunction" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0"/>
+  <testcase name="testMonotonic" classname="com.barrybecker4.common.function.FunctionInverterTest" time="0.0"/>
+  <system-out><![CDATA[inverse=[0.0, 1.0]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
