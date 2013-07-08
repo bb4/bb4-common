@@ -9,7 +9,7 @@ apply plugin: 'application'
 apply plugin: 'idea'
 
 defaultTasks 'build'
-	
+
 description = 'Common bb4 java code. Library project.'
 version = '1.1'
 project.archivesBaseName = 'bb4-common'
@@ -20,14 +20,14 @@ repositories {
         url "http://repo1.maven.org/maven2/"
         url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
     }
-	
-	// temp publish location. Reaaly want to publish to Sonatype
+
+	// temp publish location. Really want to publish to Sonatype
 	flatDir {
             name "fileRepo"
             dirs "../repository"
     }
 }
-	
+
 dependencies {
     compile 'commons-collections:commons-collections:3.2'
     compile 'commons-codec:commons-codec:1.7'
