@@ -69,6 +69,7 @@ artifacts {
 }
 
 signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
@@ -90,4 +91,51 @@ task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
     into "build/libs"
     from configurations.runtime
+}
+
+// used to publish artifacts to Sonatype repository
+// See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
+// Go to https://oss.sonatype.org to view staged repositories after publishing.
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                 name 'bb4-common'
+                 packaging 'jar'
+                 description 'Common bb4 java code. Library project.'
+                 url "https://github.com/barrybecker4/${archivesBaseName}"
+
+                 scm {
+                     url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                     connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                     developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                 }
+
+                 licenses {
+                     license {
+                         name 'The MIT license'
+                         url 'http://www.opensource.org/licenses/MIT'
+                         distribution 'repo'
+                     }
+                 }
+
+                 developers {
+                     developer {
+                         id 'barrybecker4'
+                         name 'Barry Becker'
+                     }
+                     developer {
+                         id 'wkeese'
+                         name 'Bill Keese'
+                     }
+               }
+           }
+        }
+    }
 }
