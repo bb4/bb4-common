@@ -11,6 +11,8 @@ targetCompatibility = '1.6'
 apply plugin: 'project-report'
 apply plugin: 'application'
 apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 
 // all bb4 projects use this directory layout.
@@ -47,16 +49,16 @@ dependencies {
     testCompile 'junit:junit:3.+'
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    description = 'Create a jar file containing all project sources'
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    description = 'Create a jar file containing all project javadoc'
+    description = 'Create a jar file containing all project javadoc. Needed for publishing to Sonatype.'
     classifier = 'javadoc'
     from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    description = 'Create a jar file containing all project sources. Needed for publishing to Sonatype.'
+    classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
 // These artifacts need to be published so other projects can depend on them
@@ -64,6 +66,10 @@ artifacts {
     archives jar
     archives sourcesJar
     archives javadocJar
+}
+
+signing {
+    sign configurations.archives
 }
 
 javadoc.doLast {

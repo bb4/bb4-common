@@ -6,6 +6,7 @@ apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'  
 defaultTasks 'build'
 
 description = 'Common bb4 java code. Library project.'
+group = 'com.barrybecker4'
 version = '1.1'
 project.archivesBaseName = 'bb4-common'
 
@@ -29,4 +30,48 @@ jar {
     }
 }
 
+// used to publish artifacts to Sonatype repository
+/*
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signPom(deployment) }
 
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+              authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+               name 'bb4-common'
+               packaging 'jar'
+               description 'Common bb4 java code. Library project.'
+               url 'https://github.com/barrybecker4/bb4-common'
+
+               scm {
+                   url 'scm:git@github.com:barrybecker4/bb4-common.git'
+                   connection 'scm:git@github.com:barrybecker4/bb4-common.git'   // https://github.com/barrybecker4/bb4-common.git
+                   developerConnection 'scm:git@github.com:barrybecker4/bb4-common.git'
+               }
+
+               licenses {
+                   license {
+                       name 'The MIT license'
+                       url 'http://www.opensource.org/licenses/MIT'
+                       distribution 'repo'
+                   }
+               }
+
+               developers {
+                   developer {
+                       id 'barrybecker4'
+                       name 'Barry Becker'
+                   }
+                   developer {
+                       id 'wkeese'
+                       name 'Bill Keese'
+                   }
+               }
+           }
+        }
+    }
+}          */
