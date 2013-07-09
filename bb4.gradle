@@ -82,11 +82,6 @@ javadoc.doLast {
     }
 }
 
-clean.doLast {
-    // project. is needed to disambiguate from the clean tasks existing delete.
-    project.delete(project.repositories.fileRepo.dirs)
-}
-
 task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
     into "build/libs"
