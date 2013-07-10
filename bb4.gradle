@@ -69,7 +69,6 @@ artifacts {
 }
 
 signing {
-    required { gradle.taskGraph.hasTask("publishArtifacts") }
     sign configurations.archives
 }
 
@@ -88,10 +87,12 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
-// used to publish artifacts to Sonatype repository
-// See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
-// Go to https://oss.sonatype.org to view staged repositories after publishing.
-publishArtifacts {
+/**
+ * Used to publish artifacts to Sonatype repository
+ * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
+ * Go to https://oss.sonatype.org to view staged repositories after publishing.
+ */
+uploadArchives {
     repositories {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
@@ -129,8 +130,12 @@ publishArtifacts {
                          id 'wkeese'
                          name 'Bill Keese'
                      }
-               }
-           }
+                 }
+            }
         }
     }
+}
+
+task publishArtifacts (dependsOn:uploadArchives) {
+    description = 'Publish artifacts to Sonatype repository'
 }
