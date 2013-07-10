@@ -69,7 +69,7 @@ artifacts {
 }
 
 signing {
-    required { gradle.taskGraph.hasTask("uploadArchives") }
+    required { gradle.taskGraph.hasTask("publishArtifact") }
     sign configurations.archives
 }
 
