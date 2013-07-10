@@ -66,7 +66,6 @@ public class CommandLineOptions  {
      * @return value for the arg (may be null if no value for the arg)
      */
     public String getValueForOption(String option, String defaultValue) {
-        //System.out.println("getting option named " + option + " from " + optionsMap_);
         return optionsMap_.get(option);
     }
 

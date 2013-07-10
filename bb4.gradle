@@ -91,7 +91,7 @@ task copyToLib(dependsOn: jar, type: Copy) {
 // used to publish artifacts to Sonatype repository
 // See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
 // Go to https://oss.sonatype.org to view staged repositories after publishing.
-uploadArchives {
+publishArtifacts {
     repositories {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }

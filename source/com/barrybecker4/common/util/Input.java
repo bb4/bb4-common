@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 
 /**
+ * Convenience methods for getting user input entered from the keyboard.
  * @author Barry Becker
  */
 public final class Input {

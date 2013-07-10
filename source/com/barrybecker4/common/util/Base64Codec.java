@@ -14,7 +14,6 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 
-
 /**
  * Utility methods for Base64 compression and decompression.
  *
