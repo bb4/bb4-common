@@ -25,7 +25,6 @@ public final class FileUtil {
 
     /**
      * Points to the main project directory.
-     * Reads the PROJECT_HOME env variable to figure out where the data files are.
      * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
      */
     public static final String PROJECT_HOME = getProjectHomeDir();
@@ -43,25 +42,20 @@ public final class FileUtil {
     }
 
     /**
-     * Get the location of the PROJECT_HOME environment variable if it is set.
-     * @return location of project files.
+     * @return Current working directory if possible
      */
     private static String getProjectHomeDir() {
-        String home = "";
-        try {
-            home = System.getenv("PROJECT_HOME"); //NON-NLS
-        } catch (Exception e) {
-            //throw new IllegalStateException("Must set PROJECT_HOME environment variable.");
-            System.out.println("Should set PROJECT_HOME environment variable if running locally."); // NON-NLS
-        }
+        String home = System.getProperty("user.dir");
+        System.out.println("home=" + home);
         return home + FILE_SEPARATOR;
     }
+
     /**
      * Tries to create the specified directory if it does not exist.
      * @param path path to the directory to verify
      * @throws IOException if any problem creating the specified directory
      */
-    public static void verifyDirectoryExistance(String path) throws IOException {
+    public static void verifyDirectoryExistence(String path) throws IOException {
         File directory = new File(path);
 
         if (!directory.exists()) {
@@ -111,5 +105,5 @@ public final class FileUtil {
             "failed to create url for  " + sPath;
 
         return url;
-     }
+    }
 }
