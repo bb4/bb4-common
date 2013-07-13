@@ -40,9 +40,10 @@ repositories {
     maven {
         // this is where bb4 release artifacts will come from
         url "http://repo1.maven.org/maven2/"
-        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
         // this is where SNAPSHOT releases will come from
         url "https://oss.sonatype.org/content/groups/staging"
+        // some thirdparty jars from here
+        url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
     }
 }
 
