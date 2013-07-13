@@ -38,8 +38,11 @@ sourceSets {
 repositories {
     mavenCentral()
     maven {
+        // this is where bb4 release artifacts will come from
         url "http://repo1.maven.org/maven2/"
         url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
+        // this is where SNAPSHOT releases will come from
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
 }
 
@@ -98,6 +101,10 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
