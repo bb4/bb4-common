@@ -46,7 +46,6 @@ public final class FileUtil {
      */
     private static String getProjectHomeDir() {
         String home = System.getProperty("user.dir");
-        System.out.println("home=" + home);
         return home + FILE_SEPARATOR;
     }
 
