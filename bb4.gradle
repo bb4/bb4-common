@@ -42,7 +42,7 @@ repositories {
         url "http://repo1.maven.org/maven2/"
         url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
         // this is where SNAPSHOT releases will come from
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        url "https://oss.sonatype.org/content/groups/staging"
     }
 }
 
