@@ -41,12 +41,7 @@ public final class FileUtil {
      */
     private static String getProjectHomeDir() {
 
-        String home = System.getProperty("project.home");//, System.getProperty("user.dir")); //NON-NLS
-        if (home == null) {
-            System.out.println("project.home not found");
-            home = System.getProperty("user.dir");
-        }
-        System.out.println("project.home == " + home);
+        String home = System.getProperty("user.dir");
         return home + FILE_SEPARATOR;
     }
 

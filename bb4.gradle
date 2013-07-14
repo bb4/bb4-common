@@ -90,12 +90,6 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
-// passing location of project to java tests so files can be located.
-tasks.withType(Test) {
-    systemProperties['project.home']="$project.projectDir"
-}
-
-
 /**
  * Used to publish artifacts to Sonatype repository
  * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
