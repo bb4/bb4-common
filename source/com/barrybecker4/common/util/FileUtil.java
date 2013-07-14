@@ -3,12 +3,7 @@ package com.barrybecker4.common.util;
 
 import com.barrybecker4.common.app.ClassLoaderSingleton;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -101,14 +96,30 @@ public final class FileUtil {
     }
 
     /**
+     * @param sPath the file path to get URL for
+     * @param failIfNotFound throws IllegalArgumentException if not found in path
      * @return a URL given the path to an existing file.
      */
     public static URL getURL(String sPath, boolean failIfNotFound) {
 
         URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
-        assert (url != null || !failIfNotFound):
-            "failed to create url for  " + sPath;
-
+        if (url == null && failIfNotFound) {
+            throw new IllegalArgumentException("failed to create url for  " + sPath);
+        }
         return url;
+    }
+
+    /**
+     * @param sPath the file path to get URL for
+     * @param failIfNotFound throws IllegalArgumentException if not found in path
+     * @return a stream given the path to an existing file.
+     */
+    public static InputStream getResourceAsStream(String sPath, boolean failIfNotFound) {
+
+        InputStream stream = ClassLoaderSingleton.getClassLoader().getResourceAsStream(sPath);
+        if (stream == null && failIfNotFound) {
+            throw new IllegalArgumentException("failed to find " + sPath);
+        }
+        return stream;
     }
 }
