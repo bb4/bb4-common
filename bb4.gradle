@@ -76,7 +76,7 @@ signing {
 }
 
 javadoc.doLast {
-    description = 'Copy images from source to javadoc in case they are referenced by documenation'
+    description = 'Copy images from source to javadoc in case they are referenced by documentation'
     copy {
         from sourceSets.main.allSource
         into javadoc.destinationDir
@@ -89,6 +89,17 @@ task copyToLib(dependsOn: jar, type: Copy) {
     into "build/libs"
     from configurations.runtime
 }
+
+// trying to get latest SNAPSHOTS to be pulled
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+// passing location of project to java tests so files can be located.
+tasks.withType(Test) {
+    systemProperties['project.home']="$project.projectDir"
+}
+
 
 /**
  * Used to publish artifacts to Sonatype repository
