@@ -2,7 +2,7 @@
 This library project contains common java code for all bb4 projects.
 The bb4-common jar file along with the corresponding source and javadoc will be published to Sonatype so other projects can easily depend on it.
 
-### How to Build
+### [How to Build](https://github.com/barrybecker4/bb4-common/wiki/Building-bb4-Projects)
 If you have not already done so, first install [Git](http://git-scm.com/), [Gradle](http://www.gradle.org/), and [Intellij](http://www.jetbrains.com/idea/).
 
 Type 'gradle build' at the root. This will build everything, but since its a library project there won't be much to see.
