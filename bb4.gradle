@@ -77,7 +77,6 @@ artifacts {
 }
 
 signing {
-    println "version = $version  isRelease = $isReleaseVersion"
     required { isReleaseVersion }
     sign configurations.archives
 }
