@@ -109,7 +109,7 @@ uploadArchives {
             }
 
             pom.project {
-                 name 'bb4-common'
+                 name "${archivesBaseName}"
                  packaging 'jar'
                  description 'Common bb4 java code. Library project.'
                  url "https://github.com/barrybecker4/${archivesBaseName}"
