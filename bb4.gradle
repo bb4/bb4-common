@@ -77,6 +77,7 @@ artifacts {
 }
 
 signing {
+    println "version = $version  isRelease = $isReleaseVersion"
     required { isReleaseVersion }
     sign configurations.archives
 }
@@ -138,10 +139,6 @@ uploadArchives {
                      developer {
                          id 'barrybecker4'
                          name 'Barry Becker'
-                     }
-                     developer {
-                         id 'wkeese'
-                         name 'Bill Keese'
                      }
                  }
             }
