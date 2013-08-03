@@ -11,6 +11,7 @@ targetCompatibility = '1.6'
 apply plugin: 'project-report'
 apply plugin: 'application'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
