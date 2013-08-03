@@ -15,11 +15,15 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-// These credentials are not to be committed. Define in ~/.gradle/gradle.properties
-ext.sonatypeUsername=
-ext.sonatypePassword=
+// Secret credentials for Sonatype and signing defined in ~/.gradle/gradle.properties
 // Only sign the artifacts if it is a final release
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+if (!hasProperty('sonatypeUsername')) {
+	ext.sonatypeUsername = ''
+}
+if (!hasProperty('sonatypePassword')) {
+	ext.sonatypePassword = ''
+}
 
 // all bb4 projects use this directory layout.
 sourceSets {
