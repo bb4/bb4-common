@@ -5,6 +5,7 @@ import com.barrybecker4.common.app.ClassLoaderSingleton;
 
 import java.io.*;
 import java.net.URL;
+import java.security.AccessControlException;
 
 /**
  * Miscellaneous commonly used file related static utility methods.
@@ -34,13 +35,19 @@ public final class FileUtil {
     }
 
     /**
+     * This is ugly and needs to be cleaned up. Applets cannot get system properties.
      * @return Current working directory if possible
      * @deprecated use getHomeDir instead
      */
     private static String getProjectHomeDir() {
 
-        String home = System.getProperty("user.dir");
-        return home + FILE_SEPARATOR;
+        String home = FILE_SEPARATOR;
+        try {
+            home = System.getProperty("user.dir") + FILE_SEPARATOR;
+        } catch (AccessControlException e) {
+            System.out.println("You do not have access to user.dir. This can happen when running as an applet. ");
+        }
+        return home;
     }
 
     /**
