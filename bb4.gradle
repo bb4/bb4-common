@@ -58,7 +58,11 @@ repositories {
 
 /** check for updates every build */
 configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy {
+        failOnVersionConflict()
+        cacheDynamicVersionsFor 0, 'seconds'
+        cacheChangingModulesFor 0, 'seconds'
+    }
 }
 
 dependencies {
@@ -125,31 +129,36 @@ uploadArchives {
             }
 
             pom.project {
-                 name "${archivesBaseName}"
-                 packaging 'jar'
-                 description 'Common bb4 java code. Library project.'
-                 url "https://github.com/barrybecker4/${archivesBaseName}"
+                name "${archivesBaseName}"
+                packaging 'jar'
+                description 'Common bb4 java code. Library project.'
+                url "https://github.com/barrybecker4/${archivesBaseName}"
 
-                 scm {
-                     url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                     connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                     developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                 }
+                // workaround to get changing snapshots to be updated
+                properties {
+                   'timestamp' String.valueOf(System.currentTimeMillis())
+                }
 
-                 licenses {
-                     license {
-                         name 'The MIT license'
-                         url 'http://www.opensource.org/licenses/MIT'
-                         distribution 'repo'
-                     }
-                 }
+                scm {
+                    url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                    connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                    developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+                }
 
-                 developers {
-                     developer {
-                         id 'barrybecker4'
-                         name 'Barry Becker'
-                     }
-                 }
+                licenses {
+                    license {
+                        name 'The MIT license'
+                        url 'http://www.opensource.org/licenses/MIT'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'barrybecker4'
+                        name 'Barry Becker'
+                    }
+                }
             }
         }
     }
