@@ -18,11 +18,6 @@ public final class FileUtil {
      */
     public static final String FILE_SEPARATOR = "/";
 
-    /**
-     * Points to the main project directory.
-     * If not deployed, you can use System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
-     */
-    public static final String PROJECT_HOME = getProjectHomeDir();
 
     /**
      * cannot instantiate static class.
@@ -30,14 +25,17 @@ public final class FileUtil {
     private FileUtil() {}
 
     /**
+     * Try not to use this.
+     * If this is called from an applet, it will give a security exception.
      * @return home directory. Assumes running as an Application.
      */
     public static String getHomeDir() {
-        return PROJECT_HOME;
+        return getProjectHomeDir();
     }
 
     /**
      * @return Current working directory if possible
+     * @deprecated use getHomeDir instead
      */
     private static String getProjectHomeDir() {
 
