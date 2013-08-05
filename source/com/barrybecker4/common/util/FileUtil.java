@@ -31,16 +31,6 @@ public final class FileUtil {
      * @return home directory. Assumes running as an Application.
      */
     public static String getHomeDir() {
-        return getProjectHomeDir();
-    }
-
-    /**
-     * This is ugly and needs to be cleaned up. Applets cannot get system properties.
-     * @return Current working directory if possible
-     * @deprecated use getHomeDir instead
-     */
-    private static String getProjectHomeDir() {
-
         String home = FILE_SEPARATOR;
         try {
             home = System.getProperty("user.dir") + FILE_SEPARATOR;

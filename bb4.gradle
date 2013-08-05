@@ -110,6 +110,10 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
+// In local gradle files set this to the list of jar tasks used to create the jars
+// where each jar task is of the form <basename>Jar.
+def jarTasks = []
+
 /**
  * Used to publish artifacts to Sonatype repository
  * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
@@ -158,6 +162,13 @@ uploadArchives {
                         id 'barrybecker4'
                         name 'Barry Becker'
                     }
+                }
+            }
+            // Maven does not allow more than one jar per pom file. Filter is used to make many artifacts.
+            jarTasks.each{ taskName ->
+                def jarName = 'bb4-' + taskName - 'Jar'
+                addFilter(jarName) {artifact, file ->
+                    artifact.name == jarName
                 }
             }
         }
