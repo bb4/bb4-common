@@ -164,6 +164,6 @@ task publishArtifacts (dependsOn:uploadArchives) {
 }
 
 signing {
-    required { isReleaseVersion }
+    required { gradle.taskGraph.hasTask("uploadArchives") && isReleaseVersion }
     sign configurations.archives
 }
