@@ -164,14 +164,6 @@ uploadArchives {
                     }
                 }
             }
-            // Maven does not allow more than one jar per pom file. Filter is used to make many artifacts.
-            jarTasks.each{ taskName ->
-                def jarName = 'bb4-' + taskName - 'Jar'
-                println "jarName=$jarName"
-                addFilter(jarName) {artifact, file ->
-                    artifact.name == jarName
-                }
-            }
         }
     }
 }
