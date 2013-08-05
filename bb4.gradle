@@ -25,10 +25,6 @@ if (!hasProperty('sonatypePassword')) {
 	ext.sonatypePassword = ''
 }
 
-// In local gradle files set this to the list of jar tasks used to create the jars
-// where each jar task is of the form <basename>Jar.
-ext.jarTasks = []
-
 // all bb4 projects use this directory layout.
 sourceSets {
     main {
