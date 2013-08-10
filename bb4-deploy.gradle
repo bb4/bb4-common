@@ -89,5 +89,9 @@ task publishArtifacts (dependsOn:uploadArchives) {
 
 signing {
     required { isReleaseVersion }
-    sign configurations.archives
+    if (jarTasks.size() == 0)
+        sign jar
+
+    jarTasks.each{ jarTask -> sign jarTask }
+    //sign configurations.archives
 }
