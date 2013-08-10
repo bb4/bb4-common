@@ -14,9 +14,13 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
+defaultTasks 'build'
 
-// Secret credentials for Sonatype and signing defined in ~/.gradle/gradle.properties
-// Only sign the artifacts if it is a final release
+/**
+ * Secret credentials for Sonatype and signing
+ * should be defined in ~/.gradle/gradle.properties if you need them.
+ * Only sign the artifacts if it is a final release.
+ */
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 if (!hasProperty('sonatypeUsername')) {
 	ext.sonatypeUsername = ''
@@ -24,8 +28,15 @@ if (!hasProperty('sonatypeUsername')) {
 if (!hasProperty('sonatypePassword')) {
 	ext.sonatypePassword = ''
 }
+/**
+ * If a project has multiple jars, it should define the list of tasks that produce them
+ * in an array called jarTasks before applying this bb4.gradle file.
+ */
+if (!hasProperty('jarList')) {
+    ext.jarTasks = []
+}
 
-// all bb4 projects use this directory layout.
+/** all bb4 projects use this directory layout. */
 sourceSets {
     main {
         java {
@@ -86,6 +97,11 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 // These artifacts need to be published so other projects can depend on them
 artifacts {
     archives jar
+
+    artifacts {
+        jarTasks.each{ jarTask -> archives jarTask }
+    }
+
     archives sourcesJar
     archives javadocJar
 }
@@ -155,6 +171,13 @@ uploadArchives {
                     }
                 }
             }
+            // creates filters for each jar produced by jarTasks (if needed)
+            jarTasks.each{ jarTask ->
+                def jarName = 'bb4-' + jarTask.name - 'Jar'
+                addFilter(jarTask.name) {artifact, file ->
+                    artifact.name == jarName
+                }
+            }
         }
     }
 }
@@ -164,6 +187,6 @@ task publishArtifacts (dependsOn:uploadArchives) {
 }
 
 signing {
-    required { gradle.taskGraph.hasTask("uploadArchives") && isReleaseVersion }
+    required { isReleaseVersion }
     sign configurations.archives
 }
