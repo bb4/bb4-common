@@ -1,13 +1,12 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
-
 /**
- * This is common gradle build file used to deploy bb4 artifacts.
+ * This is common gradle build file used to publish bb4 artifacts.
  * Any project on github can include it using
- * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-deploy.gradle'
+ * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
  *
  * If a project has multiple jars, it should define the list of tasks
- * in an array called jarTasks before applying this bb4-deploy.gradle file.
+ * in an array called jarTasks before applying this bb4-publish.gradle file.
  */
 if (!hasProperty('jarTasks')) {
     ext.jarTasks = []
