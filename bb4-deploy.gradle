@@ -14,7 +14,7 @@ artifacts {
         archives jar
 
     artifacts {
-        jarTasks.each{ jarTask -> archives tasks[jarTask] }
+        jarTasks.each{ jarTask -> archives jarTask }
     }
 
     archives sourcesJar
@@ -73,8 +73,8 @@ uploadArchives {
             }
             // creates filters for each jar produced by jarTasks (if needed)
             jarTasks.each{ jarTask ->
-                def jarName = 'bb4-' + tasks[jarTask].name - 'Jar'
-                addFilter(tasks[jarTask].name) {artifact, file ->
+                def jarName = 'bb4-' + jarTask.name - 'Jar'
+                addFilter(jarTask.name) {artifact, file ->
                     artifact.name == jarName
                 }
             }
