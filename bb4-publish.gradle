@@ -84,38 +84,9 @@ uploadArchives {
                 addFilter(jarTask.name) {artifact, file ->
                     artifact.name == jarName
                 }
-                pom(jarTask.name) {
-                    name "${archivesBaseName}"
-                    packaging 'jar'
-                    description 'Common bb4 java code. Library project.'
-                    url "https://github.com/barrybecker4/${archivesBaseName}"
-
-                    // workaround to get changing snapshots to be updated
-                    properties {
-                       'timestamp' String.valueOf(System.currentTimeMillis())
-                    }
-
-                    scm {
-                        url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                        connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                        developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                    }
-
-                    licenses {
-                        license {
-                            name 'The MIT license'
-                            url 'http://www.opensource.org/licenses/MIT'
-                            distribution 'repo'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'barrybecker4'
-                            name 'Barry Becker'
-                        }
-                    }
-                }
+                pom(jarTask.name).name = jarName
+                pom(jarTask.name).description = jarName
+                pom(jarTask.name).url = "https://github.com/barrybecker4/${archivesBaseName}"
             }
         }
     }
