@@ -1,16 +1,23 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
+
 /**
- * If a project has multiple jars, it should define the list of tasks that produce them
- * in an array called jarTasks before applying this bb4.gradle file.
+ * This is common gradle build file used to deploy bb4 artifacts.
+ * Any project on github can include it using
+ * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-deploy.gradle'
+ *
+ * If a project has multiple jars, it should define the list of tasks
+ * in an array called jarTasks before applying this bb4-deploy.gradle file.
  */
 if (!hasProperty('jarTasks')) {
     ext.jarTasks = []
 }
 
-// These artifacts need to be published so other projects can depend on them
+/**
+ * These artifacts need to be published so other projects can depend on them.
+ * The default jar is only include if there is not an explicit list of jarTasks.
+ */
 artifacts {
-    println jarTasks.size()
     if (jarTasks.size() == 0)
         archives jar
 
@@ -83,15 +90,16 @@ uploadArchives {
     }
 }
 
-task publishArtifacts (dependsOn:uploadArchives) {
-    description = 'Publish artifacts to Sonatype repository'
-}
-
+/** release jars need to be signed when published to sonatype so the publisher can be verified.
 signing {
     required { isReleaseVersion }
     if (jarTasks.size() == 0)
         sign jar
 
     jarTasks.each{ jarTask -> sign jarTask }
-    //sign configurations.archives
+}
+
+/** Effectively the same as uploadArchives, but I like this name better */
+task publishArtifacts (dependsOn:uploadArchives) {
+    description = 'Publish artifacts to Sonatype repository'
 }
