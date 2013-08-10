@@ -89,13 +89,15 @@ uploadArchives {
     }
 }
 
-/** release jars need to be signed when published to sonatype so the publisher can be verified.
+/** release jars need to be signed when published to sonatype so the publisher can be verified. */
 signing {
     required { isReleaseVersion }
     if (jarTasks.size() == 0)
         sign jar
 
     jarTasks.each{ jarTask -> sign jarTask }
+    sign sourcesJar
+    sign javadocJar
 }
 
 /** Effectively the same as uploadArchives, but I like this name better */
