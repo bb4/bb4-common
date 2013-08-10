@@ -96,10 +96,12 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 // These artifacts need to be published so other projects can depend on them
 artifacts {
-    archives jar
-
-    artifacts {
-        jarTasks.each{ jarTask -> archives jarTask }
+    if (jarTasks.isEmpty()) {
+        archives jar
+    } else {
+        artifacts {
+            jarTasks.each{ jarTask -> archives jarTask }
+        }
     }
 
     archives sourcesJar
