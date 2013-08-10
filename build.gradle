@@ -21,3 +21,5 @@ jar {
             provider: 'gradle'
     }
 }
+
+apply from: 'bb4-deploy.gradle'

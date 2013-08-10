@@ -28,13 +28,6 @@ if (!hasProperty('sonatypeUsername')) {
 if (!hasProperty('sonatypePassword')) {
 	ext.sonatypePassword = ''
 }
-/**
- * If a project has multiple jars, it should define the list of tasks that produce them
- * in an array called jarTasks before applying this bb4.gradle file.
- */
-if (!hasProperty('jarTasks')) {
-    ext.jarTasks = []
-}
 
 /** all bb4 projects use this directory layout. */
 sourceSets {
@@ -94,19 +87,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-// These artifacts need to be published so other projects can depend on them
-artifacts {
-    if (jarTasks.size() == 0)
-        archives jar
-
-    artifacts {
-        jarTasks.each{ jarTask -> archives tasks[jarTask] }
-    }
-
-    archives sourcesJar
-    archives javadocJar
-}
-
 javadoc.doLast {
     description = 'Copy images from source to javadoc in case they are referenced by documentation'
     copy {
@@ -120,75 +100,4 @@ task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
     into "build/libs"
     from configurations.runtime
-}
-
-/**
- * Used to publish artifacts to Sonatype repository
- * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
- * Go to https://oss.sonatype.org to view staged repositories after publishing.
- */
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            pom.project {
-                name "${archivesBaseName}"
-                packaging 'jar'
-                description 'Common bb4 java code. Library project.'
-                url "https://github.com/barrybecker4/${archivesBaseName}"
-
-                // workaround to get changing snapshots to be updated
-                properties {
-                   'timestamp' String.valueOf(System.currentTimeMillis())
-                }
-
-                scm {
-                    url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                    connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                    developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                }
-
-                licenses {
-                    license {
-                        name 'The MIT license'
-                        url 'http://www.opensource.org/licenses/MIT'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'barrybecker4'
-                        name 'Barry Becker'
-                    }
-                }
-            }
-            // creates filters for each jar produced by jarTasks (if needed)
-            jarTasks.each{ jarTask ->
-                def jarName = 'bb4-' + tasks[jarTask].name - 'Jar'
-                addFilter(tasks[jarTask].name) {artifact, file ->
-                    artifact.name == jarName
-                }
-            }
-        }
-    }
-}
-
-task publishArtifacts (dependsOn:uploadArchives) {
-    description = 'Publish artifacts to Sonatype repository'
-}
-
-
-signing {
-    required { isReleaseVersion }
-    sign configurations.archives
 }
