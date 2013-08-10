@@ -32,7 +32,7 @@ if (!hasProperty('sonatypePassword')) {
  * If a project has multiple jars, it should define the list of tasks that produce them
  * in an array called jarTasks before applying this bb4.gradle file.
  */
-if (!hasProperty('jarList')) {
+if (!hasProperty('jarTasks')) {
     ext.jarTasks = []
 }
 
