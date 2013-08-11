@@ -95,11 +95,9 @@ artifacts {
 /** Config for non-core artifacts like asc (signing) files. */
 def ascPomConfig = {
     name "${archivesBaseName}"
-    groupId 'com.barrrybecker4'
+    groupId 'com.barrybecker4'
     description "${archivesBaseName}"
     url "https://github.com/barrybecker4/${archivesBaseName}"
-    groupId 'com.barrybecker4'
-    classifier 'asc'
 }
 
 /** bb4 pom configuration for core jar artifacts */
