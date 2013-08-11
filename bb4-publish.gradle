@@ -28,6 +28,43 @@ artifacts {
     archives javadocJar
 }
 
+def pomConfig = {
+    name "${archivesBaseName}"
+    packaging 'jar'
+    description 'Common bb4 java code. Library project.'
+    url "https://github.com/barrybecker4/${archivesBaseName}"
+
+    // workaround to get changing snapshots to be updated
+    properties {
+       'timestamp' String.valueOf(System.currentTimeMillis())
+    }
+
+    scm {
+        url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+        connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+        developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+    }
+
+    licenses {
+        license {
+            name 'The MIT license'
+            url 'http://www.opensource.org/licenses/MIT'
+            distribution 'repo'
+        }
+    }
+
+    developers {
+        developer {
+            id 'barrybecker4'
+            name 'Barry Becker'
+        }
+    }
+}
+
+configure(install.repositories.mavenInstaller) {
+    pom.project pomConfig
+}
+
 /**
  * Used to publish artifacts to Sonatype repository
  * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
@@ -46,38 +83,8 @@ uploadArchives {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
-            pom.project {
-                name "${archivesBaseName}"
-                packaging 'jar'
-                description 'Common bb4 java code. Library project.'
-                url "https://github.com/barrybecker4/${archivesBaseName}"
+            pom.project pomConfig
 
-                // workaround to get changing snapshots to be updated
-                properties {
-                   'timestamp' String.valueOf(System.currentTimeMillis())
-                }
-
-                scm {
-                    url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                    connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                    developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-                }
-
-                licenses {
-                    license {
-                        name 'The MIT license'
-                        url 'http://www.opensource.org/licenses/MIT'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'barrybecker4'
-                        name 'Barry Becker'
-                    }
-                }
-            }
             // creates filters for each jar produced by jarTasks (if needed)
             jarTasks.each{ jarTask ->
                 def jarName = 'bb4-' + jarTask.name - 'Jar'
@@ -86,7 +93,7 @@ uploadArchives {
                 }
                 jarPom.artifactId = jarName
                 jarPom.name = jarName
-                jarPom.description = jarName
+                //jarPom.description = jarName
                 jarPom.url = "https://github.com/barrybecker4/${archivesBaseName}"
             }
         }
