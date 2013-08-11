@@ -159,6 +159,10 @@ uploadArchives {
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
 
+                def ascPom = addFilter('asc') {artifact, file -> artifact.ext == "asc" }
+                // ascPom.version = version
+                // ascPom.artifactId = "$projectName"
+                // ascPom.groupId = "$projectGroup"
             }
         }
     }
