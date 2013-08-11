@@ -44,7 +44,7 @@ if (hasProperty('appMap')) {
 
 /** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
 appMap.each { String key, Map value ->
-    task "${key}Jar(type: Jar)"  {
+    task "${key}Jar"(type: Jar)  {
         from sourceSets.main.output
         include value['include']
         if (value.containsKey('exclude'))
@@ -56,13 +56,13 @@ appMap.each { String key, Map value ->
                 provider: 'gradle'
         }
     }
-    task "${key}JavadocJar(type: Jar, dependsOn: javadoc)" {
+    task "${key}JavadocJar"(type: Jar, dependsOn: javadoc) {
         description = "Create a javadoc jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'javadoc'
         from javadoc.destinationDir
         include value['include']
     }
-    task "${key}SourcesJar(type: Jar, dependsOn: classes)" {
+    task "${key}SourcesJar"(type: Jar, dependsOn: classes) {
         description = "Create a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
         from sourceSets.main.allSource
