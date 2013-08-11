@@ -83,9 +83,9 @@ artifacts {
 
     artifacts {
         appMap.each { String key, Map value ->
-            archives "${key}Jar"
-            archives "${key}JavadocJar"
-            archives "${key}SourcesJar"
+            archives tasks["${key}Jar"]
+            archives tasks["${key}JavadocJar"]
+            archives tasks["${key}SourcesJar"]
         }
     }
 }
@@ -170,9 +170,9 @@ signing {
     }
 
     appMap.each { String key, Map value ->
-        sign "${key}Jar"
-        sign "${key}JavadocJar"
-        sign "${key}SourcesJar"
+        sign tasks["${key}Jar"]
+        sign tasks["${key}JavadocJar"]
+        sign tasks["${key}SourcesJar"]
     }
 }
 
