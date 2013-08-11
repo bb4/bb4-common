@@ -135,7 +135,7 @@ def jarPomConfig = {
 }
 
 configure(install.repositories.mavenInstaller) {
-    pom.project pomConfig
+    pom.project jarPomConfig
 }
 
 /**
