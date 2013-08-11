@@ -43,7 +43,7 @@ if (hasProperty('appMap')) {
 }
 
 /** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
-appMap.each { key, value ->
+appMap.each { String key, Map value ->
     task "${key}Jar" (type: Jar) {
         from sourceSets.main.output
         include value.include
@@ -82,7 +82,7 @@ artifacts {
     }
 
     artifacts {
-        appMap.each { key, value ->
+        appMap.each { String key, Map value ->
             archives "${key}Jar"
             archives "${key}JavadocJar"
             archives "${key}SourcesJar"
@@ -149,7 +149,7 @@ uploadArchives {
             pom.project pomConfig
 
             // creates filters for each jar produced by appMap entries (if any)
-            appMap.each { key, value ->
+            appMap.each { String key, Map value ->
                 def jarName = 'bb4-' + key
                 def jarPom = addFilter(key + 'Jar') {artifact, file ->
                     artifact.name == jarName
@@ -169,7 +169,7 @@ signing {
         sign javadocJar
     }
 
-    appMap.each { key, value ->
+    appMap.each { String key, Map value ->
         sign "${key}Jar"
         sign "${key}JavadocJar"
         sign "${key}SourcesJar"
