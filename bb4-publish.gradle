@@ -38,6 +38,7 @@ if (hasProperty('appMap')) {
     jar.enabled = false
     sourcesJar.enabled = false
     javadocJar.enabled = false
+    println appMap
 } else {
     ext.appMap = new HashMap()
 }
@@ -83,6 +84,7 @@ artifacts {
 
     artifacts {
         appMap.each { String key, Map value ->
+            println key
             archives tasks["${key}Jar"]
             archives tasks["${key}JavadocJar"]
             archives tasks["${key}SourcesJar"]
