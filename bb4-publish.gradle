@@ -88,13 +88,13 @@ uploadArchives {
             // creates filters for each jar produced by jarTasks (if needed)
             jarTasks.each{ jarTask ->
                 def jarName = 'bb4-' + jarTask.name - 'Jar'
-                def jarPom = addFilter(jarTask.name) {artifact, file ->
+                addFilter(jarTask.name) {artifact, file ->
                     artifact.name == jarName
-                }
-                jarPom.artifactId = jarName
-                jarPom.name = jarName
+                } pomConfig
+                //jarPom.artifactId = jarName
+                //jarPom.name = jarName
                 //jarPom.description = jarName
-                jarPom.url = "https://github.com/barrybecker4/${archivesBaseName}"
+                //jarPom.url = "https://github.com/barrybecker4/${archivesBaseName}"
             }
         }
     }
