@@ -75,27 +75,6 @@ dependencies {
     testCompile 'junit:junit:3.+'
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    description = 'Create a jar file containing all project javadoc. Needed for publishing to Sonatype.'
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    description = 'Create a jar file containing all project sources. Needed for publishing to Sonatype.'
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-javadoc.doLast {
-    description = 'Copy images from source to javadoc in case they are referenced by documentation'
-    copy {
-        from sourceSets.main.allSource
-        into javadoc.destinationDir
-        include '**/package.png'
-    }
-}
-
 task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
     into "build/libs"
