@@ -157,19 +157,31 @@ uploadArchives {
             // creates filters for each jar produced by appMap entries (if any)
             appMap.each { String key, Map value ->
                 def jarName = "bb4-$key"
-                def jarPom = addFilter("${key}Jar") {artifact, file ->
+                def jarPom = addFilter("${key}Jar") { artifact, file ->
                     artifact.name == jarName
                 }
                 jarPom.artifactId = jarName
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
-                addFilter('${key}Jar.asc') {artifact, file ->
+
+            }
+            appMap.each { String key, Map value ->
+                addFilter('${key}Jar.asc') { artifact, file ->
                     println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.jar.asc"
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
-                //ascPom.artifactId = jarName
-                //ascPom.version = version
-                // ascPom.groupId = "$projectGroup"
+            }
+            appMap.each { String key, Map value ->
+                addFilter('${key}Jar.asc') { artifact, file ->
+                    println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.javadoc.jar.asc"
+                    artifact.name == "bb4-${key}-${version}.jar.asc"
+                }
+            }
+            appMap.each { String key, Map value ->
+                addFilter('${key}Jar.asc') { artifact, file ->
+                    println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.sources.jar.asc"
+                    artifact.name == "bb4-${key}-${version}.jar.asc"
+                }
             }
         }
     }
