@@ -164,8 +164,8 @@ uploadArchives {
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
                 def ascPom = addFilter('${key}Jar.asc') {artifact, file ->
-                    println "name = ${artifact.name}"
-                    artifact.ext == "asc"
+                    println "name = ${artifact.name}  ext = ${artifact.ext} f=${artifact.ext == "asc" && artifact.name == jarName}"
+                    artifact.ext == "asc" && artifact.name == jarName
                 }
                 //ascPom.artifactId = jarName
                 //ascPom.version = version
