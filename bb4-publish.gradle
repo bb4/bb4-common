@@ -6,19 +6,19 @@
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
  */
 
-/** javadoc jar used for the whole project. Used only if there are not subjars. */
+/** javadoc jar used for the whole project. Used only if there are not subjars. *
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
     classifier = 'javadoc'
     from javadoc.destinationDir
-}
+}     */
 
-/** sources jar used for the whole project. Used only if there are not subjars. */
+/** sources jar used for the whole project. Used only if there are not subjars. *
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
     classifier = 'sources'
     from sourceSets.main.allSource
-}
+}   */
 
 javadoc.doLast {
     description = 'Copy images from source to javadoc in case they are referenced by documentation'
@@ -36,8 +36,8 @@ javadoc.doLast {
 if (hasProperty('appMap')) {
     // skip building the default jars that contains everything if there is a specific list
     jar.enabled = false
-    sourcesJar.enabled = false
-    javadocJar.enabled = false
+    //sourcesJar.enabled = false
+    //javadocJar.enabled = false
 } else {
     ext.appMap = new HashMap()
 }
@@ -77,8 +77,8 @@ appMap.each { String key, Map value ->
 artifacts {
     if (appMap.size() == 0) {
         archives jar
-        archives sourcesJar
-        archives javadocJar
+        //archives sourcesJar
+        //archives javadocJar
     }
 
     appMap.each { String key, Map value ->
@@ -148,8 +148,8 @@ uploadArchives {
 
             // creates filters for each jar produced by appMap entries (if any)
             appMap.each { String key, Map value ->
-                def jarName = 'bb4-' + key
-                def jarPom = addFilter(key + 'Jar') {artifact, file ->
+                def jarName = "bb4-$key"
+                def jarPom = addFilter("${key}Jar") {artifact, file ->
                     artifact.name == jarName
                 }
                 jarPom.artifactId = jarName
@@ -163,8 +163,8 @@ signing {
     required { isReleaseVersion }
     if (appMap.size() == 0)  {
         sign jar
-        sign sourcesJar
-        sign javadocJar
+        //sign sourcesJar
+        //sign javadocJar
     }
 
     appMap.each { String key, Map value ->
