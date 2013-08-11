@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 /**
- * This is common gradle build file used to publish bb4 artifacts.
+ * This common gradle build file is used to publish bb4 artifacts.
  * Any project on github can include it using
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
  */
@@ -13,7 +13,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-/** sources jar used for the whole project. UUsed only if appMap was not specified. */
+/** sources jar used for the whole project. Used only if appMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
     classifier = 'sources'
@@ -31,10 +31,10 @@ javadoc.doLast {
 
 /**
  * If a project has multiple apps, it should define them
- * in an map called appMap before applying this bb4-publish.gradle file.
+ * in a map called appMap before applying this bb4-publish.gradle file.
+ * Skip building the default jars that contains everything if there is a specific list
  */
 if (hasProperty('appMap')) {
-    // skip building the default jars that contains everything if there is a specific list
     jar.enabled = false
     sourcesJar.enabled = false
     javadocJar.enabled = false
@@ -47,11 +47,11 @@ appMap.each { String key, Map value ->
     task "${key}Jar"(type: Jar)  {
         baseName = "bb4-${key}"
         from sourceSets.main.output
-        include value['include']
+        value['include'].each { pattern -> include pattern }
         if (value.containsKey('exclude'))
-            exclude value['exclude']
+            value['exclude'].each { pattern -> include pattern }
         manifest {
-            attributes 'Implementation-Title': 'Puzzle code',
+            attributes 'Implementation-Title': '$key code',
                 'Implementation-Version': version,
                 provider: 'gradle'
         }
@@ -61,16 +61,16 @@ appMap.each { String key, Map value ->
         classifier = 'javadoc'
         baseName = "bb4-${key}"
         from javadoc.destinationDir
-        include value['include']
+        value['include'].each { pattern -> include pattern }
     }
     task "${key}SourcesJar"(type: Jar, dependsOn: classes) {
         description = "Create a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
         baseName = "bb4-${key}"
         from sourceSets.main.allSource
-        include value['include']
+        value['include'].each { pattern -> include pattern }
         if (value.containsKey('exclude'))
-            exclude value['exclude']
+            value['exclude'].each { pattern -> include pattern }
     }
 }
 
@@ -92,21 +92,26 @@ artifacts {
     }
 }
 
+/** Config for non-core artifacts like asc (signing) files. */
 def basicPomConfig = {
     name "${archivesBaseName}"
+    groupId 'com.barrrybecker4'
     description "${archivesBaseName}"
     url "https://github.com/barrybecker4/${archivesBaseName}"
+    groupId 'com.barrrybecker4'
 }
 
-/** bb4 pom configuration for all artifacts */
+/** bb4 pom configuration for core jar artifacts */
 def jarPomConfig = {
     name "${archivesBaseName}"
+    groupId 'com.barrrybecker4'
     packaging 'jar'
     description 'Common bb4 java code. Library project.'
     url "https://github.com/barrybecker4/${archivesBaseName}"
     inceptionYear '2013'
 
-    // workaround to get changing snapshots to be updated
+    // workaround to get changing snapshots to be updated.
+    // Maybe not needed if --refresh-dependencies is used.
     properties {
        'timestamp' String.valueOf(System.currentTimeMillis())
     }
@@ -168,28 +173,30 @@ uploadArchives {
                 }
                 jarPom.artifactId = jarName
                 jarPom.project jarPomConfig
-                jarPom.name = jarName
+                //jarPom.name = jarName
 
                 def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
                 ascPom.project basicPomConfig
                 ascPom.artifactId = jarName
-                ascPom.name = jarName
+                //ascPom.name = jarName
 
                 def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
                 ascJavadocPom.project basicPomConfig
                 ascJavadocPom.artifactId = jarName
-                ascJavadocPom.name = jarName
+                //ascJavadocPom.name = jarName
+                ascPom.classifier = 'javadoc'
 
                 def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
                 ascSourcesPom.project basicPomConfig
                 ascSourcesPom.artifactId = jarName
-                ascSourcesPom.name = jarName
+                //ascSourcesPom.name = jarName
+                ascPom.classifier = 'sources'
             }
         }
     }
