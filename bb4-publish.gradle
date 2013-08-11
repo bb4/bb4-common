@@ -32,7 +32,7 @@ javadoc.doLast {
 /**
  * If a project has multiple apps, it should define them
  * in an map called appMap before applying this bb4-publish.gradle file.
- */
+ *
 if (hasProperty('appMap')) {
     // skip building the default jars that contains everything if there is a specific list
     jar.enabled = false
@@ -41,7 +41,7 @@ if (hasProperty('appMap')) {
     println appMap
 } else {
     ext.appMap = new HashMap()
-}
+}   */
 
 /** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
 appMap.each { String key, Map value ->
