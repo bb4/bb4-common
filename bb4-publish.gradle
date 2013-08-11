@@ -98,6 +98,7 @@ def pomConfig = {
     packaging 'jar'
     description 'Common bb4 java code. Library project.'
     url "https://github.com/barrybecker4/${archivesBaseName}"
+    inceptionYear '2013'
 
     // workaround to get changing snapshots to be updated
     properties {
@@ -122,6 +123,7 @@ def pomConfig = {
         developer {
             id 'barrybecker4'
             name 'Barry Becker'
+            email 'barrybecker4@yahoo.com'
         }
     }
 }
@@ -159,9 +161,11 @@ uploadArchives {
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
 
-                def ascPom = addFilter('asc') {artifact, file -> artifact.ext == "asc" }
-                // ascPom.version = version
-                // ascPom.artifactId = "$projectName"
+                def ascPom = addFilter('asc') {artifact, file ->
+                    artifact.ext == "asc"
+                }
+                ascPom.artifactId = jarName
+                ascPom.version = version
                 // ascPom.groupId = "$projectGroup"
             }
         }
