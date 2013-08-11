@@ -168,10 +168,10 @@ uploadArchives {
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
                 addFilter("${key}JavadocJar.asc") { artifact, file ->
-                    artifact.name == "bb4-${key}-${version}.javadoc.jar.asc"
+                    artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
                 addFilter("${key}SourcesJar.asc") { artifact, file ->
-                    artifact.name == "bb4-${key}-${version}.sources.jar.asc"
+                    artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
             }
         }
