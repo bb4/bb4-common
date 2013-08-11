@@ -6,14 +6,14 @@
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
  */
 
-/** javadoc jar used for the whole project. Used only if there are not subjars. */
+/** javadoc jar used for the whole project. Used only if appMap was not specified. */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
 
-/** sources jar used for the whole project. Used only if there are not subjars. */
+/** sources jar used for the whole project. UUsed only if appMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
     classifier = 'sources'
@@ -45,11 +45,11 @@ if (hasProperty('appMap')) {
 /** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
 appMap.each { String key, Map value ->
     task "${key}Jar"(type: Jar)  {
+        baseName = "bb4-${key}"
         from sourceSets.main.output
         include value['include']
         if (value.containsKey('exclude'))
             exclude value['exclude']
-        baseName = "bb4-${key}"
         manifest {
             attributes 'Implementation-Title': 'Puzzle code',
                 'Implementation-Version': version,
@@ -69,6 +69,8 @@ appMap.each { String key, Map value ->
         baseName = "bb4-${key}"
         from sourceSets.main.allSource
         include value['include']
+        if (value.containsKey('exclude'))
+            exclude value['exclude']
     }
 }
 
@@ -141,7 +143,6 @@ uploadArchives {
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
-
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
