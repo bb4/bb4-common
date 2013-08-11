@@ -81,14 +81,10 @@ artifacts {
         archives javadocJar
     }
 
-    artifacts {
-        println tasks
-        appMap.each { String key, Map value ->
-            println key
-            archives tasks["${key}Jar"]
-            archives tasks["${key}JavadocJar"]
-            archives tasks["${key}SourcesJar"]
-        }
+    appMap.each { String key, Map value ->
+        archives tasks["${key}Jar"]
+        archives tasks["${key}JavadocJar"]
+        archives tasks["${key}SourcesJar"]
     }
 }
 
