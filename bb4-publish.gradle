@@ -47,9 +47,9 @@ if (hasProperty('appMap')) {
 appMap.each { String key, Map value ->
     task "${key}Jar" (type: Jar) {
         from sourceSets.main.output
-        include value.include
+        include value['include']
         if (value.containsKey('exclude'))
-            exclude value.exclude
+            exclude value['exclude']
         baseName = "bb4-${key}"
         manifest {
             attributes 'Implementation-Title': 'Puzzle code',
@@ -61,13 +61,13 @@ appMap.each { String key, Map value ->
         description = "Create a javadoc jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'javadoc'
         from javadoc.destinationDir
-        include value.include
+        include value['include']
     }
     task "${key}SourcesJar" (type: Jar, dependsOn: classes) {
         description = "Create a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
         from sourceSets.main.allSource
-        include value.include
+        include value['include']
     }
 }
 
@@ -83,6 +83,7 @@ artifacts {
     }
 
     artifacts {
+        println tasks
         appMap.each { String key, Map value ->
             println key
             archives tasks["${key}Jar"]
