@@ -43,30 +43,30 @@ if (hasProperty('appMap')) {
 }
 
 /** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
-for (entry in appMap) {
-    task "${entry.key}Jar" (type: Jar) {
+appMap.each { key, value ->
+    task "${key}Jar" (type: Jar) {
         from sourceSets.main.output
-        include entry.value.include
-        if (entry.value.containsKey('exclude'))
-            exclude entry.value.exclude
-        baseName = "bb4-${entry.key}"
+        include value.include
+        if (value.containsKey('exclude'))
+            exclude value.exclude
+        baseName = "bb4-${key}"
         manifest {
             attributes 'Implementation-Title': 'Puzzle code',
                 'Implementation-Version': version,
                 provider: 'gradle'
         }
     }
-    task "${entry.key}JavadocJar" (type: Jar, dependsOn: javadoc) {
-        description = "Create a javadoc jar file for ${entry.key}. Needed for publishing to Sonatype."
+    task "${key}JavadocJar" (type: Jar, dependsOn: javadoc) {
+        description = "Create a javadoc jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'javadoc'
         from javadoc.destinationDir
-        include entry.value.include
+        include value.include
     }
-    task "${entry.key}SourcesJar" (type: Jar, dependsOn: classes) {
-        description = "Create a source jar file for ${entry.key}. Needed for publishing to Sonatype."
+    task "${key}SourcesJar" (type: Jar, dependsOn: classes) {
+        description = "Create a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
         from sourceSets.main.allSource
-        include entry.value.include
+        include value.include
     }
 }
 
@@ -82,10 +82,10 @@ artifacts {
     }
 
     artifacts {
-        for (entry in appMap) {
-            archives "${entry.key}Jar"
-            archives "${entry.key}JavadocJar"
-            archives "${entry.key}SourcesJar"
+        appMap.each { key, value ->
+            archives "${key}Jar"
+            archives "${key}JavadocJar"
+            archives "${key}SourcesJar"
         }
     }
 }
@@ -149,9 +149,9 @@ uploadArchives {
             pom.project pomConfig
 
             // creates filters for each jar produced by appMap entries (if any)
-            for (entry in appMap) {
-                def jarName = 'bb4-' + entry.key
-                def jarPom = addFilter(entry.key + 'Jar') {artifact, file ->
+            appMap.each { key, value ->
+                def jarName = 'bb4-' + key
+                def jarPom = addFilter(key + 'Jar') {artifact, file ->
                     artifact.name == jarName
                 }
                 jarPom.artifactId = jarName
@@ -169,10 +169,10 @@ signing {
         sign javadocJar
     }
 
-    for (entry in appMap) {
-        sign "${entry.key}Jar"
-        sign "${entry.key}JavadocJar"
-        sign "${entry.key}SourcesJar"
+    appMap.each { key, value ->
+        sign "${key}Jar"
+        sign "${key}JavadocJar"
+        sign "${key}SourcesJar"
     }
 }
 
