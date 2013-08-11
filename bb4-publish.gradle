@@ -156,10 +156,9 @@ uploadArchives {
                     artifact.name == jarName
                 }
                 jarPom.artifactId = jarName
+                jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
-                jarPom.description = "bb4-$key"
-                jarPom.url = "https://github.com/barrybecker4/${jarName}"
-                jarPom.packagin = 'jar'
+
             }
         }
     }
