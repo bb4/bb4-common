@@ -163,14 +163,14 @@ uploadArchives {
                 jarPom.artifactId = jarName
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
-                addFilter('${key}Jar.asc') { artifact, file ->
+                addFilter("${key}Jar.asc") { artifact, file ->
                     println "artName = ${artifact.name}   act = " + "bb4-${key}-${version}.jar.asc"
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
-                addFilter('${key}JavadocJar.asc') { artifact, file ->
+                addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.javadoc.jar.asc"
                 }
-                addFilter('${key}SourcesJar.asc') { artifact, file ->
+                addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.sources.jar.asc"
                 }
             }
