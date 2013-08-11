@@ -163,24 +163,15 @@ uploadArchives {
                 jarPom.artifactId = jarName
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
-
-            }
-            appMap.each { String key, Map value ->
                 addFilter('${key}Jar.asc') { artifact, file ->
-                    println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.jar.asc"
+                    println "artName = ${artifact.name}   act = " + "bb4-${key}-${version}.jar.asc"
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
-            }
-            appMap.each { String key, Map value ->
-                addFilter('${key}Jar.asc') { artifact, file ->
-                    println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.javadoc.jar.asc"
-                    artifact.name == "bb4-${key}-${version}.jar.asc"
+                addFilter('${key}JavadocJar.asc') { artifact, file ->
+                    artifact.name == "bb4-${key}-${version}.javadoc.jar.asc"
                 }
-            }
-            appMap.each { String key, Map value ->
-                addFilter('${key}Jar.asc') { artifact, file ->
-                    println "artName = ${artifact.name}  act=" + "bb4-${key}-${version}.sources.jar.asc"
-                    artifact.name == "bb4-${key}-${version}.jar.asc"
+                addFilter('${key}SourcesJar.asc') { artifact, file ->
+                    artifact.name == "bb4-${key}-${version}.sources.jar.asc"
                 }
             }
         }
