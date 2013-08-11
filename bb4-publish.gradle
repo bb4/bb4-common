@@ -163,17 +163,23 @@ uploadArchives {
                 jarPom.artifactId = jarName
                 jarPom.project pomConfig
                 jarPom.name = "bb4-$key"
+
                 def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
+                ascPom.project pomConfig
                 ascPom.name = "bb4-$key"
+
                 def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
+                ascJavadocPom.project pomConfig
                 ascJavadocPom.name = "bb4-$key"
+
                 def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
+                ascSourcesPom.project pomConfig
                 ascSourcesPom.name = "bb4-$key"
             }
         }
