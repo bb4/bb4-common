@@ -90,8 +90,8 @@ uploadArchives {
                 def jarName = 'bb4-' + jarTask.name - 'Jar'
                 addFilter(jarTask.name) {artifact, file ->
                     artifact.name == jarName
-                } pomConfig
-                //jarPom.artifactId = jarName
+                }
+                jarPom.artifactId = jarName
                 //jarPom.name = jarName
                 //jarPom.description = jarName
                 //jarPom.url = "https://github.com/barrybecker4/${archivesBaseName}"
