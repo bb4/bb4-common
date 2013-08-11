@@ -84,9 +84,10 @@ uploadArchives {
                 addFilter(jarTask.name) {artifact, file ->
                     artifact.name == jarName
                 }
-                pom(jarTask.name).name = jarName
-                pom(jarTask.name).description = jarName
-                pom(jarTask.name).url = "https://github.com/barrybecker4/${archivesBaseName}"
+                pom(jarTask.name).artifactId = jarName
+                //pom(jarTask.name).name = jarName
+                //pom(jarTask.name).description = jarName
+                //pom(jarTask.name).url = "https://github.com/barrybecker4/${archivesBaseName}"
             }
         }
     }
