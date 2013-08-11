@@ -164,8 +164,8 @@ uploadArchives {
             def ascPom = addFilter('asc') {artifact, file ->
                 artifact.ext == "asc"
             }
-            ascPom.artifactId = jarName
-            ascPom.version = version
+            //ascPom.artifactId = jarName
+            //ascPom.version = version
             // ascPom.groupId = "$projectGroup"
         }
     }
