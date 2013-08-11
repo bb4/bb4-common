@@ -92,8 +92,14 @@ artifacts {
     }
 }
 
+def basicPomConfig = {
+    name "${archivesBaseName}"
+    description "${archivesBaseName}"
+    url "https://github.com/barrybecker4/${archivesBaseName}"
+}
+
 /** bb4 pom configuration for all artifacts */
-def pomConfig = {
+def jarPomConfig = {
     name "${archivesBaseName}"
     packaging 'jar'
     description 'Common bb4 java code. Library project.'
@@ -152,7 +158,7 @@ uploadArchives {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
-            pom.project pomConfig
+            pom.project jarPomConfig
 
             // creates filters for each jar produced by appMap entries (if any)
             appMap.each { String key, Map value ->
@@ -161,28 +167,28 @@ uploadArchives {
                     artifact.name == jarName
                 }
                 jarPom.artifactId = jarName
-                jarPom.project pomConfig
+                jarPom.project jarPomConfig
                 jarPom.name = jarName
 
                 def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
+                ascPom.project basicPomConfig
                 ascPom.artifactId = jarName
-                ascPom.project pomConfig
                 ascPom.name = jarName
 
                 def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
+                ascJavadocPom.project basicPomConfig
                 ascJavadocPom.artifactId = jarName
-                ascJavadocPom.project pomConfig
                 ascJavadocPom.name = jarName
 
                 def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
+                ascSourcesPom.project basicPomConfig
                 ascSourcesPom.artifactId = jarName
-                ascSourcesPom.project pomConfig
                 ascSourcesPom.name = jarName
             }
         }
