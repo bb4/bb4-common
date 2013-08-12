@@ -98,6 +98,8 @@ artifacts {
 /** release jars need to be signed when published to sonatype so the publisher can be verified. */
 signing {
     required { isReleaseVersion }
+    sign configurations.archives
+    /*
     if (appMap.size() == 0)  {
         sign jar
         sign sourcesJar
@@ -107,7 +109,7 @@ signing {
         sign tasks["${key}Jar"]
         sign tasks["${key}JavadocJar"]
         sign tasks["${key}SourcesJar"]
-    }
+    }  */
 }
 
 /** bb4 pom configuration for core jar artifacts */
@@ -179,9 +181,8 @@ uploadArchives {
                 def jarPom = addFilter("${key}Jar") { artifact, file ->
                     artifact.name == jarName
                 }
-                //jarPom.project jarPomConfig
+                jarPom.project jarPomConfig
                 jarPom.artifactId = jarName
-                //jarPom.name = jarName
             }
         }
     }
