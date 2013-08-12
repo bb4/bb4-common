@@ -89,9 +89,9 @@ artifacts {
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
         archives tasks["${key}SourcesJar"]
-        archives file('build/libs/bb4-${key}-${version}.jar.asc')
-        archives file('build/libs/bb4-${key}-${version}-javadoc.jar.asc')
-        archives file('build/libs/bb4-${key}-${version}-sources.jar.asc')
+        archives file("build/libs/bb4-${key}-${version}.jar.asc")
+        archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
+        archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
@@ -207,9 +207,9 @@ signing {
         sign tasks["${key}Jar"]
         sign tasks["${key}JavadocJar"]
         sign tasks["${key}SourcesJar"]
-        sign file('build/libs/bb4-${key}-${version}.jar.asc')
-        sign file('build/libs/bb4-${key}-${version}-javadoc.jar.asc')
-        sign file('build/libs/bb4-${key}-${version}-sources.jar.asc')
+        sign file("build/libs/bb4-${key}-${version}.jar.asc")
+        sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
+        sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
