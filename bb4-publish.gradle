@@ -57,14 +57,14 @@ appMap.each { String key, Map value ->
         }
     }
     task "${key}JavadocJar"(type: Jar, dependsOn: javadoc) {
-        description = "Create a javadoc jar file for ${key}. Needed for publishing to Sonatype."
+        description = "Creates a javadoc jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'javadoc'
         baseName = "bb4-${key}"
         from javadoc.destinationDir
         value['include'].each { pattern -> include pattern }
     }
     task "${key}SourcesJar"(type: Jar, dependsOn: classes) {
-        description = "Create a source jar file for ${key}. Needed for publishing to Sonatype."
+        description = "Creates a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
         baseName = "bb4-${key}"
         from sourceSets.main.allSource
@@ -92,6 +92,24 @@ artifacts {
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
         archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
         archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
+    }
+}
+
+/** release jars need to be signed when published to sonatype so the publisher can be verified. */
+signing {
+    required { isReleaseVersion }
+    if (appMap.size() == 0)  {
+        sign jar
+        sign sourcesJar
+        sign javadocJar
+    }
+    appMap.each { String key, Map value ->
+        sign tasks["${key}Jar"]
+        sign tasks["${key}JavadocJar"]
+        sign tasks["${key}SourcesJar"]
+        sign file("build/libs/bb4-${key}-${version}.jar.asc")
+        sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
+        sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
@@ -167,49 +185,8 @@ uploadArchives {
                 jarPom.project jarPomConfig
                 jarPom.artifactId = jarName
                 jarPom.name = jarName
-                /*
-                def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
-                    artifact.name == "bb4-${key}-${version}.jar.asc"
-                }
-                ascPom.project jarPomConfig
-                ascPom.artifactId = jarName
-                ascPom.name = 'asc-' + jarName
-
-                def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
-                    artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
-                }
-                ascJavadocPom.project jarPomConfig
-                ascJavadocPom.artifactId = jarName
-                ascJavadocPom.name = 'javadoc-' + jarName
-
-                def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
-                    artifact.name == "bb4-${key}-${version}-sources.jar.asc"
-                }
-                ascSourcesPom.project jarPomConfig
-                ascSourcesPom.artifactId = jarName
-                ascSourcesPom.name = 'sources-' + jarName
-                */
             }
         }
-    }
-}
-
-/** release jars need to be signed when published to sonatype so the publisher can be verified. */
-signing {
-    required { isReleaseVersion }
-    if (appMap.size() == 0)  {
-        sign jar
-        sign sourcesJar
-        sign javadocJar
-    }
-
-    appMap.each { String key, Map value ->
-        sign tasks["${key}Jar"]
-        sign tasks["${key}JavadocJar"]
-        sign tasks["${key}SourcesJar"]
-        sign file("build/libs/bb4-${key}-${version}.jar.asc")
-        sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
-        sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
