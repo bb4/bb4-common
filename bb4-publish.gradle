@@ -92,22 +92,13 @@ artifacts {
     }
 }
 
-/** Config for non-core artifacts like asc (signing) files. *
-def ascPomConfig = {
-    name "${archivesBaseName}"
-    groupId 'com.barrybecker4'
-    description "${archivesBaseName}"
-    url "https://github.com/barrybecker4/${archivesBaseName}"
-} */
-
 /** bb4 pom configuration for core jar artifacts */
 def jarPomConfig = {
     name "${archivesBaseName}"
     groupId 'com.barrybecker4'
     packaging 'jar'
-    description "bb4 ${archivesBaseName} java code."
+    description "${archivesBaseName} java code."
     url "https://github.com/barrybecker4/${archivesBaseName}"
-    inceptionYear '2013'
 
     // workaround to get changing snapshots to be updated.
     // Maybe not needed if --refresh-dependencies is used.
