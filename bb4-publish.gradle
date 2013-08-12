@@ -107,9 +107,9 @@ signing {
         sign tasks["${key}Jar"]
         sign tasks["${key}JavadocJar"]
         sign tasks["${key}SourcesJar"]
-        sign file("build/libs/bb4-${key}-${version}.jar.asc")
-        sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
-        sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
+        //sign file("build/libs/bb4-${key}-${version}.jar.asc")
+        //sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
+        //sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
