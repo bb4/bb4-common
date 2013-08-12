@@ -89,10 +89,9 @@ artifacts {
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
         archives tasks["${key}SourcesJar"]
-        println "build/libs/bb4-${key}-${version}-javadoc.jar.asc"
+        archives file("build/libs/bb4-${key}-${version}.jar.asc")
         archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
         archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
-        archives file("build/libs/bb4-${key}-${version}.jar.asc")
     }
 }
 
@@ -108,9 +107,9 @@ signing {
         sign tasks["${key}Jar"]
         sign tasks["${key}JavadocJar"]
         sign tasks["${key}SourcesJar"]
+        sign file("build/libs/bb4-${key}-${version}.jar.asc")
         sign file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
         sign file("build/libs/bb4-${key}-${version}-sources.jar.asc")
-        sign file("build/libs/bb4-${key}-${version}.jar.asc")
     }
 }
 
@@ -177,6 +176,7 @@ uploadArchives {
 
             pom.project jarPomConfig
 
+            /*
             // creates filters for each jar produced by appMap entries (if any)
             appMap.each { String key, Map value ->
                 def jarName = "bb4-$key"
@@ -186,7 +186,7 @@ uploadArchives {
                 jarPom.project jarPomConfig
                 jarPom.artifactId = jarName
                 jarPom.name = jarName
-            }
+            } */
         }
     }
 }
