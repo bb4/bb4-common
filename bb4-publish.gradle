@@ -180,7 +180,7 @@ uploadArchives {
                     artifact.name == jarName
                 }
                 //jarPom.project jarPomConfig
-                //jarPom.artifactId = jarName
+                jarPom.artifactId = jarName
                 //jarPom.name = jarName
             }
         }
