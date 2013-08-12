@@ -90,8 +90,8 @@ artifacts {
         archives tasks["${key}JavadocJar"]
         archives tasks["${key}SourcesJar"]
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
-        archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
-        archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
+        //archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
+        //archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
@@ -99,17 +99,6 @@ artifacts {
 signing {
     required { isReleaseVersion }
     sign configurations.archives
-    /*
-    if (appMap.size() == 0)  {
-        sign jar
-        sign sourcesJar
-        sign javadocJar
-    }
-    appMap.each { String key, Map value ->
-        sign tasks["${key}Jar"]
-        sign tasks["${key}JavadocJar"]
-        sign tasks["${key}SourcesJar"]
-    }  */
 }
 
 /** bb4 pom configuration for core jar artifacts */
