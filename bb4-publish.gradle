@@ -170,8 +170,8 @@ uploadArchives {
                 def jarPom = addFilter("${key}Jar") { artifact, file ->
                     artifact.name == jarName
                 }
-                jarPom.artifactId = jarName
                 jarPom.project jarPomConfig
+                jarPom.artifactId = jarName
                 jarPom.name = jarName
 
                 def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
