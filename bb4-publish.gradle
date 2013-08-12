@@ -92,20 +92,20 @@ artifacts {
     }
 }
 
-/** Config for non-core artifacts like asc (signing) files. */
+/** Config for non-core artifacts like asc (signing) files. *
 def ascPomConfig = {
     name "${archivesBaseName}"
     groupId 'com.barrybecker4'
     description "${archivesBaseName}"
     url "https://github.com/barrybecker4/${archivesBaseName}"
-}
+} */
 
 /** bb4 pom configuration for core jar artifacts */
 def jarPomConfig = {
     name "${archivesBaseName}"
     groupId 'com.barrybecker4'
     packaging 'jar'
-    description 'bb4 ${archivesBaseName} java code.'
+    description "bb4 ${archivesBaseName} java code."
     url "https://github.com/barrybecker4/${archivesBaseName}"
     inceptionYear '2013'
 
@@ -177,7 +177,7 @@ uploadArchives {
                 def ascPom = addFilter("${key}Jar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
-                ascPom.project ascPomConfig
+                ascPom.project jarPomConfig
                 ascPom.artifactId = jarName
                 ascPom.name = jarName
 
