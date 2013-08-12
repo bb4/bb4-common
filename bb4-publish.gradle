@@ -49,7 +49,7 @@ appMap.each { String key, Map value ->
         from sourceSets.main.output
         value['include'].each { pattern -> include pattern }
         if (value.containsKey('exclude'))
-            value['exclude'].each { pattern -> include pattern }
+            value['exclude'].each { pattern -> exclude pattern }
         manifest {
             attributes 'Implementation-Title': '$key code',
                 'Implementation-Version': version,
@@ -70,7 +70,7 @@ appMap.each { String key, Map value ->
         from sourceSets.main.allSource
         value['include'].each { pattern -> include pattern }
         if (value.containsKey('exclude'))
-            value['exclude'].each { pattern -> include pattern }
+            value['exclude'].each { pattern -> exclude pattern }
     }
 }
 
@@ -90,8 +90,6 @@ artifacts {
         archives tasks["${key}JavadocJar"]
         archives tasks["${key}SourcesJar"]
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
-        //archives file("build/libs/bb4-${key}-${version}-javadoc.jar.asc")
-        //archives file("build/libs/bb4-${key}-${version}-sources.jar.asc")
     }
 }
 
