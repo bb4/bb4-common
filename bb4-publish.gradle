@@ -105,7 +105,7 @@ def jarPomConfig = {
     name "${archivesBaseName}"
     groupId 'com.barrybecker4'
     packaging 'jar'
-    description 'Common bb4 java code. Library project.'
+    description 'bb4 ${archivesBaseName} java code.'
     url "https://github.com/barrybecker4/${archivesBaseName}"
     inceptionYear '2013'
 
@@ -179,18 +179,21 @@ uploadArchives {
                 }
                 ascPom.project ascPomConfig
                 ascPom.artifactId = jarName
+                ascPom.name = jarName
 
                 def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
-                ascJavadocPom.project ascPomConfig
+                ascJavadocPom.project jarPomConfig
                 ascJavadocPom.artifactId = jarName
+                ascJavadocPom.name = jarName
 
                 def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
-                ascSourcesPom.project ascPomConfig
+                ascSourcesPom.project jarPomConfig
                 ascSourcesPom.artifactId = jarName
+                ascSourcesPom.name = jarName
             }
         }
     }
