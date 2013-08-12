@@ -178,22 +178,22 @@ uploadArchives {
                     artifact.name == "bb4-${key}-${version}.jar.asc"
                 }
                 ascPom.project jarPomConfig
-                ascPom.artifactId = 'asc-' + jarName
-                ascPom.name = jarName
+                ascPom.artifactId = jarName
+                ascPom.name = 'asc-' + jarName
 
                 def ascJavadocPom = addFilter("${key}JavadocJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-javadoc.jar.asc"
                 }
                 ascJavadocPom.project jarPomConfig
-                ascJavadocPom.artifactId = 'javadoc-' + jarName
-                ascJavadocPom.name = jarName
+                ascJavadocPom.artifactId = jarName
+                ascJavadocPom.name = 'javadoc-' + jarName
 
                 def ascSourcesPom = addFilter("${key}SourcesJar.asc") { artifact, file ->
                     artifact.name == "bb4-${key}-${version}-sources.jar.asc"
                 }
                 ascSourcesPom.project jarPomConfig
-                ascSourcesPom.artifactId = 'sources-' + jarName
-                ascSourcesPom.name = jarName
+                ascSourcesPom.artifactId = jarName
+                ascSourcesPom.name = 'sources-' + jarName
             }
         }
     }
