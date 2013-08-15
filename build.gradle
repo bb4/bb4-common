@@ -5,7 +5,7 @@ defaultTasks 'build'
 
 description = 'Common bb4 java code. Library project.'
 group = 'com.barrybecker4'
-version = '1.1.2'
+version = '1.2-SNAPSHOT'
 apply from: 'bb4.gradle' // 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
 
 project.archivesBaseName = 'bb4-common'
