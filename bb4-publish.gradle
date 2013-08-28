@@ -20,6 +20,11 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+// remove this
+task showProject() {
+    println  "project.name = ${project.name}"
+}
+
 javadoc.doLast {
     description = 'Copy images from source to javadoc in case they are referenced by documentation'
     copy {
@@ -101,11 +106,11 @@ signing {
 
 /** bb4 pom configuration for core jar artifacts */
 def jarPomConfig = {
-    name "${archivesBaseName}"
+    name "${project.name}"
     groupId 'com.barrybecker4'
     packaging 'jar'
-    description "${archivesBaseName} java code."
-    url "https://github.com/barrybecker4/${archivesBaseName}"
+    description "${project.name} java code."
+    url "https://github.com/barrybecker4/${project.name}"
 
     // workaround to get changing snapshots to be updated.
     // Maybe not needed if --refresh-dependencies is used.
@@ -114,9 +119,9 @@ def jarPomConfig = {
     }
 
     scm {
-        url "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-        connection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
-        developerConnection "scm:git@github.com:barrybecker4/${archivesBaseName}.git"
+        url "scm:git@github.com:barrybecker4/${project.name}.git"
+        connection "scm:git@github.com:barrybecker4/${project.name}.git"
+        developerConnection "scm:git@github.com:barrybecker4/${project.name}.git"
     }
 
     licenses {
