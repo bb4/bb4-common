@@ -11,7 +11,7 @@ apply from: 'bb4.gradle' // 'https://raw.github.com/barrybecker4/bb4-common/mast
 project.archivesBaseName = 'bb4-common'
 
 dependencies {
-    compile 'commons-codec:commons-codec:1.7'
+    compile 'commons-codec:commons-codec:1.8'
 }
 
 jar {
