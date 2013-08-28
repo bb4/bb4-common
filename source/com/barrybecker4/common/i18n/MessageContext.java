@@ -25,7 +25,7 @@ public final class MessageContext {
     /** logger object. Use console by default. */
     private ILog logger_;
 
-    /** now the variable forms of the above defaults */
+    /** debug level */
     private int debug_ = 0;
 
     /** the list of paths the define where to get the messageBundles */
@@ -79,9 +79,9 @@ public final class MessageContext {
 
     private void log(int logLevel, String message) {
         if (logger_ == null) {
-            throw new RuntimeException("You need to set a logger on the MessageContext before you can call log.");
+            throw new RuntimeException("Set a logger on the MessageContext before calling log.");
         }
-       logger_.print(logLevel, debug_, message);
+        logger_.print(logLevel, debug_, message);
     }
 
     /**
@@ -158,7 +158,9 @@ public final class MessageContext {
 
         for (String path :  resourcePaths_) {
             ResourceBundle bundle = ResourceBundle.getBundle(path, locale.getLocale());
-            assert (bundle != null) : "Messages bundle for "+ path + " was not found.";
+            if (bundle == null) {
+                throw new IllegalArgumentException("Messages bundle for "+ path + " was not found.");
+            }
             messagesBundles_.add(bundle);
         }
 
