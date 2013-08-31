@@ -12,6 +12,10 @@ public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
 
     @Override
     public double interpolate(double value) {
+
+        if (value < 0 || value > 1.0)
+            throw new IllegalArgumentException("value out of range [0, 1] :" + value);
+
         int len = function.length - 1;
         double x = value * (double) len;
         int index0 = (int) x;
@@ -19,12 +23,13 @@ public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
         double xdiff = x - index0;
         //System.out.println("cub:  x=" + x + " xdiff="+ xdiff  + " index0="+ index0 + " index1=" + index1);
 
-        // we need to come up with the 4 points to use for interpolation
+        // Produce the 4 points to use for interpolation
         double y1 = function[ index0 ];
         double y0 = y1;
         double y2 = y1;
-        if (len > 0)
+        if (len > 0) {
             y2 = function[ index1 ];
+        }
         double y3 = y2;
         if (index0 > 0) {
             y0 = function[index0-1];

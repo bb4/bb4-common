@@ -2,15 +2,20 @@
 package com.barrybecker4.common.util;
 
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test LRUCache behavior.
  * @author Barry Becker
  */
-public class LRUCacheTest extends TestCase {
+public class LRUCacheTest {
 
     private static final String ONE = "one";
     private static final String TWO = "two";
@@ -20,9 +25,8 @@ public class LRUCacheTest extends TestCase {
 
     private LRUCache<String,String> lruCache;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         lruCache = new LRUCache<String,String>(3);
 
         lruCache.put ("1", ONE);             // 1
@@ -30,7 +34,7 @@ public class LRUCacheTest extends TestCase {
         lruCache.put ("3", THREE);          // 3 2 1
     }
 
-
+    @Test
     public void testNumEntries() {
 
         assertEquals("Unexpected number of entries. ", 3, lruCache.numEntries());
@@ -40,6 +44,7 @@ public class LRUCacheTest extends TestCase {
         assertEquals("Unexpected number of entries. ", 3, lruCache.numEntries());
     }
 
+    @Test
     public void testEntryReplaced() {
         // there are only 3 entries, so 1 gets bumped out.
         lruCache.put ("4", FOUR);                           // 4 3 2

@@ -3,13 +3,13 @@ package com.barrybecker4.common.interpolation;
 
 import com.barrybecker4.common.math.interplolation.Interpolator;
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  *
  * @author Barry Becker
  */
-public abstract class InterpolatorTstBase extends TestCase {
+public abstract class InterpolatorTstBase {
 
     private static final double EPS = 0.00000000000001;
 
@@ -19,7 +19,7 @@ public abstract class InterpolatorTstBase extends TestCase {
 
     protected abstract Interpolator createInterpolator(double[] func);
 
-    /**  */
+    @Test
     public void testSimpleInterpolation0_1() {
         double[] func = {0, 1, 2};
         interpolator = createInterpolator(func);
@@ -34,7 +34,7 @@ public abstract class InterpolatorTstBase extends TestCase {
     protected abstract double getExpectedSimpleInterpolation0_1();
     protected abstract double getExpectedSimpleInterpolation0_9();
 
-
+    @Test
     public void testTypicalInterpolate() {
         double[] func = {1, 2, 3, 4};
         interpolator = createInterpolator(func);
@@ -53,7 +53,7 @@ public abstract class InterpolatorTstBase extends TestCase {
     protected abstract double getExpectedTypicalInterpolation0_9();
 
 
-
+    @Test
     public void testInterpolateOnePoint() {
         double[] func = {1};
         interpolator = createInterpolator(func);
@@ -64,7 +64,7 @@ public abstract class InterpolatorTstBase extends TestCase {
 
     protected abstract double getExpectedOnePointInterpolation();
 
-
+    @Test
     public void testInterpolate2Points() {
         double[] func = {0, 1};
         interpolator = createInterpolator(func);
@@ -75,49 +75,24 @@ public abstract class InterpolatorTstBase extends TestCase {
 
     protected abstract double getExpectedInterpolation2Points0_1(); // 0.1
 
+    @Test(expected = IllegalArgumentException.class)
     public void testInterpolateOutOfRangeClosePositive() {
         double[] func = {1, 2};
         interpolator = createInterpolator(func);
-
-        try {
-            interpolator.interpolate(1.1);
-            Assert.fail("Did not expect to get here");
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            // Success
-        }
-        catch (AssertionError e)  {
-            // Success  (this way if assertions are enabled).
-        }
+        interpolator.interpolate(1.1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
     public void testInterpolateOutOfRangeFar() {
         double[] func = {1, 2};
         interpolator = createInterpolator(func);
-        try {
-            interpolator.interpolate(2.1);
-            Assert.fail();
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            // Success
-        }
-        catch (AssertionError e)  {
-            // Success  (this way if assertions are enabled).
-        }
+        interpolator.interpolate(2.1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
     public void testInterpolateOutOfRangeNegative() {
         double[] func = {1, 2};
         interpolator = createInterpolator(func);
-        try {
-            interpolator.interpolate(-1.1);
-            Assert.fail();
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            // Success
-        }
-        catch (AssertionError e)  {
-            // Success  (this way if assertions are enabled).
-        }
+        interpolator.interpolate(-1.1);
     }
 }

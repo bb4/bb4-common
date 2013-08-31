@@ -9,7 +9,6 @@ import com.barrybecker4.common.math.interplolation.Interpolator;
  */
 public class CubicInterpolatorTest extends InterpolatorTstBase {
 
-
     @Override
     protected Interpolator createInterpolator(double[] func) {
           return new CubicInterpolator(func);

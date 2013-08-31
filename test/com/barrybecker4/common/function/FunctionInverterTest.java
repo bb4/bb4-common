@@ -4,19 +4,22 @@ package com.barrybecker4.common.function;
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.common.math.Range;
 import com.barrybecker4.common.math.function.FunctionInverter;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Barry Becker
  */
-public class FunctionInverterTest extends TestCase {
+public class FunctionInverterTest {
 
     /** instance under test. */
     private FunctionInverter inverter;
 
-
+    @Test
     public void testInvertTrivialFunction() {
 
         double[] func = new double[] {0, 1.0};
@@ -27,6 +30,7 @@ public class FunctionInverterTest extends TestCase {
         assertFunctionsEqual(new double[] {0.0, 1.0}, inverse);
     }
 
+    @Test
     public void testInvertSimple3Function() {
 
         double[] func = new double[] {0, 0.1, 1.0};
@@ -37,6 +41,7 @@ public class FunctionInverterTest extends TestCase {
         assertFunctionsEqual(new double[] {0.0, 0.72222, 1.0}, inverse);
     }
 
+    @Test
     public void testInvertSimple6Function() {
 
         double[] func = new double[] {0, 0.1, 0.1, 0.3,  0.7, 1.0};
@@ -49,6 +54,7 @@ public class FunctionInverterTest extends TestCase {
                 inverse);
     }
 
+    @Test
     public void testInvertSimple10Function() {
 
         double[] func = new double[] {0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.1, 0.2, 0.3, 1.0};
@@ -61,6 +67,7 @@ public class FunctionInverterTest extends TestCase {
             inverse);
     }
 
+    @Test
     public void testLinearFunction() {
 
         double[] func = new double[] {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
@@ -76,16 +83,12 @@ public class FunctionInverterTest extends TestCase {
     /**
      * We should get an exception if not monotonic. Negative test.
      */
+    @Test(expected = IllegalStateException.class)
     public void testMonotonic() {
         double[] func = new double[] {0, 0.9, 0.1, 1.0};
         inverter = new FunctionInverter(func);
-        try {
-            inverter.createInverseFunction(new Range(0, 1.0));
-            fail("did not expect to get here");
-        }
-        catch (IllegalStateException e) {
-            // success
-        }
+
+        inverter.createInverseFunction(new Range(0, 1.0));
     }
 
     /**

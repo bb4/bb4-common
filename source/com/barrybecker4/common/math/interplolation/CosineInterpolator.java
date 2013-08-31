@@ -19,7 +19,8 @@ public class CosineInterpolator extends AbstractSmoothInterpolator {
     @Override
     public double interpolate(double value) {
 
-        assert(value >= 0 && value <= 1.0) : "value out of range [0, 1] :" + value;
+        if (value < 0 || value > 1.0)
+            throw new IllegalArgumentException("value out of range [0, 1] :" + value);
         int len =  function.length - 1;
         double x = value * (double) len;
 

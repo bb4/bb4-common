@@ -3,27 +3,28 @@ package com.barrybecker4.common.function;
 
 import com.barrybecker4.common.math.function.InvertibleFunction;
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- *
+ * Base test class for function classes.
  * @author Barry Becker
  */
-public abstract class FunctionTstBase extends TestCase {
+public abstract class FunctionTstBase {
 
     private static final double EPS = 0.00000000000001;
 
     /** function class under test. */
     protected InvertibleFunction function;
 
-    @Override
+    @Before
     public void setUp() {
         function = createFunction();
     }
 
     protected abstract InvertibleFunction createFunction();
 
-
+    @Test
     public void testGetFunctionValue() {
 
         double y = function.getValue(0.1);
@@ -36,7 +37,7 @@ public abstract class FunctionTstBase extends TestCase {
     protected abstract double getExpectedValue0_1();
     protected abstract double getExpectedValue0_9();
 
-
+    @Test
     public void testGetInverseFunctionValue() {
 
         double y = function.getInverseValue(0.1);
@@ -51,6 +52,7 @@ public abstract class FunctionTstBase extends TestCase {
 
 
     /*
+    @Test
     public void testGetDomain() {
 
         Range range = function.getDomain();
@@ -58,6 +60,7 @@ public abstract class FunctionTstBase extends TestCase {
         Assert.assertTrue("Unexpected min for domain", expRange.equals(range));
     }
 
+    @Test
     protected abstract Range getExpectedDomain();
     */
 }

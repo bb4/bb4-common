@@ -2,18 +2,21 @@
 package com.barrybecker4.common.math.cutpoints;
 
 import com.barrybecker4.common.math.Range;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Arrays;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Barry Becker
  */
-public class LooseCutPointFinderTest extends TestCase {
+public class LooseCutPointFinderTest {
 
     /** instance under test */
     private LooseCutPointFinder finder = new LooseCutPointFinder();
 
+    @Test
     public void testFindCutPoints() {
         double[] cuts = finder.getCutPoints(new Range(10.0, 22.0), 5);
 

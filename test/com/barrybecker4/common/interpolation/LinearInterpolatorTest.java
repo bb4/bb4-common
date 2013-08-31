@@ -9,7 +9,6 @@ import com.barrybecker4.common.math.interplolation.LinearInterpolator;
  */
 public class LinearInterpolatorTest extends InterpolatorTstBase {
 
-
     @Override
     protected Interpolator createInterpolator(double[] func) {
           return new LinearInterpolator(func);
@@ -24,7 +23,6 @@ public class LinearInterpolatorTest extends InterpolatorTstBase {
     protected  double getExpectedSimpleInterpolation0_9() {
         return 1.8;
     }
-
 
     @Override
     protected double getExpectedTypicalInterpolation0_1() {
@@ -46,12 +44,10 @@ public class LinearInterpolatorTest extends InterpolatorTstBase {
         return 3.7;
     }
 
-
     @Override
     protected double getExpectedOnePointInterpolation() {
         return 1.0;
     }
-
 
     @Override
     protected double getExpectedInterpolation2Points0_1() {

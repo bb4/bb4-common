@@ -2,16 +2,19 @@
 package com.barrybecker4.common.util;
 
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test LRUCache behavior.
  * @author Barry Becker
  */
-public class LinkedHashMapTest extends TestCase {
+public class LinkedHashMapTest {
 
     private static final String ONE = "one";
     private static final String TWO = "two";
@@ -21,9 +24,8 @@ public class LinkedHashMapTest extends TestCase {
 
     private LinkedHashMap<String,String> map;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         map = new LinkedHashMap<String,String>(3);
 
         map.put("2", TWO);
@@ -31,6 +33,7 @@ public class LinkedHashMapTest extends TestCase {
         map.put("3", THREE);
     }
 
+    @Test
     public void testNumEntries() {
 
         assertEquals("Unexpected number of entries. ", 3, map.size());
@@ -40,6 +43,7 @@ public class LinkedHashMapTest extends TestCase {
     }
 
 
+    @Test
     public void testKeyOrder() {
 
         Iterator<String> keys = map.keySet().iterator();
@@ -49,6 +53,7 @@ public class LinkedHashMapTest extends TestCase {
         assertEquals("3", keys.next());
     }
 
+    @Test
     public void testKeyOrderAfterModify() {
 
         map.remove("1");
@@ -62,6 +67,4 @@ public class LinkedHashMapTest extends TestCase {
         assertEquals("5", keys.next());
         assertEquals("1", keys.next());
     }
-
-
 }

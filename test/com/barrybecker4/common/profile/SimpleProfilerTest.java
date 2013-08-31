@@ -3,21 +3,26 @@ package com.barrybecker4.common.profile;
 
 import com.barrybecker4.common.app.ILog;
 import com.barrybecker4.common.concurrency.ThreadUtil;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Barry Becker
  */
-public class SimpleProfilerTest extends TestCase {
+public class SimpleProfilerTest  {
 
     /** instance under test */
     SimpleProfiler profiler;
 
-    @Override
+    @Before
     public void setUp() {
         profiler = new SimpleProfiler();
     }
 
+    @Test
     public void testProfilerTime() {
 
         profiler.start();
@@ -32,6 +37,7 @@ public class SimpleProfilerTest extends TestCase {
         assertTrue("Unexpected elapsed time: " + elapsed, elapsed>=0 );
     }
 
+    @Test
     public void testProfilerTimeWhenDisabled() {
 
         profiler.setEnabled(false);
@@ -43,6 +49,7 @@ public class SimpleProfilerTest extends TestCase {
         assertEquals("Unexpected elapsed time", 0, entry.getTime());
     }
 
+    @Test
     public void testProfilerLogging() {
 
         profiler.start();

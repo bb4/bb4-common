@@ -1,16 +1,19 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.math;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import javax.vecmath.Point2d;
-//import static junit.framework.assertEquals;
+
+import static org.junit.Assert.assertEquals;
+
 
 /**
- * @author Barry Becker Date: Apr 2, 2006
+ * @author Barry Becker
  */
-public class MathUtilTest extends TestCase {
+public class MathUtilTest {
 
+    @Test
     public void testPositiveGCD() {
         long result;
 
@@ -27,6 +30,7 @@ public class MathUtilTest extends TestCase {
         assertEquals(result, 20l);
     }
 
+    @Test
     public void testNegativeGCD() {
         long result;
 
@@ -40,6 +44,7 @@ public class MathUtilTest extends TestCase {
         assertEquals(result, 1L);
     }
 
+    @Test
     public void testIntNeg() {
         assertEquals("1) ", 2, (int)2.1);
         assertEquals("2) ", 0, (int)(-0.1));
@@ -47,48 +52,58 @@ public class MathUtilTest extends TestCase {
         assertEquals("4) ", -2, (int)(-2.9));
     }
 
+    @Test
     public void testFactorial() {
         assertEquals("Unexpected value for 4!", 24L, MathUtil.factorial(4));
     }
 
+    @Test
     public void testFactorialRatio4d3() {
         assertEquals("Unexpected value for 4!/3!)", 4L, MathUtil.permutation(4, 3));
     }
 
+    @Test
     public void testFactorialRatio7d4() {
         assertEquals("Unexpected value for 7!/4!)", 210L, MathUtil.permutation(7, 4));
     }
 
+    @Test
     public void testBigFactorialRatio7d4() {
         assertEquals("Unexpected value for 7!/4!)",
                 "210", MathUtil.bigPermutation(7, 4).toString());
     }
 
+    @Test
     public void testBigFactorialRatio9d4() {
         assertEquals("Unexpected value for 9!/4!)",
                 "15120", MathUtil.bigPermutation(9, 4).toString());
     }
 
+    @Test
     public void testBigFactorialRatio40d20() {
         assertEquals("Unexpected value for 40!/20!)",
                 "335367096786357081410764800000",
                 MathUtil.bigPermutation(40, 20).toString());
     }
 
+    @Test
     public void testBigFactorialRatio70d20() {
         assertEquals("Unexpected value for 70!/20!)",
                 "4923573423718507525892570413923319470803578288313732111773416409792512000000000000",
                 MathUtil.bigPermutation(70, 20).toString());
     }
 
+    @Test
     public void testCombination4_3() {
         assertEquals("Unexpected value for C(4, 3)", "4", MathUtil.combination(4, 3).toString());
     }
 
+    @Test
     public void testCombination40_30() {
         assertEquals("Unexpected value for C(40, 30)", "847660528", MathUtil.combination(40, 30).toString());
     }
 
+    @Test
     public void testFindAngle() {
 
         Point2d point = new Point2d(1.0, 1.0);
@@ -97,12 +112,12 @@ public class MathUtilTest extends TestCase {
             System.out.println("angle to " + toPoint +" is " + MathUtil.getDirectionTo(point, toPoint));
         }
         assertEquals("Unexpected angle.",
-                Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 2.0)));
+                Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 2.0)), 0);
         assertEquals("Unexpected angle.",
-                3.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 2.0)));
+                3.0*Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(0.0, 2.0)), 0);
         assertEquals("Unexpected angle.",
-                5.0*Math.PI/4.0 - 2.0*Math.PI, MathUtil.getDirectionTo(point, new Point2d(0.0, 0.0)));
+                5.0*Math.PI/4.0 - 2.0*Math.PI, MathUtil.getDirectionTo(point, new Point2d(0.0, 0.0)), 0);
         assertEquals("Unexpected angle.",
-                -Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 0.0)));
+                -Math.PI/4.0, MathUtil.getDirectionTo(point, new Point2d(2.0, 0.0)), 0);
     }
 }

@@ -9,7 +9,6 @@ import com.barrybecker4.common.math.interplolation.StepInterpolator;
  */
 public class StepInterpolatorTest extends InterpolatorTstBase {
 
-
     @Override
     protected Interpolator createInterpolator(double[] func) {
           return new StepInterpolator(func);
@@ -24,7 +23,6 @@ public class StepInterpolatorTest extends InterpolatorTstBase {
     protected  double getExpectedSimpleInterpolation0_9() {
         return 2.0;
     }
-
 
     @Override
     protected double getExpectedTypicalInterpolation0_1() {
@@ -45,7 +43,6 @@ public class StepInterpolatorTest extends InterpolatorTstBase {
     protected double getExpectedTypicalInterpolation0_9() {
         return 4.0;
     }
-
 
     @Override
     protected double getExpectedOnePointInterpolation() {

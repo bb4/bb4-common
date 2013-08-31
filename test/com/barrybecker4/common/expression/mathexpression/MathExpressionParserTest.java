@@ -3,13 +3,16 @@ package com.barrybecker4.common.expression.mathexpression;
 
 import com.barrybecker4.common.expression.OperatorsDefinition;
 import com.barrybecker4.common.expression.TreeNode;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Ported from flex project.
  * @author Barry Becker
  */
-public class MathExpressionParserTest extends TestCase {
+public class MathExpressionParserTest {
 
     /** instance under test */
     private MathExpressionParser parser;
@@ -21,88 +24,105 @@ public class MathExpressionParserTest extends TestCase {
     /**
      * common initialization for all go test cases.
      */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
+    @Before
+    public void setUp() throws Exception {
         OperatorsDefinition opDef = new MathOperatorsDefinition();
         parser = new MathExpressionParser(opDef);
         serializer = new TreeSerializer();
     }
 
+    @Test
     public void testXOnlyExp() {
         verifyParse("x");
     }
 
+    @Test
     public void testNegXExp() {
         verifyParse("x");
     }
 
+    @Test
     public void testConstantIntOnlyExp() {
         verifyParse("5", "5.0");
     }
 
+    @Test
     public void testNegativeConstantIntExp() {
         verifyParse("-5", "-5.0");
     }
 
+    @Test
     public void testNegativeConstantDecimalExp() {
         verifyParse("-5.3");
     }
 
+    @Test
     public void testScaledXExp() {
         verifyParse("2.3x", "2.3 * x");
     }
 
+    @Test
     public void testScaledXExpWithSpaces() {
         verifyParse("2.3x", "2.3 * x");
     }
 
+    @Test
     public void testXsquaredExp() {
         verifyParse("x*x", "x * x");
     }
 
+    @Test
     public void testXtimesNegXExp() {
         verifyParse("x*-x", "x * -1 * x");
     }
 
+    @Test
     public void testXRaisedToXMinus3XExp() {
         verifyParse("x^x-3x", "x ^ x - 3.0 * x");
     }
 
+    @Test
     public void testXRaisedToNegXMinus3XExp() {
         verifyParse("x^-x-3x", "x ^ -1 * x - 3.0 * x");
     }
 
+    @Test
     public void testXXXExp() {
         verifyParse("x*x *  x", "x * x * x");
     }
 
+    @Test
     public void testXCubedMinusXCubedExp() {
         verifyParse("x^3 - x^3", "x ^ 3.0 - x ^ 3.0");
     }
 
+    @Test
     public void testParenExpMinus3() {
         verifyParse("(2x + 1) - 3", "(2.0 * x + 1.0) - 3.0");
     }
 
+    @Test
     public void test3MinusParenExp() {
         verifyParse("3 - (2x + 1)", "3.0 - (2.0 * x + 1.0)");
     }
 
+    @Test
     public void testXMinus2() {
         verifyParse("x - 2", "x - 2.0");
     }
 
+    @Test
     public void test2MinusX() {
         verifyParse("2 - x", "2.0 - x");
     }
 
+    @Test
     public void test5X() {
         verifyParse("5x", "5.0 * x");
     }
 
 
+    @Test
     public void testComplexNestedExp() {
         verifyParse("(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))",
                 "(1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)))) * (1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0))))");

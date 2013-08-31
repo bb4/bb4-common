@@ -1,102 +1,109 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.math;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
  * @author Barry Becker
  */
-public class VectorTest extends TestCase {
+public class VectorTest {
+
+    private static final double TOL = 0;
 
     /** instance under test */
     private Vector vector;
 
     /** must be at least one dim */
+    @Test(expected = IllegalArgumentException.class)
     public void testCreateLength0Vector() {
-
-        try {
             new Vector(0);
-            fail();
-        } catch (IllegalArgumentException e) {
-            // success
-        }
     }
 
+    @Test
     public void testCreateLength1Vector() {
 
         vector = new Vector(1);
         vector.set(0, 1.23);
 
-        assertEquals("Unexpected value.", 1.23, vector.get(0));
+        assertEquals("Unexpected value.", 1.23, vector.get(0), TOL);
     }
 
+    @Test
     public void testCreateLength2Vector() {
 
         vector = new Vector(2);
         vector.set(0, 1.23);
         vector.set(1, 2.34);
 
-        assertEquals("Unexpected value at 0.", 1.23, vector.get(0));
-        assertEquals("Unexpected value at 1.", 2.34, vector.get(1));
+        assertEquals("Unexpected value at 0.", 1.23, vector.get(0), TOL);
+        assertEquals("Unexpected value at 1.", 2.34, vector.get(1), TOL);
     }
 
+    @Test
     public void testCreateLength2VectorWithData() {
         vector = new Vector(new double[] {1.23, 2.34});
 
-        assertEquals("Unexpected value at 0.", 1.23, vector.get(0));
-        assertEquals("Unexpected value at 1.", 2.34, vector.get(1));
+        assertEquals("Unexpected value at 0.", 1.23, vector.get(0), TOL);
+        assertEquals("Unexpected value at 1.", 2.34, vector.get(1), TOL);
     }
 
-
+    @Test
     public void testDistanceTo() {
 
         vector = new Vector(new double[] {1.0, 2.0});
         Vector vector2 = new Vector(new double[] {3.0, 4.0});
 
         assertEquals("Unexpected distance to itself.",
-                0.0, vector.distanceTo(vector));
+                0.0, vector.distanceTo(vector), TOL);
         assertEquals("Unexpected distance to vector2.",
-                2.8284271247461903, vector.distanceTo(vector2));
+                2.8284271247461903, vector.distanceTo(vector2), TOL);
     }
 
+    @Test
     public void testMagnitude() {
 
         vector = new Vector(new double[] {3.0, 4.0});
         assertEquals("Unexpected magnitude.",
-                5.0, vector.magnitude());
+                5.0, vector.magnitude(), TOL);
     }
 
+    @Test
     public void testDotProduct() {
 
         vector = new Vector(new double[] {3.0, 4.0});
         Vector vector2 = new Vector(new double[] {5.0, 12.0});
         assertEquals("Unexpected dot product.",
-                63.0, vector.dot(vector2));
+                63.0, vector.dot(vector2), TOL);
     }
 
+    @Test
     public void testNormalizedDotProduct() {
 
         vector = new Vector(new double[] {3.0, 4.0});
         Vector vector2 = new Vector(new double[] {5.0, 12.0});
         assertEquals("Unexpected normalizedDot product.",
-                0.9692307692307692, vector.normalizedDot(vector2));
+                0.9692307692307692, vector.normalizedDot(vector2), TOL);
     }
 
+    @Test
     public void testNormalizedDotProductWhenParallel() {
 
         vector = new Vector(new double[] {3.0, 4.0});
         Vector vector2 = new Vector(new double[] {3.0, 4.0});
         assertEquals("Unexpected normalizedDot product.",
-                1.0, vector.normalizedDot(vector2));
+                1.0, vector.normalizedDot(vector2), TOL);
     }
 
+    @Test
     public void testNormalizedDotProductWhenSmall() {
 
         vector = new Vector(new double[] {0.0000003, 0.0000004});
         Vector vector2 = new Vector(new double[] {0.0000005, 0.0000012});
         assertEquals("Unexpected normalizedDot product.",
-                0.9692307692307692, vector.normalizedDot(vector2));
+                0.9692307692307692, vector.normalizedDot(vector2), TOL);
     }
 
 
@@ -111,6 +118,7 @@ public class VectorTest extends TestCase {
 
 
     /** This case failed from hill climbing one time */
+    @Test
     public void testNormalizedDotProductWhenAlmostSameNegative() {
 
         vector = new Vector(new double[] {-0.4409008100751817, -0.4500071951369762});
@@ -127,6 +135,7 @@ public class VectorTest extends TestCase {
     //magThis=2.339145900000001 magB=1.799343000000001
 
     /** This case failed from hill climbing one time */
+    @Test
     public void testNormalizedDotProductWhenAlmostSame2() {
 
         vector = new Vector(new double[] {-1.6370338447524475, -1.6708452150399316});

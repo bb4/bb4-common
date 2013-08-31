@@ -1,19 +1,22 @@
 package com.barrybecker4.common.i18n;
 
 import com.barrybecker4.common.app.ILog;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.MissingResourceException;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Barry Becker
  */
-public class MessageContextTest extends TestCase {
+public class MessageContextTest {
 
     /** instance under test */
     private MessageContext context;
 
+    @Test
     public void testConstructionWithValidPath() {
         context = new MessageContext("com.barrybecker4.common.i18n.message");
 
@@ -21,26 +24,17 @@ public class MessageContextTest extends TestCase {
                 "bar", context.getLabel("FOO"));
     }
 
+    @Test(expected = MissingResourceException.class)
     public void testGetLabelWhenLabelMissing() {
         context = new MessageContext("com.barrybecker4.common.i18n.message");
         context.setLogger(new MyLogger());
-        try {
-            context.getLabel("INVALID");
-            fail();
-        } catch(MissingResourceException e) {
-            // success
-        }
+        context.getLabel("INVALID");
     }
 
+    @Test(expected = MissingResourceException.class)
     public void testConstructionWithInvalidPath() {
         context = new MessageContext("com.barrybecker4.common.invalid.message");
-
-        try {
-            context.getLabel("FOO");
-            fail();
-        } catch(MissingResourceException e) {
-            // success
-        }
+        context.getLabel("FOO");
     }
 
     private class MyLogger implements ILog {

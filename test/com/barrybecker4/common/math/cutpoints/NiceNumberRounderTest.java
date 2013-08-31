@@ -1,15 +1,19 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.math.cutpoints;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Barry Becker
  */
-public class NiceNumberRounderTest extends TestCase {
+public class NiceNumberRounderTest {
 
 
-    private static double BASE_VALUE = 101.34;
+    private static final double BASE_VALUE = 101.34;
+
+    private static final double TOLERANCE = 0.0;
 
     private static double[] EXPECTED_ROUNDED_VALUES = {
         100.0, 100.0, 200.0, 200.0, 200.0, 200.0, 200.0,
@@ -25,58 +29,64 @@ public class NiceNumberRounderTest extends TestCase {
         2000.0, 2000.0, 2000.0, 2000.0,
     };
 
+    @Test
     public void testRoundNumberSmall() {
-        assertEquals("Unexpected ", 0.001, Rounder.round(0.001234567, true));
+        assertEquals("Unexpected ", 0.001, Rounder.round(0.001234567, true), TOLERANCE);
     }
 
+    @Test
     public void testRoundNumberMediumUpper() {
-        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, true));
+        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, true), TOLERANCE);
     }
 
+    @Test
     public void testRoundNumberMediumLower() {
-        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, true));
+        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, true), TOLERANCE);
     }
 
+    @Test
     public void testRoundNumberLargeUpper() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true));
+        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
     }
 
+    @Test
     public void testRoundNumberLargeLower() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true));
+        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
     }
 
+    @Test
     public void testRoundNumber() {
         int index = 0;
         for (double inc = 0; inc < 1000; inc += 30.0) {
             double value = BASE_VALUE + inc;
             //System.out.print(Rounder.round(value, true) +", ");
             assertEquals("Unexpected rounded value for " + value,
-                    EXPECTED_ROUNDED_VALUES[index], Rounder.round(value, true));
+                    EXPECTED_ROUNDED_VALUES[index], Rounder.round(value, true), TOLERANCE);
             index++;
         }
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true));
+        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
     }
 
 
 
     public void testCielNumberSmall() {
-        assertEquals("Unexpected ", 0.002, Rounder.round(0.001234567, false));
+        assertEquals("Unexpected ", 0.002, Rounder.round(0.001234567, false), TOLERANCE);
     }
 
     public void testCielNumberMediumUpper() {
-        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, false));
+        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, false), TOLERANCE);
     }
 
     public void testCielNumberMediumLower() {
-        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, false));
+        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, false), TOLERANCE);
     }
 
     public void testCielNumberLargeUpper() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, false));
+        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, false), TOLERANCE);
     }
 
     public void testCielNumberLargeLower() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(102034506708.90123, false));
+        assertEquals("Unexpected ", 200000000000.0, Rounder.round(102034506708.90123, false), TOLERANCE);
     }
 
     public void testCieledNumber() {
@@ -85,7 +95,7 @@ public class NiceNumberRounderTest extends TestCase {
             double value = BASE_VALUE + inc;
             //System.out.print(Rounder.round(value, false) +", ");
             assertEquals("Unexpected rounded value for " + value,
-                    EXPECTED_CEILED_VALUES[index], Rounder.round(value, false));
+                    EXPECTED_CEILED_VALUES[index], Rounder.round(value, false), TOLERANCE);
             index++;
         }
     }

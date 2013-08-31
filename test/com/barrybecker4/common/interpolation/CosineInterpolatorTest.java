@@ -9,7 +9,6 @@ import com.barrybecker4.common.math.interplolation.Interpolator;
  */
 public class CosineInterpolatorTest extends InterpolatorTstBase {
 
-
     @Override
     protected Interpolator createInterpolator(double[] func) {
           return new CosineInterpolator(func);
@@ -24,7 +23,6 @@ public class CosineInterpolatorTest extends InterpolatorTstBase {
     protected  double getExpectedSimpleInterpolation0_9() {
         return 1.9045084971874737;
     }
-
 
     @Override
     protected double getExpectedTypicalInterpolation0_1() {
@@ -46,12 +44,10 @@ public class CosineInterpolatorTest extends InterpolatorTstBase {
         return 3.7938926261462367;
     }
 
-
     @Override
     protected double getExpectedOnePointInterpolation() {
         return 1.0;
     }
-
 
     @Override
     protected double getExpectedInterpolation2Points0_1() {
