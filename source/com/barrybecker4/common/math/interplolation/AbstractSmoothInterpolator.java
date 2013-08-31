@@ -21,7 +21,6 @@ public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
         int index0 = (int) x;
         int index1 = index0 + 1;
         double xdiff = x - index0;
-        //System.out.println("cub:  x=" + x + " xdiff="+ xdiff  + " index0="+ index0 + " index1=" + index1);
 
         // Produce the 4 points to use for interpolation
         double y1 = function[ index0 ];
