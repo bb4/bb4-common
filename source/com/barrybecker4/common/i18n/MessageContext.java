@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  *
  * @author Barry Becker
  */
-public final class MessageContext {
+public class MessageContext {
 
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
 

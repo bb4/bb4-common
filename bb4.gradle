@@ -79,3 +79,7 @@ task copyToLib(dependsOn: jar, type: Copy) {
     into "build/libs"
     from configurations.runtime
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}

@@ -40,6 +40,11 @@ public final class AppContext {
         messageContext_.setLocale(localeName);
     }
 
+    /** Allow setting a custom message context for testing purposes */
+    public static void injectMessageContext(MessageContext context) {
+        messageContext_ = context;
+    }
+
     public static boolean isInitialized() {
         return logger_ != null;
     }
