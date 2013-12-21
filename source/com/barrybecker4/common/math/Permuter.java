@@ -36,7 +36,7 @@ public class Permuter implements Iterator<List<Integer>>{
         hasMore = num > 0;
 
         lastPermutation = new ArrayList<Integer>(num);
-        for (int i=1; i <= num; i++) {
+        for (int i=0; i < num; i++) {
            lastPermutation.add(i);
         }
     }

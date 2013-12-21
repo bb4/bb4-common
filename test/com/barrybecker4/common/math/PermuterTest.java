@@ -32,7 +32,7 @@ public class PermuterTest {
     public void testPermute1() {
         permuter = new Permuter(1);
         assertTrue(permuter.hasNext());
-        assertEquals("Unexpected second permutation", Arrays.asList(1), permuter.next());
+        assertEquals("Unexpected second permutation", Arrays.asList(0), permuter.next());
         assertFalse(permuter.hasNext());
     }
 
@@ -41,8 +41,8 @@ public class PermuterTest {
         permuter = new Permuter(2);
 
         assertTrue(permuter.hasNext());
-        assertEquals("Unexpected first permutation", Arrays.asList(1, 2), permuter.next());
-        assertEquals("Unexpected second permutation", Arrays.asList(2, 1), permuter.next());
+        assertEquals("Unexpected first permutation", Arrays.asList(0, 1), permuter.next());
+        assertEquals("Unexpected second permutation", Arrays.asList(1, 0), permuter.next());
         assertFalse(permuter.hasNext());
     }
 
@@ -53,12 +53,12 @@ public class PermuterTest {
         permuter = new Permuter(3);
 
         assertTrue(permuter.hasNext());
-        assertEquals("Unexpected permutation", Arrays.asList(1, 2, 3), permuter.next());
-        assertEquals("Unexpected permutation", Arrays.asList(1, 3, 2), permuter.next());
-        assertEquals("Unexpected permutation", Arrays.asList(2, 1, 3), permuter.next());
-        assertEquals("Unexpected permutation", Arrays.asList(2, 3, 1), permuter.next());
-        assertEquals("Unexpected permutation", Arrays.asList(3, 1, 2), permuter.next());
-        assertEquals("Unexpected permutation", Arrays.asList(3, 2, 1), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(0, 1, 2), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(0, 2, 1), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(1, 0, 2), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(1, 2, 0), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(2, 0, 1), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(2, 1, 0), permuter.next());
         assertFalse(permuter.hasNext());
     }
 
@@ -68,10 +68,10 @@ public class PermuterTest {
         permuter = new Permuter(5);
 
         assertTrue(permuter.hasNext());
-        assertEquals("Unexpected permutation", Arrays.asList(1, 2, 3, 4, 5), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(0, 1, 2, 3, 4), permuter.next());
         for (int i=0; i<119; i++)
             permuter.next();
-        assertEquals("Unexpected permutation", Arrays.asList(5, 4, 3, 2, 1), permuter.next());
+        assertEquals("Unexpected permutation", Arrays.asList(4, 3, 2, 1, 0), permuter.next());
         assertFalse(permuter.hasNext());
     }
 
@@ -96,10 +96,10 @@ public class PermuterTest {
         permuter.next();
         assertEquals("Unexpected permutation", 20, permuter.next().size());
         assertEquals("Unexpected second permutation",
-                "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 18, 20]",
+                "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 17, 19]",
                 permuter.next().toString());
         assertEquals("Unexpected third permutation",
-                "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 18]",
+                "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 17]",
                 permuter.next().toString());
         assertTrue(permuter.hasNext());
     }
