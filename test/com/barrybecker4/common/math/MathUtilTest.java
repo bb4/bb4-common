@@ -53,8 +53,14 @@ public class MathUtilTest {
     }
 
     @Test
-    public void testFactorial() {
+    public void testFactorial4() {
         assertEquals("Unexpected value for 4!", 24L, MathUtil.factorial(4));
+    }
+
+
+    @Test
+    public void testFactorial40() {
+        assertEquals("Unexpected value for 20!", 2432902008176640000L, MathUtil.factorial(20));
     }
 
     @Test
