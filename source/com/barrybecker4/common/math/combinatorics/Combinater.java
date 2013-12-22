@@ -37,7 +37,7 @@ public class Combinater implements Iterator<List<Integer>> {
 
         this.num = num;
         numCombinations = (long)Math.pow(2, num) - 1;
-        System.out.println("num comb="+ numCombinations);
+
         if (numCombinations >= Long.MAX_VALUE -1) {
             throw new IllegalArgumentException("The number of combinations is greater than " +  Long.MAX_VALUE);
         }
