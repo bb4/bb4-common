@@ -1,22 +1,21 @@
 /** Copyright by Barry G. Becker, 2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.math;
+package com.barrybecker4.common.math.combinatorics;
+
+import com.barrybecker4.common.math.MathUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- * Provides a way of iterating through all the permutations of a set of N integers (excluding 0).
+ * Provides a way of iterating through all the permutations of a set of N integers (including 0).
  * If there are more than Long.MAX_VALUE permutations, this will not work.
  * The implementation does not require memory for storing the permutations since
  * only one is produced at a time.
  *
  * @author Barry Becker
  */
-public class Permuter implements Iterator<List<Integer>>{
-
-
-    //private long count = 0;
+public class Permuter implements Iterator<List<Integer>> {
 
     /** the most recently created permutation   */
     private List<Integer> lastPermutation;
