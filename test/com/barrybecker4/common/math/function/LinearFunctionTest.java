@@ -46,6 +46,27 @@ public class LinearFunctionTest {
         assertEquals(-0.02, func.getValue(-1010), EPS);
     }
 
+    @Test
+    public void testFuncFromRangeToBinsSmall() {
+        func = new LinearFunction(new Range(-100, 500), 15);
+        assertEquals(2.5, func.getValue(0), EPS);
+        assertEquals(2.575, func.getValue(3), EPS);
+        assertEquals(0, func.getValue(-100), EPS);
+        assertEquals(52.5, func.getValue(2000), EPS);
+        assertEquals(15, func.getValue(500), EPS);
+        assertEquals(-22.75, func.getValue(-1010), EPS);
+    }
+
+    @Test
+    public void testFuncFromRangeToBinsPositiveOffset() {
+        func = new LinearFunction(new Range(100, 500), 15);
+        assertEquals(-3.75, func.getValue(0), EPS);
+        assertEquals(-7.5, func.getValue(-100), EPS);
+        assertEquals(0, func.getValue(100), EPS);
+        assertEquals(15, func.getValue(500), EPS);
+        assertEquals(-41.625, func.getValue(-1010), EPS);
+    }
+
     @Test (expected = IllegalArgumentException.class)
     public void testFuncWithZeroScale() {
         func = new LinearFunction(0.0, 5.0);
