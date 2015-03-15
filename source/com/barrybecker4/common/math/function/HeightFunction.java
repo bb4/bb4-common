@@ -13,10 +13,9 @@ import java.util.List;
  */
 public class HeightFunction implements Function {
 
-
-    /** These parallel arrays define the piecewise function map. */
     private Range domain;
     private double[] yValues;
+
     private LinearFunction domainToBinFunc;
 
 
@@ -31,7 +30,15 @@ public class HeightFunction implements Function {
         domainToBinFunc = new LinearFunction(domain, yValues.length  - 1);
     }
 
-
+    /**
+     * Constructor.
+     * @param yValues the y values.  The length automatically determines the domain.
+     */
+    public HeightFunction(double[] yValues) {
+        this.domain = new Range(0, yValues.length - 1);
+        this.yValues = yValues;
+        domainToBinFunc = new LinearFunction(domain, yValues.length  - 1);
+    }
 
     /** X axis domain */
     @Override

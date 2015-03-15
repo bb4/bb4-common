@@ -56,4 +56,19 @@ public class HeightFunctionTest {
         assertEquals(0.3, func.getValue(9.4), EPS);
     }
 
+
+    @Test
+    public void testFuncFromAutoRangeToBins() {
+        func = new HeightFunction(new double[] {.2, 0.3, 0.6, 0.7, 0.5, 0.2, 0.1, 0.5, 0.4, 0.3});
+        assertEquals(0.2, func.getValue(-0.5), EPS);
+        assertEquals(0.2, func.getValue(-0.2), EPS);
+        assertEquals(0.2, func.getValue(0), EPS);
+        assertEquals(0.2, func.getValue(0.1), EPS);
+        assertEquals(0.3, func.getValue(1), EPS);
+        assertEquals(0.5, func.getValue(4), EPS);
+        assertEquals(0.2, func.getValue(5), EPS);
+        assertEquals(0.4, func.getValue(8), EPS);
+        assertEquals(0.3, func.getValue(9), EPS);
+        assertEquals(0.3, func.getValue(9.4), EPS);
+    }
 }
