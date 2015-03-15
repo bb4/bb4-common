@@ -31,13 +31,13 @@ public class HeightFunction implements Function {
     }
 
     /**
-     * Constructor.
-     * @param yValues the y values.  The length automatically determines the domain.
+     * Constructor. A domain of [0, 1.0] is assumed
+     * @param yValues the y values.
      */
     public HeightFunction(double[] yValues) {
         this.domain = new Range(0, yValues.length - 1);
         this.yValues = yValues;
-        domainToBinFunc = new LinearFunction(domain, yValues.length  - 1);
+        domainToBinFunc = new LinearFunction(domain.getExtent());
     }
 
     /** X axis domain */
