@@ -2,6 +2,8 @@
 package com.barrybecker4.common.math.function;
 
 import com.barrybecker4.common.math.Range;
+import com.barrybecker4.common.math.interplolation.Interpolator;
+import com.barrybecker4.common.math.interplolation.LinearInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,9 @@ public class HeightFunction implements Function {
     private Range domain;
     private double[] yValues;
 
+    // a function that maps from the domain to indices within yValues.
     private LinearFunction domainToBinFunc;
+    Interpolator interpolator;
 
 
     /**
@@ -27,7 +31,9 @@ public class HeightFunction implements Function {
     public HeightFunction(Range domain, double[] yValues) {
         this.domain = domain;
         this.yValues = yValues;
-        domainToBinFunc = new LinearFunction(domain, yValues.length  - 1);
+
+        domainToBinFunc = new LinearFunction(1.0/domain.getExtent(), -domain.getMin()/domain.getExtent());
+        interpolator = new LinearInterpolator(yValues);
     }
 
     /**
@@ -35,9 +41,7 @@ public class HeightFunction implements Function {
      * @param yValues the y values.
      */
     public HeightFunction(double[] yValues) {
-        this.domain = new Range(0, yValues.length - 1);
-        this.yValues = yValues;
-        domainToBinFunc = new LinearFunction(domain.getExtent());
+        this(new Range(0, 1.0), yValues);
     }
 
     /** X axis domain */
@@ -52,7 +56,10 @@ public class HeightFunction implements Function {
      */
     @Override
     public double getValue(double xValue) {
-        return yValues[(int)(domainToBinFunc.getValue(xValue) + 0.5)];
+        //return yValues[(int)(domainToBinFunc.getValue(xValue) + 0.5)];
+        System.out.println("xValue = " + xValue + " binIds = " + domainToBinFunc.getValue(xValue));
+        System.out.println(" interpdVal = " + interpolator.interpolate(domainToBinFunc.getValue(xValue)));
+        return interpolator.interpolate(domainToBinFunc.getValue(xValue));
     }
 }
 
