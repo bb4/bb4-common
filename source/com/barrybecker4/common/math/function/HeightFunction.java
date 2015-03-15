@@ -57,8 +57,6 @@ public class HeightFunction implements Function {
     @Override
     public double getValue(double xValue) {
         //return yValues[(int)(domainToBinFunc.getValue(xValue) + 0.5)];
-        System.out.println("xValue = " + xValue + " binIds = " + domainToBinFunc.getValue(xValue));
-        System.out.println(" interpdVal = " + interpolator.interpolate(domainToBinFunc.getValue(xValue)));
         return interpolator.interpolate(domainToBinFunc.getValue(xValue));
     }
 }
