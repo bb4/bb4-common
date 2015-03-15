@@ -34,6 +34,25 @@ public class LinearFunction implements InvertibleFunction {
         }
     }
 
+    /**
+     * Constructor that creates a linear mapping from a range to a set of bin indices that go from 0 to numBins.
+     * @param range The range of the domain. From min  to max value.
+     * @param numBins number of bins to map to.
+     */
+    public LinearFunction(Range range, int numBins) {
+        if (numBins == 0) {
+            throw new IllegalArgumentException("numBins cannot be 0.");
+        }
+        if (range.getExtent() == 0) {
+            throw new IllegalArgumentException("The range extent cannot be 0.");
+        }
+        this.scale = numBins / range.getExtent() ;
+        this.offset = -range.getMin() * scale;
+        if (scale == 0)  {
+            throw new IllegalArgumentException("scale cannot be 0.");
+        }
+    }
+
     @Override
     public double getValue(double value) {
         return scale * value + offset;

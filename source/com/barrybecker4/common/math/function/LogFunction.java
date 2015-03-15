@@ -18,9 +18,10 @@ public class LogFunction implements InvertibleFunction {
 
     /**
      * Constructor.
+     * @param scale the amount to scale the resulting log value by
      */
     public LogFunction(double scale) {
-        this(DEFAULT_BASE, scale, false);
+        this(scale, DEFAULT_BASE, false);
     }
 
     /**
@@ -29,7 +30,7 @@ public class LogFunction implements InvertibleFunction {
      * @param scale amount to scale after taking the logarithm.
      * @param positiveOnly if true then clamp negative log values at 0.
      */
-    public LogFunction(double scale,  double base, boolean positiveOnly) {
+    public LogFunction(double scale, double base, boolean positiveOnly) {
         this.scale = scale;
         this.base = base;
         baseConverter = Math.log(base);
@@ -39,10 +40,17 @@ public class LogFunction implements InvertibleFunction {
     @Override
     public double getValue(double value) {
 
+        double logValue;
         if (value <= 0) {
-            throw new IllegalArgumentException("Cannot take the log of a number (" + value + ") that is <=0");
+            if (positiveOnly) {
+                 throw new IllegalArgumentException("Cannot take the log of a number (" + value + ") that is <=0");
+            }
+            logValue = Math.signum(value) * Math.log(-value);
         }
-        double logValue = positiveOnly ?  Math.max(0, Math.log(value)) : Math.log(value);
+        else {
+            logValue = positiveOnly ?  Math.max(0, Math.log(value)) : Math.log(value);
+        }
+
         return  scale * logValue / baseConverter;
     }
 

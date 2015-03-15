@@ -56,17 +56,17 @@ class CallableParallelizer<T> {
 
     /**
      * Invoke all the workers at once and block until they are all done
-     * Once all the separate threads have completed there assigned work, you may want to commit the results.
+     * Once all the separate threads have completed their assigned work, you may want to commit the results.
      * @return list of Future tasks.
      */
     public List<Future<T>> invokeAll(Collection<? extends Callable<T>> callables)  {
 
-        List<Future<T>> f = null;
+        List<Future<T>> futures = null;
         try {
-            f = executor.invokeAll(callables);
+            futures = executor.invokeAll(callables);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-        return f;
+        return futures;
     }
 }
