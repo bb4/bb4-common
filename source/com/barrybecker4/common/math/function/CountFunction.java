@@ -27,6 +27,10 @@ public class CountFunction implements Function {
      * @param initialYValue y value for x=0
      */
     public CountFunction(double initialYValue) {
+        setInitialValue(initialYValue);
+    }
+
+    public void setInitialValue(double initialYValue) {
         xValues = new ArrayList<Double>();
         yValues = new ArrayList<Double>();
         xValues.add(0.0);
