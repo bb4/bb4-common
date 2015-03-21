@@ -4,6 +4,7 @@ package com.barrybecker4.common.math.function;
 import com.barrybecker4.common.math.Range;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,8 +32,8 @@ public class CountFunction implements Function {
     }
 
     public void setInitialValue(double initialYValue) {
-        xValues = new ArrayList<Double>();
-        yValues = new ArrayList<Double>();
+        xValues = new LinkedList<Double>();
+        yValues = new LinkedList<Double>();
         xValues.add(0.0);
         yValues.add(initialYValue);
     }
