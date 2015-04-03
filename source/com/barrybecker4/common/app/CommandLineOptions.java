@@ -30,8 +30,8 @@ public class CommandLineOptions  {
         while (ct < args.length) {
             String arg = args[ct];
 
-            assert (arg.charAt(0)=='-') :
-                    "Command line Options must start with - and then be followed by an optional value";
+            //assert (arg.charAt(0)=='-') :
+            //        "Command line Options must start with - and then be followed by an optional value";
             String option = arg.substring(1);
             String value = null;
 
