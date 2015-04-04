@@ -36,7 +36,7 @@ public class PackageReflectorTest {
     public void testGetClassesFromJar() throws Exception {
 
         List<Class> classes = reflector.getClasses("org.junit.runner");
-        assertEquals("Unexpected number of classes in com.java.awt.print.", 9, classes.size());
+        assertEquals("Unexpected number of classes in org.junit.runner.", 9, classes.size());
 
         assertEquals("Unexpected first class", "Computer", classes.get(0).getSimpleName());
     }

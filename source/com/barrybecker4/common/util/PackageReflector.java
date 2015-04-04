@@ -39,7 +39,6 @@ public class PackageReflector {
 
     private List<String> getClassNames(String packageName) throws IOException {
 
-        System.out.println("PR: package = " + packageName);
         String packagePath = packageName.replace('.', '/');
 
         ClassLoader classLoader = ClassLoaderSingleton.getClassLoader();
@@ -86,7 +85,6 @@ public class PackageReflector {
     private List<String> getClassNamesFromFiles(List<File> files) {
         List<String> classNames = new ArrayList<>();
         for (File file : files) {
-            System.out.println("PR: file = " + file.getAbsolutePath());
             if (file.getName().endsWith(CLASS_EXT)) {
                 String className = file.getName().substring(0, file.getName().length() - CLASS_EXT.length());
                 classNames.add(className);
@@ -100,7 +98,6 @@ public class PackageReflector {
 
         ArrayList<Class> classes = new ArrayList<>();
         for (String className : classNames) {
-            System.out.println("PR: class = " + className);
             classes.add(Class.forName(packageName + '.' + className));
         }
         return classes;
