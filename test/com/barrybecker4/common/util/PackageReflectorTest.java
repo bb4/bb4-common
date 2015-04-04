@@ -6,11 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+
 
 /**
  * @author Barry Becker
@@ -30,7 +28,17 @@ public class PackageReflectorTest {
         List<Class> classes = reflector.getClasses("com.barrybecker4.common.format");
         assertEquals("Unexpected number of classes in com.barrybecker4.common.format.", 5, classes.size());
 
-        assertEquals("Unexptected first class", "CurrencyFormatter", classes.get(0).getSimpleName());
+        assertEquals("Unexpected first class", "CurrencyFormatter", classes.get(0).getSimpleName());
+    }
+
+
+    @Test
+    public void testGetClassesFromJar() throws Exception {
+
+        List<Class> classes = reflector.getClasses("org.junit.runner");
+        assertEquals("Unexpected number of classes in com.java.awt.print.", 9, classes.size());
+
+        assertEquals("Unexpected first class", "Computer", classes.get(0).getSimpleName());
     }
 
     @Test

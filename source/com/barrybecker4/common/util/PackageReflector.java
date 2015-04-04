@@ -5,13 +5,14 @@ import com.barrybecker4.common.app.ClassLoaderSingleton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Use to find all classes in a specified package on the classpath.
+ * It will find the classes whether they are classes in the project or jar file dependencies.
  * Could be useful in a plugin implementation.
  *
  * @author Barry Becker
@@ -19,6 +20,8 @@ import java.util.List;
 public class PackageReflector {
 
     private static final String CLASS_EXT = ".class";
+
+
     /**
      * Finds all classes in the specified package accessible from the class loader.
      *
@@ -28,37 +31,77 @@ public class PackageReflector {
     public List<Class> getClasses(String packageName)
             throws ClassNotFoundException, IOException {
 
-        ClassLoader classLoader = ClassLoaderSingleton.getClassLoader();
-        String path = packageName.replace('.', '/');
 
-        List<File> files = getFiles(classLoader, path);
-        return getClassesFromFiles(packageName, files);
+        List<String> files = getClassNames(packageName);
+        return getClassesFromNames(packageName, files);
     }
 
 
-    private List<File> getFiles(ClassLoader classLoader, String path) throws IOException {
+    private List<String> getClassNames(String packageName) throws IOException {
 
-        Enumeration<URL> resources = classLoader.getResources(path);
-        List<File> files = new ArrayList<File>();
+        System.out.println("PR: package = " + packageName);
+        String packagePath = packageName.replace('.', '/');
+
+        ClassLoader classLoader = ClassLoaderSingleton.getClassLoader();
+        List<String> classNames = new ArrayList<>();
+        Enumeration<URL> resources = classLoader.getResources(packagePath);
 
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
-            File dir = new File(resource.getFile());
-            files.addAll(Arrays.asList(dir.listFiles()));
+            String dirPath = URLDecoder.decode(resource.getFile(), "UTF-8");
+
+            if (dirPath.startsWith("file:") && dirPath.contains("!")) {
+                classNames.addAll(getClassNamesFromJar(dirPath, packageName));
+            }
+            else {
+                File dir = new File(dirPath);
+                List<String> names = getClassNamesFromFiles(Arrays.asList(dir.listFiles()));
+                classNames.addAll(names);
+            }
         }
-        return files;
+        return classNames;
     }
 
+    private List<String> getClassNamesFromJar(String path, String packageName) throws IOException {
+        Set<String> classNameSet = new LinkedHashSet<>();
+        String[] split = path.split("!");
+        URL jar = new URL(split[0]);
+        ZipInputStream zip = new ZipInputStream(jar.openStream());
+        ZipEntry entry;
+        while ((entry = zip.getNextEntry()) != null) {
+            if (entry.getName().endsWith(CLASS_EXT)) {
+                String className = entry.getName().replaceAll("[$].*", "").replaceAll("[.]class", "").replace('/', '.');
 
-    private ArrayList<Class> getClassesFromFiles(String packageName, List<File> files)
-            throws ClassNotFoundException {
+                if (className.startsWith(packageName)) {
+                    String name = className.substring(packageName.length() + 1);
+                    if (!name.contains(".")) {
+                        classNameSet.add(name);
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(classNameSet);
+    }
 
-        ArrayList<Class> classes = new ArrayList<Class>();
+    private List<String> getClassNamesFromFiles(List<File> files) {
+        List<String> classNames = new ArrayList<>();
         for (File file : files) {
+            System.out.println("PR: file = " + file.getAbsolutePath());
             if (file.getName().endsWith(CLASS_EXT)) {
                 String className = file.getName().substring(0, file.getName().length() - CLASS_EXT.length());
-                classes.add(Class.forName(packageName + '.' + className));
+                classNames.add(className);
             }
+        }
+        return classNames;
+    }
+
+    private ArrayList<Class> getClassesFromNames(String packageName, List<String> classNames)
+            throws ClassNotFoundException {
+
+        ArrayList<Class> classes = new ArrayList<>();
+        for (String className : classNames) {
+            System.out.println("PR: class = " + className);
+            classes.add(Class.forName(packageName + '.' + className));
         }
         return classes;
     }
