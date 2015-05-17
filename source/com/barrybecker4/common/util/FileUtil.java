@@ -6,6 +6,8 @@ import com.barrybecker4.common.app.ClassLoaderSingleton;
 import java.io.*;
 import java.net.URL;
 import java.security.AccessControlException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Miscellaneous commonly used file related static utility methods.
@@ -143,5 +145,23 @@ public final class FileUtil {
             }
         }
         return bldr.toString();
+    }
+
+    /**
+     * Get all files in a directory (not recursive)
+     * @param directory full path
+     * @return the list of all files in the specified directory
+     */
+    public static List<File> getFilesInDirectory(String directory) {
+        File dir = new File(directory);
+        File[] listOfFiles = dir.listFiles();
+        List<File> files = new ArrayList<>();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                files.add(file);
+            }
+        }
+        return files;
     }
 }

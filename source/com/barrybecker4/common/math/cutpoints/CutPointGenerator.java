@@ -84,8 +84,8 @@ public class CutPointGenerator {
             max1 = range.getMin() + MIN_RANGE;
         }
 
-        double extent = Rounder.round(max1 - range.getMin(), false);
-        double d = Rounder.round(extent / (maxNumTicks - 1), true);
+        double extent = Rounder.roundUp(max1 - range.getMin());
+        double d = Rounder.roundDown(extent / (maxNumTicks - 1));
 
         return (int) Math.max( -Math.floor(MathUtil.log10(d)), 0);
     }

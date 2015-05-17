@@ -31,27 +31,27 @@ public class NiceNumberRounderTest {
 
     @Test
     public void testRoundNumberSmall() {
-        assertEquals("Unexpected ", 0.001, Rounder.round(0.001234567, true), TOLERANCE);
+        assertEquals("Unexpected ", 0.001, Rounder.roundDown(0.001234567), TOLERANCE);
     }
 
     @Test
     public void testRoundNumberMediumUpper() {
-        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, true), TOLERANCE);
+        assertEquals("Unexpected ", 10.0, Rounder.roundDown(8.87653), TOLERANCE);
     }
 
     @Test
     public void testRoundNumberMediumLower() {
-        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, true), TOLERANCE);
+        assertEquals("Unexpected ", 5.0, Rounder.roundDown(4.363), TOLERANCE);
     }
 
     @Test
     public void testRoundNumberLargeUpper() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
+        assertEquals("Unexpected ", 200000000000.0, Rounder.roundDown(172034506708.90123), TOLERANCE);
     }
 
     @Test
     public void testRoundNumberLargeLower() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
+        assertEquals("Unexpected ", 200000000000.0, Rounder.roundDown(172034506708.90123), TOLERANCE);
     }
 
     @Test
@@ -61,32 +61,32 @@ public class NiceNumberRounderTest {
             double value = BASE_VALUE + inc;
             //System.out.print(Rounder.round(value, true) +", ");
             assertEquals("Unexpected rounded value for " + value,
-                    EXPECTED_ROUNDED_VALUES[index], Rounder.round(value, true), TOLERANCE);
+                    EXPECTED_ROUNDED_VALUES[index], Rounder.roundDown(value), TOLERANCE);
             index++;
         }
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, true), TOLERANCE);
+        assertEquals("Unexpected ", 200000000000.0, Rounder.roundDown(172034506708.90123), TOLERANCE);
     }
 
 
 
     public void testCielNumberSmall() {
-        assertEquals("Unexpected ", 0.002, Rounder.round(0.001234567, false), TOLERANCE);
+        assertEquals("Unexpected ", 0.002, Rounder.roundUp(0.001234567), TOLERANCE);
     }
 
     public void testCielNumberMediumUpper() {
-        assertEquals("Unexpected ", 10.0, Rounder.round(8.87653, false), TOLERANCE);
+        assertEquals("Unexpected ", 10.0, Rounder.roundUp(8.87653), TOLERANCE);
     }
 
     public void testCielNumberMediumLower() {
-        assertEquals("Unexpected ", 5.0, Rounder.round(4.363, false), TOLERANCE);
+        assertEquals("Unexpected ", 5.0, Rounder.roundUp(4.363), TOLERANCE);
     }
 
     public void testCielNumberLargeUpper() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(172034506708.90123, false), TOLERANCE);
+        assertEquals("Unexpected ", 200000000000.0, Rounder.roundUp(172034506708.90123), TOLERANCE);
     }
 
     public void testCielNumberLargeLower() {
-        assertEquals("Unexpected ", 200000000000.0, Rounder.round(102034506708.90123, false), TOLERANCE);
+        assertEquals("Unexpected ", 200000000000.0, Rounder.roundUp(102034506708.90123), TOLERANCE);
     }
 
     public void testCieledNumber() {
@@ -95,7 +95,7 @@ public class NiceNumberRounderTest {
             double value = BASE_VALUE + inc;
             //System.out.print(Rounder.round(value, false) +", ");
             assertEquals("Unexpected rounded value for " + value,
-                    EXPECTED_CEILED_VALUES[index], Rounder.round(value, false), TOLERANCE);
+                    EXPECTED_CEILED_VALUES[index], Rounder.roundUp(value), TOLERANCE);
             index++;
         }
     }
