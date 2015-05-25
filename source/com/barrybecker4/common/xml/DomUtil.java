@@ -220,22 +220,23 @@ public final class DomUtil {
      * @param xsdUri location of the schema to use for validation.
      * @return the parsed file as a Document
      */
-    private static Document parseXML(InputStream stream, boolean replaceUseWithDeepCopy, String xsdUri)
-    {
+    private static Document parseXML(InputStream stream, boolean replaceUseWithDeepCopy, String xsdUri) {
         Document document = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setIgnoringComments(true);
 
         try {
             factory.setNamespaceAware(true);
             factory.setValidating(true);
-            if (xsdUri != null)  {
+            if (xsdUri != null) {
                 factory.setAttribute( "http://java.sun.com/xml/jaxp/properties/schemaLanguage",
-                                       "http://www.w3.org/2001/XMLSchema");
+                        "http://www.w3.org/2001/XMLSchema");
                 factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri);
             }
 
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new XmlErrorHandler());
+
 
             document = builder.parse( stream );
 
@@ -248,13 +249,9 @@ public final class DomUtil {
             if (sxe.getException() != null)
                 x = sxe.getException();
             x.printStackTrace();
-        } catch (ParserConfigurationException pce) {
+        } catch (ParserConfigurationException | IOException pce) {
              // Parser with specified options can't be built
              pce.printStackTrace();
-
-        } catch (IOException ioe) {
-            // I/O error
-            ioe.printStackTrace();
         }
 
         return document;
@@ -313,7 +310,7 @@ public final class DomUtil {
         Transformer transformer = null;
         try {
             transformer = transformerFactory.newTransformer();
-             transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //NON-NLS
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //NON-NLS
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4"); //NON-NLS
             if (schema != null) {
                 transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,  DomUtil.SCHEMA_LOCATION + schema);
