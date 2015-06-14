@@ -18,7 +18,7 @@ public class FileUtilTest {
 
         String dir = "test/com/barrybecker4/common/util";
         List<File> files = FileUtil.getFilesInDirectory(dir);
-        assertEquals("Unexpected number of entriesfiles in dir " + dir, 4, files.size());
+        assertEquals("Unexpected number of entriesfiles in dir " + dir, 5, files.size());
     }
 
     @Test
@@ -26,6 +26,6 @@ public class FileUtilTest {
 
         String dir = FileUtil.getHomeDir() + "test/com/barrybecker4/common/util";
         List<File> files = FileUtil.getFilesInDirectory(dir);
-        assertEquals("Unexpected number of entriesfiles in dir " + dir, 4, files.size());
+        assertEquals("Unexpected number of entriesfiles in dir " + dir, 5, files.size());
     }
 }
