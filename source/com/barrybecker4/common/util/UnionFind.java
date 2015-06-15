@@ -36,22 +36,6 @@ public class UnionFind {
      * @param n the number of objects
      */
     public UnionFind(int n) {
-        init(n);
-    }
-
-    public UnionFind(InputStream in) {
-        Scanner stdIn = new Scanner(in);
-        int n = stdIn.nextInt();
-        init(n);
-        while (!stdIn.hasNext()) {
-            int p = stdIn.nextInt();
-            int q = stdIn.nextInt();
-            if (connected(p, q)) continue;
-            union(p, q);
-        }
-    }
-
-    private void init(int n) {
         count = n;
         parent = new int[n];
         size = new int[n];
@@ -61,11 +45,25 @@ public class UnionFind {
         }
     }
 
+    public static UnionFind create(InputStream in) {
+        Scanner stdIn = new Scanner(in);
+        int n = stdIn.nextInt();
+        UnionFind uf = new UnionFind(n);
+        while (stdIn.hasNext()) {
+            int p = stdIn.nextInt();
+            int q = stdIn.nextInt();
+            if (!uf.connected(p, q)) {
+                uf.union(p, q);
+            }
+        }
+        return uf;
+    }
+
     /**
      * Returns the number of components.
      * @return the number of components (between 1 and N)
      */
-    public int count() {
+    public int getCount() {
         return count;
     }
 
@@ -77,12 +75,13 @@ public class UnionFind {
      */
     public int find(int p) {
         validate(p);
-        while (p != parent[p])
+        while (p != parent[p]) {
             p = parent[p];
+        }
         return p;
     }
 
-    // validate that p is a valid index
+    /** validate that p is a valid index */
     private void validate(int p) {
         int N = parent.length;
         if (p < 0 || p >= N) {
@@ -101,7 +100,6 @@ public class UnionFind {
     public boolean connected(int p, int q) {
         return find(p) == find(q);
     }
-
 
     /**
      * Merges the component containing site<tt>p</tt> with the component
@@ -135,8 +133,8 @@ public class UnionFind {
      * and print the pair to standard output.
      */
     public static void main(String[] args) {
-        UnionFind uf = new UnionFind(System.in);
-        System.out.println(uf.count() + " components");
+        UnionFind uf = UnionFind.create(System.in);
+        System.out.println(uf.getCount() + " components");
     }
 
 }
