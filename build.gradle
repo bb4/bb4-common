@@ -9,6 +9,7 @@ version = '1.2-SNAPSHOT'
 apply from: 'bb4.gradle' // 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
 
 project.archivesBaseName = 'bb4-common'
+mainClassName = 'com.barrybecker4.common.format.CurrencyFormatter'
 
 dependencies {
     compile 'commons-codec:commons-codec:1.8'
