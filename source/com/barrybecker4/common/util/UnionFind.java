@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  *  The <tt>WeightedQuickUnionUF</tt> class represents a union-find data structure.
  *  It supports the <em>union</em> and <em>find</em> operations, along with
- *  methods for determinig whether two objects are in the same component
+ *  methods for determining whether two objects are in the same component
  *  and the total number of components.
  *  <p>
  *  This implementation uses weighted quick union by size (without path compression).
@@ -14,7 +14,10 @@ import java.util.Scanner;
  *  Afterwards, <em>union</em>, <em>find</em>, and <em>connected</em> take
  *  logarithmic time (in the worst case) and <em>count</em> takes constant
  *  time.
+ *  </p>
  *  <p>
+ *  6/19 added ability to delete connections
+ *  </p>
  *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/15uf">Section 1.5</a> of
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
