@@ -12,36 +12,33 @@ import java.util.Set;
 /**
  * Sequential search strategy that uses the A* search algorithm.
  * See http://en.wikipedia.org/wiki/A*_search_algorithm
- * A concurrent version of this algorithm could be made using a PriorityBlockingQueue for {@code openQueue}
- * P represents a Position (or state) of the problem being searched.
- *   A sequence of positions lead from initial position to goal position.
- * M represnets a move, or a transition from one position to the next
- * TODO: P->S  M->T (transition)
+ * S represents a state in the global search space.
+ * T represents a transition from one state to the next.
  *
  * @author Barry Becker
  */
-public class AStarSearch<P, M>  {
+public class AStarSearch<S, T>  {
 
-    protected SearchSpace<P, M> searchSpace;
+    protected SearchSpace<S, T> searchSpace;
 
-    /** nodes that have been visited, but they may be replaced if we can reach them by a better path */
-    protected Set<P> visited;
+    /** States that have been visited, but they may be replaced if we can reach them by a better path */
+    protected Set<S> visited;
 
-    /** candidate nodes to search on the frontier. */
-    protected Queue<Node<P, M>> openQueue;
+    /** Candidate nodes to search on the frontier. */
+    protected Queue<Node<S, T>> openQueue;
 
-    /** provides the value for the lowest cost path from the start node to the specified node (g score) */
-    protected Map<P, Integer> pathCost;
+    /** Provides the value for the lowest cost path from the start state to the specified goal state (g score) */
+    protected Map<S, Integer> pathCost;
 
-    protected volatile Node<P, M> solution;
+    protected volatile Node<S, T> solution;
 
-    /** number of steps to find solution */
+    /** number of steps that it took to find solution */
     protected long numTries;
 
     /**
      * @param searchSpace the global search space containing initial and goal states.
      */
-    public AStarSearch(SearchSpace<P, M> searchSpace) {
+    public AStarSearch(SearchSpace<S, T> searchSpace) {
         this.searchSpace = searchSpace;
         visited = new HashSet<>();
         openQueue = new PriorityQueue<>(20);
@@ -50,22 +47,25 @@ public class AStarSearch<P, M>  {
 
     protected AStarSearch() {}
 
-    public List<M> solve() {
+    /**
+     * @return a sequence of transitions leading from the initial state to the goal state.
+     */
+    public List<T> solve() {
 
-        P startingPos = searchSpace.initialPosition();
+        S startingState = searchSpace.initialState();
         long startTime = System.currentTimeMillis();
-        Node<P, M> startNode =
-                new Node<>(startingPos, searchSpace.distanceFromGoal(startingPos));
+        Node<S, T> startNode =
+                new Node<>(startingState, searchSpace.distanceFromGoal(startingState));
         openQueue.add(startNode);
-        pathCost.put(startingPos, 0);
+        pathCost.put(startingState, 0);
 
-        Node<P, M> solutionState = doSearch();
+        Node<S, T> solutionState = doSearch();
 
-        List<M> pathToSolution = null;
-        P solution = null;
+        List<T> pathToSolution = null;
+        S solution = null;
         if (solutionState != null) {
-            pathToSolution = solutionState.asMoveList();
-            solution = solutionState.getPosition();
+            pathToSolution = solutionState.asTransitionList();
+            solution = solutionState.getState();
         }
         long elapsedTime = System.currentTimeMillis() - startTime;
         searchSpace.finalRefresh(pathToSolution, solution, numTries, elapsedTime);
@@ -76,7 +76,7 @@ public class AStarSearch<P, M>  {
      * Best first search for a solution.
      * @return the solution state node if found which has the path leading to a solution. Null if no solution.
      */
-    protected Node<P, M> doSearch() {
+    protected Node<S, T> doSearch() {
         return search();
     }
 
@@ -84,26 +84,26 @@ public class AStarSearch<P, M>  {
      * Best first search for a solution.
      * @return the solution state node if found which has the path leading to a solution. Null if no solution.
      */
-    protected Node<P, M> search() {
+    protected Node<S, T> search() {
 
         while (nodesAvailable())  {
-            Node<P, M> currentNode = openQueue.remove();
-            P currentPosition = currentNode.getPosition();
-            searchSpace.refresh(currentPosition, numTries);
+            Node<S, T> currentNode = openQueue.remove();
+            S currentState = currentNode.getState();
+            searchSpace.refresh(currentState, numTries);
 
-            if (searchSpace.isGoal(currentPosition)) {
+            if (searchSpace.isGoal(currentState)) {
                 solution = currentNode;
                 return currentNode;  // success
             }
-            visited.add(currentPosition);
-            List<M> moves = searchSpace.legalMoves(currentPosition);
-            for (M move : moves) {
-                P nbr = searchSpace.move(currentPosition, move);
-                int estPathCost = pathCost.get(currentPosition) + searchSpace.getCost(move);
+            visited.add(currentState);
+            List<T> transitions = searchSpace.legalTransitions(currentState);
+            for (T transition : transitions) {
+                S nbr = searchSpace.transition(currentState, transition);
+                int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
                 if (!visited.contains(nbr) || estPathCost < pathCost.get(nbr)) {
                     int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
-                    Node<P, M> child =
-                            new Node<>(nbr, move, currentNode, estFutureCost);
+                    Node<S, T> child =
+                            new Node<>(nbr, transition, currentNode, estFutureCost);
                     pathCost.put(nbr, estPathCost);
                     if (!openQueue.contains(child)) {
                         openQueue.add(child);

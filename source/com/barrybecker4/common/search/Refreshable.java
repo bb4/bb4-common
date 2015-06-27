@@ -8,21 +8,21 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public interface Refreshable<P, M> {
+public interface Refreshable<S, T> {
 
     /**
      * Call when you want the UI to update.
-     * @param pos if the current position to show.
+     * @param state if the current state to show.
      * @param numTries number of tries so far.
      */
-    void refresh(P pos, long numTries);
+    void refresh(S state, long numTries);
 
     /**
-     *Show the path to the solution at the end.
-     *@param path list of moves that gets to the solution. If path is null then no solution was found.
-     *@param position the final board state in the path. It may be null if no solution was found.
+     *Show the path to the goal state at the end.
+     *@param path list of transitions that gets to the solution. If path is null then no solution was found.
+     *@param state the final state in the path. It may be null if no solution was found.
      *@param numTries number of tries it took to find that final state.
      *@param elapsedMillis number of milliseconds it took to find the solution.
      */
-    void finalRefresh(List<M> path, P position, long numTries, long elapsedMillis);
+    void finalRefresh(List<T> path, S state, long numTries, long elapsedMillis);
 }

@@ -5,48 +5,49 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Represents the global search space of all position states.
+ * Represents the global search space of all states.
  * It must include an initial state and a goal state.
- * The type parameters P and M correspond to a position (state) and a move (transition from one state to the next).
+ * The type parameters S and T correspond to a state and a transition from one state to the next.
  *
  * @author Barry Becker
  */
-public interface SearchSpace<P, M> extends Refreshable<P, M>  {
+public interface SearchSpace<S, T> extends Refreshable<S, T>  {
 
-    P initialPosition();
+    S initialState();
 
     /**
-     * @return true if the position is the goal state.
+     * @return true if the state is the goal state.
      */
-    boolean isGoal(P position);
+    boolean isGoal(S state);
 
     /**
-     * @return a list of legal next immutable moves.
+     * @return a list of legal next immutable transitions.
      */
-    List<M> legalMoves(P position);
+    List<T> legalTransitions(S state);
 
     /**
-     * @return the position (immutable) that you get after applying the specified move.
+     * @return the state (immutable) that you get after applying the specified transition.
      */
-    P move(P position, M move);
+    S transition(S state, T transition);
 
     /**
-     * Add the position to the seen set of position if not already seen.
+     * Add the state to the seen set of state if not already seen.
      *
-     * @param position to check
-     * @param seen Map of seen positions.
-     * @return true if the specified position was already seen (possibly taking into account symmetries).
+     * @param state to check
+     * @param seen Map of seen states.
+     * @return true if the specified state was already seen (possibly taking into account symmetries).
      */
-    boolean alreadySeen(P position, Set<P> seen);
+    boolean alreadySeen(S state, Set<S> seen);
 
     /**
-     * @return estimate of the cost to reach the goal from the specified position.
+     * @return estimate of the cost to reach the goal from the specified state.
      */
-    int distanceFromGoal(P position);
+    int distanceFromGoal(S state);
 
     /**
-     * @return the cost of making a single move. Usually a constant like 1, but for some scenarios it matters.
+     * @return the cost of making a single transition.
+     * Usually a constant like 1, but for some scenarios it matters.
      */
-    int getCost(M move);
+    int getCost(T transition);
 
 }

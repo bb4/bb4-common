@@ -1,4 +1,4 @@
-/** Copyright by Barry G. Becker, 2012-2014. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2012-2015. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.search;
 
 import com.barrybecker4.common.concurrency.Parallelizer;
@@ -13,11 +13,13 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Concurrent implementation of the A* search algorithm.
- * Finds the optimal path to a goal state from an initial state.
+ * Finds the optimal path to a goal state (S) from an initial state (S) via a sequence of transitions (T).
  * See http://en.wikipedia.org/wiki/A*_search_algorithm
+ * S - State
+ * T - Transition from one state to the next.
  * @author Barry Becker
  */
-public class AStarConcurrentSearch<P, M> extends AStarSearch<P, M> {
+public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
 
     /** use the number of cores available as a default number of threads */
     private static final int NUM_WORKERS = Parallelizer.NUM_PROCESSORS;
@@ -26,18 +28,18 @@ public class AStarConcurrentSearch<P, M> extends AStarSearch<P, M> {
     /**
      * @param searchSpace the global search space that contains initial and goal states.
      */
-    public AStarConcurrentSearch(SearchSpace<P, M> searchSpace) {
+    public AStarConcurrentSearch(SearchSpace<S, T> searchSpace) {
         this.searchSpace = searchSpace;
-        visited = Collections.synchronizedSet(new HashSet<P>());
+        visited = Collections.synchronizedSet(new HashSet<S>());
         openQueue = new PriorityBlockingQueue<>(20);
-        pathCost = Collections.synchronizedMap(new HashMap<P, Integer>());
+        pathCost = Collections.synchronizedMap(new HashMap<S, Integer>());
     }
 
     /**
      * Best first search for a solution.
      * @return the solution state node if found which has the path leading to a solution. Null if no solution.
      */
-    protected Node<P, M> doSearch() {
+    protected Node<S, T> doSearch() {
 
         Parallelizer parallelizer = new Parallelizer<>();
 
@@ -65,15 +67,15 @@ public class AStarConcurrentSearch<P, M> extends AStarSearch<P, M> {
 
     /** search worker */
     class Worker implements Runnable {
-         AStarSearch<P, M> solver;
+         AStarSearch<S, T> solver;
 
-        Worker(AStarSearch<P, M> solver) {
+        Worker(AStarSearch<S, T> solver) {
             this.solver = solver;
         }
 
         @Override
         public void run() {
-            Node<P, M> sol = solver.search();
+            Node<S, T> sol = solver.search();
             if (sol != null)  {
                 solution = sol;
             }

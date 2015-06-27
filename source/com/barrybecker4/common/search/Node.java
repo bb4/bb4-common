@@ -6,56 +6,60 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Link node for a position/state in the global search space.
- * Contains a position (immutable state) and a move
- * (transition that got us to that position from the previous state).
+ * Link node for a state in the global search space.
+ * Contains an immutable state and a transition that got us to this state from the last one.
  * The estimated future cost is used for sorting nodes.
- * P is the position/state type
- * M is the move/transition from one position to another.
+ * S is the state type
+ * T is the transition from one state to the next.
  *
  * @author Barry Becker
  */
 //@Immutable
-public class Node<P, M> implements Comparable<Node<P, M>> {
+public class Node<S, T> implements Comparable<Node<S, T>> {
 
-    private final P position;
-    private final M move;
+    private final S state;
+    private final T transition;
     private final int estimatedFutureCost;
-    private Node<P, M> previous;
+    private Node<S, T> previous;
 
-    public Node(P pos, M move, Node<P, M> prev) {
-        this(pos, move, prev, 1);
+    public Node(S state, T transition, Node<S, T> prev) {
+        this(state, transition, prev, 1);
     }
 
-    public Node(P pos) {
-        this(pos, null, null, 1);
-    }
-
-    public Node(P pos, int estimatedFutureCost) {
-        this(pos, null, null, estimatedFutureCost);
+    public Node(S state) {
+        this(state, null, null, 1);
     }
 
     /**
-     * Puzzle state
-     * @param pos the current position state
-     * @param move the transformation that got to this state
+     * Use this only when there is no transition to this node.
+     * @param initialState initial state
+     * @param estimatedFutureCost the cost of getting here plus the estimated future cost to get to the finish.
+     */
+    public Node(S initialState, int estimatedFutureCost) {
+        this(initialState, null, null, estimatedFutureCost);
+    }
+
+    /**
+     * Represents a state and how we got to it from the last state.
+     * @param state the current state state
+     * @param transition the transformation that got to this state
      * @param prev the previous state
      * @param estimatedFutureCost the cost of getting here plus the estimated future cost to get to the finish.
      */
-    public Node(P pos, M move, Node<P, M> prev, int estimatedFutureCost) {
-        this.position = pos;
-        this.move = move;
+    public Node(S state, T transition, Node<S, T> prev, int estimatedFutureCost) {
+        this.state = state;
+        this.transition = transition;
         this.previous = prev;
         this.estimatedFutureCost = estimatedFutureCost;
     }
 
-    /** @return position in the global search space*/
-    public P getPosition() {
-        return position;
+    /** @return state in the global search space */
+    public S getState() {
+        return state;
     }
 
     /**
-     * @return An estimate of how much it will cost to go from this position to the goal state
+     * @return An estimate of how much it will cost to go from this state to the goal state
      */
     public int getEstimatedFutureCost() {
         return estimatedFutureCost;
@@ -64,16 +68,16 @@ public class Node<P, M> implements Comparable<Node<P, M>> {
     /**
      * @return a list of nodes from the start state to this state.
      */
-    public List<M> asMoveList() {
-        List<M> solution = new LinkedList<>();
-        for (Node<P, M> n = this; n.move != null; n = n.previous) {
-            solution.add(0, n.move);
+    public List<T> asTransitionList() {
+        List<T> solution = new LinkedList<>();
+        for (Node<S, T> n = this; n.transition != null; n = n.previous) {
+            solution.add(0, n.transition);
         }
         return solution;
     }
 
     @Override
-    public int compareTo(Node<P, M> otherNode) {
+    public int compareTo(Node<S, T> otherNode) {
         return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
 }
