@@ -5,9 +5,35 @@ package com.barrybecker4.common.search;
  */
 public class StubTransition {
 
-    int id;
+    StubState newState;
+    int cost;
 
-    StubTransition(int id) {
-        this.id = id;
+    /**
+     * @param newState the new state to be transitioned to.
+     */
+    StubTransition(StubState newState) {
+        this.newState = newState;
+    }
+
+    /**
+     * @param newState the new state to be transitioned to.
+     * @param cost the cost of making this transition
+     */
+    StubTransition(StubState newState, int cost) {
+        this(newState);
+        this.cost = cost;
+    }
+
+    StubState getNewState() {
+        return newState;
+    }
+
+    int getCost() {
+        return cost;
+    }
+
+
+    public String toString() {
+        return "[" + newState + " cost=" + cost  + "]";
     }
 }

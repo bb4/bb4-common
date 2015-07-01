@@ -82,7 +82,7 @@ public class AStarSearch<S, T>  {
 
     /**
      * Best first search for a solution.
-     * @return the solution state node if found which has the path leading to a solution. Null if no solution.
+     * @return the solution state node, if found, which has the path leading to a solution. Null if no solution.
      */
     protected Node<S, T> search() {
 

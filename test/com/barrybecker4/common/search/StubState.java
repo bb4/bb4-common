@@ -5,13 +5,40 @@ package com.barrybecker4.common.search;
  */
 public class StubState {
 
-    private int id;
+    private String id;
+    int estDistanceFromGoal;
+
+    /**
+     * @param id some unique identifier
+     */
+    StubState(String id) {
+         this.id = id;
+    }
 
     /**
      * @param id some unique identifier
      */
     StubState(int id) {
-         this.id = id;
+         this.id = Integer.toString(id);
+    }
+
+    /**
+     * @param id some unique identifier
+     * @param estDistanceFromGoal the estimated distance to goal should be an optimistic estimate in order to
+     *            be admissible by A*.
+     */
+    StubState(String id, int estDistanceFromGoal) {
+        this(id);
+        this.estDistanceFromGoal = estDistanceFromGoal;
+    }
+
+
+    int getDistanceFromGoal() {
+        return estDistanceFromGoal;
+    }
+
+    public String toString() {
+         return "id=" + id + " distanceFromGoal=" + estDistanceFromGoal;
     }
 
     @Override
@@ -21,12 +48,13 @@ public class StubState {
 
         StubState stubState = (StubState) o;
 
-        return id == stubState.id;
+        return id.equals(stubState.id);
 
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
+
 }

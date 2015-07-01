@@ -80,4 +80,8 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
     public int compareTo(Node<S, T> otherNode) {
         return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
+
+    public String toString() {
+        return "[" + state + ", cost="+  estimatedFutureCost +"]";
+    }
 }
