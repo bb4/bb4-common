@@ -112,7 +112,7 @@ public class AStarSearch<S, T>  {
                 }
             }
         }
-        return null;  // failure
+        return null;  // failure. No solution found.
     }
 
     protected boolean nodesAvailable() {

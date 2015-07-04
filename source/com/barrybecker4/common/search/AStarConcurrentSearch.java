@@ -24,7 +24,6 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
     /** use the number of cores available as a default number of threads */
     private static final int NUM_WORKERS = Parallelizer.NUM_PROCESSORS;
 
-
     /**
      * @param searchSpace the global search space that contains initial and goal states.
      */
