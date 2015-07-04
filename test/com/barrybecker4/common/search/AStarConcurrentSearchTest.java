@@ -28,10 +28,27 @@ public class AStarConcurrentSearchTest {
 
         // a list of transitions to the goal state
         List<StubTransition> path = searcher.solve();
+        /*
+        assertEquals("Unexpected path to goal state found.",
+                "[[id=A distanceFromGoal=8 cost=3], " +
+                "[id=B distanceFromGoal=7 cost=4], " +
+                "[id=C distanceFromGoal=6 cost=6], " +
+                "[id=goal distanceFromGoal=0 cost=8]]",
+                path.toString()); */
+
+        // this is what it should be.
         assertEquals("Unexpected path to goal state found.",
                 "[[id=D distanceFromGoal=5 cost=4], " +
                 "[id=E distanceFromGoal=4 cost=6], " +
                 "[id=goal distanceFromGoal=0 cost=4]]",
                 path.toString());
+        // [[id=[D distanceFromGoal=5 cost=4],
+        // [id=E distanceFromGoal=4 cost=6],
+        // [id=goal distanceFromGoal=0 cost=4]]]>
+        // but was:<
+        // [[id=[A distanceFromGoal=8 cost=3],
+        // [id=B distanceFromGoal=7 cost=4],
+        // [id=C distanceFromGoal=6 cost=6],
+        // [id=goal distanceFromGoal=0 cost=8]]]>
     }
 }

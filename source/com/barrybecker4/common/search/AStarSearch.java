@@ -100,7 +100,7 @@ public class AStarSearch<S, T>  {
             for (T transition : transitions) {
                 S nbr = searchSpace.transition(currentState, transition);
                 int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
-                if (!openQueue.contains(nbr) || estPathCost < pathCost.get(nbr)) {
+                if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
                     int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
                     Node<S, T> child =
                             new Node<>(nbr, transition, currentNode, estFutureCost);
@@ -112,7 +112,7 @@ public class AStarSearch<S, T>  {
                 }
             }
         }
-        return null;  // failure. No solution found.
+        return null;  // failure
     }
 
     protected boolean nodesAvailable() {

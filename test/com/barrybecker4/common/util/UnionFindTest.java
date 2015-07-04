@@ -35,7 +35,7 @@ public class UnionFindTest {
         long elapsed = System.currentTimeMillis() - start;
         assertEquals("Unexpected number of sets", 6, uf.getCount());
 
-        assertTrue("Too long: "+ elapsed, elapsed < 4500);
+        assertTrue("Too long: "+ elapsed, elapsed < 8500);
     }
 
     @Test

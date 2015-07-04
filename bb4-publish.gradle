@@ -150,7 +150,7 @@ configure(install.repositories.mavenInstaller) {
  * See http://jedicoder.blogspot.com/2011/11/automated-gradle-project-deployment-to.html
  * Go to https://oss.sonatype.org to view staged repositories after publishing.
  */
-uploadArchives {
+final def archives = uploadArchives {
     repositories {
         mavenDeployer {
 
@@ -179,6 +179,7 @@ uploadArchives {
         }
     }
 }
+archives
 
 /** Effectively the same as uploadArchives, but I like this name better */
 task publishArtifacts (dependsOn:uploadArchives) {
