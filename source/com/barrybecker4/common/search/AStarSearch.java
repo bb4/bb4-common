@@ -100,7 +100,7 @@ public class AStarSearch<S, T>  {
             for (T transition : transitions) {
                 S nbr = searchSpace.transition(currentState, transition);
                 int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
-                if (!visited.contains(nbr) || estPathCost < pathCost.get(nbr)) {
+                if (!openQueue.contains(nbr) || estPathCost < pathCost.get(nbr)) {
                     int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
                     Node<S, T> child =
                             new Node<>(nbr, transition, currentNode, estFutureCost);
