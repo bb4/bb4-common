@@ -103,7 +103,7 @@ public class AStarSearch<S, T>  {
                 if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
                     int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
                     Node<S, T> child =
-                            new Node<>(nbr, transition, currentNode, estFutureCost);
+                            new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
                     pathCost.put(nbr, estPathCost);
                     if (!openQueue.contains(child)) {
                         openQueue.add(child);

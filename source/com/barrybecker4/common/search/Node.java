@@ -19,15 +19,16 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
 
     private final S state;
     private final T transition;
+    private final int pathCost;
     private final int estimatedFutureCost;
     private Node<S, T> previous;
 
     public Node(S state, T transition, Node<S, T> prev) {
-        this(state, transition, prev, 1);
+        this(state, transition, prev, 0, 1);
     }
 
     public Node(S state) {
-        this(state, null, null, 1);
+        this(state, null, null, 0,  1);
     }
 
     /**
@@ -36,7 +37,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
      * @param estimatedFutureCost the cost of getting here plus the estimated future cost to get to the finish.
      */
     public Node(S initialState, int estimatedFutureCost) {
-        this(initialState, null, null, estimatedFutureCost);
+        this(initialState, null, null, 0, estimatedFutureCost);
     }
 
     /**
@@ -44,12 +45,14 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
      * @param state the current state state
      * @param transition the transformation that got to this state
      * @param prev the previous state
+     * @param pathCost cost from initial position to the state represented by this node
      * @param estimatedFutureCost the cost of getting here plus the estimated future cost to get to the finish.
      */
-    public Node(S state, T transition, Node<S, T> prev, int estimatedFutureCost) {
+    public Node(S state, T transition, Node<S, T> prev, int pathCost, int estimatedFutureCost) {
         this.state = state;
         this.transition = transition;
         this.previous = prev;
+        this.pathCost = pathCost;
         this.estimatedFutureCost = estimatedFutureCost;
     }
 
@@ -58,6 +61,9 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         return state;
     }
 
+    public int getPathCost() {
+        return pathCost;
+    }
     /**
      * @return An estimate of how much it will cost to go from this state to the goal state
      */
@@ -78,10 +84,11 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
 
     @Override
     public int compareTo(Node<S, T> otherNode) {
-        return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
+        return pathCost - otherNode.pathCost;
+        //return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
 
     public String toString() {
-        return "[" + state + ", cost="+  estimatedFutureCost +"]";
+        return "[" + state + ", pathCost="+ pathCost + " totalCost="+  estimatedFutureCost +"]";
     }
 }
