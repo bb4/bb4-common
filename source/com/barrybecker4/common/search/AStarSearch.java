@@ -105,7 +105,7 @@ public class AStarSearch<S, T>  {
                     Node<S, T> child =
                             new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
                     pathCost.put(nbr, estPathCost);
-                    if (!openQueue.contains(child)) {
+                    if (!visited.contains(nbr) && !openQueue.contains(child)) {
                         openQueue.add(child);
                         numTries++;
                     }
