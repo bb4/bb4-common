@@ -38,6 +38,9 @@ public class AStarSearch<S, T>  {
     /** number of steps that it took to find solution */
     protected long numTries;
 
+    /** enables stopping the search via method call */
+    private boolean stopped;
+
     /**
      * @param searchSpace the global search space containing initial and goal states.
      */
@@ -55,6 +58,7 @@ public class AStarSearch<S, T>  {
      */
     public List<T> solve() {
 
+        stopped = false;
         S startingState = searchSpace.initialState();
         long startTime = System.currentTimeMillis();
         Node<S, T> startNode =
@@ -75,6 +79,16 @@ public class AStarSearch<S, T>  {
         return pathToSolution;
     }
 
+    /** @return the solution - null until it is found */
+    public List<T> getSolution() {
+        return solution == null ? null : solution.asTransitionList();
+    }
+
+    /** Tell the search to stop */
+    public void stop() {
+        stopped = true;
+    }
+
     /**
      * Best first search for a solution.
      * @return the solution state node if found which has the path leading to a solution. Null if no solution.
@@ -89,7 +103,7 @@ public class AStarSearch<S, T>  {
      */
     protected Node<S, T> search() {
 
-        while (nodesAvailable())  {
+        while (nodesAvailable() && !stopped)  {
             Node<S, T> currentNode = openQueue.remove();
             S currentState = currentNode.getState();
             searchSpace.refresh(currentState, numTries);
@@ -112,10 +126,10 @@ public class AStarSearch<S, T>  {
                         Node<S, T> child =
                                 new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
                         pathCost.put(nbr, estPathCost);
-                        if (!openQueue.contains(child)) {    // not sure about this
+                        //if (!openQueue.contains(child)) {    // not sure about this
                             openQueue.add(child);
                             numTries++;
-                        }
+                        //}
                     }
                 }
             }
