@@ -75,7 +75,6 @@ public class Solver {
         if (!isSolvable()) return null;
         List<Board> list = new LinkedList<>();
         list.add(startState);
-        System.out.println("sol trans = "+ solutionTransitions);
         Board previous = startState;
 
         for (Transition trans : solutionTransitions) {

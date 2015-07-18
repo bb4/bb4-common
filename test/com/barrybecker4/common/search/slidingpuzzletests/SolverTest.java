@@ -1,5 +1,6 @@
 package com.barrybecker4.common.search.slidingpuzzletests;
 
+import com.barrybecker4.common.Watch;
 import com.barrybecker4.common.search.slidingpuzzle.Board;
 import com.barrybecker4.common.search.slidingpuzzle.BoardReader;
 import com.barrybecker4.common.search.slidingpuzzle.Solver;
@@ -53,12 +54,10 @@ public class SolverTest {
     @Test
     public void testSolve07() {
         Board initial = reader.read("puzzle07.txt");
-        System.out.println("initial = "+ initial);
         solver = new Solver(initial);
 
         assertEquals("Unexpected number of moves for puzzle07.txt", 7, solver.moves());
         String path = getSolutionSequence(solver.solution());
-        System.out.println("path=" + path);
         assertTrue("Unexpected solution", path.equals(
                 "3\n" +
                         " 1  2  3 \n" +
@@ -165,7 +164,7 @@ public class SolverTest {
         List<Case> testCases = new LinkedList<>();
         testCases.add(new Case("puzzle00.txt", 0, true));
 
-        for (int i = 1; i < 32; i++) {
+        for (int i = 1; i < 30; i++) {
             String filename = "puzzle";
             if (i < 10) {
                filename += "0";
@@ -173,7 +172,7 @@ public class SolverTest {
             testCases.add(new Case(filename + i + ".txt", i, true));
         }
 
-        runCases(testCases, 45.0);
+        runCases(testCases, 40.0);
     }
 
 
@@ -187,7 +186,7 @@ public class SolverTest {
         testCases.add(new Case("puzzle3x3-unsolvable1.txt", -1, false));
         testCases.add(new Case("puzzle3x3-unsolvable2.txt", -1, false));
 
-        runCases(testCases, 5.0);
+        runCases(testCases, 4.0);
     }
 
     @Test
@@ -196,7 +195,7 @@ public class SolverTest {
         testCases.add(new Case("puzzle2x2-solvable1.txt", 4, true));
         testCases.add(new Case("puzzle2x2-solvable2.txt", 4, true));
 
-        runCases(testCases, 2.0);
+        runCases(testCases, 1.0);
     }
 
     /*

@@ -1,4 +1,4 @@
-package com.barrybecker4.common.search.slidingpuzzletests;
+package com.barrybecker4.common;
 
 
 public class Watch {

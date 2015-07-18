@@ -14,8 +14,6 @@ import java.util.Scanner;
 public class BoardReader {
 
     public Board read(String filename) {
-        System.out.println("reading file = " + filename);
-        //ClassLoader classLoader = getClass().getClassLoader();
 
         InputStream str = getClass().getResourceAsStream("resources/"+ filename);
         assert str != null;
