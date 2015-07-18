@@ -62,7 +62,7 @@ public class Node implements Comparable<Node> {
 
     /**
      * @return a list of nodes from the start state to this state.
-     */
+     *
     public List<Board> asTransitionList() {
         List<Board> solution = new LinkedList<>();
         solution.add(this.getState());
@@ -71,7 +71,7 @@ public class Node implements Comparable<Node> {
         }
         Collections.reverse(solution);
         return solution;
-    }
+    }   */
 
     public String toString() {
         return "[" + state + ", numSteps="+ numSteps + "]";

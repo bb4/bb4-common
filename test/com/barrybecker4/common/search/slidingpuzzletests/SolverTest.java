@@ -91,8 +91,8 @@ public class SolverTest {
                         "3\n" +
                         " 1  2  3 \n" +
                         " 4  5  6 \n" +
-                        " 7  8  0 \n") ||  path.equals(
-                        "3\n" +
+                        " 7  8  0 \n") || path.equals(
+                "3\n" +
                         " 1  2  3 \n" +
                         " 0  7  6 \n" +
                         " 5  4  8 \n" +
@@ -151,28 +151,21 @@ public class SolverTest {
         return bldr.toString();
     }
 
+    /*
     @Test
     public void testNotSolvable() {
-
         Board initial = reader.read("puzzle3x3-unsolvable.txt");
         solver = new Solver(initial);
-
         assertEquals("Unexpected number of moves for puzzle3x3-unsolvable.txt", -1, solver.moves());
         assertEquals("Unexpectedly solvable", false, solver.isSolvable());
-    }
+    }  */
 
     @Test
-    public void runAllTestFiles() {
+    public void runAllSolvableTestFiles() {
         List<Case> testCases = new LinkedList<>();
-        testCases.add(new Case("puzzle2x2-unsolvable1.txt", -1, false));
-        testCases.add(new Case("puzzle2x2-unsolvable2.txt", -1, false));
-        testCases.add(new Case("puzzle2x2-unsolvable3.txt", -1, false));
-        testCases.add(new Case("puzzle3x3-unsolvable.txt", -1, false));
-        testCases.add(new Case("puzzle3x3-unsolvable1.txt", -1, false));
-        testCases.add(new Case("puzzle3x3-unsolvable2.txt", -1, false));
         testCases.add(new Case("puzzle00.txt", 0, true));
 
-        for (int i = 1; i < 22; i++) {
+        for (int i = 1; i < 32; i++) {
             String filename = "puzzle";
             if (i < 10) {
                filename += "0";
@@ -180,7 +173,21 @@ public class SolverTest {
             testCases.add(new Case(filename + i + ".txt", i, true));
         }
 
-        runCases(testCases, 55.0);
+        runCases(testCases, 45.0);
+    }
+
+
+    @Test
+    public void runAllUnsolvableTestFiles() {
+        List<Case> testCases = new LinkedList<>();
+        testCases.add(new Case("puzzle2x2-unsolvable1.txt", -1, false));
+        testCases.add(new Case("puzzle2x2-unsolvable2.txt", -1, false));
+        testCases.add(new Case("puzzle2x2-unsolvable3.txt", -1, false));
+        testCases.add(new Case("puzzle3x3-unsolvable.txt", -1, false));
+        testCases.add(new Case("puzzle3x3-unsolvable1.txt", -1, false));
+        testCases.add(new Case("puzzle3x3-unsolvable2.txt", -1, false));
+
+        runCases(testCases, 5.0);
     }
 
     @Test
@@ -254,6 +261,5 @@ public class SolverTest {
             assertFalse("Unexpectedly solvable", solver.isSolvable());
             assertNull("Solution not null", solver.solution());
         }
-
     }
 }

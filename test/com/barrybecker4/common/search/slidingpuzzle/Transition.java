@@ -11,16 +11,20 @@ public class Transition {
     private Location spacePosition;
     private Location tilePosition;
 
-    Transition(Location spacePosition, Location tilePosition) {
+    public Transition(Location spacePosition, Location tilePosition) {
         this.spacePosition = spacePosition;
         this.tilePosition = tilePosition;
     }
 
-    Location getSpacePosition() {
+    public Location getSpacePosition() {
         return spacePosition;
     }
 
-    Location getTilePosition() {
+    public Location getTilePosition() {
         return tilePosition;
+    }
+
+    public String toString() {
+        return "from " + tilePosition + " to " + spacePosition;
     }
 }

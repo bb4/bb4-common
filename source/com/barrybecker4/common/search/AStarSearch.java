@@ -126,10 +126,10 @@ public class AStarSearch<S, T>  {
                         Node<S, T> child =
                                 new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
                         pathCost.put(nbr, estPathCost);
-                        //if (!openQueue.contains(child)) {    // not sure about this
+                        if (!openQueue.contains(child)) {    // not sure about this
                             openQueue.add(child);
                             numTries++;
-                        //}
+                        }
                     }
                 }
             }

@@ -207,6 +207,20 @@ public class Board {
         return neighbors;
     }
 
+    private Board move(int oldSpaceRow, int oldSpaceCol, int newSpaceRow, int newSpaceCol) {
+        byte[] newBlocks = copyBlocks(blocks);
+        short movingVal = blocks[newSpaceRow * side + newSpaceCol];
+        int goalCol = (movingVal - 1) % side;
+        int goalRow = (movingVal - 1) / side;
+        int oldDist = Math.abs(newSpaceRow - goalRow) + Math.abs(newSpaceCol - goalCol);
+        int newDist = Math.abs(oldSpaceRow - goalRow) + Math.abs(oldSpaceCol - goalCol);
+        int distImprovement = oldDist - newDist;
+        //System.out.println("dist delta = " + distImprovement);
+        swap(oldSpaceRow, oldSpaceCol, newSpaceRow, newSpaceCol, newBlocks);
+        return new Board(newBlocks, side, (short)(manhattan - distImprovement));
+    }
+
+
     /**
      * @return row column coordinates of the space position
      */
@@ -219,19 +233,6 @@ public class Board {
             }
         }
         throw new IllegalStateException("No space position!");
-    }
-
-    private Board move(int oldSpaceRow, int oldSpaceCol, int newSpaceRow, int newSpaceCol) {
-        byte[] newBlocks = copyBlocks(blocks);
-        short movingVal = blocks[newSpaceRow * side + newSpaceCol];
-        int goalCol = (movingVal - 1) % side;
-        int goalRow = (movingVal - 1) / side;
-        int oldDist = Math.abs(newSpaceRow - goalRow) + Math.abs(newSpaceCol - goalCol);
-        int newDist = Math.abs(oldSpaceRow - goalRow) + Math.abs(oldSpaceCol - goalCol);
-        int distImprovement = oldDist - newDist;
-        //System.out.println("dist delta = " + distImprovement);
-        swap(oldSpaceRow, oldSpaceCol, newSpaceRow, newSpaceCol, newBlocks);
-        return new Board(newBlocks, side, (short)(manhattan - distImprovement));
     }
 
     private static byte[] makeBlocks(int[][] src) {

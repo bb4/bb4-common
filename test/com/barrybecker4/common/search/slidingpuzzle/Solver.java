@@ -12,7 +12,7 @@ import java.util.List;
 public class Solver {
 
     private Board startState;
-    private List<Transition> solution;
+    private List<Transition> solutionTransitions;
 
     /**
      * find a solution to the initial board (using the A* algorithm)
@@ -42,43 +42,48 @@ public class Solver {
 
         while (searcher.getSolution() == null && twinSearcher.getSolution() == null) {
             // keep searching
-
+            /*
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            } */
         }
 
         if (searcher.getSolution() != null) {
-            solution = searcher.getSolution();
+            solutionTransitions = searcher.getSolution();
             twinSearcher.stop();
         }
         else {
-            solution = null; // no solution
+            solutionTransitions = null; // no solution
             searcher.stop();
         }
     }
 
     /** @return true if the initial board is solvable */
     public boolean isSolvable() {
-        return solution != null;
+        return solutionTransitions != null;
     }
 
     /** @return min number of moves to solve initial board; -1 if unsolvable */
     public int moves() {
-        return solution == null ? -1 : solution.size();
+        return solutionTransitions == null ? -1 : solutionTransitions.size();
     }
 
-    /** @return sequence of boards in a shortest solution; null if unsolvable */
+    /** @return sequence of boards in a shortest solutionTransitions; null if unsolvable */
     public Iterable<Board> solution() {
         if (!isSolvable()) return null;
         List<Board> list = new LinkedList<>();
         list.add(startState);
-        for (Transition trans : solution) {
-            list.add(startState.applyTransition(trans));
+        System.out.println("sol trans = "+ solutionTransitions);
+        Board previous = startState;
+
+        for (Transition trans : solutionTransitions) {
+            Board newState = previous.applyTransition(trans);
+            list.add(newState);
+            previous = newState;
         }
-        return list; //solution.asTransitionList();
+        return list; //solutionTransitions.asTransitionList();
     }
 
 
@@ -90,9 +95,9 @@ public class Solver {
         // solve the puzzle
         Solver solver = new Solver(initial);
 
-        // print solution to standard output
+        // print solutionTransitions to standard output
         if (!solver.isSolvable())
-            System.out.println("No solution possible");
+            System.out.println("No solutionTransitions possible");
         else {
             System.out.println("Minimum number of moves = " + solver.moves());
             for (Board board : solver.solution())

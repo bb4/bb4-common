@@ -2,6 +2,7 @@
 package com.barrybecker4.common.search;
 
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
 
-    /*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,8 +94,9 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         int result = state.hashCode();
         result = 31 * result + pathCost;
         return result;
-    } */
+    }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,7 +108,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
     @Override
     public int hashCode() {
         return state.hashCode();
-    }
+    }  */
 
     /**
      * @return a list of nodes from the start state to this state.
@@ -116,6 +118,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         for (Node<S, T> n = this; n.transition != null; n = n.previous) {
             solution.add(0, n.transition);
         }
+        //Collections.reverse(solution);
         return solution;
     }
 

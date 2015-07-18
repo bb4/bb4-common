@@ -1,6 +1,8 @@
 package com.barrybecker4.common.search.slidingpuzzletests;
 
+import com.barrybecker4.common.geometry.ByteLocation;
 import com.barrybecker4.common.search.slidingpuzzle.Board;
+import com.barrybecker4.common.search.slidingpuzzle.Transition;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -118,6 +120,28 @@ public class BoardTest {
         board = new Board(ALMOST_SOLVED_3);
         assertEquals("Unexpected hamming distance", 1, board.hamming());
         assertEquals("Unexpected manhattan distance", 1, board.manhattan());
+    }
+
+    @Test
+     public void testApplyTransition() {
+        board = new Board(ALMOST_SOLVED_3);
+        Transition trans1 = new Transition(new ByteLocation(2, 1), new ByteLocation(1, 1));
+
+        Board newBoard = board.applyTransition(trans1);
+        assertEquals("Unexpected hamming distance after trans1", 2, newBoard.hamming());
+        assertEquals("Unexpected board after first transition", "3\n" +
+                " 1  2  3 \n" +
+                " 4  0  6 \n" +
+                " 7  5  8 \n", newBoard.toString());
+
+        Transition trans2 = new Transition(new ByteLocation(1, 1), new ByteLocation(1, 0));
+        newBoard = newBoard.applyTransition(trans2);
+        assertEquals("Unexpected hamming distance after trans2", 3, newBoard.hamming());
+        assertEquals("Unexpected board after trans2", "3\n" +
+                " 1  2  3 \n" +
+                " 0  4  6 \n" +
+                " 7  5  8 \n", newBoard.toString());
+
     }
 
     @Test
