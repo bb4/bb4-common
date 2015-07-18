@@ -42,6 +42,7 @@ public class AStarConcurrentSearchTest {
                 "[id=E distanceFromGoal=4 cost=6], " +
                 "[id=goal distanceFromGoal=0 cost=4]]",
                 path.toString());
+
         // [[id=[D distanceFromGoal=5 cost=4],
         // [id=E distanceFromGoal=4 cost=6],
         // [id=goal distanceFromGoal=0 cost=4]]]>
@@ -50,5 +51,8 @@ public class AStarConcurrentSearchTest {
         // [id=B distanceFromGoal=7 cost=4],
         // [id=C distanceFromGoal=6 cost=6],
         // [id=goal distanceFromGoal=0 cost=8]]]>
+
+        //[[id=A distanceFromGoal=8 cost=3],
+        //[id=B distanceFromGoal=7 cost=4], [id=C distanceFromGoal=6 cost=6], [id=goal distanceFromGoal=0 cost=8]]
     }
 }

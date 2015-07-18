@@ -1,14 +1,13 @@
-/** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
+/** Copyright by Barry G. Becker, 2000-2015. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.concurrency;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Using this class you should be able to easily parallelize a set of long running tasks.
@@ -36,7 +35,7 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
     public void invokeAllRunnables(List<Runnable> workers)  {
 
         // convert the runnables to callables so the invokeAll api works
-        List<Callable<T>> callables = new ArrayList<Callable<T>>(workers.size());
+        List<Callable<T>> callables = new ArrayList<>(workers.size());
         for (Runnable r : workers) {
             callables.add(Executors.callable(r, (T)null));
         }
@@ -45,6 +44,7 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
 
         // consider using ExecutorCompletionService so that the results can be processed as they become available
         // rather than blocking on one of them arbitrarily.
+        /*
         for (Future<T> f : futures) {
             try {
                 // blocks until the result is available.
@@ -54,6 +54,27 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
             } catch (ExecutionException ex) {
                 Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }    */
+        ExecutorCompletionService<T> completionService = new ExecutorCompletionService<>(executor);
+
+        for (final Callable<T> callable : callables) {
+            completionService.submit(callable);
         }
+
+        try {
+            for(int i = 0; i < futures.size(); ++i) {
+                final Future<T> future = completionService.take();
+                try {
+                    T result = future.get();
+                    //... process result (perhaps use a callback here)
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -1,19 +1,22 @@
 /** Copyright by Barry G. Becker, 2012 - 2015. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.search;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Sequential search strategy that uses the A* search algorithm.
  * See http://en.wikipedia.org/wiki/A*_search_algorithm
  * S represents a state in the global search space.
  * T represents a transition from one state to the next.
+ *
+ * The performance of this search is very dependent on the design of the search space.
+ * Here are some possible optimizations to consider when designing the SearchSpace and its components.
+ * - The visited list may grow huge if the space is very large causing out of memory issues.
+ * - Calculate distance metrics in the constructor (or using lazy initialization) of S. S and T should be immutable.
+ * - Try to make the equals method in S as efficient as possible as it will be called a lot.
+ * - When creating neighbors, use the fact that there is going to be an incremental change to the distance
+ *   and do not recompute it from scratch. Hint: use a private constructor, that takes the distance as a param.
+ * - Sort the neighbors so that the most promising is delivered first.
  *
  * @author Barry Becker
  */
@@ -92,22 +95,27 @@ public class AStarSearch<S, T>  {
             searchSpace.refresh(currentState, numTries);
 
             if (searchSpace.isGoal(currentState)) {
-                solution = currentNode;
+                // the extra check for a better path is needed when running concurrently
+                if (solution == null || currentNode.getPathCost() < solution.getPathCost()) {
+                     solution = currentNode;
+                }
                 return currentNode;  // success
             }
             visited.add(currentState);
             List<T> transitions = searchSpace.legalTransitions(currentState);
             for (T transition : transitions) {
                 S nbr = searchSpace.transition(currentState, transition);
-                int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
-                if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
-                    int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
-                    Node<S, T> child =
-                            new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
-                    pathCost.put(nbr, estPathCost);
-                    if (!visited.contains(nbr) && !openQueue.contains(child)) {
-                        openQueue.add(child);
-                        numTries++;
+                if (!visited.contains(nbr)) {
+                    int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
+                    if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
+                        int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
+                        Node<S, T> child =
+                                new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
+                        pathCost.put(nbr, estPathCost);
+                        if (!openQueue.contains(child)) {    // not sure about this
+                            openQueue.add(child);
+                            numTries++;
+                        }
                     }
                 }
             }
@@ -119,3 +127,7 @@ public class AStarSearch<S, T>  {
         return !openQueue.isEmpty();
     }
 }
+
+
+
+

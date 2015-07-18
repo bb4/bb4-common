@@ -20,6 +20,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
     private final S state;
     private final T transition;
     private final int pathCost;
+    /** an estimate of the total eventual cost of the path from start to goal running through this node */
     private final int estimatedFutureCost;
     private Node<S, T> previous;
 
@@ -71,6 +72,42 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         return estimatedFutureCost;
     }
 
+
+    @Override
+    public int compareTo(Node<S, T> otherNode) {
+        return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
+    }
+
+    /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node<?, ?> node = (Node<?, ?>) o;
+        if (pathCost != node.pathCost) return false;
+        return state.equals(node.state);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = state.hashCode();
+        result = 31 * result + pathCost;
+        return result;
+    } */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node<?, ?> node = (Node<?, ?>) o;
+        return state.equals(node.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+
     /**
      * @return a list of nodes from the start state to this state.
      */
@@ -80,12 +117,6 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
             solution.add(0, n.transition);
         }
         return solution;
-    }
-
-    @Override
-    public int compareTo(Node<S, T> otherNode) {
-        return pathCost - otherNode.pathCost;
-        //return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
 
     public String toString() {

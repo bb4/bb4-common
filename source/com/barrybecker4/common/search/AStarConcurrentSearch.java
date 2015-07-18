@@ -15,6 +15,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  * Concurrent implementation of the A* search algorithm.
  * Finds the optimal path to a goal state (S) from an initial state (S) via a sequence of transitions (T).
  * See http://en.wikipedia.org/wiki/A*_search_algorithm
+ * See http://math.owu.edu/MCURCSM/papers/paper2.pdf
  * S - State
  * T - Transition from one state to the next.
  * @author Barry Becker
@@ -66,7 +67,7 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
 
     /** search worker */
     class Worker implements Runnable {
-         AStarSearch<S, T> solver;
+        AStarSearch<S, T> solver;
 
         Worker(AStarSearch<S, T> solver) {
             this.solver = solver;

@@ -68,9 +68,9 @@ public class NodeTest {
         Collections.sort(nodes);
         assertEquals("Unexpected ordering.",
                 "[[id=1 distanceFromGoal=0, pathCost=0 totalCost=5], " +
+                "[id=1 distanceFromGoal=0, pathCost=7 totalCost=7], " +
                 "[id=1 distanceFromGoal=0, pathCost=1 totalCost=11], " +
-                "[id=1 distanceFromGoal=0, pathCost=4 totalCost=14], " +
-                "[id=1 distanceFromGoal=0, pathCost=7 totalCost=7]]",
+                "[id=1 distanceFromGoal=0, pathCost=4 totalCost=14]]",
                 nodes.toString());
     }
 }

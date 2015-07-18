@@ -20,7 +20,7 @@ class CallableParallelizer<T> {
     public static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
-    private ExecutorService executor;
+    protected ExecutorService executor;
 
     /**
      * By default, the number of threads we use is equal to the number of processors
