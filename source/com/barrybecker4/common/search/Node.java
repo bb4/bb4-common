@@ -73,6 +73,13 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         return estimatedFutureCost;
     }
 
+    public Node<S, T> getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Node<S, T> p) {
+        previous = p;
+    }
 
     @Override
     public int compareTo(Node<S, T> otherNode) {
@@ -97,10 +104,9 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
      */
     public List<T> asTransitionList() {
         List<T> solution = new LinkedList<>();
-        for (Node<S, T> n = this; n.transition != null; n = n.previous) {
-            solution.add(0, n.transition);
+        for (Node<S, T> node = this; node.transition != null; node = node.previous) {
+            solution.add(0, node.transition);
         }
-        //Collections.reverse(solution);
         return solution;
     }
 

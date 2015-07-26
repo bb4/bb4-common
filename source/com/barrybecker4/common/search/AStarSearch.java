@@ -20,12 +20,12 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class AStarSearch<S, T>  {
+public class AStarSearch<S, T> implements ISearcher {
 
     protected SearchSpace<S, T> searchSpace;
 
     /** States that have been visited, but they may be replaced if we can reach them by a better path */
-    Set<S> visited;
+    Map<S, Node<S, T>> visited;
 
     /** Candidate nodes to search on the frontier. */
     protected UpdatablePriorityQueue<S, T> openQueue;
@@ -54,7 +54,7 @@ public class AStarSearch<S, T>  {
      */
     public AStarSearch(SearchSpace<S, T> searchSpace, UpdatablePriorityQueue<S, T> queue) {
         this.searchSpace = searchSpace;
-        visited = new HashSet<>();
+        visited = new HashMap<>();
         openQueue = queue;
         pathCost = new HashMap<>();
     }
@@ -66,15 +66,10 @@ public class AStarSearch<S, T>  {
      */
     public List<T> solve() {
 
-        stopped = false;
-        S startingState = searchSpace.initialState();
         long startTime = System.currentTimeMillis();
-        Node<S, T> startNode =
-                new Node<>(startingState, searchSpace.distanceFromGoal(startingState));
-        openQueue.add(startNode);
-        pathCost.put(startingState, 0);
+        initialize();
 
-        Node<S, T> solutionState = doSearch();
+        Node<S, T> solutionState = search();
 
         List<T> pathToSolution = null;
         S solution = null;
@@ -85,6 +80,16 @@ public class AStarSearch<S, T>  {
         long elapsedTime = System.currentTimeMillis() - startTime;
         searchSpace.finalRefresh(pathToSolution, solution, numTries, elapsedTime);
         return pathToSolution;
+    }
+
+    void initialize() {
+        stopped = false;
+        S startingState = searchSpace.initialState();
+
+        Node<S, T> startNode =
+                new Node<>(startingState, searchSpace.distanceFromGoal(startingState));
+        openQueue.add(startNode);
+        pathCost.put(startingState, 0);
     }
 
     /** @return the solution - null until it is found */
@@ -99,54 +104,52 @@ public class AStarSearch<S, T>  {
 
     /**
      * Best first search for a solution.
-     * @return the solution state node if found which has the path leading to a solution. Null if no solution.
-     */
-    protected Node<S, T> doSearch() {
-        return search();
-    }
-
-    /**
-     * Best first search for a solution.
      * @return the solution state node, if found, which has the path leading to a solution. Null if no solution.
      */
     protected Node<S, T> search() {
 
-        while (nodesAvailable() && !stopped)  {
-            Node<S, T> currentNode = openQueue.pop();
-            //System.out.println("popped from ["+openQueue.size()+"] = " + currentNode);
-            S currentState = currentNode.getState();
-            searchSpace.refresh(currentState, numTries);
-
-            if (searchSpace.isGoal(currentState)) {
-                // the extra check for a better path is needed when running concurrently
-                if (solution == null || currentNode.getPathCost() < solution.getPathCost()) {
-                     solution = currentNode;
-                }
-                return currentNode;  // success
-            }
-            visited.add(currentState);
-            List<T> transitions = searchSpace.legalTransitions(currentState);
-            for (T transition : transitions) {
-                S nbr = searchSpace.transition(currentState, transition);
-                if (!visited.contains(nbr)) {
-                    //if (pathCost.get(currentState) == null) {
-                    //    System.out.println("pathCost " + currentState+"= " + pathCost.get(currentState));
-                    //    System.out.println("map = " + pathCost);
-                    //}
-
-                    int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
-                    if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
-                        int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
-                        Node<S, T> child =
-                                new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
-                        pathCost.put(nbr, estPathCost);
-                        openQueue.addOrUpdate(child);
-                        numTries++;
-                    }
-                }
+        while (continueSearching())  {
+            Node<S, T> currentNode = processNext(openQueue.pop());
+            if (currentNode != null) {
+                return currentNode;
             }
         }
         return null;  // failure
+    }
+
+    boolean continueSearching() {
+        return nodesAvailable() && !stopped;
+    }
+
+    /** process the next node on the priority queue */
+    Node<S, T> processNext(Node<S, T> currentNode) {
+        S currentState = currentNode.getState();
+        searchSpace.refresh(currentState, numTries);
+
+        if (searchSpace.isGoal(currentState)) {
+            // the extra check for a better path is needed when running concurrently
+            if (solution == null || currentNode.getPathCost() < solution.getPathCost()) {
+                 solution = currentNode;
+            }
+            return currentNode;  // success
+        }
+        visited.put(currentState, currentNode);
+        List<T> transitions = searchSpace.legalTransitions(currentState);
+        for (T transition : transitions) {
+            S nbr = searchSpace.transition(currentState, transition);
+            if (!visited.containsKey(nbr)) {
+                int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
+                if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
+                    int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
+                    Node<S, T> child =
+                            new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
+                    pathCost.put(nbr, estPathCost);
+                    openQueue.addOrUpdate(child);
+                    numTries++;
+                }
+            }
+        }
+        return null;
     }
 
     protected boolean nodesAvailable() {

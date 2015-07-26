@@ -26,7 +26,7 @@ public class Solver {
         solveAssumingSolvable(initial, queue);
     }
 
-    /** this is faster and simple if we know its solvable */
+    /** this is faster and simpler if we know its solvable */
     private void solveAssumingSolvable(Board initial, UpdatablePriorityQueue queue) {
         final SearchSpace<Board, Transition> space = new PuzzleSearchSpace(initial);
 
@@ -35,6 +35,7 @@ public class Solver {
         solutionTransitions = searcher.getSolution();
     }
 
+    /*
     private void solveWithoutAssumptions(Board initial, UpdatablePriorityQueue queue) {
         final SearchSpace<Board, Transition> space = new PuzzleSearchSpace(initial);
         final SearchSpace<Board, Transition> twinSpace = new PuzzleSearchSpace(initial.twin());
@@ -73,7 +74,7 @@ public class Solver {
             solutionTransitions = null; // no solution
             searcher.stop();
         }
-    }
+    }*/
 
     /** @return true if the initial board is solvable */
     public boolean isSolvable() {
