@@ -32,6 +32,7 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
         this.searchSpace = searchSpace;
         visited = Collections.synchronizedSet(new HashSet<S>());
         //openQueue = new PriorityBlockingQueue<>(20);
+        openQueue = new HeapPriorityQueue<S, T>();  // this probably will not work since it is not thread safe
         pathCost = Collections.synchronizedMap(new HashMap<S, Integer>());
     }
 

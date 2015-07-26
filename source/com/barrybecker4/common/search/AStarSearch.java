@@ -113,7 +113,7 @@ public class AStarSearch<S, T>  {
 
         while (nodesAvailable() && !stopped)  {
             Node<S, T> currentNode = openQueue.pop();
-            System.out.println("popped from ["+openQueue.size()+"] = " + currentNode);
+            //System.out.println("popped from ["+openQueue.size()+"] = " + currentNode);
             S currentState = currentNode.getState();
             searchSpace.refresh(currentState, numTries);
 
@@ -129,10 +129,10 @@ public class AStarSearch<S, T>  {
             for (T transition : transitions) {
                 S nbr = searchSpace.transition(currentState, transition);
                 if (!visited.contains(nbr)) {
-                    if (pathCost.get(currentState) == null) {
-                        System.out.println("pathCost " + currentState+"= " + pathCost.get(currentState));
-                        System.out.println("map = " + pathCost);
-                    }
+                    //if (pathCost.get(currentState) == null) {
+                    //    System.out.println("pathCost " + currentState+"= " + pathCost.get(currentState));
+                    //    System.out.println("map = " + pathCost);
+                    //}
 
                     int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
                     if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {

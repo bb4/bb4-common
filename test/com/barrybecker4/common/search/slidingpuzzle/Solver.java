@@ -1,8 +1,8 @@
 package com.barrybecker4.common.search.slidingpuzzle;
 
 import com.barrybecker4.common.search.AStarSearch;
+import com.barrybecker4.common.search.HeapPriorityQueue;
 import com.barrybecker4.common.search.SearchSpace;
-import com.barrybecker4.common.search.TreePriorityQueue;
 import com.barrybecker4.common.search.UpdatablePriorityQueue;
 
 import java.util.LinkedList;
@@ -107,7 +107,7 @@ public class Solver {
         Board initial = new BoardReader().read(args[0]);
 
         // solve the puzzle
-        Solver solver = new Solver(initial, new TreePriorityQueue());
+        Solver solver = new Solver(initial, new HeapPriorityQueue());
 
         // print solutionTransitions to standard output
         if (!solver.isSolvable())
