@@ -25,7 +25,7 @@ public class AStarSearch<S, T>  {
     protected SearchSpace<S, T> searchSpace;
 
     /** States that have been visited, but they may be replaced if we can reach them by a better path */
-    protected Set<S> visited;
+    Set<S> visited;
 
     /** Candidate nodes to search on the frontier. */
     protected UpdatablePriorityQueue<S, T> openQueue;

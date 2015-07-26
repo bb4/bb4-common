@@ -128,9 +128,14 @@ public abstract class SolverTest {
     }
 
     @Test
-    public void testSolveMedium() {
-        int testNum = 11;
-        String file = "puzzle" + testNum + ".txt";
+    public void test11() {
+        doRun(11, 2.0);
+    }
+
+    /*
+    @Test
+    public void testSolve4x4_78() {
+        String file = "puzzle4x4-78.txt";
         Board initial = reader.read(file);
 
         Watch timer = new Watch();
@@ -139,7 +144,23 @@ public abstract class SolverTest {
 
         System.out.println("elapsed = " + elapsed + " seconds.");
         assertEquals("Unexpected number of moves for " + file,
-                testNum, solver.moves());
+                78, solver.moves());
+        assertEquals(file + " unexpectedly not solvable", true, solver.isSolvable());
+        assertTrue("Took too long " + elapsed, elapsed < 30.0);
+    }*/
+
+    @Test
+    public void testSolveHard() {
+        String file = "puzzle4x4-hard1.txt";
+        Board initial = reader.read(file);
+
+        Watch timer = new Watch();
+        solver = createSolver(initial);
+        double elapsed = timer.getElapsedTime();
+
+        System.out.println("elapsed = " + elapsed + " seconds.");
+        assertEquals("Unexpected number of moves for " + file,
+                38, solver.moves());
         assertEquals(file + " unexpectedly not solvable", true, solver.isSolvable());
         assertTrue("Took too long " + elapsed, elapsed < 10.0);
     }
