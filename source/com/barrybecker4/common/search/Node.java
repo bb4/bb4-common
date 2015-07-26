@@ -79,24 +79,6 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
         return getEstimatedFutureCost() - otherNode.getEstimatedFutureCost();
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Node<?, ?> node = (Node<?, ?>) o;
-        if (pathCost != node.pathCost) return false;
-        return state.equals(node.state);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = state.hashCode();
-        result = 31 * result + pathCost;
-        return result;
-    }
-
-    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,7 +90,7 @@ public class Node<S, T> implements Comparable<Node<S, T>> {
     @Override
     public int hashCode() {
         return state.hashCode();
-    }  */
+    }
 
     /**
      * @return a list of nodes from the start state to this state.

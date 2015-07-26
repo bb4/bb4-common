@@ -20,7 +20,6 @@ public class AStarConcurrentSearchTest {
     }
 
 
-
     /** test the protected search method to see if it finds the goal state */
     @Test
     public void testSolve() {

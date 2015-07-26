@@ -38,7 +38,7 @@ public class Board {
     private byte side;
     private byte hamming;
     private short manhattan;
-    private String stringForm;
+    private int hashCode;
 
     /**
      * Construct a board from an N-by-N array of blocks
@@ -54,7 +54,7 @@ public class Board {
         this.side = (byte) Math.sqrt(size);
         this.hamming = -1;
         this.manhattan = calculateManhattan();
-        this.stringForm = this.getStringForm();
+        this.hashCode = -1;
     }
 
     /** use this version of the constructor if you already know the manhattan distance */
@@ -62,8 +62,8 @@ public class Board {
         this.blocks = blocks;
         this.side = side;
         this.hamming = -1;
+        this.hashCode = -1;
         this.manhattan = manhattan;
-        this.stringForm = this.getStringForm();
     }
 
     /** @return board dimension N */
@@ -96,16 +96,13 @@ public class Board {
 
     /** @return sum of Manhattan distances between blocks and goal */
     public int manhattan()  {
-        //if (manhattan < 0) {
-        //    manhattan = calculateManhattan();
-        //}
         return manhattan;
     }
 
     private short calculateManhattan() {
         short totalDistance = 0;
-        for (byte i=0; i < side; i++) {
-            for (byte j=0; j < side; j++) {
+        for (byte i = 0; i < side; i++) {
+            for (byte j = 0; j < side; j++) {
                 int value = blocks[i * side + j];
                 if (value != 0) {
                     int expCol = (value - 1) % side;
@@ -125,15 +122,17 @@ public class Board {
         if (o == null || getClass() != o.getClass()) return false;
 
         Board board = (Board) o;
-        return board.hamming() == hamming() && Arrays.equals(blocks, board.blocks);
+        return hamming() == board.hamming() && Arrays.equals(blocks, board.blocks);
+
     }
 
-/*
     @Override
-
     public int hashCode() {
-        return Arrays.deepHashCode(this.blocks);
-    }*/
+        if (hashCode < 0) {
+            hashCode = Arrays.hashCode(blocks);
+        }
+        return hashCode;
+    }
 
     /** @return true if this board the goal board */
     public boolean isGoal()  {
@@ -215,11 +214,9 @@ public class Board {
         int oldDist = Math.abs(newSpaceRow - goalRow) + Math.abs(newSpaceCol - goalCol);
         int newDist = Math.abs(oldSpaceRow - goalRow) + Math.abs(oldSpaceCol - goalCol);
         int distImprovement = oldDist - newDist;
-        //System.out.println("dist delta = " + distImprovement);
         swap(oldSpaceRow, oldSpaceCol, newSpaceRow, newSpaceCol, newBlocks);
         return new Board(newBlocks, side, (short)(manhattan - distImprovement));
     }
-
 
     /**
      * @return row column coordinates of the space position
@@ -263,7 +260,7 @@ public class Board {
 
     /** @return string representation of this board  */
     public String toString() {
-        return stringForm;
+        return getStringForm();
     }
 
     private String getStringForm() {
@@ -276,9 +273,5 @@ public class Board {
             s.append("\n");
         }
         return s.toString();
-    }
-
-    public static void main(String[] args) {
-
     }
 }

@@ -19,20 +19,22 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Barry Becker
  */
-public class SolverTest {
+public abstract class SolverTest {
 
-    private Solver solver;
-    private BoardReader reader;
+    protected Solver solver;
+    protected BoardReader reader;
 
     @Before
     public void setUp() {
          reader = new BoardReader();
     }
 
+    protected abstract Solver createSolver(Board initial);
+
     @Test
     public void testSolve8() {
         Board initial = reader.read("puzzle08.txt");
-        solver = new Solver(initial);
+        solver = createSolver(initial);
 
         assertEquals("Unexpected number of moves for puzzle8.txt",
                 8, solver.moves());
@@ -44,7 +46,7 @@ public class SolverTest {
 
         String file = "puzzle00.txt";
         Board initial = reader.read(file);
-        solver = new Solver(initial);
+        solver = createSolver(initial);
 
         assertEquals("Unexpected number of moves for " + file,
                 0, solver.moves());
@@ -54,7 +56,7 @@ public class SolverTest {
     @Test
     public void testSolve07() {
         Board initial = reader.read("puzzle07.txt");
-        solver = new Solver(initial);
+        solver = createSolver(initial);
 
         assertEquals("Unexpected number of moves for puzzle07.txt", 7, solver.moves());
         String path = getSolutionSequence(solver.solution());
@@ -127,19 +129,19 @@ public class SolverTest {
 
     @Test
     public void testSolveMedium() {
-        int testNum = 24;
+        int testNum = 11;
         String file = "puzzle" + testNum + ".txt";
         Board initial = reader.read(file);
 
         Watch timer = new Watch();
-        solver = new Solver(initial);
+        solver = createSolver(initial);
         double elapsed = timer.getElapsedTime();
 
         System.out.println("elapsed = " + elapsed + " seconds.");
         assertEquals("Unexpected number of moves for " + file,
                 testNum, solver.moves());
         assertEquals(file + " unexpectedly not solvable", true, solver.isSolvable());
-        assertTrue("Took too long " + elapsed, elapsed < 30.0);
+        assertTrue("Took too long " + elapsed, elapsed < 10.0);
     }
 
     private String getSolutionSequence(Iterable<Board> seq) {
@@ -154,7 +156,7 @@ public class SolverTest {
     @Test
     public void testNotSolvable() {
         Board initial = reader.read("puzzle3x3-unsolvable.txt");
-        solver = new Solver(initial);
+        solver = createSolver(initial);
         assertEquals("Unexpected number of moves for puzzle3x3-unsolvable.txt", -1, solver.moves());
         assertEquals("Unexpectedly solvable", false, solver.isSolvable());
     }  */
@@ -164,7 +166,7 @@ public class SolverTest {
         List<Case> testCases = new LinkedList<>();
         testCases.add(new Case("puzzle00.txt", 0, true));
 
-        for (int i = 1; i < 30; i++) {
+        for (int i = 1; i < 49; i++) {
             String filename = "puzzle";
             if (i < 10) {
                filename += "0";
@@ -172,7 +174,7 @@ public class SolverTest {
             testCases.add(new Case(filename + i + ".txt", i, true));
         }
 
-        runCases(testCases, 40.0);
+        runCases(testCases, 30.0);
     }
 
 
@@ -186,7 +188,7 @@ public class SolverTest {
         testCases.add(new Case("puzzle3x3-unsolvable1.txt", -1, false));
         testCases.add(new Case("puzzle3x3-unsolvable2.txt", -1, false));
 
-        runCases(testCases, 4.0);
+        runCases(testCases, 2.0);
     }
 
     @Test
@@ -195,7 +197,7 @@ public class SolverTest {
         testCases.add(new Case("puzzle2x2-solvable1.txt", 4, true));
         testCases.add(new Case("puzzle2x2-solvable2.txt", 4, true));
 
-        runCases(testCases, 1.0);
+        runCases(testCases, 0.5);
     }
 
     /*
@@ -220,7 +222,7 @@ public class SolverTest {
         Board initial = reader.read(file);
 
         Watch timer = new Watch();
-        solver = new Solver(initial);
+        solver = createSolver(initial);
         double elapsed = timer.getElapsedTime();
 
         System.out.println("elapsed = " + elapsed + " seconds.");
@@ -230,7 +232,7 @@ public class SolverTest {
         assertTrue("Took too long " + elapsed, elapsed < timeLimit);
     }
 
-    private void runCases(List<Case> testCases, double timeLimitSecs) {
+    protected void runCases(List<Case> testCases, double timeLimitSecs) {
         Watch timer = new Watch();
         for (Case testCase : testCases) {
             runCase(testCase);
@@ -239,13 +241,13 @@ public class SolverTest {
         System.out.println("Elapsed time = " + elapsed + " seconds.");
         assertTrue("Took too long: " + elapsed + "seconds. Wanted " + timeLimitSecs,
                 elapsed < timeLimitSecs);
-        assertTrue("TOO FAST!?!: " + elapsed + "seconds.", elapsed > (timeLimitSecs/100.0));
+        assertTrue("TOO FAST!?!: " + elapsed + "seconds.", elapsed > (timeLimitSecs/500.0));
     }
 
     private void runCase(Case testCase) {
         System.out.println(testCase.filename);
         Board initial = reader.read(testCase.filename);
-        solver = new Solver(initial);
+        solver = createSolver(initial);
 
         assertEquals("Unexpected number of moves for " + testCase.filename,
                 testCase.expNumMoves, solver.moves());

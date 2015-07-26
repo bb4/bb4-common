@@ -2,6 +2,8 @@ package com.barrybecker4.common.search.slidingpuzzle;
 
 import com.barrybecker4.common.search.AStarSearch;
 import com.barrybecker4.common.search.SearchSpace;
+import com.barrybecker4.common.search.TreePriorityQueue;
+import com.barrybecker4.common.search.UpdatablePriorityQueue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,13 +20,27 @@ public class Solver {
      * find a solution to the initial board (using the A* algorithm)
      * @param initial starting board state
      */
-    public Solver(final Board initial)   {
+    public Solver(final Board initial, UpdatablePriorityQueue queue)   {
         startState = initial;
+        //solveWithoutAssumptions(initial, queue);
+        solveAssumingSolvable(initial, queue);
+    }
+
+    /** this is faster and simple if we know its solvable */
+    private void solveAssumingSolvable(Board initial, UpdatablePriorityQueue queue) {
+        final SearchSpace<Board, Transition> space = new PuzzleSearchSpace(initial);
+
+        final AStarSearch<Board, Transition> searcher = new AStarSearch<>(space, queue);
+        searcher.solve();
+        solutionTransitions = searcher.getSolution();
+    }
+
+    private void solveWithoutAssumptions(Board initial, UpdatablePriorityQueue queue) {
         final SearchSpace<Board, Transition> space = new PuzzleSearchSpace(initial);
         final SearchSpace<Board, Transition> twinSpace = new PuzzleSearchSpace(initial.twin());
 
-        final AStarSearch<Board, Transition> searcher = new AStarSearch<>(space);
-        final AStarSearch<Board, Transition> twinSearcher = new AStarSearch<>(twinSpace);
+        final AStarSearch<Board, Transition> searcher = new AStarSearch<>(space, queue);
+        final AStarSearch<Board, Transition> twinSearcher = new AStarSearch<>(twinSpace, queue);
 
         new Thread(new Runnable() {
             @Override
@@ -42,12 +58,11 @@ public class Solver {
 
         while (searcher.getSolution() == null && twinSearcher.getSolution() == null) {
             // keep searching
-            /*
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } */
+            //try {
+            //    Thread.sleep(100);
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
         }
 
         if (searcher.getSolution() != null) {
@@ -92,7 +107,7 @@ public class Solver {
         Board initial = new BoardReader().read(args[0]);
 
         // solve the puzzle
-        Solver solver = new Solver(initial);
+        Solver solver = new Solver(initial, new TreePriorityQueue());
 
         // print solutionTransitions to standard output
         if (!solver.isSolvable())

@@ -28,7 +28,7 @@ public class AStarSearch<S, T>  {
     protected Set<S> visited;
 
     /** Candidate nodes to search on the frontier. */
-    protected Queue<Node<S, T>> openQueue;
+    protected UpdatablePriorityQueue<S, T> openQueue;
 
     /** Provides the value for the lowest cost path from the start state to the specified goal state (g score) */
     protected Map<S, Integer> pathCost;
@@ -45,9 +45,17 @@ public class AStarSearch<S, T>  {
      * @param searchSpace the global search space containing initial and goal states.
      */
     public AStarSearch(SearchSpace<S, T> searchSpace) {
+        this(searchSpace, new HeapPriorityQueue<S, T>());
+    }
+
+    /**
+     * @param searchSpace the global search space containing initial and goal states.
+     * @param queue the specific updatable priority queue to use.
+     */
+    public AStarSearch(SearchSpace<S, T> searchSpace, UpdatablePriorityQueue<S, T> queue) {
         this.searchSpace = searchSpace;
         visited = new HashSet<>();
-        openQueue = new PriorityQueue<>(20);
+        openQueue = queue;
         pathCost = new HashMap<>();
     }
 
@@ -104,7 +112,8 @@ public class AStarSearch<S, T>  {
     protected Node<S, T> search() {
 
         while (nodesAvailable() && !stopped)  {
-            Node<S, T> currentNode = openQueue.remove();
+            Node<S, T> currentNode = openQueue.pop();
+            System.out.println("popped from ["+openQueue.size()+"] = " + currentNode);
             S currentState = currentNode.getState();
             searchSpace.refresh(currentState, numTries);
 
@@ -120,16 +129,19 @@ public class AStarSearch<S, T>  {
             for (T transition : transitions) {
                 S nbr = searchSpace.transition(currentState, transition);
                 if (!visited.contains(nbr)) {
+                    if (pathCost.get(currentState) == null) {
+                        System.out.println("pathCost " + currentState+"= " + pathCost.get(currentState));
+                        System.out.println("map = " + pathCost);
+                    }
+
                     int estPathCost = pathCost.get(currentState) + searchSpace.getCost(transition);
                     if (!pathCost.containsKey(nbr) || estPathCost < pathCost.get(nbr)) {
                         int estFutureCost = estPathCost + searchSpace.distanceFromGoal(nbr);
                         Node<S, T> child =
                                 new Node<>(nbr, transition, currentNode, estPathCost, estFutureCost);
                         pathCost.put(nbr, estPathCost);
-                        if (!openQueue.contains(child)) {    // not sure about this
-                            openQueue.add(child);
-                            numTries++;
-                        }
+                        openQueue.addOrUpdate(child);
+                        numTries++;
                     }
                 }
             }
