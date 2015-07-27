@@ -68,7 +68,7 @@ public class DualAStarSearch<S, T> implements ISearcher {
                 solutionNode = processNext(goalToStartSearch, startToGoalSearch);
                 // ? need to reverse in this case
             }
-            if (solutionNode != null) {
+            else {
                 solution = solutionNode;
                 return solutionNode;
             }
@@ -80,17 +80,7 @@ public class DualAStarSearch<S, T> implements ISearcher {
         Node<S, T> currentNode = startToGoalSearch.openQueue.pop();
         if (goalToStartSearch.visited.containsKey(currentNode.getState())) {
             // add the nodes from the other search
-            Node<S, T> node = goalToStartSearch.visited.get(currentNode.getState());
-            Node<S, T> nextNode = node.getPrevious();
-            node.setPrevious(currentNode.getPrevious());
-            // make the path to the finish include thos nodes in the other search
-            while (nextNode != null) {
-                Node<S, T> temp = nextNode.getPrevious();
-                nextNode.setPrevious(node);
-                node = nextNode;
-                nextNode = temp;
-            }
-            return node;
+            return addPathFromOtherSearch(goalToStartSearch, currentNode);
         }
         Node<S, T> solutionNode = startToGoalSearch.processNext(currentNode);
         if (solutionNode != null) {
@@ -98,6 +88,21 @@ public class DualAStarSearch<S, T> implements ISearcher {
             return solutionNode;
         }
         return null;
+    }
+
+    private Node<S, T> addPathFromOtherSearch(AStarSearch<S, T> goalToStartSearch, Node<S, T> currentNode) {
+        Node<S, T> node = goalToStartSearch.visited.get(currentNode.getState());
+        Node<S, T> nextNode = node.getPrevious();
+        node.setPrevious(currentNode.getPrevious());
+        //node.setTransition(currentNode.)  // need to set the inverted transtion
+        // make the path to the finish include those nodes in the other search
+        while (nextNode != null) {
+            Node<S, T> temp = nextNode.getPrevious();
+            nextNode.setPrevious(node);
+            node = nextNode;
+            nextNode = temp;
+        }
+        return node;
     }
 }
 

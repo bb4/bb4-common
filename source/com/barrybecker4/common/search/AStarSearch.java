@@ -135,6 +135,7 @@ public class AStarSearch<S, T> implements ISearcher {
         }
         visited.put(currentState, currentNode);
         List<T> transitions = searchSpace.legalTransitions(currentState);
+        assert transitions != null : "Could not find any transitions from " + currentState;
         for (T transition : transitions) {
             S nbr = searchSpace.transition(currentState, transition);
             if (!visited.containsKey(nbr)) {

@@ -7,17 +7,21 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Search from goal back to start
  * @author Barry Becker
  */
-public class PuzzleSearchSpace extends AbstractSearchSpace<Board, Transition> {
+public class ReversePuzzleSearchSpace extends AbstractSearchSpace<Board, Transition> {
 
-    PuzzleSearchSpace(Board initialState) {
-        super(initialState);
+    private Board goalState;
+
+    ReversePuzzleSearchSpace(Board initialState, Board goalState) {
+        super(goalState);
+        this.goalState = initialState;
     }
 
     @Override
     public boolean isGoal(Board state) {
-        return state.hamming() == 0;
+        return state.equals(goalState);
     }
 
     @Override
@@ -39,5 +43,4 @@ public class PuzzleSearchSpace extends AbstractSearchSpace<Board, Transition> {
     public int getCost(Transition transition) {
         return 1;
     }
-
 }

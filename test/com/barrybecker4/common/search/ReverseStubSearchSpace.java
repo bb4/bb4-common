@@ -1,26 +1,24 @@
 package com.barrybecker4.common.search;
 
-import java.util.*;
+import java.util.List;
 
 /**
- * A fake, very simple, search space for use in unit tests.
- * Teh StubNodes define a network, with costs on edges, that can be searched by A*.
- * See https://en.wikipedia.org/wiki/A*_search_algorithm (where I get this example)
+ * This space looks from goal back to initial state.
  *
  * @author Barry Becker
  */
-public class StubSearchSpace extends AbstractSearchSpace<StubState, StubTransition> {
+public class ReverseStubSearchSpace extends AbstractSearchSpace<StubState, StubTransition> {
 
     private static final StubProblem PROBLEM = new StubProblem();
 
     /** Constructor */
-    StubSearchSpace() {
-        super(PROBLEM.getInitialState());
+    ReverseStubSearchSpace() {
+        super(PROBLEM.getGoalState());
     }
 
     @Override
     public boolean isGoal(StubState state) {
-        return state.equals(PROBLEM.getGoalState());
+        return state.equals(PROBLEM.getInitialState());
     }
 
     @Override
