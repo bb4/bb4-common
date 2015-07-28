@@ -2,9 +2,10 @@
 package com.barrybecker4.common.function;
 
 import com.barrybecker4.common.math.function.InvertibleFunction;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Base test class for function classes.
@@ -28,10 +29,10 @@ public abstract class FunctionTstBase {
     public void testGetFunctionValue() {
 
         double y = function.getValue(0.1);
-        Assert.assertEquals("Unexpected y for 0.1", getExpectedValue0_1(), y, EPS);
+        assertEquals("Unexpected y for 0.1", getExpectedValue0_1(), y, EPS);
 
         y = function.getValue(0.9);
-        Assert.assertEquals("Unexpected y for 0.9", getExpectedValue0_9(), y, EPS);
+        assertEquals("Unexpected y for 0.9", getExpectedValue0_9(), y, EPS);
     }
 
     protected abstract double getExpectedValue0_1();
@@ -41,10 +42,10 @@ public abstract class FunctionTstBase {
     public void testGetInverseFunctionValue() {
 
         double y = function.getInverseValue(0.1);
-        Assert.assertEquals("Unexpected x for y=0.1", getExpectedInverseValue0_1(), y, EPS);
+        assertEquals("Unexpected x for y=0.1", getExpectedInverseValue0_1(), y, EPS);
 
         y = function.getValue(0.9);
-        Assert.assertEquals("Unexpected x for y=0.9", getExpectedInverseValue0_9(), y, EPS);
+        assertEquals("Unexpected x for y=0.9", getExpectedInverseValue0_9(), y, EPS);
     }
 
     protected abstract double getExpectedInverseValue0_1();

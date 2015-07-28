@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class CommandLineOptions  {
 
-    private final Map<String, String> optionsMap_ = new HashMap<String, String>();
+    private final Map<String, String> optionsMap_ = new HashMap<>();
 
     /**
      * Constructor.

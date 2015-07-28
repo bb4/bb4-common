@@ -31,7 +31,7 @@ abstract class AbstractCutPointFinder {
             finalRange.add(range.getMin() + MIN_RANGE);
         }
 
-        List<Double> positions = new ArrayList<Double>(10);
+        List<Double> positions = new ArrayList<>(10);
 
         if (finalRange.getExtent() < MIN_RANGE) {
             positions.add(finalRange.getMin());
@@ -47,7 +47,7 @@ abstract class AbstractCutPointFinder {
         return result;
     }
 
-    void determineCutPoints(int maxTicks, Range finalRange, List<Double> positions) {
+    private void determineCutPoints(int maxTicks, Range finalRange, List<Double> positions) {
 
         double extent = Rounder.roundUp(finalRange.getExtent());
         double d = Rounder.roundDown(extent / (maxTicks - 1));

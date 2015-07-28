@@ -1,10 +1,8 @@
 package com.barrybecker4.common.search.slidingpuzzle;
 
 import com.barrybecker4.common.search.AbstractSearchSpace;
-import com.barrybecker4.common.search.SearchSpace;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Barry Becker

@@ -2,8 +2,6 @@ package com.barrybecker4.common.search.slidingpuzzle;
 
 import com.barrybecker4.common.search.slidingpuzzle.Board;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 

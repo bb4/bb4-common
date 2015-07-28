@@ -63,7 +63,7 @@ public class Combinater implements Iterator<List<Integer>> {
         }
         hasMore = counter < numCombinations;
 
-        List<Integer> subset = new ArrayList<Integer>(num);
+        List<Integer> subset = new ArrayList<>(num);
         String bits = Long.toBinaryString(counter);
 
         for (int i = bits.length()-1; i >= 0; i--) {

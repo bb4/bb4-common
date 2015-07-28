@@ -5,9 +5,6 @@ import com.barrybecker4.common.math.Range;
 import com.barrybecker4.common.math.interplolation.Interpolator;
 import com.barrybecker4.common.math.interplolation.LinearInterpolator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a general y values function. It does not have to be monotonic or 1-1.
  *
@@ -16,7 +13,6 @@ import java.util.List;
 public class HeightFunction implements Function {
 
     private Range domain;
-    private double[] yValues;
 
     // a function that maps from the domain to indices within yValues.
     private LinearFunction domainToBinFunc;
@@ -30,7 +26,6 @@ public class HeightFunction implements Function {
      */
     public HeightFunction(Range domain, double[] yValues) {
         this.domain = domain;
-        this.yValues = yValues;
 
         domainToBinFunc = new LinearFunction(1.0/domain.getExtent(), -domain.getMin()/domain.getExtent());
         interpolator = new LinearInterpolator(yValues);

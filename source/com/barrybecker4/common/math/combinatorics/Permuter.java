@@ -34,7 +34,7 @@ public class Permuter implements Iterator<List<Integer>> {
         }
         hasMore = num > 0;
 
-        lastPermutation = new ArrayList<Integer>(num);
+        lastPermutation = new ArrayList<>(num);
         for (int i=0; i < num; i++) {
            lastPermutation.add(i);
         }
@@ -51,7 +51,7 @@ public class Permuter implements Iterator<List<Integer>> {
     @Override
     public List<Integer> next() {
         List<Integer> permutation = lastPermutation;
-        List<Integer> nextPermutation = new ArrayList<Integer>(lastPermutation);
+        List<Integer> nextPermutation = new ArrayList<>(lastPermutation);
 
         int k = nextPermutation.size() - 2;
         if (k < 0) {

@@ -25,7 +25,7 @@ public class ProfilerEntry {
     /** the total time used by this named code section while the app was running  */
     private long totalTime_ = 0;
 
-    private final List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
+    private final List<ProfilerEntry> children_ = new LinkedList<>();
 
     /** Constructor */
     public ProfilerEntry(String name) {

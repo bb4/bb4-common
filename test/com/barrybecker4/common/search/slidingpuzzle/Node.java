@@ -1,9 +1,5 @@
 package com.barrybecker4.common.search.slidingpuzzle;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Node for a state in the global search space.
  * A search node is a board, the number of moves made to reach the board, and the previous search node.

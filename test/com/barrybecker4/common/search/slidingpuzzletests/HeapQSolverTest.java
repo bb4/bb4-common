@@ -6,9 +6,6 @@ import com.barrybecker4.common.search.slidingpuzzle.Board;
 import com.barrybecker4.common.search.slidingpuzzle.Solver;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Search from goal back to start
+ * Describes the search space.
  * @author Barry Becker
  */
 public abstract class AbstractSearchSpace<S, T> implements SearchSpace<S, T> {

@@ -26,7 +26,7 @@ public class LinkedHashMapTest {
 
     @Before
     public void setUp() throws Exception {
-        map = new LinkedHashMap<String,String>(3);
+        map = new LinkedHashMap<>(3);
 
         map.put("2", TWO);
         map.put("1", ONE);

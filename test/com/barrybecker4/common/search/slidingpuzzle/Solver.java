@@ -20,14 +20,14 @@ public class Solver {
      * find a solution to the initial board (using the A* algorithm)
      * @param initial starting board state
      */
-    public Solver(final Board initial, UpdatablePriorityQueue queue)   {
+    public Solver(final Board initial, UpdatablePriorityQueue<Board, Transition> queue)   {
         startState = initial;
         //solveWithoutAssumptions(initial, queue);
         solveAssumingSolvable(initial, queue);
     }
 
     /** this is faster and simpler if we know its solvable */
-    private void solveAssumingSolvable(Board initial, UpdatablePriorityQueue queue) {
+    private void solveAssumingSolvable(Board initial, UpdatablePriorityQueue<Board, Transition> queue) {
         final SearchSpace<Board, Transition> space = new PuzzleSearchSpace(initial);
 
         final AStarSearch<Board, Transition> searcher = new AStarSearch<>(space, queue);
@@ -108,7 +108,7 @@ public class Solver {
         Board initial = new BoardReader().read(args[0]);
 
         // solve the puzzle
-        Solver solver = new Solver(initial, new HeapPriorityQueue());
+        Solver solver = new Solver(initial, new HeapPriorityQueue<Board, Transition>());
 
         // print solutionTransitions to standard output
         if (!solver.isSolvable())

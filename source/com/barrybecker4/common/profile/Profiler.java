@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class Profiler {
 
-    private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
-    private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
+    private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<>();
+    private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<>();
     private boolean enabled_ = true;
     private ILog logger_ = null;
 

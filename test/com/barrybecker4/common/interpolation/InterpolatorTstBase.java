@@ -2,8 +2,9 @@
 package com.barrybecker4.common.interpolation;
 
 import com.barrybecker4.common.math.interplolation.Interpolator;
-import junit.framework.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -25,10 +26,10 @@ public abstract class InterpolatorTstBase {
         interpolator = createInterpolator(func);
 
         double y = interpolator.interpolate(0.1);
-        Assert.assertEquals("Unexpected y for 0.1", getExpectedSimpleInterpolation0_1(), y, EPS);
+        assertEquals("Unexpected y for 0.1", getExpectedSimpleInterpolation0_1(), y, EPS);
 
         y = interpolator.interpolate(0.9);
-        Assert.assertEquals("Unexpected y for 0.9", getExpectedSimpleInterpolation0_9(), y, EPS);
+        assertEquals("Unexpected y for 0.9", getExpectedSimpleInterpolation0_9(), y, EPS);
     }
 
     protected abstract double getExpectedSimpleInterpolation0_1();
@@ -40,11 +41,11 @@ public abstract class InterpolatorTstBase {
         interpolator = createInterpolator(func);
 
         double y = interpolator.interpolate(0.1);
-        Assert.assertEquals("Unexpected y for 0.1", getExpectedTypicalInterpolation0_1(), y, EPS);
+        assertEquals("Unexpected y for 0.1", getExpectedTypicalInterpolation0_1(), y, EPS);
 
 
         y = interpolator.interpolate(0.9);
-        Assert.assertEquals("Unexpected y for 0.9", getExpectedTypicalInterpolation0_9(), y, EPS);
+        assertEquals("Unexpected y for 0.9", getExpectedTypicalInterpolation0_9(), y, EPS);
     }
 
     protected abstract double getExpectedTypicalInterpolation0_1();
@@ -59,7 +60,7 @@ public abstract class InterpolatorTstBase {
         interpolator = createInterpolator(func);
 
         double y = interpolator.interpolate(0.0);
-        Assert.assertEquals("Unexpected y for 0.0", 1.0, y, EPS);
+        assertEquals("Unexpected y for 0.0", 1.0, y, EPS);
     }
 
     protected abstract double getExpectedOnePointInterpolation();
@@ -70,7 +71,7 @@ public abstract class InterpolatorTstBase {
         interpolator = createInterpolator(func);
 
         double y = interpolator.interpolate(0.1);
-        Assert.assertEquals("Unexpected y for 0.1", getExpectedInterpolation2Points0_1(), y);
+        assertEquals("Unexpected y for 0.1", getExpectedInterpolation2Points0_1(), y, EPS);
     }
 
     protected abstract double getExpectedInterpolation2Points0_1(); // 0.1

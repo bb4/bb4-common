@@ -101,7 +101,7 @@ public final class DomUtil {
     private static void postProcessDocument(Node root, Document document, boolean replaceUseWithDeepCopy) {
         NodeList l = root.getChildNodes();
 
-        List<Node> deleteList = new ArrayList<Node>();
+        List<Node> deleteList = new ArrayList<>();
 
         for (int i=0; i<l.getLength(); i++) {
             Node n = l.item(i);

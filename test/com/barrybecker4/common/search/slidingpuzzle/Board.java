@@ -25,7 +25,7 @@ import java.util.List;
  *   equals is slow. IOW first check the hamming value, if that does not match, it cannot be equal. If it does match
  *   resort to slower comparison.
  * - When creating neighbors I use the fact that there is going to be an incremental change to the manhattan distance
- *   and do not recompute it from scrach. Hint: use a private constructor, that takes the manhattan distance as a param.
+ *   and do not recompute it from scratch. Hint: use a private constructor, that takes the manhattan distance as a param.
  * - Sorted the neighbors so that the most promising is delivered first. Gave a modest performance boost because
  *   fewer nodes were then added to the queue in the long run.
  * - Used System.arraycopy(src, 0, target, 0,length); to copy the internal blocks array.

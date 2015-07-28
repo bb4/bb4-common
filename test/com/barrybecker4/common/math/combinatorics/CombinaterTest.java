@@ -4,6 +4,7 @@ package com.barrybecker4.common.math.combinatorics;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +31,7 @@ public class CombinaterTest {
     public void testCombinations1() {
         combinater = new Combinater(1);
         assertTrue(combinater.hasNext());
-        assertEquals("Unexpected second permutation", Arrays.asList(0), combinater.next());
+        assertEquals("Unexpected second permutation", Collections.singletonList(0), combinater.next());
         assertFalse(combinater.hasNext());
     }
 
@@ -39,8 +40,8 @@ public class CombinaterTest {
         combinater = new Combinater(2);
 
         assertTrue(combinater.hasNext());
-        assertEquals("Unexpected first permutation", Arrays.asList(0), combinater.next());
-        assertEquals("Unexpected second permutation", Arrays.asList(1), combinater.next());
+        assertEquals("Unexpected first permutation", Collections.singletonList(0), combinater.next());
+        assertEquals("Unexpected second permutation", Collections.singletonList(1), combinater.next());
         assertEquals("Unexpected third permutation", Arrays.asList(0, 1), combinater.next());
         assertFalse(combinater.hasNext());
     }

@@ -7,9 +7,7 @@ import com.barrybecker4.common.concurrency.ThreadUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Concurrent implementation of the A* search algorithm.
@@ -32,7 +30,7 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
         this.searchSpace = searchSpace;
         visited = Collections.synchronizedMap(new HashMap<S, Node<S, T>>());
         //openQueue = new PriorityBlockingQueue<>(20);
-        openQueue = new HeapPriorityQueue<S, T>();  // this probably will not work since it is not thread safe
+        openQueue = new HeapPriorityQueue<>();  // this probably will not work since it is not thread safe
         pathCost = Collections.synchronizedMap(new HashMap<S, Integer>());
     }
 

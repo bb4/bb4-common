@@ -42,7 +42,7 @@ public class MessageContext {
      * @param resourcePath path to message bundle
      */
     public MessageContext(String resourcePath) {
-        this(new ArrayList<String>(Arrays.asList(resourcePath)));
+        this(new ArrayList<>(Arrays.asList(resourcePath)));
     }
 
     /**
@@ -51,7 +51,7 @@ public class MessageContext {
      */
     public MessageContext(List<String> resourcePaths) {
         resourcePaths_ = resourcePaths;
-        messagesBundles_ = new ArrayList<ResourceBundle>();
+        messagesBundles_ = new ArrayList<>();
     }
 
     /**

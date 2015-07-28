@@ -12,7 +12,7 @@ import java.util.List;
 public class TreeNode {
 
     /** child nodes if any */
-    public List<TreeNode> children = new LinkedList<TreeNode>();
+    public List<TreeNode> children = new LinkedList<>();
 
     /** if true then the sup expression represented by this node has parenthesis around it */
     public boolean hasParens;
