@@ -12,13 +12,13 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * @author Barry Becker
  */
-public class ParallelizerTest {
+public class RunnableParallelizerTest {
 
-    private Parallelizer<Result> parallelizer;
+    private RunnableParallelizer<Result> parallelizer;
 
     @Before
     public void setUp() {
-        parallelizer = new Parallelizer<>();
+        parallelizer = new RunnableParallelizer<>();
     }
 
     @Test

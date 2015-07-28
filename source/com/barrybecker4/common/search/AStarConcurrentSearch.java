@@ -1,7 +1,7 @@
 /** Copyright by Barry G. Becker, 2012-2015. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.search;
 
-import com.barrybecker4.common.concurrency.Parallelizer;
+import com.barrybecker4.common.concurrency.RunnableParallelizer;
 import com.barrybecker4.common.concurrency.ThreadUtil;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
 
     /** use the number of cores available as a default number of threads */
-    private static final int NUM_WORKERS = Parallelizer.NUM_PROCESSORS;
+    private static final int NUM_WORKERS = RunnableParallelizer.NUM_PROCESSORS;
 
     /**
      * @param searchSpace the global search space that contains initial and goal states.
@@ -40,7 +40,7 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
      */
     protected Node<S, T> doSearch() {
 
-        Parallelizer parallelizer = new Parallelizer<>();
+        RunnableParallelizer parallelizer = new RunnableParallelizer<>();
 
         List<Runnable> workers = new ArrayList<>(NUM_WORKERS);
         for (int i = 0; i < NUM_WORKERS; i++) {

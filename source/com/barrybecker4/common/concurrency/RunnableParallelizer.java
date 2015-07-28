@@ -16,19 +16,19 @@ import java.util.concurrent.Future;
  *
  * @author Barry Becker
  */
-public class Parallelizer<T> extends CallableParallelizer<T> {
+public class RunnableParallelizer<T> extends AbstractParallelizer<T> {
 
-    /** Constructor */
-    public Parallelizer() {}
+    public RunnableParallelizer() {
+        super();
+    }
 
     /**
      * Constructor
      * @param numThreads the number of threads that are assumed available on the hardware.
      */
-    public Parallelizer(int numThreads) {
+    public RunnableParallelizer(int numThreads) {
         super(numThreads);
     }
-
 
     /**
      * Invoke all the workers at once and optionally call doneHandler on the results as they complete.
@@ -45,19 +45,6 @@ public class Parallelizer<T> extends CallableParallelizer<T> {
 
         List<Future<T>> futures = invokeAll(callables);
 
-        // consider using ExecutorCompletionService so that the results can be processed as they become available
-        // rather than blocking on one of them arbitrarily.
-        /*
-        for (Future<T> f : futures) {
-            try {
-                // blocks until the result is available.
-                f.get();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ExecutionException ex) {
-                Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }    */
         ExecutorCompletionService<T> completionService = new ExecutorCompletionService<>(executor);
 
         for (final Callable<T> callable : callables) {

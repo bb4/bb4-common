@@ -19,7 +19,7 @@ public class CallableParallelizerTest {
 
     @Before
     public void setUp() {
-        parallelizer = new Parallelizer<>();
+        parallelizer = new CallableParallelizer<>();
     }
 
 
@@ -27,19 +27,17 @@ public class CallableParallelizerTest {
     public void runParallelTasksWithDoneHandler() {
 
         final StringBuilder finalResult = new StringBuilder();
-        parallelizer.setDoneHandler(new DoneHandler<Result>() {
-            @Override
-            public void done(Result result) {
-                long t= result.getSum();
-                finalResult.append(result.getSum()).append(" ");
-            }
-        });
 
         List<Callable<Result>> workers = new ArrayList<>();
         for (int i=1000; i<100000; i+=10000) {
             workers.add(new Worker(i));
         }
-        parallelizer.invokeAllWithCallback(workers);
+        parallelizer.invokeAllWithCallback(workers, new DoneHandler<Result>() {
+            @Override
+            public void done(Result result) {
+                finalResult.append(result.getSum()).append(" ");
+            }
+        });
 
         // these results could be in an y order, but yhe string length shoud be constant
         assertEquals("Unexpected result ",
