@@ -12,10 +12,11 @@ import java.util.concurrent.Future;
 /**
  * Using this class you should be able to easily parallelize a set of long running tasks.
  * Immutable.
+ * T - the result
  *
  * @author Barry Becker
  */
-public class Parallelizer <T> extends CallableParallelizer<T> {
+public class Parallelizer<T> extends CallableParallelizer<T> {
 
     /** Constructor */
     public Parallelizer() {}
@@ -28,9 +29,11 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
         super(numThreads);
     }
 
+
     /**
-     * Invoke all the workers at once and blocks until they are all done.
+     * Invoke all the workers at once and optionally call doneHandler on the results as they complete.
      * Once all the separate threads have completed their assigned work, you may want to commit the results.
+     * @param workers list of workers to execute in parallel.
      */
     public void invokeAllRunnables(List<Runnable> workers)  {
 
@@ -62,11 +65,10 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
         }
 
         try {
-            for(int i = 0; i < futures.size(); ++i) {
+            for (int i = 0; i < futures.size(); i++) {
                 final Future<T> future = completionService.take();
                 try {
                     T result = future.get();
-                    //... process result (perhaps use a callback here)
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -75,6 +77,5 @@ public class Parallelizer <T> extends CallableParallelizer<T> {
         catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }
