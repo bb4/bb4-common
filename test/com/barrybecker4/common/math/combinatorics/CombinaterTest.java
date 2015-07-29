@@ -62,7 +62,7 @@ public class CombinaterTest {
         assertFalse(combinater.hasNext());
     }
 
-    /** permutations of 1, 2, 3, 4, 5. There will be 120 of them*/
+    /** permutations of 1, 2, 3, 4, 5. There will be 120 of them */
     @Test
     public void testCombinations5() {
         combinater = new Combinater(5);

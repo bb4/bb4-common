@@ -14,11 +14,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class PermuterTest {
 
-
     /** instance under test */
     private Permuter permuter;
-
-
 
     @Test
     public void testPermute0() {

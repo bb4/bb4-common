@@ -75,9 +75,10 @@ public final class LinearUtil {
         assert vec1.getSize() == vec2.getSize();
         double totalDiff = 0;
         for (int i = 0; i < vec1.getSize(); i++) {
-            totalDiff += vec2.getElement(i) - vec1.getElement(i);
+            double diff = vec2.getElement(i) - vec1.getElement(i);
+            totalDiff += (diff * diff);
         }
-        return (totalDiff < eps);
+        return (Math.sqrt(totalDiff) < eps);
     }
 }
 

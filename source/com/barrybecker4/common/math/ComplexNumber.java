@@ -49,7 +49,7 @@ public class ComplexNumber {
      * @return the magnitude of a complex number. ie.e distance from origin.
      */
     public double getMagnitude() {
-        return Math.sqrt(a*a + b*b);
+        return Math.sqrt(a * a + b * b);
     }
 
     /**

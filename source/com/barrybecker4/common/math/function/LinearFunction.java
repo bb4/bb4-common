@@ -10,11 +10,10 @@ import com.barrybecker4.common.math.Range;
  */
 public class LinearFunction implements InvertibleFunction {
 
-    private static final Range DEFAULT_DOMAIN = new Range(Double.MIN_VALUE, Double.MAX_VALUE);
+    private static final Range DOMAIN = new Range(Double.MIN_VALUE, Double.MAX_VALUE);
 
     private double scale;
     private double offset;
-    private Range domain = DEFAULT_DOMAIN;
 
 
     /**
@@ -66,12 +65,9 @@ public class LinearFunction implements InvertibleFunction {
         return (value - offset) / scale;
     }
 
-    public void setDomain(Range domain) {
-        this.domain = domain;
-    }
 
     @Override
     public Range getDomain() {
-        return domain;
+        return DOMAIN;
     }
 }

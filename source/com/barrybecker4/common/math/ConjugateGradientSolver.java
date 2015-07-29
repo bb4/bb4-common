@@ -6,17 +6,21 @@ import javax.vecmath.GVector;
 
 /**
  * Iterative conjugate-Gradient solver for a system of equations of the form Ax = b
- * Where A is
+ * Where A is a symmetric, positive definite matrix.
  * See http://en.wikipedia.org/wiki/Conjugate_gradient_method
+ * Commonly applied when the matrix is large and sparse.
+ * For other sort of matrices, gaussian elimination may work better.
  *
  * @author Barry Becker
  */
 public class ConjugateGradientSolver {
 
-    private static final double DEFAULT_EPS  = 0.000001;
+    private static final double DEFAULT_EPS = 0.000001;
+    private static final int DEFAULT_MAX_ITERATIONS = 8;
 
     /** the tolerable error  */
     private double eps = DEFAULT_EPS;
+    private int maxIterations = DEFAULT_MAX_ITERATIONS;
 
     private GMatrix matrix;
     private GVector b;
@@ -24,15 +28,20 @@ public class ConjugateGradientSolver {
     /**
      * Constructor
      * @param matrix A in Ax = b
-     * @param b  the b bector in Ax = b
+     * @param b the b vector in Ax = b
      */
     public ConjugateGradientSolver(GMatrix matrix, GVector b) {
         this.matrix = matrix;
         this.b = b;
     }
 
+    /** @param e some small error tolerance */
     public void setEpsilon(double e) {
         eps = e;
+    }
+
+    public void setMaxIterations(int num) {
+        maxIterations = num;
     }
 
     public GVector solve() {
@@ -47,7 +56,6 @@ public class ConjugateGradientSolver {
      * @return solution vector
      */
     public GVector solve(GVector initialGuess) {
-
 
         GVector x = new GVector( initialGuess );
         GVector tempv = new GVector( initialGuess );
@@ -82,13 +90,13 @@ public class ConjugateGradientSolver {
             error = norm * norm;
             //System.out.println("xi = "+x.toString());
             iteration++;
-            //System.out.println( "the error for iteration " + iteration + " is : " + error );
-        } while ( error > eps && iteration < 8 );
+            //System.out.println("The error for iteration " + iteration + " is : " + error );
+        } while ( error > eps && iteration < maxIterations );
 
         if ( error > eps || Double.isNaN( error ) || Double.isInfinite( error ) ) {
             // something went wrong
-            System.out.println("Unable to converge on a solution. Error = " + error);
-            return initialGuess;
+            throw new IllegalStateException("Unable to converge on a solution. Error = " + error);
+            //return initialGuess;
         }
 
         return xnew;

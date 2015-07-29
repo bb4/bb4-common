@@ -36,6 +36,6 @@ public class HermiteInterpolator extends AbstractSmoothInterpolator {
         a2 =      mu3 -     mu2;
         a3 = -2 * mu3 + 3*mu2;
 
-       return(a0*y1 + a1*m0 + a2*m1 + a3*y2);
+        return(a0*y1 + a1*m0 + a2*m1 + a3*y2);
     }
 }
