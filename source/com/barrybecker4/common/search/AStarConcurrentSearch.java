@@ -40,7 +40,7 @@ public class AStarConcurrentSearch<S, T> extends AStarSearch<S, T> {
      */
     protected Node<S, T> doSearch() {
 
-        RunnableParallelizer parallelizer = new RunnableParallelizer<>();
+        RunnableParallelizer parallelizer = new RunnableParallelizer();
 
         List<Runnable> workers = new ArrayList<>(NUM_WORKERS);
         for (int i = 0; i < NUM_WORKERS; i++) {

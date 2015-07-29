@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
  *
  * @author Barry Becker
  */
-public class RunnableParallelizer<T> extends AbstractParallelizer<T> {
+public class RunnableParallelizer extends AbstractParallelizer<Object> {
 
     public RunnableParallelizer() {
         super();
@@ -26,7 +26,7 @@ public class RunnableParallelizer<T> extends AbstractParallelizer<T> {
      * Constructor
      * @param numThreads the number of threads that are assumed available on the hardware.
      */
-    public RunnableParallelizer(int numThreads) {
+     RunnableParallelizer(int numThreads) {
         super(numThreads);
     }
 
@@ -38,24 +38,24 @@ public class RunnableParallelizer<T> extends AbstractParallelizer<T> {
     public void invokeAllRunnables(List<Runnable> workers)  {
 
         // convert the runnables to callables so the invokeAll api works
-        List<Callable<T>> callables = new ArrayList<>(workers.size());
+        List<Callable<Object>> callables = new ArrayList<>(workers.size());
         for (Runnable r : workers) {
-            callables.add(Executors.callable(r, (T)null));
+            callables.add(Executors.callable(r, null));
         }
 
-        List<Future<T>> futures = invokeAll(callables);
+        List<Future<Object>> futures = invokeAll(callables);
 
-        ExecutorCompletionService<T> completionService = new ExecutorCompletionService<>(executor);
+        ExecutorCompletionService<Object> completionService = new ExecutorCompletionService<>(executor);
 
-        for (final Callable<T> callable : callables) {
+        for (final Callable<Object> callable : callables) {
             completionService.submit(callable);
         }
 
         try {
             for (int i = 0; i < futures.size(); i++) {
-                final Future<T> future = completionService.take();
+                final Future<Object> future = completionService.take();
                 try {
-                    T result = future.get();
+                    future.get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
