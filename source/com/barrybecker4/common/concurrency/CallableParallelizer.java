@@ -1,14 +1,13 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.concurrency;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * Using this class you should be able to easily parallelize a set of long running tasks.
+ * Using this class you should be able to easily parallelize a set of long running allable tasks.
  * Immutable.
- * T -the result
+ * T - the result object
  *
  * @author Barry Becker
  */
@@ -33,7 +32,7 @@ class CallableParallelizer<T> extends AbstractParallelizer<T> {
      * @param callables list of workers to execute in parallel.
      * @param doneHandler gets called for each task as it finishes.
      */
-    public void invokeAllWithCallback(List<Callable<T>> callables,  DoneHandler<T> doneHandler)  {
+    public void invokeAllWithCallback(List<Callable<T>> callables, DoneHandler<T> doneHandler)  {
 
         List<Future<T>> futures = invokeAll(callables);
         ExecutorCompletionService<T> completionService = new ExecutorCompletionService<>(executor);
