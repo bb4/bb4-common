@@ -26,7 +26,7 @@ public class RunnableParallelizer extends AbstractParallelizer<Object> {
      * Constructor
      * @param numThreads the number of threads that are assumed available on the hardware.
      */
-     RunnableParallelizer(int numThreads) {
+     public RunnableParallelizer(int numThreads) {
         super(numThreads);
     }
 
