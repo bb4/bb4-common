@@ -11,7 +11,7 @@ import java.util.concurrent.*;
  *
  * @author Barry Becker
  */
-class AbstractParallelizer<T> {
+public class AbstractParallelizer<T> {
 
     /** The number of processors available on this computer */
     public static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();

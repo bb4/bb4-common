@@ -11,8 +11,7 @@ import java.util.concurrent.*;
  *
  * @author Barry Becker
  */
-class CallableParallelizer<T> extends AbstractParallelizer<T> {
-
+public class CallableParallelizer<T> extends AbstractParallelizer<T> {
 
     public CallableParallelizer() {
         super();
