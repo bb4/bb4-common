@@ -56,7 +56,7 @@ appMap.each { String key, Map value ->
         if (value.containsKey('exclude'))
             value['exclude'].each { pattern -> exclude pattern }
         manifest {
-            attributes 'Implementation-Title': '$key code',
+            attributes 'Implementation-Title': "${key} code",
                 'Implementation-Version': version,
                 provider: 'gradle'
         }
@@ -100,7 +100,9 @@ artifacts {
 
 /** release jars need to be signed when published to sonatype so the publisher can be verified. */
 signing {
-    required { isReleaseVersion }
+    required {
+        isReleaseVersion
+    }
     sign configurations.archives
 }
 
