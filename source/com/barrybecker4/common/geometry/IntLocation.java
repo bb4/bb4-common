@@ -28,8 +28,8 @@ public class IntLocation extends Location {
     /**
      * Constructs a new Location at the given coordinates.
      *
-     * @param row  the row  coordinate (0 - 255).
-     * @param col  the column coordinate (0 - 255).
+     * @param row  the row coordinate.
+     * @param col  the column coordinate.
      */
     public IntLocation(int row, int col) {
         row_ = row;
@@ -63,7 +63,7 @@ public class IntLocation extends Location {
 
     @Override
     public Location incrementOnCopy(int rowChange, int colChange) {
-        return new IntLocation(row_ + rowChange, col_+colChange);
+        return new IntLocation(row_ + rowChange, col_ + colChange);
     }
 }
 
