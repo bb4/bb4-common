@@ -59,7 +59,7 @@ public class NiceNumbersTest {
     }
 
     private static final String[] EXPECTED_LOOSE_CUTS3 = {"-2", "0", "2", "4", "6"};
-    private static final String[] EXPECTED_TIGHT_CUTS3 = {"-1.48", "0", "2", "4", "4.61"};
+    private static final String[] EXPECTED_TIGHT_CUTS3 = {"-1.5", "0", "2", "4", "4.6"};
 
     @Test
     public void testNiceNumbers3() {
@@ -78,7 +78,7 @@ public class NiceNumbersTest {
     private static final String[] EXPECTED_LOOSE_CUTS4 =
             {"-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"};
     private static final String[] EXPECTED_TIGHT_CUTS4 =
-            {"-1.476", "-1", "-0.5", "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "4.61"};
+            {"-1.48", "-1", "-0.5", "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "4.61"};
 
     @Test
     public void testNiceNumbers4() {
