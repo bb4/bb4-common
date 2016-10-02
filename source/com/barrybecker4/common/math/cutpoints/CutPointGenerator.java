@@ -20,7 +20,6 @@ public class CutPointGenerator {
     /** If true, show the precise min/max values at the extreme cut points (tight), else loose labels */
     private AbstractCutPointFinder cutPointFinder;
 
-
     /** Constructor */
     public CutPointGenerator() {
        this(true, new DecimalFormat("###,###.##"));
@@ -55,17 +54,21 @@ public class CutPointGenerator {
     /**
      * Labels for the found cut points.
      * @param range tickmark range.
+     * @param maxTicks upper limit on the number of cuts.
      * @return cut point labels
      */
     public String[] getCutPointLabels(Range range, int maxTicks) {
 
         double[] cutPoints = cutPointFinder.getCutPoints(range, maxTicks);
-        formatter.setMaximumFractionDigits(
-                getNumberOfFractionDigits(range, maxTicks));
+        int maxFracDigits = getNumberOfFractionDigits(range, maxTicks);
+        boolean useTight = cutPointFinder instanceof TightCutPointFinder;
 
         int length = cutPoints.length;
         String[] labels = new String[length];
         for (int i = 0; i < length; i++) {
+            if (useTight && (i == 0 || i == length -1))
+            // show a little more precision for the tight labels.
+            formatter.setMaximumFractionDigits(maxFracDigits + 2);
             labels[i] = formatter.format(cutPoints[i]);
         }
         return labels;

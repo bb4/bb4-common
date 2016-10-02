@@ -2,6 +2,7 @@
 package com.barrybecker4.common.app;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,12 +14,12 @@ import java.util.Set;
  */
 public class CommandLineOptions  {
 
-    private final Map<String, String> optionsMap_ = new HashMap<>();
+    private final Map<String, String> optionsMap_ = new LinkedHashMap<>();
 
     /**
      * Constructor.
      * Parse out the args and put them in a hashmap.
-     * We expect the args to be some set of flags of the form -<flag name> followed by and  optional value
+     * We expect the args to be some set of flags of the form -&lt;flag name&gt; followed by and  optional value
      * So an example argument list might be
      *   java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
      * Note: verbose and -safe are options and do not have values.

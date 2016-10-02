@@ -54,6 +54,7 @@ public class AbstractParallelizer<T> {
     /**
      * Invoke all the workers at once and block until they are all done
      * Once all the separate threads have completed their assigned work, you may want to commit the results.
+     * @param callables the callables to invoke concurrently
      * @return list of Future tasks.
      */
     public List<Future<T>> invokeAll(Collection<? extends Callable<T>> callables)  {

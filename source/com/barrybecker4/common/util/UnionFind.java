@@ -35,7 +35,7 @@ public class UnionFind {
 
     /**
      * Initializes an empty union-find data structure with N isolated components 0 through N-1.
-     * @throws java.lang.IllegalArgumentException if N < 0
+     * @throws java.lang.IllegalArgumentException if N &lt; 0
      * @param n the number of objects
      */
     public UnionFind(int n) {
@@ -74,7 +74,7 @@ public class UnionFind {
      * Returns the component identifier for the component containing site <tt>p</tt>.
      * @param p the integer representing one site
      * @return the component identifier for the component containing site <tt>p</tt>
-     * @throws java.lang.IndexOutOfBoundsException unless 0 <= p < N
+     * @throws java.lang.IndexOutOfBoundsException unless 0 &lt;= p &lt; N
      */
     public int find(int p) {
         validate(p);
@@ -98,7 +98,7 @@ public class UnionFind {
      * @param q the integer representing the other site
      * @return <tt>true</tt> if the two sites <tt>p</tt> and <tt>q</tt>
      *    are in the same component, and <tt>false</tt> otherwise
-     * @throws java.lang.IndexOutOfBoundsException unless both 0 <= p < N and 0 <= q < N
+     * @throws java.lang.IndexOutOfBoundsException unless both 0 &lt;= p &lt; N and 0 &lt;= q &lt; N
      */
     public boolean connected(int p, int q) {
         return find(p) == find(q);
@@ -109,7 +109,7 @@ public class UnionFind {
      * containing site <tt>q</tt>.
      * @param p the integer representing one site
      * @param q the integer representing the other site
-     * @throws java.lang.IndexOutOfBoundsException unless both 0 <= p < N and 0 <= q < N
+     * @throws java.lang.IndexOutOfBoundsException unless both 0 &lt;= p &lt; N and 0 &lt;= q &lt; N
      */
     public void union(int p, int q) {
         int rootP = find(p);

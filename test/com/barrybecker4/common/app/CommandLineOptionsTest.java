@@ -15,6 +15,6 @@ public class CommandLineOptionsTest {
 
         String[] testArgs = {"-a", "b", "-c", "dog", "-e", "-f", "-type", "foo", "-h"};
         CommandLineOptions options = new CommandLineOptions(testArgs);
-        assertEquals("unexpected", "{f=null, e=null, c=dog, a=b, type=foo, h=null}", options.toString());
+        assertEquals("unexpected", "{a=b, c=dog, e=null, f=null, type=foo, h=null}", options.toString());
     }
 }
