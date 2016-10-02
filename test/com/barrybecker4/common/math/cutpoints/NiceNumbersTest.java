@@ -28,10 +28,11 @@ public class NiceNumbersTest {
 
     @Test
     public void testNiceNumbers1() {
+        Range range = new Range(11.0, 101.0);
         generator.setUseTightLabeling(false);
-        String[] resultLoose = generator.getCutPointLabels(new Range(11.0, 101.0), 5);
+        String[] resultLoose = generator.getCutPointLabels(range, 5);
         generator.setUseTightLabeling(true);
-        String[] resultTight = generator.getCutPointLabels(new Range(11.0, 101.0), 5);
+        String[] resultTight = generator.getCutPointLabels(range, 5);
         assertNotNull("resultLoose should not be null", resultLoose);
         assertNotNull("resultTight should not be null", resultTight);
         assertTrue(LOOSE + Arrays.toString(resultLoose),
@@ -45,15 +46,52 @@ public class NiceNumbersTest {
 
     @Test
     public void testNiceNumbers2() {
+        Range range = new Range(11.1, 11.23);
         generator.setUseTightLabeling(false);
-        String[] resultLoose = generator.getCutPointLabels(new Range(11.1, 11.23), 5);
+        String[] resultLoose = generator.getCutPointLabels(range, 5);
         generator.setUseTightLabeling(true);
-        String[] resultTight = generator.getCutPointLabels(new Range(11.1, 11.23), 5);
+        String[] resultTight = generator.getCutPointLabels(range, 5);
 
         assertTrue(LOOSE + Arrays.toString(resultLoose),
                 Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS2));
         assertTrue(TIGHT + Arrays.toString(resultTight),
                 Arrays.equals(resultTight, EXPECTED_TIGHT_CUTS2));
+    }
+
+    private static final String[] EXPECTED_LOOSE_CUTS3 = {"-2", "0", "2", "4", "6"};
+    private static final String[] EXPECTED_TIGHT_CUTS3 = {"-1", "0", "2", "4", "5"};
+
+    @Test
+    public void testNiceNumbers3() {
+        Range range = new Range(-1.475879149417865, 4.609775340085392);
+        generator.setUseTightLabeling(false);
+        String[] resultLoose = generator.getCutPointLabels(range, 5);
+        generator.setUseTightLabeling(true);
+        String[] resultTight = generator.getCutPointLabels(range, 5);
+
+        assertTrue(LOOSE + Arrays.toString(resultLoose),
+                Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS3));
+        assertTrue(TIGHT + Arrays.toString(resultTight),
+                Arrays.equals(resultTight, EXPECTED_TIGHT_CUTS3));
+    }
+
+    private static final String[] EXPECTED_LOOSE_CUTS4 =
+            {"-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"};
+    private static final String[] EXPECTED_TIGHT_CUTS4 =
+            {"-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "4.6"};
+
+    @Test
+    public void testNiceNumbers4() {
+        Range range = new Range(-1.475879149417865, 4.609775340085392);
+        generator.setUseTightLabeling(false);
+        String[] resultLoose = generator.getCutPointLabels(range, 20);
+        generator.setUseTightLabeling(true);
+        String[] resultTight = generator.getCutPointLabels(range, 20);
+
+        assertTrue(LOOSE + Arrays.toString(resultLoose),
+                Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS4));
+        assertTrue(TIGHT + Arrays.toString(resultTight),
+                Arrays.equals(resultTight, EXPECTED_TIGHT_CUTS4));
     }
 
     /** There should be no fractional digits in this case */
