@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class AStarSearch<S, T> implements ISearcher {
+public class AStarSearch<S, T> implements ISearcher<S, T> {
 
     protected SearchSpace<S, T> searchSpace;
 

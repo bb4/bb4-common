@@ -4,6 +4,7 @@ import com.barrybecker4.common.Watch;
 import com.barrybecker4.common.search.HeapPriorityQueue;
 import com.barrybecker4.common.search.slidingpuzzle.Board;
 import com.barrybecker4.common.search.slidingpuzzle.Solver;
+import com.barrybecker4.common.search.slidingpuzzle.Transition;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class HeapQSolverTest extends SolverTest {
 
     public Solver createSolver(Board initial) {
-        return new Solver(initial, new HeapPriorityQueue());
+        return new Solver(initial, new HeapPriorityQueue<Board, Transition>());
     }
 
 
