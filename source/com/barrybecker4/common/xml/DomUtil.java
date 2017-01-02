@@ -1,31 +1,16 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.xml;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -144,6 +129,8 @@ public final class DomUtil {
     /**
      * get the value for an attribute.
      * Error if the attribute does not exist.
+     * @param node node to get attribute from
+     * @param attribName attribute to get
      */
     public static String getAttribute(Node node, String attribName) {
 
@@ -154,8 +141,11 @@ public final class DomUtil {
     }
 
      /**
-     * get the value for an attribute. If not found, defaultValue is used.
-     */
+      * get the value for an attribute. If not found, defaultValue is used.
+      * @param node
+      * @param attribName
+      * @param defaultValue
+      */
     public static String getAttribute(Node node, String attribName, String defaultValue) {
         NamedNodeMap attribMap = node.getAttributes();
         String attributeVal = null;
@@ -257,7 +247,11 @@ public final class DomUtil {
         return document;
     }
 
-
+    /**
+     *
+     * @param url
+     * @return parsed Document
+     */
     public static Document parseXML(URL url) {
         try {
             //System.out.println("url path=" + url.getPath());
@@ -269,11 +263,22 @@ public final class DomUtil {
         }
     }
 
+    /**
+     *
+     * @param file
+     * @return parsed Document
+     */
     public static Document parseXMLFile(File file) {
         //System.out.println("about to parse "+ file.getPath());
         return parseXMLFile(file, true);
     }
 
+    /**
+     *
+     * @param file
+     * @param replaceUseWithDeepCopy
+     * @return
+     */
     public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy) {
         try {
             FileInputStream str = new FileInputStream(file);

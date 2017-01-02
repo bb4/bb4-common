@@ -60,6 +60,15 @@ repositories {
     maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
 }
 
+// Suppress javadoc warning when using java 8.
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 /** check for updates every build */
 configurations.all {
     resolutionStrategy {
@@ -81,5 +90,5 @@ task copyToLib(dependsOn: jar, type: Copy) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
+    gradleVersion = '3.2'
 }

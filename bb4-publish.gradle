@@ -37,7 +37,7 @@ javadoc.doLast {
 /**
  * If a project has multiple apps, it should define them
  * in a map called appMap before applying this bb4-publish.gradle file.
- * Skip building the default jars that contains everything if there is a specific list
+ * Skip building the default jars that contain everything if there is a specific list.
  */
 if (hasProperty('appMap')) {
     jar.enabled = false

@@ -10,6 +10,7 @@ public class ThreadUtil {
 
     /**
      * Cause this thread to sleep for specified amount of time while other threads run.
+     * @param millis number of seconds to sleep
      */
     public static void sleep(int millis) {
         if (millis > 0) {
