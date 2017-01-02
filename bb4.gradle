@@ -6,8 +6,8 @@
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
  */
 apply plugin: 'java'
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 apply plugin: 'project-report'
 apply plugin: 'application'
 apply plugin: 'idea'
