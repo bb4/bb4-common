@@ -265,7 +265,7 @@ public final class DomUtil {
 
     /**
      *
-     * @param file
+     * @param file the file to parse
      * @return parsed Document
      */
     public static Document parseXMLFile(File file) {
@@ -275,9 +275,9 @@ public final class DomUtil {
 
     /**
      *
-     * @param file
-     * @param replaceUseWithDeepCopy
-     * @return
+     * @param file the file to parse
+     * @param replaceUseWithDeepCopy if true, replace element references with deep copies.
+     * @return the xml document DOM object
      */
     public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy) {
         try {
