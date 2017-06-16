@@ -1,9 +1,8 @@
 // Copyright by Barry G. Becker, 2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.common.function;
+package com.barrybecker4.common.math.function;
 
 import com.barrybecker4.common.math.MathUtil;
 import com.barrybecker4.common.math.Range;
-import com.barrybecker4.common.math.function.FunctionInverter;
 import org.junit.Test;
 
 import java.util.Arrays;

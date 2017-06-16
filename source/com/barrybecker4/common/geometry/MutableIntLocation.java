@@ -2,8 +2,7 @@
 package com.barrybecker4.common.geometry;
 
 /**
- * Represents a location location of something in byte coordinates.
- * The range of bytes are only 0 to 255 and cannot be negative.
+ * Represents a location of something in coordinates.
  * Use this version if you really need it to be mutable
  * This version <i>is</i> mutable.
  *

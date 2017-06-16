@@ -3,15 +3,15 @@ package com.barrybecker4.common.concurrency;
 /**
  * @author Barry Becker
  */
-public class Result {
+class Result {
 
-    long sum;
+    private long sum;
 
-    public Result(long sum) {
+    Result(long sum) {
         this.sum = sum;
     }
 
-    public long getSum() {
+    long getSum() {
         return sum;
     }
 }

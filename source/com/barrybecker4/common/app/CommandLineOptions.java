@@ -31,13 +31,13 @@ public class CommandLineOptions  {
         while (ct < args.length) {
             String arg = args[ct];
 
-            //assert (arg.charAt(0)=='-') :
-            //        "Command line Options must start with - and then be followed by an optional value";
-            String option = arg.substring(1);
+            assert(arg.charAt(0)=='-') :
+                   "Command line Options must start with - and then be followed by an optional value";
+            String option = arg.substring(1).trim();
             String value = null;
 
             if (ct < args.length-1 && args[ct+1].charAt(0) != '-') {
-                value = args[ct+1];
+                value = args[ct+1].trim();
                 ct++;
             }
             optionsMap_.put(option, value);

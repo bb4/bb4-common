@@ -66,4 +66,3 @@ public class IntLocation extends Location {
         return new IntLocation(row_ + rowChange, col_ + colChange);
     }
 }
-

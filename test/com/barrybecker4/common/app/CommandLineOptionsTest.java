@@ -17,4 +17,35 @@ public class CommandLineOptionsTest {
         CommandLineOptions options = new CommandLineOptions(testArgs);
         assertEquals("unexpected", "{a=b, c=dog, e=null, f=null, type=foo, h=null}", options.toString());
     }
+
+    @Test
+    public void testEmptyCommandLineOptions() {
+
+        String[] testArgs = {};
+        CommandLineOptions options = new CommandLineOptions(testArgs);
+        assertEquals("unexpected", "{}", options.toString());
+    }
+
+    @Test(expected=AssertionError.class)
+    public void testCommandLineOptionsWithNoDash() {
+        String[] testArgs = {"a", "b", "-c", "dog"};
+        CommandLineOptions options = new CommandLineOptions(testArgs);
+    }
+
+    @Test
+    public void testCommandLineOptionsWithSpace() {
+
+        String[] testArgs = {"-a", " b", "-c ", "dog"};
+        CommandLineOptions options = new CommandLineOptions(testArgs);
+        assertEquals("unexpected", "{a=b, c=dog}", options.toString());
+    }
+
+    @Test
+    public void testCommandLineOptionsWithoutValues() {
+
+        String[] testArgs = {"-abc", "-c", "dog", "-efg"};
+        CommandLineOptions options = new CommandLineOptions(testArgs);
+        assertEquals("unexpected", "{abc=null, c=dog, efg=null}", options.toString());
+    }
+
 }

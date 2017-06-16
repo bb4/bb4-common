@@ -12,8 +12,8 @@ package com.barrybecker4.common.geometry;
 public class ByteLocation extends Location {
 
     private static final long serialVersionUID = 1;
-    protected byte row_ = 0;
-    protected byte col_ = 0;
+    private byte row_ = 0;
+    private byte col_ = 0;
 
     /**
      * Constructs a new Location at the given coordinates.
@@ -22,7 +22,7 @@ public class ByteLocation extends Location {
      * @param col  the column coordinate (0 - 255).
      */
     public ByteLocation(int row, int col) {
-        assert Math.abs(row) < 128 && Math.abs(col) < 128 : "row=" + row + " or col="+ col +" was out of range.";
+        assert Math.abs(row) < 128 && Math.abs(col) < 128 : "row=" + row + " or col=" + col + " was out of range.";
         row_ = (byte) row;
         col_ = (byte) col;
     }

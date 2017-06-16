@@ -39,7 +39,7 @@ public class MathExpressionParser extends ExpressionParser {
     @Override
     protected List<TreeNode> getNodesAtLevel(String exp) {
 
-        int pos= 0;
+        int pos = 0;
         List<TreeNode> nodes = new ArrayList<>();
         String token = "";
         char ch = exp.charAt(pos);

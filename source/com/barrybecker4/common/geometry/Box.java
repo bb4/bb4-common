@@ -137,7 +137,7 @@ public class Box {
     }
 
     /**
-     * @param location the location to check if on board.
+     * @param location the location to check if on border.
      * @return true if location is on this box's border
      */
     public boolean isOnEdge(Location location) {
@@ -148,7 +148,7 @@ public class Box {
     }
 
     /**
-     * @param location the location to check if on board.
+     * @param location the location to check if on corner.
      * @return true if location is on this box's border
      */
     public boolean isOnCorner(Location location) {
@@ -222,5 +222,4 @@ public class Box {
         result = 31 * result + (bottomRightCorner != null ? bottomRightCorner.hashCode() : 0);
         return result;
     }
-
 }

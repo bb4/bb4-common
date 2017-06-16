@@ -20,7 +20,6 @@ public class ClassLoaderSingleton {
         return loader_;
     }
 
-
     /**
      * @param className the class to load.
      * @return  the loaded class.
@@ -37,7 +36,7 @@ public class ClassLoaderSingleton {
         return theClass;
     }
 
-      /** private constructor */
+    /** private constructor */
     private ClassLoaderSingleton() {
     }
 
