@@ -195,9 +195,9 @@ public final class DomUtil {
          NamedNodeMap attribMap = root.getAttributes();
          String attribs = getAttributeList(attribMap);
 
-         System.out.println("Node: <"+root.getNodeName()+">  "+ attribs);
-         for (int i=0; i<l.getLength(); i++) {
-            printTree(l.item(i), level+1);
+         System.out.println("Node: <" + root.getNodeName() + ">  " + attribs);
+         for (int i=0; i < l.getLength(); i++) {
+            printTree(l.item(i), level + 1);
          }
      }
 
@@ -227,7 +227,6 @@ public final class DomUtil {
             DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new XmlErrorHandler());
 
-
             document = builder.parse( stream );
 
             postProcessDocument(document, document, replaceUseWithDeepCopy);
@@ -249,7 +248,7 @@ public final class DomUtil {
 
     /**
      *
-     * @param url
+     * @param url url that points to the xml document to parse
      * @return parsed Document
      */
     public static Document parseXML(URL url) {
@@ -264,7 +263,6 @@ public final class DomUtil {
     }
 
     /**
-     *
      * @param file the file to parse
      * @return parsed Document
      */

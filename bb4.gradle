@@ -25,10 +25,10 @@ defaultTasks 'build'
  */
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 if (!hasProperty('sonatypeUsername')) {
-	ext.sonatypeUsername = ''
+    ext.sonatypeUsername = ''
 }
 if (!hasProperty('sonatypePassword')) {
-	ext.sonatypePassword = ''
+    ext.sonatypePassword = ''
 }
 
 /** all bb4 projects use this directory layout. */

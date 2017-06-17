@@ -69,7 +69,10 @@ public class PackageReflector {
         ZipEntry entry;
         while ((entry = zip.getNextEntry()) != null) {
             if (entry.getName().endsWith(CLASS_EXT)) {
-                String className = entry.getName().replaceAll("[$].*", "").replaceAll("[.]class", "").replace('/', '.');
+                String className = entry.getName()
+                        .replaceAll("[$].*", "")
+                        .replaceAll("[.]class", "")
+                        .replace('/', '.');
 
                 if (className.startsWith(packageName)) {
                     String name = className.substring(packageName.length() + 1);
