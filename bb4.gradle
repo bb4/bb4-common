@@ -41,7 +41,7 @@ sourceSets {
             srcDir 'scala-source'
         }
         resources {
-            srcDir 'source'
+            srcDirs 'source', 'scala-source'
         }
     }
     test {
@@ -52,7 +52,7 @@ sourceSets {
             srcDir 'scala-test'
         }
         resources {
-            srcDir 'test'
+            srcDirs 'test', 'scala-test'
         }
     }
 }

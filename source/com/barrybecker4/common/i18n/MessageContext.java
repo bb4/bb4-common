@@ -156,6 +156,7 @@ public class MessageContext {
 
     private void initMessageBundles(LocaleType locale) {
 
+        System.out.println("resource paths = " + resourcePaths_);
         for (String path :  resourcePaths_) {
             ResourceBundle bundle = ResourceBundle.getBundle(path, locale.getLocale());
             if (bundle == null) {
