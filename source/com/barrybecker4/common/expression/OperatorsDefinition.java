@@ -18,5 +18,4 @@ public interface OperatorsDefinition {
     Operator[][] getOperatorPrecedence();
 
     boolean isLastNodeOperator(List<TreeNode> nodes);
-
 }

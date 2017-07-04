@@ -6,7 +6,7 @@ import com.barrybecker4.common.app.ILog;
 import javax.swing.JComponent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -42,7 +42,7 @@ public class MessageContext {
      * @param resourcePath path to message bundle
      */
     public MessageContext(String resourcePath) {
-        this(new ArrayList<>(Arrays.asList(resourcePath)));
+        this(new ArrayList<>(Collections.singletonList(resourcePath)));
     }
 
     /**
@@ -132,8 +132,7 @@ public class MessageContext {
         boolean found = false;
         int numBundles = messagesBundles_.size();
         int ct = 0;
-        while (!found && ct < numBundles)
-        {
+        while (!found && ct < numBundles) {
             ResourceBundle bundle = messagesBundles_.get(ct++);
             if (bundle.containsKey(key))  {
                 label = bundle.getString(key);
