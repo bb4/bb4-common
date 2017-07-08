@@ -80,7 +80,9 @@ if (JavaVersion.current().isJava8Compatible()) {
 /** check for updates every build */
 configurations.all {
     resolutionStrategy {
-        failOnVersionConflict()
+        if (!project.hasProperty('debugDeps')) {
+            failOnVersionConflict()
+        }
         cacheDynamicVersionsFor 0, 'seconds'
         cacheChangingModulesFor 0, 'seconds'
     }
