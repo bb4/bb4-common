@@ -95,9 +95,7 @@ public final class DomUtil {
                 // delete if nothing by whitespace
                 String text = n.getNodeValue();
                 if (text.matches("[ \\t\n\\x0B\\f\\r]*")) {
-                    //System.out.println("TEXT="+text+"|so removing");
                     deleteList.add(n);
-                    //node.removeChild(n);
                 }
             }
 
@@ -142,9 +140,9 @@ public final class DomUtil {
 
      /**
       * get the value for an attribute. If not found, defaultValue is used.
-      * @param node
-      * @param attribName
-      * @param defaultValue
+      * @param node node to get attribute on
+      * @param attribName name of attribute to get
+      * @param defaultValue default to use if not there
       */
     public static String getAttribute(Node node, String attribName, String defaultValue) {
         NamedNodeMap attribMap = node.getAttributes();

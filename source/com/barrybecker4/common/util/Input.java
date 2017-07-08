@@ -34,7 +34,7 @@ public final class Input {
      * @param min minimum acceptable value.
      * @param max the maximum number allowed to be entered.
      * @return an integer number between 0 and max.
-     * @throws IOException
+     * @throws IOException if error reading
      */
     public static long getLong(String prompt, long min, long max) throws IOException {
         long value = 0;
@@ -75,7 +75,7 @@ public final class Input {
      * There is mo limit to the amount of precision.
      * @param prompt query string to prompt the user for a response.
      * @return an big integer number
-     * @throws IOException
+     * @throws IOException if error reading
      */
     public static BigInteger getBigInteger(String prompt) throws IOException {
         BigInteger value = new BigInteger("0");
@@ -104,7 +104,7 @@ public final class Input {
      * Get a string from the user.
      * todo: add an optional regexp argument.
      * @return input string.
-     * @throws IOException
+     * @throws IOException if error reading
      */
     public static String getString(String prompt) throws IOException {
 
