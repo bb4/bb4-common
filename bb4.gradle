@@ -36,8 +36,6 @@ if (!hasProperty('sonatypePassword')) {
     ext.sonatypePassword = ''
 }
 
-
-
 /** all bb4 projects use this directory layout. */
 sourceSets {
     main {
