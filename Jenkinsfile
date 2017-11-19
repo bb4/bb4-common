@@ -1,3 +1,7 @@
+def gradle(command) {
+    sh "./gradlew ${command}"
+}
+
 node {
-    echo "Hello from Jenkinsfile"
+    gradle 'tasks'
 }
