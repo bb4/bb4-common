@@ -1,4 +1,4 @@
-sh('''#!C:\Program Files\Git\bin\bash.exe
+sh('''#!C:/Program Files/Git/bin/bash.exe
 
 def gradle(command) {
     sh "./gradlew ${command}"
