@@ -3,5 +3,6 @@ def gradle(command) {
 }
 
 node {
+    echo "Hello from jenkins file with Gradle"
     gradle 'tasks'
 }
