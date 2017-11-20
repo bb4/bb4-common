@@ -6,18 +6,21 @@ node {
         git url: 'https://github.com/bb4/bb4-common.git'
     }
 
-    stage 'build'
-    gradle("clean build --refresh-dependencies")
-
-    stage 'test'
-    gradle("test")
-
-    def gradle(tasks) {
-        if (isUnix()) {
-            sh './gradlew ${tasks}'
-        } else {
-            bat './gradlew.bat ${tasks}'
-        }
+    stage ('build')
+    if (isUnix()) {
+        sh './gradlew ${tasks}'
+    } else {
+        bat './gradlew.bat ${tasks}'
     }
+    //gradle("clean build --refresh-dependencies")
+
+    stage ('test') {
+    if (isUnix()) {
+        sh './gradlew test'
+    } else {
+        bat './gradlew.bat test'
+    }
+    // gradle("test")
+
 }
 
