@@ -12,15 +12,13 @@ node {
     } else {
         bat './gradlew.bat clean build --refresh-dependencies'
     }
-    //gradle("clean build --refresh-dependencies")
 
-    stage ('test') {
+    stage ('test')
     if (isUnix()) {
         sh './gradlew test'
     } else {
         bat './gradlew.bat test'
     }
-    // gradle("test")
 
 }
 
