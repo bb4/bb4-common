@@ -2,14 +2,6 @@
 
 node {
 
-    def gradle(tasks) {
-        if (isUnix()) {
-            sh './gradlew ${tasks}'
-        } else {
-            bat './gradlew.bat ${tasks}'
-        }
-    }
-
     stage('Checkout sources') {
         git url: 'https://github.com/bb4/bb4-common.git'
     }
@@ -19,5 +11,13 @@ node {
 
     stage 'test'
     gradle("test")
+
+    def gradle(tasks) {
+        if (isUnix()) {
+            sh './gradlew ${tasks}'
+        } else {
+            bat './gradlew.bat ${tasks}'
+        }
+    }
 }
 
