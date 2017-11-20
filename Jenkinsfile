@@ -8,9 +8,9 @@ node {
 
     stage ('build')
     if (isUnix()) {
-        sh './gradlew ${tasks}'
+        sh './gradlew clean build --refresh-dependencies'
     } else {
-        bat './gradlew.bat ${tasks}'
+        bat './gradlew.bat clean build --refresh-dependencies'
     }
     //gradle("clean build --refresh-dependencies")
 
