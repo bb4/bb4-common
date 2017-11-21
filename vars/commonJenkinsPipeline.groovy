@@ -36,8 +36,7 @@ def call(Map pipelineParams) {
         post {
             always {
                 junit 'build/test-results/test/*.xml'
-                def dir = 'build/docs/' + pipelineParams.language + 'doc'
-                step([$class: 'JavadocArchiver', javadocDir: dir, keepAll: true])
+                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + pipelineParams.language + 'doc', keepAll: true])
             }
             success {
                 mail to: 'barrybecker4@gmail.com',
