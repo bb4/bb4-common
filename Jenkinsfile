@@ -1,24 +1,23 @@
 #!groovy
 
 node {
-
     stage('Checkout sources') {
-        git url: 'https://github.com/bb4/bb4-common.git'
+        git url: 'https://github.com/bb4/bb4-common.git', branch: 'master'
     }
 
-    stage ('build') {
-        if (isUnix()) {
-            sh './gradlew clean build --refresh-dependencies'
-        } else {
-            bat './gradlew.bat clean build --refresh-dependencies'
-        }
+    stage ('build/test') {
+        gradleCmd("clean build --refresh-dependencies")
     }
 
     stage ('documentation') {
-        if (isUnix()) {
-            sh './gradlew javadoc'
-        } else {
-            bat './gradlew.bat javadoc'
-        }
+        gradleCmd("javadoc")
+    }
+}
+
+def gradleCmd(cmd) {
+    if (isUnix()) {
+        sh "./gradlew ${cmd}"
+    } else {
+        bat "./gradlew.bat ${cmd}"
     }
 }
