@@ -80,7 +80,8 @@ if (JavaVersion.current().isJava8Compatible()) {
             options.addStringOption('Xdoclint:none', '-quiet')
         }
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-Werror"
+            options.compilerArgs << "-Xlint:deprecation" << "-Werror"
+            // "-Xlint:unchecked" <<
         }
     }
 }

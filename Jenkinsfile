@@ -3,21 +3,27 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout sources') {
+        stage('Checkout source') {
             steps {
                 git url: 'https://github.com/bb4/bb4-common.git', branch: 'master'
             }
         }
 
-        stage ('build/test') {
+        stage('build/test') {
             steps {
                 gradleCmd("clean build --refresh-dependencies")
             }
         }
 
-        stage ('documentation') {
+        stage('documentation') {
             steps {
                 gradleCmd("javadoc")
+            }
+        }
+
+        stage('publish') {
+            steps {
+                gradleCmd("publishArtifacts --info --refresh-dependencies")
             }
         }
     }
@@ -25,7 +31,6 @@ pipeline {
         always {
             junit 'build/test-results/test/*.xml'
             step([$class: 'JavadocArchiver', javadocDir: 'build/docs/javadoc', keepAll: true])
-            //javadoc 'build/docs/javadoc'
         }
         success {
             mail to: 'barrybecker4@gmail.com',
