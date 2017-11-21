@@ -23,7 +23,7 @@ def call(Map pipelineParams) {
 
             stage('documentation') {
                 steps {
-                    gradleCmd("javadoc")
+                    gradleCmd("${pipelineParams.language}doc")
                 }
             }
 
@@ -36,7 +36,7 @@ def call(Map pipelineParams) {
         post {
             always {
                 junit 'build/test-results/test/*.xml'
-                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/javadoc', keepAll: true])
+                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/${pipelineParams.language}doc', keepAll: true])
             }
             success {
                 mail to: 'barrybecker4@gmail.com',
