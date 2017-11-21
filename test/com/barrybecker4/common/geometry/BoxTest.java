@@ -2,7 +2,7 @@ package com.barrybecker4.common.geometry;
 
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
@@ -71,6 +71,7 @@ public class BoxTest {
     @Test
     public void testToString() {
         box = new Box(new IntLocation(2, 3), new IntLocation(5, 5));
-        assertEquals("Unexpected string form", "Box:(row=2, column=3) - (row=5, column=5)", box.toString());
+        assertEquals("Unexpected string form", "Box:(row=2, column=3) - (row=5, column=5)",
+                box.toString());
     }
 }
