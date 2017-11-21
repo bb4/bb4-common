@@ -24,6 +24,7 @@ pipeline {
     post {
         always {
             junit 'build/test-results/test/*.xml'
+            step([$class: 'JavadocArchiver', javadocDir: 'build/docs/javadoc', keepAll: true])
             //javadoc 'build/docs/javadoc'
         }
         success {
