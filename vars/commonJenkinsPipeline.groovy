@@ -18,7 +18,7 @@ def call(Map pipelineParams) {
     pipeline {
         agent any
         triggers {
-            pollSCM('H */4 * * *')
+            pollSCM('H/15 * * * *')
         }
         stages {
             stage('Checkout source') {
