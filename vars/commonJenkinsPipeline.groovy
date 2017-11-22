@@ -48,19 +48,10 @@ def call(Map pipelineParams) {
                     gradleCmd(params.deploymentTask + " --info --refresh-dependencies")
                 }
             }
-            stage('final test') {
-                when {
-                    expression { params.deploymentTask == "deploy" }
-                }
-                steps {
-                    // need a more recent timestamp because deploy takes too long
-                    gradleCmd("test")
-                }
-            }
         }
         post {
             always {
-                junit 'build/test-results/test/*.xml'
+                junit "**/TEST-*.xml"  // 'build/test-results/test/*.xml'
                 step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
             }
             success {
@@ -77,6 +68,14 @@ def call(Map pipelineParams) {
                 echo 'This build is unstable.'
             }
         }
+    }
+}
+
+def cmd(cmd) {
+    if (isUnix()) {
+        sh "${cmd}"
+    } else {
+        bat "${cmd}"
     }
 }
 
