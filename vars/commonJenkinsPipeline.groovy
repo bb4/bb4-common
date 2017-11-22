@@ -51,6 +51,10 @@ def call(Map pipelineParams) {
         }
         post {
             always {
+                if (params.deploymentTask == "deploy") {
+                    // need a more recent timestamp because deply taks too long
+                    gradleCmd("test")
+                }
                 junit 'build/test-results/test/*.xml'
                 step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
             }
