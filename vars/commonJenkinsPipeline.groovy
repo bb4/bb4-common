@@ -8,7 +8,7 @@
  */
 def call(Map pipelineParams) {
 
-    def defaultParams = [language: "java", deploymentTask:"publishArtifacts"]
+    def defaultParams = [language: "java", deploymentTask: "publishArtifacts"]
     def params = defaultParams << pipelineParams
 
     pipeline {
