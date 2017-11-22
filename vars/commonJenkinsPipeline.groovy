@@ -40,7 +40,7 @@ def call(Map pipelineParams) {
 
             stage('deploy') {
                 steps {
-                    gradleCms("tasks")
+                    gradleCmd("tasks")
                     gradleCmd(params.deploymentTask + " --info --refresh-dependencies")
                 }
             }
