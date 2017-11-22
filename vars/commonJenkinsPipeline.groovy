@@ -51,8 +51,11 @@ def call(Map pipelineParams) {
         }
         post {
             always {
-                if (params.deploymentTask == "deploy") {
-                    // need a more recent timestamp because deply taks too long
+                when {
+                    expression { params.deploymentTask == "deploy" }
+                }
+                steps {
+                    // need a more recent timestamp because deploy takes too long
                     gradleCmd("test")
                 }
                 junit 'build/test-results/test/*.xml'
