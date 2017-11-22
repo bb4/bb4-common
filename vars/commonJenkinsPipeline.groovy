@@ -48,9 +48,7 @@ def call(Map pipelineParams) {
                     gradleCmd(params.deploymentTask + " --info --refresh-dependencies")
                 }
             }
-        }
-        post {
-            always {
+            stage('final test') {
                 when {
                     expression { params.deploymentTask == "deploy" }
                 }
@@ -58,6 +56,10 @@ def call(Map pipelineParams) {
                     // need a more recent timestamp because deploy takes too long
                     gradleCmd("test")
                 }
+            }
+        }
+        post {
+            always {
                 junit 'build/test-results/test/*.xml'
                 step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
             }
