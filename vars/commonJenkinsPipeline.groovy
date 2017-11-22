@@ -17,7 +17,7 @@ def call(Map pipelineParams) {
 
     pipeline {
         agent any
-        properties([
+        options([
                 pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])
         ])
         stages {
