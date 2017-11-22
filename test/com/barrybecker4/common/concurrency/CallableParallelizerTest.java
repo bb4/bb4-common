@@ -29,7 +29,7 @@ public class CallableParallelizerTest {
         final StringBuilder finalResult = new StringBuilder();
 
         List<Callable<Result>> workers = new ArrayList<>();
-        for (int i=1000; i<100000; i+=10000) {
+        for (int i = 1000; i < 100000; i += 10000) {
             workers.add(new Worker(i));
         }
         parallelizer.invokeAllWithCallback(workers, new DoneHandler<Result>() {
@@ -49,7 +49,6 @@ public class CallableParallelizerTest {
     private class Worker implements Callable<Result> {
 
         int num;
-
         Worker(int num) {
             this.num = num;
         }
@@ -62,6 +61,5 @@ public class CallableParallelizerTest {
             }
             return new Result(total);
         }
-
     }
 }

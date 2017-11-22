@@ -16,7 +16,6 @@ public class AppContextTest {
     @Test(expected = NullPointerException.class)
     public void testGetLabelWhenNoMessageContext() {
          AppContext.getLabel("FOO");
-
     }
 
     @Test

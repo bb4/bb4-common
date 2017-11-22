@@ -29,8 +29,8 @@ public class LRUCacheTest {
     public void setUp() throws Exception {
         lruCache = new LRUCache<>(3);
 
-        lruCache.put ("1", ONE);             // 1
-        lruCache.put ("2", TWO);             // 2 1
+        lruCache.put ("1", ONE);            // 1
+        lruCache.put ("2", TWO);            // 2 1
         lruCache.put ("3", THREE);          // 3 2 1
     }
 
