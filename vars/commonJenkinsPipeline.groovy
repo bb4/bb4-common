@@ -1,11 +1,22 @@
+/**
+ * Shared Jenkinsfile pipline for all bb4 projects.
+ * @param pipelineParams the are:
+ *   gitUrl - the git repository url from github
+ *   language - either java or scala
+ *   deploymentTask - either publishArtifacts (default) for deploy
+ * @author Barry Becker
+ */
 def call(Map pipelineParams) {
+
+    def defaultParams = [language: "java", deploymentTask:"publishArtifacts"]
+    def params = defaultParams << pipelineParams
 
     pipeline {
         agent any
         stages {
             stage('Checkout source') {
                 steps {
-                    git url: pipelineParams.gitUrl, branch: 'master'
+                    git url: params.gitUrl, branch: 'master'
                 }
             }
 
@@ -23,20 +34,20 @@ def call(Map pipelineParams) {
 
             stage('documentation') {
                 steps {
-                    gradleCmd("${pipelineParams.language}doc")
+                    gradleCmd("${params.language}doc")
                 }
             }
 
-            stage('publish') {
+            stage('deploy') {
                 steps {
-                    gradleCmd("publishArtifacts --info --refresh-dependencies")
+                    gradleCmd(params.deploymentTask + " --info --refresh-dependencies")
                 }
             }
         }
         post {
             always {
                 junit 'build/test-results/test/*.xml'
-                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + pipelineParams.language + 'doc', keepAll: true])
+                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
             }
             success {
                 mail to: 'barrybecker4@gmail.com',
