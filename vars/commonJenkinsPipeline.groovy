@@ -8,7 +8,11 @@
  */
 def call(Map pipelineParams) {
 
-    def defaultParams = [language: "java", deploymentTask: "publishArtifacts"]
+    def defaultParams = [
+            branch: "master",
+            language: "java",
+            deploymentTask: "publishArtifacts"
+    ]
     def params = defaultParams << pipelineParams
 
     pipeline {
@@ -16,7 +20,7 @@ def call(Map pipelineParams) {
         stages {
             stage('Checkout source') {
                 steps {
-                    git url: params.gitUrl, branch: 'master'
+                    git url: params.gitUrl, branch: params.branch
                 }
             }
 
