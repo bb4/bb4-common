@@ -13,7 +13,7 @@ def call(Map pipelineParams) {
             branch: "master",
             language: "java",
             deploymentTask: "publishArtifacts",
-            upstreamProjects: ""
+            upstreamProjects: "NONE"
     ]
     def params = defaultParams << pipelineParams
 
