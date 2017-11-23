@@ -1,9 +1,10 @@
 /**
  * Shared Jenkinsfile pipline for all bb4 projects.
  * @param pipelineParams the are:
- *   gitUrl - the git repository url from github
- *   language - either java or scala
- *   deploymentTask - either publishArtifacts (default) for deploy
+ *   gitUrl - the git repository url from github.
+ *   language - either java or scala.
+ *   deploymentTask - either publishArtifacts (default) for deploy.
+ *   upstreamProjects - list of projects that should trigger us to build when they are built successfully.
  * @author Barry Becker
  */
 def call(Map pipelineParams) {
@@ -11,7 +12,8 @@ def call(Map pipelineParams) {
     def defaultParams = [
             branch: "master",
             language: "java",
-            deploymentTask: "publishArtifacts"
+            deploymentTask: "publishArtifacts",
+            upstreamProjects: ""
     ]
     def params = defaultParams << pipelineParams
 
@@ -19,6 +21,7 @@ def call(Map pipelineParams) {
         agent any
         triggers {
             pollSCM('H/15 * * * *')
+            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
         stages {
             stage('Checkout source') {
