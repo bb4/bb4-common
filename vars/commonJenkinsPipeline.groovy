@@ -21,7 +21,6 @@ def call(Map pipelineParams) {
         agent any
         options {
             buildDiscarder(logRotator(numToKeepStr: '3')) // keep only recent builds
-            timeout(time: 1, unit: 'HOURS')  // avoid runing forever
         }
         triggers {
             pollSCM('H/15 * * * *')
