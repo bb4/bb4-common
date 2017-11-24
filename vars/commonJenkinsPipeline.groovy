@@ -13,7 +13,7 @@ def call(Map pipelineParams) {
             branch: "master",
             language: "java",
             deploymentTask: "publishArtifacts",
-            upstreamProjects: null
+            upstreamProjects: ""
     ]
     def params = defaultParams << pipelineParams
 
@@ -24,9 +24,7 @@ def call(Map pipelineParams) {
         }
         triggers {
             pollSCM('H/15 * * * *')
-            when (params.upstreamProjects != null) {
-                upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
-            }
+            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
         stages {
             stage('Checkout source') {
