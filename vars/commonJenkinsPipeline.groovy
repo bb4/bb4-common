@@ -21,7 +21,7 @@ def call(Map pipelineParams) {
         agent any
         triggers {
             pollSCM('H/15 * * * *')
-            upstream(upstreamProjects: params.upstreamProjects, threshold: 'SUCCESS')
+            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
         stages {
             stage('Checkout source') {
