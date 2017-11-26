@@ -23,7 +23,7 @@ def call(Map pipelineParams) {
             buildDiscarder(logRotator(numToKeepStr: '3')) // keep only recent builds
         }
         triggers {
-            pollSCM('H/15 * * * *')
+            pollSCM('*/10 * * * *')
             upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
@@ -55,7 +55,7 @@ def call(Map pipelineParams) {
             stage('deploy') {
                 steps {
                     //gradleCmd("tasks")
-                    gradleCmd(params.deploymentTask + " --info --refresh-dependencies")
+                    gradleCmd(params.deploymentTask + " --info")
                 }
             }
         }
@@ -65,14 +65,16 @@ def call(Map pipelineParams) {
                 step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
             }
             success {
-                mail to: 'barrybecker4@gmail.com',
-                        subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "This build succeeded: ${env.BUILD_URL}"
+                echo 'This build was SUCCESSFUL!'
             }
             failure {
                 mail to: 'barrybecker4@gmail.com',
                         subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "Something is wrong with ${env.BUILD_URL}"
+                        body: """Something is wrong with ${env.BUILD_URL}.
+                          |It is failing in ${env.FAILURE_STAGE} stage.
+                          |\\u2639 ${env.JOB_NAME} (${env.BUILD_NUMBER}) has failed.
+                          |Somebody should do something about that
+                          """
             }
             unstable {
                 echo 'This build is unstable.'
