@@ -65,6 +65,11 @@ def call(Map pipelineParams) {
             }
             success {
                 echo 'This build was SUCCESSFUL!'
+                if (currentBuild.previousBuild != null && currentBuild.previousBuild.result != 'SUCCESS') {
+                    mail to: 'barrybecker4@gmail.com',
+                            subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Build is back to normal (success): ${env.BUILD_URL}"
+                }
             }
             failure {
                 mail to: 'barrybecker4@gmail.com',
@@ -72,7 +77,6 @@ def call(Map pipelineParams) {
                         body: """Something is wrong with ${env.BUILD_URL}.
                           |It is failing in ${env.FAILURE_STAGE} stage.
                           |\\u2639 ${env.JOB_NAME} (${env.BUILD_NUMBER}) has failed.
-                          |Somebody should do something about that
                           """
             }
             unstable {
