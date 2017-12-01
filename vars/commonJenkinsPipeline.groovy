@@ -10,7 +10,6 @@
 def call(Map pipelineParams) {
 
     def defaultParams = [
-            branch: "master",
             language: "java",
             deploymentTask: "publishArtifacts",
             upstreamProjects: ""
@@ -30,7 +29,7 @@ def call(Map pipelineParams) {
         stages {
             stage('Checkout source') {
                 steps {
-                    git url: params.gitUrl, branch: params.branch
+                    checkout scm
                 }
             }
 
