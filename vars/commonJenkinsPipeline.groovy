@@ -65,11 +65,11 @@ def call(Map pipelineParams) {
             }
             success {
                 echo 'This build was SUCCESSFUL!'
-                if (currentBuild.previousBuild != null && currentBuild.previousBuild.result != 'SUCCESS') {
-                    mail to: 'barrybecker4@gmail.com',
-                            subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
-                            body: "Build is back to normal (success): ${env.BUILD_URL}"
-                }
+                //if (currentBuild.previousBuild() != null && currentBuild.previousBuild().result != 'SUCCESS') {
+                //    mail to: 'barrybecker4@gmail.com',
+                //            subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
+                //            body: "Build is back to normal (success): ${env.BUILD_URL}"
+                //}
             }
             failure {
                 mail to: 'barrybecker4@gmail.com',
