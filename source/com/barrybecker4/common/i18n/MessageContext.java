@@ -23,18 +23,18 @@ public class MessageContext {
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
 
     /** logger object. Use console by default. */
-    private ILog logger_;
+    private ILog logger;
 
     /** debug level */
-    private int debug_ = 0;
+    private int debug = 0;
 
     /** the list of paths the define where to get the messageBundles */
-    private List<String> resourcePaths_;
+    private List<String> resourcePaths;
 
     /** the list of bundles to look for messages in */
-    private List<ResourceBundle> messagesBundles_ ;
+    private List<ResourceBundle> messagesBundles;
 
-    private LocaleType currentLocale_ = DEFAULT_LOCALE;
+    private LocaleType currentLocale = DEFAULT_LOCALE;
 
 
     /**
@@ -50,22 +50,22 @@ public class MessageContext {
      * @param resourcePaths list of paths to message bundles
      */
     public MessageContext(List<String> resourcePaths) {
-        resourcePaths_ = resourcePaths;
-        messagesBundles_ = new ArrayList<>();
+        this.resourcePaths = resourcePaths;
+        messagesBundles = new ArrayList<>();
     }
 
     /**
      * @param resourcePath another resource path to get a message bundle from.
      */
     public void addResourcePath(String resourcePath) {
-        if (!resourcePaths_.contains(resourcePath)) {
-            resourcePaths_.add(resourcePath);
-            messagesBundles_.clear();
+        if (!resourcePaths.contains(resourcePath)) {
+            resourcePaths.add(resourcePath);
+            messagesBundles.clear();
         }
     }
 
     public void setDebugMode(int debugMode) {
-        debug_ = debugMode;
+        debug = debugMode;
     }
 
     /**
@@ -73,15 +73,15 @@ public class MessageContext {
      */
     public void setLogger( ILog logger ) {
         assert logger != null;
-        logger_ = logger;
+        this.logger = logger;
     }
 
 
     private void log(int logLevel, String message) {
-        if (logger_ == null) {
+        if (logger == null) {
             throw new RuntimeException("Set a logger on the MessageContext before calling log.");
         }
-        logger_.print(logLevel, debug_, message);
+        logger.print(logLevel, debug, message);
     }
 
     /**
@@ -97,14 +97,14 @@ public class MessageContext {
      * @param locale locale to use
      */
     public void setLocale(LocaleType locale) {
-        currentLocale_ = locale;
-        messagesBundles_.clear();
-        initMessageBundles(currentLocale_);
-        JComponent.setDefaultLocale(currentLocale_.getLocale());
+        currentLocale = locale;
+        messagesBundles.clear();
+        initMessageBundles(currentLocale);
+        JComponent.setDefaultLocale(currentLocale.getLocale());
     }
 
     public Locale getLocale() {
-        return currentLocale_.getLocale();
+        return currentLocale.getLocale();
     }
 
     /**
@@ -126,18 +126,18 @@ public class MessageContext {
      */
     public String getLabel(String key, Object[] params)  {
         String label = key;
-        if (messagesBundles_.isEmpty())  {
-            initMessageBundles(currentLocale_);
+        if (messagesBundles.isEmpty())  {
+            initMessageBundles(currentLocale);
         }
         boolean found = false;
-        int numBundles = messagesBundles_.size();
+        int numBundles = messagesBundles.size();
         int ct = 0;
         while (!found && ct < numBundles) {
-            ResourceBundle bundle = messagesBundles_.get(ct++);
+            ResourceBundle bundle = messagesBundles.get(ct++);
             if (bundle.containsKey(key))  {
                 label = bundle.getString(key);
                 if (params != null) {
-                    MessageFormat formatter = new MessageFormat(label, currentLocale_.getLocale());
+                    MessageFormat formatter = new MessageFormat(label, currentLocale.getLocale());
                     label = formatter.format(params);
                 }
                 found = true;
@@ -145,9 +145,9 @@ public class MessageContext {
         }
 
         if (!found) {
-            String msg = "Could not find label for " + key + " among " + resourcePaths_.toString();   // NON-NLS
+            String msg = "Could not find label for " + key + " among " + resourcePaths.toString();   // NON-NLS
             log(0, msg);
-            throw new MissingResourceException(msg, resourcePaths_.toString(), key);
+            throw new MissingResourceException(msg, resourcePaths.toString(), key);
         }
         return label;
     }
@@ -155,12 +155,12 @@ public class MessageContext {
 
     private void initMessageBundles(LocaleType locale) {
 
-        for (String path :  resourcePaths_) {
+        for (String path : resourcePaths) {
             ResourceBundle bundle = ResourceBundle.getBundle(path, locale.getLocale());
             if (bundle == null) {
                 throw new IllegalArgumentException("Messages bundle for "+ path + " was not found.");
             }
-            messagesBundles_.add(bundle);
+            messagesBundles.add(bundle);
         }
 
         JComponent.setDefaultLocale(locale.getLocale());

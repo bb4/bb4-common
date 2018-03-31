@@ -1,17 +1,17 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.format;
 
-
 import java.util.Currency;
 import java.util.Locale;
+
 
 /**
  * @author Barry Becker
  */
 public class CurrencyFormatter implements INumberFormatter {
 
-    private static final String CURRENCY_SYMBOL = Currency.getInstance(Locale.US).getSymbol();
-
+    private static final String CURRENCY_SYMBOL =
+            Currency.getInstance(Locale.US).getSymbol();
 
     @Override
     public String format(double number) {

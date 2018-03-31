@@ -17,7 +17,7 @@ public enum LocaleType {
     JAPANESE ( new Locale("ja", "JP")),
     VIETNAMESE( new Locale("vi"));
 
-    private Locale locale_;
+    private Locale locale;
 
 
     /**
@@ -25,14 +25,12 @@ public enum LocaleType {
      *
      * @param locale the locale corresponding to the enum value.
      */
-    LocaleType( Locale locale) {
-        locale_ = locale;
+    LocaleType(Locale locale) {
+        this.locale = locale;
     }
-
 
     public Locale getLocale() {
-        return locale_;
+        return locale;
     }
-
 }
 
