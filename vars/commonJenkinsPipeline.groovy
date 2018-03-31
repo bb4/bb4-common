@@ -15,7 +15,7 @@ def call(Map pipelineParams) {
             language: "java",
             deploymentTask: "publishArtifacts",
             upstreamProjects: "",
-            docPath: "build/docs/"
+            docPath: "build/docs"
     ]
     def params = defaultParams << pipelineParams
 
@@ -64,7 +64,9 @@ def call(Map pipelineParams) {
         post {
             always {
                 junit "**/TEST-*.xml"  // 'build/test-results/test/*.xml'
-                step([$class: 'JavadocArchiver', javadocDir: params.docPath + params.language + 'doc', keepAll: true])
+                step([$class: 'JavadocArchiver',
+                      javadocDir: params.docPath + '/' + params.language + 'doc',
+                      keepAll: true])
             }
             success {
                 echo 'This build was SUCCESSFUL!'
