@@ -1,5 +1,6 @@
 /**
  * Shared Jenkinsfile pipline for all bb4 projects.
+ * See https://jenkins.io/doc/book/pipeline/shared-libraries/
  * @param pipelineParams the are:
  *   gitUrl - the git repository url from github.
  *   language - either java or scala.
@@ -14,7 +15,7 @@ def call(Map pipelineParams) {
             language: "java",
             deploymentTask: "publishArtifacts",
             upstreamProjects: "",
-            docPath: "build/docs"
+            docPath: "build/docs/"
     ]
     def params = defaultParams << pipelineParams
 
