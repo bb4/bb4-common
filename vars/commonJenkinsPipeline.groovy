@@ -5,6 +5,7 @@
  *   language - either java or scala.
  *   deploymentTask - either publishArtifacts (default) for deploy.
  *   upstreamProjects - list of projects that should trigger us to build when they are built successfully.
+ *   docPath - location of generated java or scala doc files. default is "build/docs"
  * @author Barry Becker
  */
 def call(Map pipelineParams) {
@@ -12,7 +13,8 @@ def call(Map pipelineParams) {
     def defaultParams = [
             language: "java",
             deploymentTask: "publishArtifacts",
-            upstreamProjects: ""
+            upstreamProjects: "",
+            docPath: "build/docs"
     ]
     def params = defaultParams << pipelineParams
 
@@ -61,7 +63,7 @@ def call(Map pipelineParams) {
         post {
             always {
                 junit "**/TEST-*.xml"  // 'build/test-results/test/*.xml'
-                step([$class: 'JavadocArchiver', javadocDir: 'build/docs/' + params.language + 'doc', keepAll: true])
+                step([$class: 'JavadocArchiver', javadocDir: params.docPath + params.language + 'doc', keepAll: true])
             }
             success {
                 echo 'This build was SUCCESSFUL!'
