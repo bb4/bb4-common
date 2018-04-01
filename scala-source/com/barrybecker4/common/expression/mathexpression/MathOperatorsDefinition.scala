@@ -2,7 +2,6 @@
 package com.barrybecker4.common.expression.mathexpression
 
 import com.barrybecker4.common.expression.{Operator, OperatorsDefinition, TreeNode}
-
 import scala.collection.mutable.ListBuffer
 
 
@@ -12,9 +11,9 @@ object MathOperatorsDefinition {
     * This at the same level are evaluated from left to right.
     */
   private val OPERATOR_PRECEDENCE = Array(
-    Array[MathOperator](EXPONENT),
-    Array[MathOperator](TIMES, DIVIDE),
-    Array[MathOperator](PLUS, MINUS)
+    Array[Operator](EXPONENT),
+    Array[Operator](TIMES, DIVIDE),
+    Array[Operator](PLUS, MINUS)
   )
 }
 
@@ -22,9 +21,9 @@ object MathOperatorsDefinition {
   * The expected binary operators in the text expression.
   * @author Barry Becker
   */
-class MathOperatorsDefinition extends OperatorsDefinition[MathOperator] {
+class MathOperatorsDefinition extends OperatorsDefinition[Operator] {
 
-  override def getOperatorPrecedence: Array[Array[MathOperator]] = MathOperatorsDefinition.OPERATOR_PRECEDENCE
+  override def getOperatorPrecedence: Array[Array[Operator]] = MathOperatorsDefinition.OPERATOR_PRECEDENCE
 
   /** @return true if the specified character is an operator */
   override def isOperator(ch: Char): Boolean = { //if (ch.length() != 1) return false;
@@ -33,6 +32,6 @@ class MathOperatorsDefinition extends OperatorsDefinition[MathOperator] {
   }
 
   /** @return true if the last node is an operator or there were no previous nodes  */
-  override def isLastNodeOperator(nodes: ListBuffer[TreeNode[MathOperator]]): Boolean =
+  override def isLastNodeOperator(nodes: ListBuffer[TreeNode[Operator]]): Boolean =
     nodes.isEmpty || nodes.last.isOperator
 }

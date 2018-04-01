@@ -3,6 +3,7 @@
  */
 package com.barrybecker4.common.expression.mathexpression
 
+import com.barrybecker4.common.expression.TreeSerializer
 import org.scalatest.FunSuite
 
 

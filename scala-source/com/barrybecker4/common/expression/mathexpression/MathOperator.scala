@@ -9,24 +9,23 @@ import com.barrybecker4.common.expression.Operator
   * The expected binary operators in the text expression.
   * @author Barry Becker
   */
-sealed abstract class MathOperator(symbol: Char) extends Operator(symbol)
 
-case object PLUS extends MathOperator('+') {
+case object PLUS extends Operator('+') {
   override def operate(operand1: Double, operand2: Double): Double = operand1 + operand2
 }
 
-case object MINUS extends MathOperator('-') {
+case object MINUS extends Operator('-') {
   override def operate(operand1: Double, operand2: Double): Double = operand1 - operand2
 }
 
-case object TIMES extends MathOperator('*') {
+case object TIMES extends Operator('*') {
   override def operate(operand1: Double, operand2: Double): Double = operand1 * operand2
 }
 
-case object DIVIDE extends MathOperator('/') {
+case object DIVIDE extends Operator('/') {
   override def operate(operand1: Double, operand2: Double): Double = operand1 / operand2
 }
 
-case object EXPONENT extends MathOperator('^') {
+case object EXPONENT extends Operator('^') {
   override def operate(operand1: Double, operand2: Double): Double = math.pow(operand1,  operand2)
 }

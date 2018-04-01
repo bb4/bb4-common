@@ -1,8 +1,7 @@
-/* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
-package com.barrybecker4.common.expression.mathexpression
-
-import com.barrybecker4.common.expression.{LEFT_PAREN, RIGHT_PAREN}
-import com.barrybecker4.common.expression.TreeNode
+/*
+ * Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+package com.barrybecker4.common.expression
 
 /**
   * Turns a tree into a string via in order traversal.
@@ -10,7 +9,7 @@ import com.barrybecker4.common.expression.TreeNode
   * @author Barry Becker
   */
 class TreeSerializer {
-  def serialize(node: TreeNode[MathOperator]): String = {
+  def serialize(node: TreeNode[Operator]): String = {
     var serialized = ""
     if (node != null) serialized = traverse(node)
     if (serialized.length > 0) serialized
@@ -18,7 +17,7 @@ class TreeSerializer {
   }
 
   /** processing for inner nodes */
-  private def traverse(node: TreeNode[MathOperator]): String = {
+  private def traverse(node: TreeNode[Operator]): String = {
     var text = ""
     if (node.children.size == 2) {
       text += (if (node.hasParens) LEFT_PAREN.symbol else "") + traverse(node.children.head)
