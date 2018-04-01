@@ -2,7 +2,7 @@
 package com.barrybecker4.common.profile;
 
 import com.barrybecker4.common.app.ILog;
-import com.barrybecker4.common.concurrency.ThreadUtil;
+import com.barrybecker4.common.concurrency1.ThreadUtil;
 import org.junit.Before;
 import org.junit.Test;
 

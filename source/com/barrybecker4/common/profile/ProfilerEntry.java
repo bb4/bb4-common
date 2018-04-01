@@ -2,7 +2,7 @@
 package com.barrybecker4.common.profile;
 
 import com.barrybecker4.common.app.ILog;
-import com.barrybecker4.common.format.FormatUtil;
+import com.barrybecker4.common.format1.FormatUtil;
 
 import java.util.LinkedList;
 import java.util.List;
