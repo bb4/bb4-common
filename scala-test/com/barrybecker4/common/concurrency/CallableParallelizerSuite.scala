@@ -24,10 +24,8 @@ class CallableParallelizerSuite extends FunSuite {
       workers.add(new Worker(i))
       i += 10000
     }
-    parallelizer.invokeAllWithCallback(workers, new DoneHandler[Result]() {
-      override def done(result: Result): Unit = {
-        finalResult.append(result.sum).append(" ")
-      }
+    parallelizer.invokeAllWithCallback(workers, doneHandler = (result: Result) => {
+      finalResult.append(result.sum).append(" ")
     })
 
     // these results could be in an y order, but yhe string length shoud be constant
