@@ -10,13 +10,13 @@ import scala.collection.mutable.ListBuffer
  *
   * @author Barry Becker
   */
-abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]) {
+abstract class ExpressionParser(var opDef: OperatorsDefinition) {
 
   /**
    * @param textExpression the expression to parse. Must not be null or empty.
    * @return the root node in the parsed expression tree.
    */
-  def parse(textExpression: String): TreeNode[T] = {
+  def parse(textExpression: String): TreeNode = {
     val nodes = getNodesAtLevel(textExpression)
     makeTreeFromNodes(nodes)
   }
@@ -33,7 +33,7 @@ abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]
     * @return array of nodes representing terms that the current level.
     * @throws Error if there is a syntax error causing the expression to be invalid
     */
-  protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode[T]]
+  protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode]
 
   /**
     * @param exp the whole sup expression
@@ -64,7 +64,7 @@ abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]
     * @return current token. May have been reset to "".
     */
   protected def processSubExpression(exp: String, pos: Int, token: String,
-                                     closingParenPos: Int, nodes: ListBuffer[TreeNode[T]]): String
+                                     closingParenPos: Int, nodes: ListBuffer[TreeNode]): String
 
   /**
     * The token may represent several nodes because of implicit multiplication.
@@ -74,14 +74,14 @@ abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]
     * @param token the token to parse
     * @param nodes array of nodes that the token was parsed into.
     */
-  protected def pushNodesForToken(token: String, nodes: ListBuffer[TreeNode[T]]): Unit
+  protected def pushNodesForToken(token: String, nodes: ListBuffer[TreeNode]): Unit
 
   /** Converts a list of nodes to a single node by reducing them to
     * subtrees in order of operator precedence.
     */
-  protected def makeTreeFromNodes(nodes: ListBuffer[TreeNode[T]]): TreeNode[T]
+  protected def makeTreeFromNodes(nodes: ListBuffer[TreeNode]): TreeNode
 
-  protected def splice(nodes: ListBuffer[TreeNode[T]], start: Int, num: Int, newNode: TreeNode[T]): Unit = {
+  protected def splice(nodes: ListBuffer[TreeNode], start: Int, num: Int, newNode: TreeNode): Unit = {
     var i = start
     while (i < start + num) {
       nodes.remove(start)
@@ -90,7 +90,7 @@ abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]
     nodes.insert(start, newNode)
   }
 
-  protected def isOperator(node: TreeNode[T], ops: Array[T]): Boolean = {
+  protected def isOperator(node: TreeNode, ops: Array[Operator]): Boolean = {
     if (node.getData == null || node.getData.length != 1) return false
     opDef.isOperator(node.getData.charAt(0))
   }

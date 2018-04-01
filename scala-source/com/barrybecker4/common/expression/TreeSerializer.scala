@@ -1,6 +1,4 @@
-/*
- * Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
- */
+/* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.expression
 
 /**
@@ -9,7 +7,7 @@ package com.barrybecker4.common.expression
   * @author Barry Becker
   */
 class TreeSerializer {
-  def serialize(node: TreeNode[Operator]): String = {
+  def serialize(node: TreeNode): String = {
     var serialized = ""
     if (node != null) serialized = traverse(node)
     if (serialized.length > 0) serialized
@@ -17,7 +15,7 @@ class TreeSerializer {
   }
 
   /** processing for inner nodes */
-  private def traverse(node: TreeNode[Operator]): String = {
+  private def traverse(node: TreeNode): String = {
     var text = ""
     if (node.children.size == 2) {
       text += (if (node.hasParens) LEFT_PAREN.symbol else "") + traverse(node.children.head)

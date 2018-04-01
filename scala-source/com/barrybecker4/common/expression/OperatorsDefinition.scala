@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
   * The expected binary operators in the text expression.
   * @author Barry Becker
   */
-trait OperatorsDefinition[T <: Operator] {
+trait OperatorsDefinition {
 
   def isOperator(c: Char): Boolean
 
@@ -16,7 +16,7 @@ trait OperatorsDefinition[T <: Operator] {
     * Defines the order of precedence for the operators
     * This at the same level are evaluated from left to right.
     */
-  def getOperatorPrecedence: Array[Array[T]]
+  def getOperatorPrecedence: Array[Array[Operator]]
 
-  def isLastNodeOperator(nodes: ListBuffer[TreeNode[T]]): Boolean
+  def isLastNodeOperator(nodes: ListBuffer[TreeNode]): Boolean
 }

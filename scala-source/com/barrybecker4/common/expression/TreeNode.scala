@@ -8,27 +8,27 @@ package com.barrybecker4.common.expression
   *
   * @author Barry Becker
   */
-class TreeNode[T <: Operator] {
+class TreeNode {
   /** child nodes if any */
-  var children: Seq[TreeNode[T]] = Seq[TreeNode[T]]()
+  var children: Seq[TreeNode] = Seq[TreeNode]()
 
   /** if true then the sup expression represented by this node has parenthesis around it */
   var hasParens = false
 
   /** either an operator or an operand */
   private var data: String = _
-  private var opDef: OperatorsDefinition[T] = _
+  private var opDef: OperatorsDefinition = _
 
   /** Constructor
     * @param  value data value - either an operator or an operand.
     */
-  def this(value: String, opDef: OperatorsDefinition[T]) {
+  def this(value: String, opDef: OperatorsDefinition) {
     this()
     data = value
     this.opDef = opDef
   }
 
-  def this(value: Char, opDef: OperatorsDefinition[T]) {
+  def this(value: Char, opDef: OperatorsDefinition) {
     this()
     data = Character.toString(value)
     this.opDef = opDef

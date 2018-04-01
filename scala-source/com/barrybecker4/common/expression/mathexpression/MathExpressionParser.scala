@@ -10,7 +10,7 @@ import scala.collection.mutable.ListBuffer
   * Create a subclass for parsing a math expression.
   * @author Barry Becker
   */
-class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends ExpressionParser[Operator](opDef) {
+class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(opDef) {
 
   /** Recursive method to find all the tree nodes for the terms a the current level.
     * For example, given this expression
@@ -23,9 +23,9 @@ class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends Express
     * @return array of nodes representing terms that the current level.
     * @throws Error if there is a syntax error causing the expression to be invalid
     */
-  override protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode[Operator]] = {
+  override protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode] = {
     var pos = 0
-    val nodes = ListBuffer[TreeNode[Operator]]()
+    val nodes = ListBuffer[TreeNode]()
     var token = ""
     var ch = exp.charAt(pos)
     while (pos < exp.length && !(token == "" + RIGHT_PAREN.symbol)) {
@@ -68,7 +68,7 @@ class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends Express
     */
   override protected def processSubExpression(exp: String, pos: Int,
                                               token: String, closingParenPos: Int,
-                                              nodes: ListBuffer[TreeNode[Operator]]): String = {
+                                              nodes: ListBuffer[TreeNode]): String = {
     val subExp = exp.substring(pos, closingParenPos)
     // recursive call for sub expression
     val subTree = parse(subExp)
@@ -94,7 +94,7 @@ class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends Express
     * @param token the token to parse
     * @param nodes array of nodes that the token was parsed into.
     */
-  override protected def pushNodesForToken(token: String, nodes: ListBuffer[TreeNode[Operator]]): Unit = {
+  override protected def pushNodesForToken(token: String, nodes: ListBuffer[TreeNode]): Unit = {
     if (token == null || token.length == 0) return
     val len = token.length
     if (token.charAt(len - 1) == 'x') {
@@ -112,7 +112,7 @@ class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends Express
     * Converts a list of nodes to a single node by reducing them to
     * subtrees in order of operator precedence.
     */
-  override protected def makeTreeFromNodes(theNodes: ListBuffer[TreeNode[Operator]]): TreeNode[Operator] = {
+  override protected def makeTreeFromNodes(theNodes: ListBuffer[TreeNode]): TreeNode = {
     var nodes = theNodes
     for (ops <- opDef.getOperatorPrecedence) {
       System.out.println("nodes=" + nodes + " ops=" + ops.mkString(", "))
@@ -133,7 +133,7 @@ class MathExpressionParser(opDef: OperatorsDefinition[Operator]) extends Express
     * @param nodes the list of nodes to reduce
     * @return same list of nodes, but reduced.
     */
-  private def reduceNodes(ops: Array[Operator], nodes: ListBuffer[TreeNode[Operator]]) = {
+  private def reduceNodes(ops: Array[Operator], nodes: ListBuffer[TreeNode]) = {
     var index = 1
     if (nodes.size == 2) throw new Error("Missing operand : " + nodes)
     while ( {

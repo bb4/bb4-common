@@ -21,7 +21,7 @@ object MathOperatorsDefinition {
   * The expected binary operators in the text expression.
   * @author Barry Becker
   */
-class MathOperatorsDefinition extends OperatorsDefinition[Operator] {
+class MathOperatorsDefinition extends OperatorsDefinition {
 
   override def getOperatorPrecedence: Array[Array[Operator]] = MathOperatorsDefinition.OPERATOR_PRECEDENCE
 
@@ -32,6 +32,6 @@ class MathOperatorsDefinition extends OperatorsDefinition[Operator] {
   }
 
   /** @return true if the last node is an operator or there were no previous nodes  */
-  override def isLastNodeOperator(nodes: ListBuffer[TreeNode[Operator]]): Boolean =
+  override def isLastNodeOperator(nodes: ListBuffer[TreeNode]): Boolean =
     nodes.isEmpty || nodes.last.isOperator
 }

@@ -9,14 +9,14 @@ package com.barrybecker4.common.expression
   * @param expressionText the expression in text form. It will be parsed.
   * @author Barry Becker
   */
-class Expression[T <: Operator](val expressionText: String, val parser: ExpressionParser[T]) {
+class Expression[T <: Operator](val expressionText: String, val parser: ExpressionParser) {
 
   /** root of the binary tree representing the expression */
-  private var rootNode: TreeNode[T] = _
+  private var rootNode: TreeNode = _
   private var valid = false
 
   def isValid: Boolean = this.valid
-  def getRootNode: TreeNode[T] = rootNode
+  def getRootNode: TreeNode = rootNode
 
   try {
     rootNode = parser.parse(expressionText)
