@@ -1,3 +1,3 @@
 commonJenkinsPipeline(
-    upstreamProjects: '-'
+    upstreamProjects: ''
  )
