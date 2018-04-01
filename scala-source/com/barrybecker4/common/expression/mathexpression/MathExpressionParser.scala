@@ -3,7 +3,6 @@ package com.barrybecker4.common.expression.mathexpression
 
 import com.barrybecker4.common.expression._
 import com.barrybecker4.common.expression.{LEFT_PAREN, RIGHT_PAREN}
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -12,8 +11,8 @@ import scala.collection.mutable.ListBuffer
   * @author Barry Becker
   */
 class MathExpressionParser(opDef: OperatorsDefinition[MathOperator]) extends ExpressionParser[MathOperator](opDef) {
-  /**
-    * Recursive method to find all the tree nodes for the terms a the current level.
+
+  /** Recursive method to find all the tree nodes for the terms a the current level.
     * For example, given this expression
     * 2x^3 +  5(x + 3x^2) / (x - 1)
     * the items in []'s represent the array of nodes returned.
@@ -29,9 +28,7 @@ class MathExpressionParser(opDef: OperatorsDefinition[MathOperator]) extends Exp
     val nodes = ListBuffer[TreeNode[MathOperator]]()
     var token = ""
     var ch = exp.charAt(pos)
-    while ( {
-      pos < exp.length && !(token == "" + RIGHT_PAREN.symbol)
-    }) {
+    while (pos < exp.length && !(token == "" + RIGHT_PAREN.symbol)) {
       if (ch == ' ') {
         // spaces are ignored
       }
@@ -41,12 +38,13 @@ class MathExpressionParser(opDef: OperatorsDefinition[MathOperator]) extends Exp
         token = processSubExpression(exp, pos + 1, token, closingParenPos, nodes)
         pos = closingParenPos + 1
       }
-      else if (ch == MINUS.symbol && token.length == 0 && opDef.isLastNodeOperator(nodes)) { // a leading minus sign
+      else if (ch == MINUS.symbol && token.length == 0 && opDef.isLastNodeOperator(nodes)) {
+        // a leading minus sign
         token += ch
       }
       else if (isNumericChar(ch)) {
         token += ch
-        if (token.contains("x")) { //NON-NLS
+        if (token.contains("x")) {
           throw new Error("Cannot have numbers after x in a term " + token + " within " + exp)
         }
       }

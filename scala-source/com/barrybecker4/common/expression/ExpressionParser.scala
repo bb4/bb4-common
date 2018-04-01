@@ -54,6 +54,7 @@ abstract class ExpressionParser[T <: Operator](var opDef: OperatorsDefinition[T]
         parenCount -= 1
       }
     } while (!(ch == RIGHT_PAREN.symbol && parenCount == 0) && i < exp.length)
+
     if (ch != RIGHT_PAREN.symbol && i == exp.length)
       throw new IllegalStateException("Mismatched parenthesis in " + exp)
     i - 1
