@@ -26,10 +26,8 @@ class MathOperatorsDefinition extends OperatorsDefinition {
   override def getOperatorPrecedence: Array[Array[Operator]] = MathOperatorsDefinition.OPERATOR_PRECEDENCE
 
   /** @return true if the specified character is an operator */
-  override def isOperator(ch: Char): Boolean = { //if (ch.length() != 1) return false;
-    //char c = ch.charAt(0);
+  override def isOperator(ch: Char): Boolean =
     ch == PLUS.symbol || ch == MINUS.symbol || ch == TIMES.symbol || ch == DIVIDE.symbol || ch == EXPONENT.symbol
-  }
 
   /** @return true if the last node is an operator or there were no previous nodes  */
   override def isLastNodeOperator(nodes: ListBuffer[TreeNode]): Boolean =

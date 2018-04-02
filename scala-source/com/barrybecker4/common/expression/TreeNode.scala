@@ -5,7 +5,6 @@ package com.barrybecker4.common.expression
 /**
   * A node in a binary tree.
   * Contains either a operator (non-leaf) or operand (at leaf).
-  *
   * @author Barry Becker
   */
 class TreeNode {

@@ -3,19 +3,18 @@ package com.barrybecker4.common.expression
 
 import scala.collection.mutable.ListBuffer
 
+
 /**
   * Parses the text form of an expression into a tree representation.
   * See derived classes for specific sorts of expression parsers.
   * Called recursively to parse sub-expressions nested within parenthesis.
- *
   * @author Barry Becker
   */
 abstract class ExpressionParser(var opDef: OperatorsDefinition) {
 
-  /**
-   * @param textExpression the expression to parse. Must not be null or empty.
-   * @return the root node in the parsed expression tree.
-   */
+  /** @param textExpression the expression to parse. Must not be null or empty.
+    * @return the root node in the parsed expression tree.
+    */
   def parse(textExpression: String): TreeNode = {
     val nodes = getNodesAtLevel(textExpression)
     makeTreeFromNodes(nodes)
@@ -35,8 +34,7 @@ abstract class ExpressionParser(var opDef: OperatorsDefinition) {
     */
   protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode]
 
-  /**
-    * @param exp the whole sup expression
+  /** @param exp the whole sup expression
     * @param pos location of lef parenthesis
     * @return location of matching right parenthesis
     */

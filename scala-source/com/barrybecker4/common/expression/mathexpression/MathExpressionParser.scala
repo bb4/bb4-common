@@ -90,7 +90,6 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
     * For example,
     * -4x should become  [-4] [times] [x]
     * -x should become [-1] [times] [x]
-    *
     * @param token the token to parse
     * @param nodes array of nodes that the token was parsed into.
     */
@@ -108,8 +107,7 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
     else nodes.append(getNodeForNumber(token))
   }
 
-  /**
-    * Converts a list of nodes to a single node by reducing them to
+  /** Converts a list of nodes to a single node by reducing them to
     * subtrees in order of operator precedence.
     */
   override protected def makeTreeFromNodes(theNodes: ListBuffer[TreeNode]): TreeNode = {
@@ -125,10 +123,8 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
     nodes.head
   }
 
-  /**
-    * Simplify the list of terms by evaluating the terms joined by the specified operators.
+  /** Simplify the list of terms by evaluating the terms joined by the specified operators.
     * Reduce the nodes list to a single node and return it.
-    *
     * @param ops   list of operators that all have the same precedence.
     * @param nodes the list of nodes to reduce
     * @return same list of nodes, but reduced.

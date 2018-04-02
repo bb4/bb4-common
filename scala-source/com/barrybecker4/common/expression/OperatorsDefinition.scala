@@ -12,8 +12,7 @@ trait OperatorsDefinition {
 
   def isOperator(c: Char): Boolean
 
-  /**
-    * Defines the order of precedence for the operators
+  /** Defines the order of precedence for the operators
     * This at the same level are evaluated from left to right.
     */
   def getOperatorPrecedence: Array[Array[Operator]]
