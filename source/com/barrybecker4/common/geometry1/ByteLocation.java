@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.common.geometry;
+package com.barrybecker4.common.geometry1;
 
 /**
  * Represents a location location of something in byte coordinates.
@@ -12,8 +12,8 @@ package com.barrybecker4.common.geometry;
 public class ByteLocation extends Location {
 
     private static final long serialVersionUID = 1;
-    private byte row_ = 0;
-    private byte col_ = 0;
+    private byte row = 0;
+    private byte col = 0;
 
     /**
      * Constructs a new Location at the given coordinates.
@@ -23,38 +23,38 @@ public class ByteLocation extends Location {
      */
     public ByteLocation(int row, int col) {
         assert Math.abs(row) < 128 && Math.abs(col) < 128 : "row=" + row + " or col=" + col + " was out of range.";
-        row_ = (byte) row;
-        col_ = (byte) col;
+        this.row = (byte) row;
+        this.col = (byte) col;
     }
 
     @Override
     public int getRow() {
-        return row_;
+        return row;
     }
 
     @Override
     public int getCol() {
-        return col_;
+        return col;
     }
 
     @Override
     public int getX() {
-        return col_;
+        return col;
     }
 
     @Override
     public int getY() {
-        return row_;
+        return row;
     }
 
     @Override
     public Location copy() {
-        return new ByteLocation(row_, col_);
+        return new ByteLocation(row, col);
     }
 
     @Override
     public Location incrementOnCopy(int rowChange, int colChange) {
-        return new ByteLocation(row_ + rowChange, col_ + colChange);
+        return new ByteLocation(row + rowChange, col + colChange);
     }
 }
 

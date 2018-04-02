@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.geometry;
+package com.barrybecker4.common.geometry1;
 
 /**
  * Represents a location of something in coordinates.
@@ -25,19 +25,19 @@ public final class MutableIntLocation extends IntLocation {
     }
 
     public void setRow(int row) {
-        this.row_ =(byte) row;
+        this.row =(byte) row;
     }
 
     public void setCol(int col) {
-        this.col_ =(byte) col;
+        this.col =(byte) col;
     }
 
     public void incrementRow(int rowChange) {
-        row_ += rowChange;
+        row += rowChange;
     }
 
     public void incrementCol(int colChange) {
-        col_ += colChange;
+        col += colChange;
     }
 
     public void increment(int rowChange, int colChange) {

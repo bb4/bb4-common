@@ -1,4 +1,4 @@
-package com.barrybecker4.common.geometry;
+package com.barrybecker4.common.geometry1;
 
 import org.junit.Test;
 

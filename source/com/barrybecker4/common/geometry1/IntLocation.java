@@ -1,5 +1,5 @@
 // Copyright by Barry G. Becker, 2012. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.common.geometry;
+package com.barrybecker4.common.geometry1;
 
 /**
  * Represents a location location of something in integer coordinates.
@@ -10,8 +10,8 @@ package com.barrybecker4.common.geometry;
 public class IntLocation extends Location {
 
     private static final long serialVersionUID = 1;
-    protected int row_ = 0;
-    protected int col_ = 0;
+    protected int row = 0;
+    protected int col = 0;
 
     /**
      * Constructs a new point at (0, 0).
@@ -21,8 +21,8 @@ public class IntLocation extends Location {
     }
 
     public IntLocation(Location loc) {
-        row_ = loc.getRow();
-        col_ = loc.getCol();
+        row = loc.getRow();
+        col = loc.getCol();
     }
 
     /**
@@ -32,37 +32,37 @@ public class IntLocation extends Location {
      * @param col  the column coordinate.
      */
     public IntLocation(int row, int col) {
-        row_ = row;
-        col_ = col;
+        this.row = row;
+        this.col = col;
     }
 
     @Override
     public int getRow() {
-        return row_;
+        return row;
     }
 
     @Override
     public int getCol() {
-        return col_;
+        return col;
     }
 
     @Override
     public int getX() {
-        return col_;
+        return col;
     }
 
     @Override
     public int getY() {
-        return row_;
+        return row;
     }
 
     @Override
     public Location copy() {
-        return new IntLocation(row_, col_);
+        return new IntLocation(row, col);
     }
 
     @Override
     public Location incrementOnCopy(int rowChange, int colChange) {
-        return new IntLocation(row_ + rowChange, col_ + colChange);
+        return new IntLocation(row + rowChange, col + colChange);
     }
 }
