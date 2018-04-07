@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.app;
+package com.barrybecker4.common.app1;
 
 /**
  * Allows getting a class loader from a static context.
@@ -8,16 +8,16 @@ package com.barrybecker4.common.app;
  */
 public class ClassLoaderSingleton {
 
-    private static ClassLoaderSingleton cls_;
-    private static ClassLoader loader_;
+    private static ClassLoaderSingleton cls;
+    private static ClassLoader loader;
 
 
     public static synchronized ClassLoader getClassLoader() {
-        if (cls_ == null) {
-            loader_ = Thread.currentThread().getContextClassLoader();
-            cls_ = new ClassLoaderSingleton();
+        if (cls == null) {
+            loader = Thread.currentThread().getContextClassLoader();
+            cls = new ClassLoaderSingleton();
         }
-        return loader_;
+        return loader;
     }
 
     /**

@@ -1,7 +1,7 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.profile;
 
-import com.barrybecker4.common.app.ILog;
+import com.barrybecker4.common.app1.ILog;
 import com.barrybecker4.common.concurrency1.ThreadUtil;
 import org.junit.Before;
 import org.junit.Test;

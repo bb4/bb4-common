@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.i18n;
+package com.barrybecker4.common.i18n1;
 
 /**
  * Used for testing to provide a fake message context.

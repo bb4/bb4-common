@@ -1,6 +1,6 @@
-package com.barrybecker4.common.app;
+package com.barrybecker4.common.app1;
 
-import com.barrybecker4.common.i18n.StubMessageContext;
+import com.barrybecker4.common.i18n1.StubMessageContext;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

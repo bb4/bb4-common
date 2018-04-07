@@ -1,7 +1,6 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.app;
+package com.barrybecker4.common.app1;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +13,7 @@ import java.util.Set;
  */
 public class CommandLineOptions  {
 
-    private final Map<String, String> optionsMap_ = new LinkedHashMap<>();
+    private final Map<String, String> optionsMap = new LinkedHashMap<>();
 
     /**
      * Constructor.
@@ -40,17 +39,17 @@ public class CommandLineOptions  {
                 value = args[ct+1].trim();
                 ct++;
             }
-            optionsMap_.put(option, value);
+            optionsMap.put(option, value);
             ct++;
         }
     }
 
     public Set getOptions() {
-        return optionsMap_.keySet();
+        return optionsMap.keySet();
     }
 
     public boolean contains(String option) {
-        return optionsMap_.containsKey(option);
+        return optionsMap.containsKey(option);
     }
 
     /**
@@ -58,7 +57,7 @@ public class CommandLineOptions  {
      * @return value for the option (may be null if no value for the option)
      */
     public String getValueForOption(String option) {
-        return optionsMap_.get(option);
+        return optionsMap.get(option);
     }
 
     /**
@@ -67,10 +66,10 @@ public class CommandLineOptions  {
      * @return value for the arg (may be null if no value for the arg)
      */
     public String getValueForOption(String option, String defaultValue) {
-        return optionsMap_.get(option);
+        return optionsMap.get(option);
     }
 
     public String toString() {
-        return optionsMap_.toString();
+        return optionsMap.toString();
     }
 }

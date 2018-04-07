@@ -1,6 +1,6 @@
-package com.barrybecker4.common.i18n;
+package com.barrybecker4.common.i18n1;
 
-import com.barrybecker4.common.app.ILog;
+import com.barrybecker4.common.app1.ILog;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
