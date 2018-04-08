@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.profile;
+package com.barrybecker4.common.profile1;
 
 /**
  * Use this class to get a single performance number for your application.

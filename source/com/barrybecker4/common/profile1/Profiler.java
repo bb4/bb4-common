@@ -1,5 +1,5 @@
 /** Copyright by Barry G. Becker, 2000-2011. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
-package com.barrybecker4.common.profile;
+package com.barrybecker4.common.profile1;
 
 import com.barrybecker4.common.app1.ILog;
 
@@ -17,14 +17,11 @@ import java.util.Map;
  */
 public class Profiler {
 
-    private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<>();
-    private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<>();
-    private boolean enabled_ = true;
-    private ILog logger_ = null;
+    private final Map<String,ProfilerEntry> hmEntries = new HashMap<>();
+    private final List<ProfilerEntry> topLevelEntries = new LinkedList<>();
+    private boolean enabled = true;
+    private ILog logger = null;
 
-    /**
-     * Default constructor.
-     */
     public Profiler() {}
 
     /**
@@ -33,8 +30,8 @@ public class Profiler {
      */
     public void add(String name)  {
         ProfilerEntry entry = new ProfilerEntry(name);
-        topLevelEntries_.add(entry);
-        hmEntries_.put(name, entry);
+        topLevelEntries.add(entry);
+        hmEntries.put(name, entry);
     }
 
     /**
@@ -47,14 +44,14 @@ public class Profiler {
         assert par!=null : "invalid parent: " + parent;
         ProfilerEntry e = new ProfilerEntry(name);
         par.addChild(e);
-        hmEntries_.put(name, e);
+        hmEntries.put(name, e);
     }
 
     /**
      * @param name the entry for whom we are to start the timing.
      */
     public void start(String name)  {
-         if (!enabled_) return;
+         if (!enabled) return;
          ProfilerEntry p = getEntry(name);
          p.start();
      }
@@ -63,20 +60,20 @@ public class Profiler {
      * @param name the entry for which we are to stop the timing and increment the total time.
      */
      public void stop(String name) {
-         if (!enabled_) return;
+         if (!enabled) return;
          ProfilerEntry p = getEntry(name);
          p.stop();
      }
 
     protected ProfilerEntry getEntry(String name) {
-        return hmEntries_.get(name);
+        return hmEntries.get(name);
     }
 
     /**
      * reset all the timing numbers to 0
      */
     public void resetAll()  {
-        for (ProfilerEntry entry : topLevelEntries_) {
+        for (ProfilerEntry entry : topLevelEntries) {
             entry.resetAll();
         }
     }
@@ -85,29 +82,29 @@ public class Profiler {
      * pretty print all the performance statistics.
      */
     public void print() {
-        if (!enabled_) return;
-        for (ProfilerEntry entry : topLevelEntries_) {
-            entry.print("", logger_);
+        if (!enabled) return;
+        for (ProfilerEntry entry : topLevelEntries) {
+            entry.print("", logger);
         }
     }
 
     /** turn on/off profiling */
     public void setEnabled(boolean enable) {
-        enabled_ = enable;
+        enabled = enable;
     }
 
     public boolean isEnabled() {
-       return enabled_;
+       return enabled;
     }
 
 
     public void setLogger(ILog logger) {
-        logger_ = logger;
+        this.logger = logger;
     }
 
     public void printMessage(String message) {
-        if (logger_ != null) {
-            logger_.print(message);
+        if (logger != null) {
+            logger.print(message);
         }
         else {
             System.out.println(message);

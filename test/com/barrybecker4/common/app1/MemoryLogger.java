@@ -1,7 +1,7 @@
-// Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-package com.barrybecker4.common.profile;
-
-import com.barrybecker4.common.app1.ILog;
+/*
+ * Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+ */
+package com.barrybecker4.common.app1;
 
 import java.io.FileNotFoundException;
 
