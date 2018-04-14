@@ -1,11 +1,11 @@
 package com.barrybecker4.common;
 
 
-public class Watch {
+public class Watch1 {
 
     private final long start;
 
-    public Watch() {
+    public Watch1() {
         start = System.currentTimeMillis();
     }
 
