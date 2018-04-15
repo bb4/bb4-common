@@ -8,13 +8,13 @@ package com.barrybecker4.common.math1;
  */
 public class Range {
 
-    private double min_;
-    private double max_;
+    private double min;
+    private double max;
 
     /** Default constructor */
     public Range() {
-        min_ = Double.MAX_VALUE;
-        max_ = -Double.MAX_VALUE;
+        min = Double.MAX_VALUE;
+        max = -Double.MAX_VALUE;
     }
 
     /**
@@ -26,28 +26,28 @@ public class Range {
         if (minimum > maximum) {
             throw new IllegalArgumentException("min greater than max");
         }
-        min_ = minimum;
-        max_ = maximum;
+        min = minimum;
+        max = maximum;
     }
 
     /** Copy constructor */
     public Range(Range range) {
-        min_ = range.getMin();
-        max_ = range.getMax();
+        min = range.getMin();
+        max = range.getMax();
     }
 
     /**
      * @return Returns the Max.
      */
     public double getMax() {
-        return max_;
+        return max;
     }
 
     /**
      * @return Returns the axisMin.
      */
     public double getMin() {
-        return min_;
+        return min;
     }
 
     /**
@@ -62,11 +62,11 @@ public class Range {
      * Extend this range by the value argument.
      */
     public void add(double value) {
-        if (value < min_) {
-            min_ = value;
+        if (value < min) {
+            min = value;
         }
-        if (value > max_) {
-            max_ = value;
+        if (value > max) {
+            max = value;
         }
     }
 
@@ -75,10 +75,10 @@ public class Range {
      * @return the max minus the min.
      */
     public double getExtent() {
-        if (min_ > max_) {
+        if (min > max) {
             return Double.NaN;
         }
-        return (max_ - min_);
+        return (max - min);
     }
 
     /**

@@ -2,7 +2,6 @@
 package com.barrybecker4.common.concurrency
 
 import java.util
-
 import org.scalatest.FunSuite
 
 

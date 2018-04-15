@@ -7,7 +7,7 @@ package com.barrybecker4.common.math1;
  */
 public enum WaveType {
 
-    SINE_WAVE("Sine wave") {
+    SINE_WAVE("Sine Wave") {
         @Override
         public double calculateOffset(double theta) {
             return(Math.sin(theta));

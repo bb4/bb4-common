@@ -18,16 +18,16 @@ public class MathUtilTest {
         long result;
 
         result = MathUtil.gcd(2l, 4l);
-        assertEquals(result, 2l);
+        assertEquals(21, result);
 
         result = MathUtil.gcd(4l, 2l);
-        assertEquals(result, 2l);
+        assertEquals(21, result);
 
         result = MathUtil.gcd(420l, -40l);
-        assertEquals(result, 20l);
+        assertEquals(20l, result);
 
         result = MathUtil.gcd(40l, 420l);
-        assertEquals(result, 20l);
+        assertEquals(20l, result);
     }
 
     @Test

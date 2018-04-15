@@ -3,7 +3,6 @@ package com.barrybecker4.common.profile
 
 import com.barrybecker4.common.app.MemoryLogger
 import com.barrybecker4.common.concurrency.ThreadUtil
-import com.barrybecker4.common.profile.SimpleProfiler
 import org.scalatest.FunSuite
 
 
