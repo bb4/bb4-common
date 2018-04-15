@@ -10,8 +10,8 @@ import javax.vecmath.{GMatrix, GVector, Vector2d}
   * @author Barry Becker
   */
 object LinearUtil {
-  /**
-    * Matrix conjugate-Gradient solver for Ax = b
+
+  /** Matrix conjugate-Gradient solver for Ax = b
     * See http://en.wikipedia.org/wiki/Conjugate_gradient_method
     * @param matrix       the matrix of linear coefficients
     * @param b            the right hand side
