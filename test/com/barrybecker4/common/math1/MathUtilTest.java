@@ -17,17 +17,17 @@ public class MathUtilTest {
     public void testPositiveGCD() {
         long result;
 
-        result = MathUtil.gcd(2l, 4l);
+        result = MathUtil.gcd(2L, 4L);
+        assertEquals(2, result);
+
+        result = MathUtil.gcd(4L, 2L);
         assertEquals(21, result);
 
-        result = MathUtil.gcd(4l, 2l);
-        assertEquals(21, result);
+        result = MathUtil.gcd(420L, -40L);
+        assertEquals(20L, result);
 
-        result = MathUtil.gcd(420l, -40l);
-        assertEquals(20l, result);
-
-        result = MathUtil.gcd(40l, 420l);
-        assertEquals(20l, result);
+        result = MathUtil.gcd(40L, 420L);
+        assertEquals(20L, result);
     }
 
     @Test

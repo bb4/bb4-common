@@ -14,27 +14,27 @@ import java.util.Arrays;
 public class MultiArray {
 
     /** handles converting from a raw index into an array of indices and back. */
-    private final MultiDimensionalIndexer indexer_;
+    private final MultiDimensionalIndexer indexer;
 
     /** this will hold all the data for this array class. */
-    private double[] arrayData_ = null;
+    private double[] arrayData = null;
 
     /**
      * Constructor
      */
     public MultiArray( int[] dims ) {
-        indexer_ = new MultiDimensionalIndexer(dims);
-        long numValues = indexer_.getNumValues();
+        indexer = new MultiDimensionalIndexer(dims);
+        long numValues = indexer.getNumValues();
         if (numValues > Integer.MAX_VALUE) {
             throw new IllegalArgumentException(
                     "The array with dimensions " + Arrays.toString(dims) + " cannot have more values than "
                     + Integer.MAX_VALUE);
         }
-        arrayData_ = new double[(int)numValues];
+        arrayData = new double[(int)numValues];
     }
 
     public int getNumValues() {
-        return (int)indexer_.getNumValues();
+        return (int)indexer.getNumValues();
     }
 
     /**
@@ -43,7 +43,7 @@ public class MultiArray {
      * @return array value.
      */
     public double get( int[] index ) {
-        return arrayData_[indexer_.getRawIndex(index)];
+        return arrayData[indexer.getRawIndex(index)];
     }
 
     /**
@@ -52,7 +52,7 @@ public class MultiArray {
      * @param value to assign to that location.
      */
     public void set( int[] index, double value ) {
-        arrayData_[indexer_.getRawIndex(index)] = value;
+        arrayData[indexer.getRawIndex(index)] = value;
     }
 
     /**
@@ -61,9 +61,6 @@ public class MultiArray {
      * @param rawIndex int specifying location in the multi dim array.
      */
     public double getRaw( int rawIndex ) {
-        return arrayData_[rawIndex];
+        return arrayData[rawIndex];
     }
 }
-
-
-
