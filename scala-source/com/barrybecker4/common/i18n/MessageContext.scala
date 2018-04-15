@@ -21,7 +21,7 @@ object MessageContext {
 class MessageContext(var resourcePaths: List[String]) {
 
   /** the list of bundles to look for messages in */
-  private var messagesBundles = ArrayBuffer[ResourceBundle]()
+  private val messagesBundles = ArrayBuffer[ResourceBundle]()
 
   /** logger object. Use console by default. */
   private var logger: ILog = _
@@ -63,7 +63,7 @@ class MessageContext(var resourcePaths: List[String]) {
     * @param localeName name locale to use (something like ENGLISH, GERMAN, etc)
     */
   def setLocale(localeName: String): Unit = {
-    setLocale(getLocale(localeName, true))
+    setLocale(getLocale(localeName, finf = true))
   }
 
   /** Set or change the current locale.

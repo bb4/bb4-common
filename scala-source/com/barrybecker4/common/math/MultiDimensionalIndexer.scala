@@ -14,9 +14,9 @@ import java.util
 class MultiDimensionalIndexer(val dimensions: Array[Int]) {
 
   /** the size of each dimension in the multi-dim array. */
-  final private var dims: Array[Int] = dimensions.clone
+  final private val dims: Array[Int] = dimensions.clone
   /** the number of dimensions. May be any number  >= 0. */
-  final private var numDims: Int = this.dims.length
+  final private val numDims: Int = this.dims.length
 
   /** product of number of dimensions. All dimensions multiplied together. */
   final private var numVals: Long = getDimensionProduct

@@ -22,23 +22,21 @@ abstract class Worker() {
   private var returnValue: Any = _
 
   /** Start a thread that will call the construct method and then exit. */
-  val doConstruct: Runnable = new Runnable() {
-    override def run(): Unit = {
-      try
-        returnValue = construct
-      finally threadVar.clear()
-      // old: SwingUtilities.invokeLater(doFinished);
-      // Now call directly, but if the body of finished is in the ui,
-      // it should call SwingUtilities.invokeLater()
-      finished()
-    }
+  val doConstruct: Runnable = () => {
+    try
+      returnValue = construct
+    finally threadVar.clear()
+    // old: SwingUtilities.invokeLater(doFinished);
+    // Now call directly, but if the body of finished is in the ui,
+    // it should call SwingUtilities.invokeLater()
+    finished()
   }
 
   val thread = new Thread(doConstruct)
   thread.setName("Worker Thread") //NON-NLS
 
   /** worker thread under separate synchronization control. */
-  final private var threadVar = new ThreadVar(thread)
+  final private val threadVar = new ThreadVar(thread)
 
   def isWorking: Boolean = getValue == null
 

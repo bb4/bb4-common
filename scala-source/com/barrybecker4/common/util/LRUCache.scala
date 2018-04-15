@@ -27,7 +27,7 @@ class LRUCache[K, V](var cacheSize: Int) {
 
   val hashTableCapacity: Int = Math.ceil(cacheSize / LRUCache.hashTableLoadFactor).toInt + 1
 
-  private var map = new util.LinkedHashMap[K, V](hashTableCapacity, LRUCache.hashTableLoadFactor, true) {
+  private val map = new util.LinkedHashMap[K, V](hashTableCapacity, LRUCache.hashTableLoadFactor, true) {
     override protected def removeEldestEntry(eldest: util.Map.Entry[K, V]): Boolean = size > cacheSize
   }
 

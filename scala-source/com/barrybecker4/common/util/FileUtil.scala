@@ -65,7 +65,7 @@ object FileUtil {
   }
 
   /** @return a URL given the path to a file */
-  def getURL(sPath: String): URL = getURL(sPath, true)
+  def getURL(sPath: String): URL = getURL(sPath,  failIfNotFound = true)
 
   /** @param sPath          the file path to get URL for
     * @param failIfNotFound throws IllegalArgumentException if not found in path

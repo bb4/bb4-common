@@ -48,9 +48,9 @@ object UnionFind {
 class UnionFind(n: Int) {
 
   // parent[i] = parent of i
-  private var parent: Array[Int] = Array.ofDim[Int](n)
+  private val parent: Array[Int] = Array.ofDim[Int](n)
   // size[i] = number of objects in subtree rooted at i
-  private var size = Array.ofDim[Int](n)
+  private val size = Array.ofDim[Int](n)
   // number of components
   private var count = n
   var i = 0

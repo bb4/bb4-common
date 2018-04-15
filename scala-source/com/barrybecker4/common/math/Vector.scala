@@ -7,7 +7,7 @@ package com.barrybecker4.common.math
   */
 class Vector(initialData: Array[Double]) {
   /** the vector values */
-  private var data: Array[Double] = initialData
+  private val data: Array[Double] = initialData
   assert(data.length > 0)
 
   def this(length: Int) { this(Array.ofDim[Double](length)) }

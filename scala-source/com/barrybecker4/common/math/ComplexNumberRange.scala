@@ -7,9 +7,9 @@ package com.barrybecker4.common.math
   * @param point2 other value for range
   * @author Barry Becker
   */
-class ComplexNumberRange(point1: ComplexNumber, point2: ComplexNumber) {
+case class ComplexNumberRange(point1: ComplexNumber, point2: ComplexNumber) {
 
-  private var extent = point2.subtract(point1)
+  private val extent = point2.subtract(point1)
 
   /** If params are outside 0, 1, then the interpolated point will be outside the range.
     * @param realRatio      between 0 and 1 in real direction

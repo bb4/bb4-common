@@ -13,14 +13,14 @@ import java.util
 class MultiArray(val dims: Array[Int]) {
 
   /** handles converting from a raw index into an array of indices and back. */
-  final private var indexer: MultiDimensionalIndexer = new MultiDimensionalIndexer(dims)
+  final private val indexer: MultiDimensionalIndexer = new MultiDimensionalIndexer(dims)
   val numValues: Long = indexer.getNumValues
   if (numValues > Integer.MAX_VALUE)
     throw new IllegalArgumentException("The array with dimensions " + util.Arrays.toString(dims) +
       " cannot have more values than " + Integer.MAX_VALUE)
 
   /** this will hold all the data for this array class. */
-  private var arrayData: Array[Double] = new Array[Double](numValues.toInt)
+  private val arrayData: Array[Double] = new Array[Double](numValues.toInt)
 
   def getNumValues: Int = indexer.getNumValues.toInt
 

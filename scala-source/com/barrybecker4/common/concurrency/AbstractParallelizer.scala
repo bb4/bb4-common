@@ -26,7 +26,7 @@ class AbstractParallelizer[T](var numThreads: Int) {
   assert(numThreads > 0)
 
   /** Recycle threads so we do not create thousands and eventually run out of memory. */
-  protected var executor: ExecutorService = Executors.newFixedThreadPool(numThreads)
+  protected val executor: ExecutorService = Executors.newFixedThreadPool(numThreads)
 
   /**
     * Constructs with default number of threads.

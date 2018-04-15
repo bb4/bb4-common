@@ -26,7 +26,6 @@ object LinearUtil {
 
   /** Pretty print the matrix for debugging. */
   def printMatrix(matrix: GMatrix): Unit = {
-    var i = 0
     for (i <- 0 until matrix.getNumRow) {
       for (j <- 0 until matrix.getNumCol) {
         val a = matrix.getElement(i, j)
