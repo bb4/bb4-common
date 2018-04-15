@@ -10,9 +10,7 @@ class Vector(initialData: Array[Double]) {
   private var data: Array[Double] = initialData
   assert(data.length > 0)
 
-  def this(length: Int) {
-    this(Array.ofDim[Double](length))
-  }
+  def this(length: Int) { this(Array.ofDim[Double](length)) }
 
   def set(i: Int, value: Double): Unit =
     this.data(i) = value
@@ -26,10 +24,7 @@ class Vector(initialData: Array[Double]) {
     */
   def dot(b: Vector): Double = {
     checkDims(b)
-    var dotProduct = 0.0
-    for (i <- 0 until size)
-      dotProduct += data(i) * b.get(i)
-    dotProduct
+    data.zip(b.data).map { case (x, y) => x * y }.sum
   }
 
   /** Find the normalized dot product with range [-1, 1].
@@ -39,7 +34,7 @@ class Vector(initialData: Array[Double]) {
   def normalizedDot(b: Vector): Double = {
     val magB = b.magnitude
     val magThis = this.magnitude
-    println("for v1=" + this + "v2=" + b + " magThis=" + magThis + " magB=" + magB)
+    //println("for v1=" + this + "v2=" + b + " magThis=" + magThis + " magB=" + magB)
 
     var divisor = magThis * magB
     divisor = if (divisor == 0) 1.0
@@ -60,11 +55,7 @@ class Vector(initialData: Array[Double]) {
   /** @return pairwise sum of this Vector a and b */
   def plus(b: Vector): Vector = {
     checkDims(b)
-    val d = new Array[Double](size)
-
-    for (i <- 0 until size)
-      d(i) = this.data(i) + b.data(i)
-    new Vector(d)
+    new Vector(data.zip(b.data).map { case (x, y) => x + y })
   }
 
   /** @param b vector to find distance to.
@@ -72,27 +63,16 @@ class Vector(initialData: Array[Double]) {
     */
   def distanceTo(b: Vector): Double = {
     checkDims(b)
-    var sum = 0.0
-    for (i <- 0 until size)
-      sum += (this.data(i) - b.data(i)) * (this.data(i) - b.data(i))
-    Math.sqrt(sum)
+    Math.sqrt(data.zip(b.data).map {case (x, y) => (x - y) * (x - y)}.sum)
   }
 
   /** @return magnitude of the vector. */
-  def magnitude: Double = {
-    var sumOfSquares = 0.0
-    for (i <- 0 until size)
-      sumOfSquares += this.data(i) * this.data(i)
-    Math.sqrt(sumOfSquares)
-  }
+  def magnitude: Double = Math.sqrt(data.map(x => x * x).sum)
 
   /** @return a vector in the same direction as vec, but with unit magnitude. */
   def normalize: Vector = {
-    val len = this.magnitude
-    val unitVec = new Vector(data.length)
-    for (i <- data.indices)
-      unitVec.set(i, data(i) / len)
-    unitVec
+    val mag = this.magnitude
+    new Vector(data.map(_ / mag))
   }
 
   def size: Int = data.length
@@ -101,10 +81,5 @@ class Vector(initialData: Array[Double]) {
     if (this.size != b.size) throw new IllegalArgumentException("Dimensions don't match")
 
   /** @return a string representation of the vector */
-  override def toString: String = {
-    var s = ""
-    for (i <- 0 until size)
-      s = s + data(i) + " "
-    s
-  }
+  override def toString: String = data.foldLeft("") {(acc, x) => acc + (x + " ")}
 }
