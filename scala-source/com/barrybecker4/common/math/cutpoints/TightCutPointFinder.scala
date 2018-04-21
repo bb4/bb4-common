@@ -3,6 +3,7 @@ package com.barrybecker4.common.math.cutpoints
 
 import com.barrybecker4.common.math.Range
 import scala.collection.mutable.ArrayBuffer
+import TightCutPointFinder._
 
 /**
   * The min and max cut-points will be specific full precision numbers.
@@ -10,8 +11,8 @@ import scala.collection.mutable.ArrayBuffer
   * @author Barry Becker
   */
 object TightCutPointFinder {
-  /** Labels should not get closer to each other than this. */
-  private val MIN_LABEL_SEPARATION = 0.2
+  /** Labels should not get closer to each other than this percentage of total. */
+  private val MIN_LABEL_SEPARATION_PCT = 0.2
 }
 
 class TightCutPointFinder extends AbstractCutPointFinder {
@@ -21,10 +22,10 @@ class TightCutPointFinder extends AbstractCutPointFinder {
     positions.append(checkSmallNumber(finalRange.min))
     var initialInc = d
     var pct = (roundedRange.min + d - finalRange.min) / d
-    if (TightCutPointFinder.MIN_LABEL_SEPARATION > pct) initialInc = 2 * d
+    if (pct < MIN_LABEL_SEPARATION_PCT) initialInc = 2 * d
     var finalInc = 0.5 * d
     pct = (finalRange.max - (roundedRange.max - d)) / d
-    if (TightCutPointFinder.MIN_LABEL_SEPARATION > pct) finalInc = 1.5 * d
+    if (pct < MIN_LABEL_SEPARATION_PCT) finalInc = 1.5 * d
     val stop = roundedRange.max - finalInc
 
     for (x <- roundedRange.min + initialInc until stop by d)

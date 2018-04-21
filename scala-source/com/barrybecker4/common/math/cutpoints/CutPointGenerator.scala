@@ -41,15 +41,15 @@ class CutPointGenerator(val useTightLabeling: Boolean, val formatter: DecimalFor
     */
   def getCutPointLabels(range: Range, maxTicks: Int): Array[String] = {
     val cutPoints = cutPointFinder.getCutPoints(range, maxTicks)
-    val maxFracDigits = getNumberOfFractionDigits(range, maxTicks)
+    var maxFracDigits = getNumberOfFractionDigits(range, maxTicks)
     val useTight = cutPointFinder.isInstanceOf[TightCutPointFinder]
     val length = cutPoints.length
     val labels = Array.ofDim[String](length)
 
     for (i <- 0 until length) {
-      if (useTight && (i == 0 || i == length - 1)) { // show a little more precision for the tight labels.
-        formatter.setMaximumFractionDigits(maxFracDigits + 1)
-      }
+      // show a little more precision for the tight labels.
+      maxFracDigits += (if (useTight && (i == 0 || i == length - 1)) 1 else 0)
+      formatter.setMaximumFractionDigits(maxFracDigits)
       labels(i) = formatter.format(cutPoints(i))
     }
     labels

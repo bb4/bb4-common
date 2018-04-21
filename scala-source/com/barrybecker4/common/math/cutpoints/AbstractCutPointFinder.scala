@@ -19,7 +19,7 @@ abstract class AbstractCutPointFinder {
   /**
     * Retrieve the cut point values.
     * If its a really small range include both min and max to avoid having just one label.
-    * @param range       range to be divided into intervals.
+    * @param range range to be divided into intervals.
     * @param maxNumTicks upper limit on number of cut points to return.
     * @return the cut points
     */
