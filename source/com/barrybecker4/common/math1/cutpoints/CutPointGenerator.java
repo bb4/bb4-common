@@ -66,9 +66,8 @@ public class CutPointGenerator {
         int length = cutPoints.length;
         String[] labels = new String[length];
         for (int i = 0; i < length; i++) {
-            if (useTight && (i == 0 || i == length -1))
-            // show a little more precision for the tight labels.
-            formatter.setMaximumFractionDigits(maxFracDigits + 1);
+            if (useTight && (i == 0 || i == length -1)) // show a little more precision for the tight labels.
+              formatter.setMaximumFractionDigits(maxFracDigits + 1);
             labels[i] = formatter.format(cutPoints[i]);
         }
         return labels;
