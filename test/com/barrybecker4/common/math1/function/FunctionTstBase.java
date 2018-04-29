@@ -50,17 +50,4 @@ public abstract class FunctionTstBase {
     protected abstract double getExpectedInverseValue0_1();
     protected abstract double getExpectedInverseValue0_9();
 
-
-    /*
-    @Test
-    public void testGetDomain() {
-
-        Range range = function.getDomain();
-        Range expRange = getExpectedDomain();
-        Assert.assertTrue("Unexpected min for domain", expRange.equals(range));
-    }
-
-    @Test
-    protected abstract Range getExpectedDomain();
-    */
 }
