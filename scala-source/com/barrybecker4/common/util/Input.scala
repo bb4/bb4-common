@@ -4,7 +4,7 @@ package com.barrybecker4.common.util
 import java.io.{BufferedReader, IOException, InputStreamReader}
 import java.math.BigInteger
 
-import com.barrybecker4.common.format1.FormatUtil
+import com.barrybecker4.common.format.FormatUtil
 
 /**
   * Convenience methods for getting user input entered from the keyboard.

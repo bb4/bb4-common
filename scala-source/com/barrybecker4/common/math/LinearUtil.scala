@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math
 
-import com.barrybecker4.common.format1.FormatUtil
+import com.barrybecker4.common.format.FormatUtil
 import javax.vecmath.{GMatrix, GVector, Vector2d}
 
 /**

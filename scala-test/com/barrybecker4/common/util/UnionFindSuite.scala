@@ -10,7 +10,7 @@ import UnionFindSuite._
   * @author Barry Becker
   */
 object UnionFindSuite  {
-  protected val PATH = "test/com/barrybecker4/common/util1/"
+  protected val PATH = "scala-test/com/barrybecker4/common/util/"
 }
 
 class UnionFindSuite extends FunSuite {
