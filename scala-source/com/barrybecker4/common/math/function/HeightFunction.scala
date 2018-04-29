@@ -12,9 +12,9 @@ import com.barrybecker4.common.math.interpolation.LinearInterpolator
   * @author Barry Becker
   */
 class HeightFunction(val yValues: Array[Double], var domain: Range = Range(0, 1.0)) extends Function {
-  private var domainToBinFunc = new LinearFunction(1.0 / domain.getExtent, -domain.min / domain.getExtent)
+  private val domainToBinFunc = new LinearFunction(1.0 / domain.getExtent, -domain.min / domain.getExtent)
   // a function that maps from the domain to indices within yValues.
-  private[function] var interpolator = new LinearInterpolator(yValues)
+  private[function] val interpolator = new LinearInterpolator(yValues)
 
 
   /** X axis domain */

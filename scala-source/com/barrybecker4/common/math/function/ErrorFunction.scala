@@ -35,8 +35,8 @@ object ErrorFunction {
 
 class ErrorFunction() extends InvertibleFunction {
 
-  private var interpolator = new LinearInterpolator(ErrorFunction.ERROR_FUNCTION)
-  private var inverseInterpolator = new LinearInterpolator(ErrorFunction.INVERSE_ERROR_FUNCTION)
+  private val interpolator = new LinearInterpolator(ErrorFunction.ERROR_FUNCTION)
+  private val inverseInterpolator = new LinearInterpolator(ErrorFunction.INVERSE_ERROR_FUNCTION)
 
   /** We expect x to be in the range approximately 0.0, 5.0.
     * Values outside of -MAX_ERROR_FUNCTION_TABLE_VALUE to MAX_ERROR_FUNCTION_TABLE_VALUE are

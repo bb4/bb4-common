@@ -30,7 +30,7 @@ object FileUtil {
       home = System.getProperty("user.dir") + FILE_SEPARATOR
     catch {
       case e: AccessControlException =>
-        println("You do not have access to user.dir. This can happen when running as an applet. ")
+        println("You do not have access to user.dir. This can happen when running as an applet. ", e)
     }
     home
   }

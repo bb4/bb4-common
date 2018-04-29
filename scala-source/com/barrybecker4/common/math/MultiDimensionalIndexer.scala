@@ -19,7 +19,7 @@ class MultiDimensionalIndexer(val dimensions: Array[Int]) {
   final private val numDims: Int = this.dims.length
 
   /** product of number of dimensions. All dimensions multiplied together. */
-  final private var numVals: Long = getDimensionProduct
+  final private val numVals: Long = getDimensionProduct
   if (numDims <= 0)
     throw new IllegalArgumentException("You must have > 0 dimension to use this class")
   if (numVals <= 0)

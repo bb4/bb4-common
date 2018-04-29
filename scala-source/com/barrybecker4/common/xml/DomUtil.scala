@@ -206,7 +206,7 @@ object DomUtil {
     val is = urlc.getInputStream
     parseXML(is, replaceUseWithDeepCopy = true, null)
   } catch {
-    case e: IOException => throw new IllegalArgumentException("Failed to open " + url.getPath)
+    case e: IOException => throw new IllegalArgumentException("Failed to open " + url.getPath, e)
   }
 
   /** @param file the file to parse

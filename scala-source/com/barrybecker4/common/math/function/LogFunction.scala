@@ -19,7 +19,7 @@ class LogFunction(val scale: Double,
                   val base: Double = LogFunction.DEFAULT_BASE,
                   val positiveOnly: Boolean = false) extends InvertibleFunction {
 
-  private var baseConverter = Math.log(base)
+  private val baseConverter = Math.log(base)
 
   override def getValue(value: Double): Double = {
     var logValue = .0

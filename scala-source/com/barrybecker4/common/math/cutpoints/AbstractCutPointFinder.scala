@@ -32,7 +32,7 @@ abstract class AbstractCutPointFinder {
     if (finalRange.getExtent < AbstractCutPointFinder.MIN_RANGE)
       positions :+= finalRange.min
     else determineCutPoints(maxNumTicks, finalRange, positions)
-    val result: Array[Double] = new Array[Double](positions.size)
+    //val result: Array[Double] = new Array[Double](positions.size)
     positions.toArray
   }
 
