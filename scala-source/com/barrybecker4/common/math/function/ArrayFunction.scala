@@ -12,9 +12,9 @@ import com.barrybecker4.common.math.interpolation.{InterpolationMethod, LINEAR}
   * @param interpMethod method to use for interpolating array values
   * @author Barry Becker
   */
-class ArrayFunction private(val functionMap: Array[Double],
-                            val inverseFunctionMap: Array[Double],
-                            val interpMethod: InterpolationMethod) extends InvertibleFunction {
+class ArrayFunction(val functionMap: Array[Double],
+                    val inverseFunctionMap: Array[Double],
+                    val interpMethod: InterpolationMethod) extends InvertibleFunction {
 
   private val interpolator = interpMethod.createInterpolator(functionMap)
   private val inverseInterpolator = interpMethod.createInterpolator(inverseFunctionMap)
