@@ -3,7 +3,7 @@ package com.barrybecker4.common.concurrency
 
 import java.util
 import java.util.concurrent._
-
+import scala.collection.JavaConverters
 
 /**
   * Using this class you should be able to easily parallelize a set of long running tasks.

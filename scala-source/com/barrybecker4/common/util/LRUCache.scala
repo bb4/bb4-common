@@ -16,7 +16,7 @@ object LRUCache {
   /** The <i>load factor</i> is a measure of how full the hash table is allowed to
     * get before its capacity is automatically increased.  75% in this case.
     */
-    private val hashTableLoadFactor = 0.75f
+  private val hashTableLoadFactor = 0.75f
 }
 
 /**

@@ -119,6 +119,13 @@ object FileUtil {
     */
   def getFilesInDirectory(directory: String): Array[File] = {
     val dir = new File(directory)
-    dir.listFiles.filter(_.isFile)
+    if (!dir.isDirectory) {
+      throw new IllegalArgumentException(directory + " was not a directory")
+    }
+    val files = dir.listFiles
+    if (files == null) {
+      throw new IllegalStateException("Invalid: " + directory)
+    }
+    files.filter(_.isFile)
   }
 }
