@@ -1,4 +1,4 @@
 commonJenkinsPipeline(
-  language: 'scala',
-  upstreamProjects: ''
+    language: 'scala',
+    upstreamProjects: ''
 )

@@ -28,8 +28,8 @@ class TightCutPointFinder extends AbstractCutPointFinder {
     if (pct < MIN_LABEL_SEPARATION_PCT) finalInc = 1.5 * d
     val stop = roundedRange.max - finalInc
 
-    for (x <- roundedRange.min + initialInc until stop by d)
-      positions.append(checkSmallNumber(x))
+    for (x <- scala.collection.immutable.Range.BigDecimal(roundedRange.min + initialInc, stop, d))
+      positions.append(checkSmallNumber(x.toDouble))
 
     positions.append(checkSmallNumber(finalRange.max))
   }

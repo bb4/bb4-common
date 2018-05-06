@@ -1,8 +1,8 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math.cutpoints
 
-import com.barrybecker4.common.math.Range
 import scala.collection.mutable.ArrayBuffer
+import com.barrybecker4.common.math.Range
 
 /**
   * The min and max cut-points will be nice round numbers.
@@ -15,7 +15,7 @@ class LooseCutPointFinder extends AbstractCutPointFinder {
 
     val stop: Double = roundedRange.max + 0.5 * d
 
-    for (x <- roundedRange.min until stop by d)
-      positions.append(checkSmallNumber(x))
+    for (x <- scala.collection.immutable.Range.BigDecimal(roundedRange.min, stop, d))
+      positions.append(checkSmallNumber(x.toDouble))
   }
 }
