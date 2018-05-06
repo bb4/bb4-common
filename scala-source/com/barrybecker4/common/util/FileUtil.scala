@@ -36,8 +36,8 @@ object FileUtil {
   }
 
   /** Tries to create the specified directory if it does not exist.
+    * Throws IOException if any problem creating the specified directory
     * @param path path to the directory to verify
-    * @throws IOException if any problem creating the specified directory
     */
   @throws[IOException]
   def verifyDirectoryExistence(path: String): Unit = {
@@ -87,9 +87,9 @@ object FileUtil {
     stream
   }
 
-  /** @param filename name of file to read from
+  /** throws IllegalStateException if could not read the file
+    * @param filename name of file to read from
     * @return text within the file
-    * @throws IllegalStateException if could not read the file
     */
   def readTextFile(filename: String): String = {
     var br: BufferedReader = null

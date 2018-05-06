@@ -12,7 +12,7 @@ class PackageReflectorSuite extends FunSuite {
 
   test("GetClasses") {
     val classes = reflector.getClasses("com.barrybecker4.common.format")
-    assertResult(9) { classes.size }
+    assertResult(11) { classes.size }
     assertResult("CurrencyFormatterSuite") { classes.head.getSimpleName }
   }
 

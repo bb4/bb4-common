@@ -1,9 +1,9 @@
 // Copyright by Barry G. Becker, 2013. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry Becker
 
-//plugins {
-//    id "com.github.maiflai.scalatest" version "0.19" // needed to run scala tests
-//}
+plugins {
+    id "com.github.maiflai.scalatest" version "0.19" // needed to run scala tests
+}
 defaultTasks 'build'
 
 description = 'Common bb4 java code. Library project.'
