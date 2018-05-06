@@ -17,7 +17,6 @@ object Input {
     * @param prompt query string to prompt the user for a response.
     * @return an integer number.
     */
-  @throws[IOException]
   def getLong(prompt: String): Long = getLong(prompt, Long.MinValue, Long.MaxValue)
 
   /** Get a number from the user.
@@ -26,7 +25,6 @@ object Input {
     * @param min    minimum acceptable value.
     * @param max    the maximum number allowed to be entered.
     * @return an integer number between 0 and max.
-    * @throws IOException if error reading
     */
   @throws[IOException]
   def getLong(prompt: String, min: Long, max: Long): Long = {
@@ -62,7 +60,6 @@ object Input {
     * There is mo limit to the amount of precision.
     * @param prompt query string to prompt the user for a response.
     * @return an big integer number
-    * @throws IOException if error reading
     */
   @throws[IOException]
   def getBigInteger(prompt: String): BigInteger = {
@@ -87,7 +84,6 @@ object Input {
   /** Get a string from the user.
     * todo: add an optional regexp argument.
     * @return input string.
-    * @throws IOException if error reading
     */
   @throws[IOException]
   def getString(prompt: String): String = {

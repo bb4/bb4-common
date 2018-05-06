@@ -67,7 +67,6 @@ class UnionFind(n: Int) {
   /** Returns the component identifier for the component containing site <tt>p</tt>.
     * @param site the integer representing one site
     * @return the component identifier for the component containing site <tt>p</tt>
-    * @throws java.lang.IndexOutOfBoundsException unless 0 &lt;= p &lt; N
     */
   def find(site: Int): Int = {
     var p = site
@@ -89,7 +88,6 @@ class UnionFind(n: Int) {
     * @param q the integer representing the other site
     * @return <tt>true</tt> if the two sites <tt>p</tt> and <tt>q</tt>
     *         are in the same component, and <tt>false</tt> otherwise
-    * @throws java.lang.IndexOutOfBoundsException unless both 0 &lt;= p &lt; N and 0 &lt;= q &lt; N
     */
   def connected(p: Int, q: Int): Boolean = find(p) == find(q)
 
@@ -97,7 +95,6 @@ class UnionFind(n: Int) {
     * containing site <tt>q</tt>.
     * @param p the integer representing one site
     * @param q the integer representing the other site
-    * @throws java.lang.IndexOutOfBoundsException unless both 0 &lt;= p &lt; N and 0 &lt;= q &lt; N
     */
   def union(p: Int, q: Int): Unit = {
     val rootP = find(p)
