@@ -7,7 +7,7 @@ package com.barrybecker4.common.geometry
   * TODO: this should be made immutable
   * @author Barry Becker
   */
-class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
+case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
   if (rowMin > rowMax) {
     val temp = rowMin
     rowMin = rowMax
@@ -70,13 +70,21 @@ class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
   /** Note that the corner locations are immutable so we create new objects for them if they change.
     * @param loc location to expand out box by.
     */
-  def expandBy(loc: Location): Unit = expandBy(new IntLocation(loc))
+  def expandBy(loc: Location): Box = expandBy(new IntLocation(loc))
 
-  def expandBy(loc: IntLocation): Unit = {
-    if (loc.getRow < topLeftCorner.getRow) topLeftCorner = IntLocation(loc.getRow, topLeftCorner.getCol)
-    else if (loc.getRow > bottomRightCorner.getRow) bottomRightCorner = IntLocation(loc.getRow, bottomRightCorner.getCol)
-    if (loc.getCol < topLeftCorner.getCol) topLeftCorner = IntLocation(topLeftCorner.getRow, loc.getCol)
-    else if (loc.getCol > bottomRightCorner.getCol) bottomRightCorner = IntLocation(bottomRightCorner.getRow, loc.getCol)
+  /** @param loc position to extend the box by.
+    * @return new Box that includes the specified loc. Box unchanged if loc withing box.
+    */
+  def expandBy(loc: IntLocation): Box = {
+    if (loc.getRow < topLeftCorner.getRow)
+      new Box(IntLocation(loc.getRow, topLeftCorner.getCol), bottomRightCorner)
+    else if (loc.getRow > bottomRightCorner.getRow)
+      new Box(topLeftCorner, IntLocation(loc.getRow, bottomRightCorner.getCol))
+    if (loc.getCol < topLeftCorner.getCol)
+      new Box(IntLocation(topLeftCorner.getRow, loc.getCol), bottomRightCorner)
+    else if (loc.getCol > bottomRightCorner.getCol)
+      new Box(topLeftCorner, IntLocation(bottomRightCorner.getRow, loc.getCol))
+    else this
   }
 
   /** @param location the location to check if on border.
@@ -98,10 +106,13 @@ class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
     * @param maxRow don't go further than this though.
     * @param maxCol don't go further than this though.
     */
-  def expandGloballyBy(amount: Int, maxRow: Int, maxCol: Int): Unit = {
-    topLeftCorner = IntLocation(Math.max(topLeftCorner.getRow - amount, 1), Math.max(topLeftCorner.getCol - amount, 1))
-    bottomRightCorner = IntLocation(Math.min(bottomRightCorner.getRow + amount, maxRow),
-                                    Math.min(bottomRightCorner.getCol + amount, maxCol))
+  def expandGloballyBy(amount: Int, maxRow: Int, maxCol: Int): Box = {
+    val topLeft = IntLocation(Math.max(topLeftCorner.getRow - amount, 1), Math.max(topLeftCorner.getCol - amount, 1))
+    val bottomRight = IntLocation(
+      Math.min(bottomRightCorner.getRow + amount, maxRow),
+      Math.min(bottomRightCorner.getCol + amount, maxCol)
+    )
+    new Box(topLeft, bottomRight)
   }
 
   /** @param threshold if withing this distance to the edge, extend the box all the way to that edge.
@@ -109,10 +120,17 @@ class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
     * @param maxCol    don't go further than this though.
     */
   def expandBordersToEdge(threshold: Int, maxRow: Int, maxCol: Int): Unit = {
-    if (topLeftCorner.getRow <= threshold + 1) topLeftCorner = IntLocation(1, topLeftCorner.getCol)
-    if (topLeftCorner.getCol <= threshold + 1) topLeftCorner = IntLocation(topLeftCorner.getRow, 1)
-    if (maxRow - bottomRightCorner.getRow <= threshold) bottomRightCorner = IntLocation(maxRow, bottomRightCorner.getCol)
-    if (maxCol - bottomRightCorner.getCol <= threshold) bottomRightCorner = IntLocation(bottomRightCorner.getRow, maxCol)
+    var topLeft = topLeftCorner
+    var bottomRight = bottomRightCorner
+    if (topLeftCorner.getRow <= threshold + 1)
+      topLeft = IntLocation(1, topLeftCorner.getCol)
+    if (topLeftCorner.getCol <= threshold + 1)
+      topLeft = IntLocation(topLeftCorner.getRow, 1)
+    if (maxRow - bottomRightCorner.getRow <= threshold)
+      bottomRight = IntLocation(maxRow, bottomRightCorner.getCol)
+    if (maxCol - bottomRightCorner.getCol <= threshold)
+      bottomRight = IntLocation(bottomRightCorner.getRow, maxCol)
+    new Box(topLeft, bottomRight)
   }
 
   override def toString: String = {
@@ -121,29 +139,5 @@ class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
     buf.append(" - ")
     buf.append(bottomRightCorner)
     buf.toString
-  }
-
-  override def equals(o: Any): Boolean = {
-    if (o == null || (getClass ne o.getClass)) return false
-    val box = o.asInstanceOf[Box]
-    !(if (bottomRightCorner != null) {
-      !(bottomRightCorner == box.bottomRightCorner)
-    }
-    else {
-      box.bottomRightCorner != null
-    }) && !(if (topLeftCorner != null) {
-      !(topLeftCorner == box.topLeftCorner)
-    }
-    else {
-      box.topLeftCorner != null
-    })
-  }
-
-  override def hashCode: Int = {
-    var result = if (topLeftCorner != null) topLeftCorner.hashCode
-    else 0
-    result = 31 * result + (if (bottomRightCorner != null) bottomRightCorner.hashCode
-    else 0)
-    result
   }
 }

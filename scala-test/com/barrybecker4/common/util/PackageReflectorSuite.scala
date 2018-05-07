@@ -11,9 +11,11 @@ class PackageReflectorSuite extends FunSuite {
   private var reflector = new PackageReflector
 
   test("GetClasses") {
-    val classes = reflector.getClasses("com.barrybecker4.common.format")
-    assertResult(11) { classes.size }
-    assertResult("CurrencyFormatterSuite") { classes.head.getSimpleName }
+    val classes = reflector.getClasses("com.barrybecker4.common.xml")
+    assertResult(4) { classes.size }
+    assertResult("DomUtil$, DomUtil, XmlErrorHandler$, XmlErrorHandler") {
+      classes.map(_.getSimpleName).mkString(", ")
+    }
   }
 
   /* not working
