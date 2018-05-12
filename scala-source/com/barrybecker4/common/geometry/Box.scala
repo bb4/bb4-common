@@ -2,9 +2,7 @@
 package com.barrybecker4.common.geometry
 
 
-/** A box defined by 2 locations.
-  * The coordinates have the resolution of integers.
-  * TODO: this should be made immutable
+/** A box defined by 2 locations. The coordinates have the resolution of integers.
   * @author Barry Becker
   */
 case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
