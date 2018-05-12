@@ -74,15 +74,16 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @return new Box that includes the specified loc. Box unchanged if loc withing box.
     */
   def expandBy(loc: IntLocation): Box = {
-    if (loc.getRow < topLeftCorner.getRow)
-      new Box(IntLocation(loc.getRow, topLeftCorner.getCol), bottomRightCorner)
-    else if (loc.getRow > bottomRightCorner.getRow)
-      new Box(topLeftCorner, IntLocation(loc.getRow, bottomRightCorner.getCol))
-    if (loc.getCol < topLeftCorner.getCol)
-      new Box(IntLocation(topLeftCorner.getRow, loc.getCol), bottomRightCorner)
-    else if (loc.getCol > bottomRightCorner.getCol)
-      new Box(topLeftCorner, IntLocation(bottomRightCorner.getRow, loc.getCol))
-    else this
+    var newBox = this
+    if (loc.getRow < newBox.topLeftCorner.getRow)
+      newBox = new Box(IntLocation(loc.getRow, newBox.topLeftCorner.getCol), newBox.bottomRightCorner)
+    if (loc.getRow > newBox.bottomRightCorner.getRow)
+      newBox = new Box(newBox.topLeftCorner, IntLocation(loc.getRow, newBox.bottomRightCorner.getCol))
+    if (loc.getCol < newBox.topLeftCorner.getCol)
+      newBox = new Box(IntLocation(newBox.topLeftCorner.getRow, loc.getCol), newBox.bottomRightCorner)
+    if (loc.getCol > newBox.bottomRightCorner.getCol)
+      newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.getRow, loc.getCol))
+    newBox
   }
 
   /** @param location the location to check if on border.

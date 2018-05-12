@@ -48,6 +48,30 @@ class BoxSuite extends FunSuite {
     assertResult(IntLocation(5, 10)) { newBox.getBottomRightCorner }
   }
 
+  test("ExpandBy toward upper left") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBy(IntLocation(1, 1))
+    assertResult(new Box(IntLocation(1, 1), IntLocation(5, 5))) { newBox }
+  }
+
+  test("ExpandBy toward upper right") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBy(IntLocation(1, 10))
+    assertResult(new Box(IntLocation(1, 3), IntLocation(5, 10))) { newBox }
+  }
+
+  test("ExpandBy toward lower right") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBy(IntLocation(6, 10))
+    assertResult(new Box(IntLocation(2, 3), IntLocation(6, 10))) { newBox }
+  }
+
+  test("ExpandBy toward lower left") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBy(IntLocation(7, 1))
+    assertResult(new Box(IntLocation(2, 1), IntLocation(7, 5))) { newBox }
+  }
+
   test("ExpandGlobally") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     val newBox = box.expandGloballyBy(3, 6, 5)
