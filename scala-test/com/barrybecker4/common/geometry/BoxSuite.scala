@@ -55,6 +55,12 @@ class BoxSuite extends FunSuite {
     assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
   }
 
+  test("ExpandBordersToEdge") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBordersToEdge(3, 6, 5)
+    assertResult(IntLocation(5, 5)) { newBox.getBottomRightCorner }
+    assertResult(IntLocation(2, 1)) { newBox.getTopLeftCorner }
+  }
   test("ToString") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     assertResult("Box:(row=2, column=3) - (row=5, column=5)") { box.toString }

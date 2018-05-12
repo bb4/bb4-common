@@ -117,7 +117,7 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @param maxRow    don't go further than this though.
     * @param maxCol    don't go further than this though.
     */
-  def expandBordersToEdge(threshold: Int, maxRow: Int, maxCol: Int): Unit = {
+  def expandBordersToEdge(threshold: Int, maxRow: Int, maxCol: Int): Box = {
     var topLeft = topLeftCorner
     var bottomRight = bottomRightCorner
     if (topLeftCorner.getRow <= threshold + 1)
