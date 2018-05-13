@@ -55,6 +55,22 @@ class MathUtilSuite extends FunSuite {
     assertResult("15120") { MathUtil.bigPermutation(9, 4).toString }
   }
 
+  test("BigFactorialRatio9d7")  {
+    assertResult("72") { MathUtil.bigPermutation(9, 7).toString }
+  }
+
+  test("BigFactorialRatio9d9")  {
+    assertResult("1") { MathUtil.bigPermutation(9, 9).toString }
+  }
+
+  test("BigFactorialRatio9d1")  {
+    assertResult("362880") { MathUtil.bigPermutation(9, 1).toString }
+  }
+
+  test("BigFactorialRatio9d10")  {
+    assertThrows[IllegalArgumentException] { MathUtil.bigPermutation(9, 10).toString }
+  }
+
   test("BigFactorialRatio40d20") {
     assertResult( "335367096786357081410764800000") { MathUtil.bigPermutation(40, 20).toString }
   }

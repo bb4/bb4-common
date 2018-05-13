@@ -128,23 +128,26 @@ object MathUtil {
     f
   }
 
-  /** permutation function computes a!/b!.
+  /** Permutation function computes a!/b!.
     * 0! = 1 (http://www.zero-factorial.com/whatis.html)
     * @param a number of items to select from
-    * @param b number of items to select order being important.
+    * @param b number of items to select, order being important.
     * @return a!/b!
     */
   def bigPermutation(a: Int, b: Int): BigInteger = {
-    assert(a > 0)
-    assert(a > b)
+    if (a == 0) throw new IllegalArgumentException("The number of items to select from was 0")
+    if (a < b) throw new IllegalArgumentException("The number of items to select (" + b + ") must be >= " + a)
     var f = new BigInteger(Integer.toString(a))
-    var anew = a - 1
-    //BigInteger anew = new BigInteger(a-1);
-    while (anew > b) {
-      f = f.multiply(new BigInteger(Integer.toString(anew)))
-      anew -= 1
+    if (a == b) BigInteger.ONE
+    else {
+      var anew = a - 1
+      //BigInteger anew = new BigInteger(a-1);
+      while (anew > b) {
+        f = f.multiply(new BigInteger(Integer.toString(anew)))
+        anew -= 1
+      }
+      f
     }
-    f
   }
 
   def getDirectionTo(fromPoint: Point2d, toPoint: Point2d): Double = {
