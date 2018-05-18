@@ -26,7 +26,7 @@ def call(Map pipelineParams) {
         }
         triggers {
             pollSCM('H/15 * * * *')
-            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
+            /*upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)*/
         }
 
         stages {
