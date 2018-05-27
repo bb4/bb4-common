@@ -5,6 +5,7 @@ import com.barrybecker4.common.expression._
 import com.barrybecker4.common.expression.{LEFT_PAREN, RIGHT_PAREN}
 import scala.collection.mutable.ListBuffer
 
+
 /**
   * Parses the text form of an expression (in x) into a tree representation.
   * Create a subclass for parsing a math expression.
@@ -18,10 +19,9 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
     * the items in []'s represent the array of nodes returned.
     * [2] [*] [x] [^] [3] [+] [5][*][x + 3x^2] [/] [x - 1]
     * The parts that were in {()'s become their own subtrees via recursive calls.
-    *
+    * throws an Error if there is a syntax error causing the expression to be invalid
     * @param exp the expression to get the nodes at the current level for
     * @return array of nodes representing terms that the current level.
-    * @throws Error if there is a syntax error causing the expression to be invalid
     */
   override protected def getNodesAtLevel(exp: String): ListBuffer[TreeNode] = {
     var pos = 0

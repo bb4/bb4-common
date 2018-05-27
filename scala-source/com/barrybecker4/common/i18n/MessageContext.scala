@@ -130,9 +130,9 @@ class MessageContext(var resourcePaths: List[String]) {
   }
 
   /** Looks up a LocaleType for a given locale name.
+    * Throws IllegalAccessError if the name is not a member of the enumeration
     * @param finf fail if not found.
     * @return locale the name of a local. Something like ENGLISH, GERMAN, etc
-    * @throws Error if the name is not a member of the enumeration
     */
   def getLocale(name: String, finf: Boolean): LocaleType = {
     var theType: LocaleType = ENGLISH // english is the default
