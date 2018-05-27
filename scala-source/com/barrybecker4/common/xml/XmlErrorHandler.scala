@@ -4,12 +4,13 @@ package com.barrybecker4.common.xml
 import org.xml.sax.{ErrorHandler, SAXException, SAXParseException}
 
 /**
+  * Exception to use for XML related problems.
   * @author Barry Becker
   */
 @SuppressWarnings(Array("HardCodedStringLiteral"))
 object XmlErrorHandler {
-  private def handleException(`type`: String, exception: SAXParseException): Unit = {
-    println(`type` + " parsing at line " + exception.getLineNumber + " column " + exception.getColumnNumber)
+  private def handleException(theType: String, exception: SAXParseException): Unit = {
+    println(theType + " parsing at line " + exception.getLineNumber + " column " + exception.getColumnNumber)
     exception.printStackTrace()
   }
 }
