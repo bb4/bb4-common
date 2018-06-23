@@ -5,6 +5,7 @@ package com.barrybecker4.common.expression.mathexpression
 
 import com.barrybecker4.common.expression.TreeSerializer
 import org.scalatest.FunSuite
+import com.barrybecker4.common.testsupport.strip
 
 
 /**
@@ -76,7 +77,7 @@ class MathExpressionParserSuite extends FunSuite {
   }
 
   test("3MinusParenExp") {
-    verifyParse("3 - (2x + 1)", "3.0 - (2.0 * x + 1.0)")
+    verifyParse(strip("3 - (2x + 1)"), "3.0 - (2.0 * x + 1.0)")
   }
 
   test("XMinus2") {
@@ -92,7 +93,17 @@ class MathExpressionParserSuite extends FunSuite {
   }
 
   test("ComplexNestedExp") {
-    verifyParse("(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +   (x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))", "(1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)))) * (1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) + (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0))))")
+    verifyParse(strip("""
+        |(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +
+        |(x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1)))) *
+        |(1 + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))   +
+        |(x + ((x + 4) / (x^2 - 1)) / ((2x + 4) / (x^2 - 1))))""", ""),
+      strip("""
+        |(1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) +
+        | (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)))) *
+        | (1.0 + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0)) +
+        | (x + ((x + 4.0) / (x ^ 2.0 - 1.0)) / ((2.0 * x + 4.0) / (x ^ 2.0 - 1.0))))""", "")
+    )
   }
 
   /**

@@ -54,7 +54,7 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
         token = ""
         nodes.append(new TreeNode(ch, opDef))
       }
-      else throw new Error("Unexpected character " + ch + " in expression: " + exp)
+      else throw new Error("Unexpected character '" + ch + "' in expression: " + exp)
       pos += 1
       if (pos < exp.length) ch = exp.charAt(pos)
     }
