@@ -22,6 +22,8 @@ object AbstractParallelizer {
   * @tparam T the result type
   * @author Barry Becker
   */
+@deprecated("this method will be removed once everything is converted to scala. Use parallel arrays instead",
+  "bb4-common 1.6")
 class AbstractParallelizer[T](var numThreads: Int) {
   assert(numThreads > 0)
 
