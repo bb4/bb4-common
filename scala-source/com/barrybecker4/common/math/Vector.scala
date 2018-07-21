@@ -2,22 +2,16 @@
 package com.barrybecker4.common.math
 
 /**
-  * Represents an n dimensional vector class.
+  * Represents an immutable n dimensional vector.
   * @author Barry Becker
   */
-class Vector(initialData: Array[Double]) {
-  /** the vector values */
-  private val data: Array[Double] = initialData
+case class Vector(data: IndexedSeq[Double]) {
   assert(data.length > 0)
 
-  def this(length: Int) { this(Array.ofDim[Double](length)) }
+  def set(i: Int, value: Double): Vector =
+    Vector(data.updated(i, value))
 
-  def set(i: Int, value: Double): Unit =
-    this.data(i) = value
-
-  def get(i: Int): Double = data(i)
-
-  def copyFrom(b: Vector): Unit = System.arraycopy(this.data, 0, b.data, 0, size)
+  def apply(i: Int): Double = data(i)
 
   /** Find the dot product of ourselves with another vector.
     * @return the dot product with another vector
@@ -50,12 +44,12 @@ class Vector(initialData: Array[Double]) {
   /** @param factor amount to scale by.
     * @return this Vector, scaled by a constant factor
     */
-  def scale(factor: Double): Vector = new Vector(data.map(_ * factor))
+  def scale(factor: Double): Vector = Vector(data.map(_ * factor))
 
   /** @return pairwise sum of this Vector a and b */
   def plus(b: Vector): Vector = {
     checkDims(b)
-    new Vector(data.zip(b.data).map { case (x, y) => x + y })
+    Vector(data.zip(b.data).map { case (x, y) => x + y })
   }
 
   /** @param b vector to find distance to.
@@ -72,7 +66,7 @@ class Vector(initialData: Array[Double]) {
   /** @return a vector in the same direction as vec, but with unit magnitude. */
   def normalize: Vector = {
     val mag = this.magnitude
-    new Vector(data.map(_ / mag))
+    Vector(data.map(_ / mag))
   }
 
   def size: Int = data.length
