@@ -15,10 +15,11 @@ object FormatUtil {
 
   /**
     * Show a reasonable number of significant digits.
+    * Synchronized because if changes the fract digits in the global format.
     * @param num the number to format.
     * @return a nicely formatted string representation of the number.
     */
-  def formatNumber(num: Double): String = {
+  def formatNumber(num: Double): String = synchronized {
     val absnum = Math.abs(num)
     if (absnum == 0) return "0"
     if (absnum > 10000000.0 || absnum < 0.000000001) return EXP_FORMAT.format(num)
