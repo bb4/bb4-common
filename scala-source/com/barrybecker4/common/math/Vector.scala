@@ -6,7 +6,7 @@ package com.barrybecker4.common.math
   * @author Barry Becker
   */
 case class Vector(data: IndexedSeq[Double]) {
-  assert(data.length > 0)
+  assert(data.nonEmpty)
 
   def set(i: Int, value: Double): Vector =
     Vector(data.updated(i, value))
