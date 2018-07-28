@@ -15,9 +15,9 @@ class MultiArray(val dims: Array[Int]) {
   /** handles converting from a raw index into an array of indices and back. */
   final private val indexer: MultiDimensionalIndexer = new MultiDimensionalIndexer(dims)
   val numValues: Long = indexer.getNumValues
-  if (numValues > Integer.MAX_VALUE)
+  if (numValues > Int.MaxValue)
     throw new IllegalArgumentException("The array with dimensions " + util.Arrays.toString(dims) +
-      " cannot have more values than " + Integer.MAX_VALUE)
+      " cannot have more values than " + Int.MaxValue)
 
   /** this will hold all the data for this array class. */
   private val arrayData: Array[Double] = new Array[Double](numValues.toInt)

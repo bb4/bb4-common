@@ -13,14 +13,14 @@ import scala.collection.mutable.ArrayBuffer
   * @param num the number of integer elements to permute.
   * @author Barry Becker
   */
-class Permuter(val num: Int) extends Iterator[List[Integer]] {
+class Permuter(val num: Int) extends Iterator[List[Int]] {
   val numPermutations: Long = MathUtil.factorial(num)
   if (numPermutations < 0)
     throw new IllegalArgumentException("The number of permutations is greater than " + Long.MaxValue)
   private var hasMore = num > 0
 
   /** the most recently created permutation   */
-  private var lastPermutation = new ArrayBuffer[Integer](num)
+  private var lastPermutation = new ArrayBuffer[Int](num)
 
   for (i <- 0 until num)
     lastPermutation.append(i)
@@ -28,7 +28,7 @@ class Permuter(val num: Int) extends Iterator[List[Integer]] {
   override def hasNext: Boolean = hasMore
 
   /** @return the next permutation*/
-  override def next: List[Integer] = {
+  override def next: List[Int] = {
     val permutation = lastPermutation
     val nextPermutation = lastPermutation.clone()
     var k = nextPermutation.size - 2
@@ -58,7 +58,7 @@ class Permuter(val num: Int) extends Iterator[List[Integer]] {
   }
 
   /** Swap two entries in the list  */
-  private def swap(permutation: ArrayBuffer[Integer], i: Int, j: Int): Unit = {
+  private def swap(permutation: ArrayBuffer[Int], i: Int, j: Int): Unit = {
     val temp = permutation(i)
     permutation(i) = permutation(j)
     permutation(j) = temp

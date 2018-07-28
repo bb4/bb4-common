@@ -15,8 +15,11 @@ import scala.collection.mutable.{ArrayBuffer, ListBuffer}
   * @param num the number of integer elements to permute.
   * @author Barry Becker
   */
-class Combinater(num: Int) extends Iterator[List[Integer]] {
-  private val numCombinations = Math.pow(2, num).toLong - 1
+class Combinater(num: Int) extends Iterator[List[Int]] {
+
+  val numCombinations = Math.pow(2, num).toLong - 1
+  // val numCombinations = (1 to num).map(x => MathUtil.combination(num, x).longValue()).sum
+
   if (numCombinations >= Long.MaxValue - 1)
     throw new IllegalArgumentException("The number of combinations is greater than " + Long.MaxValue)
 
@@ -26,12 +29,14 @@ class Combinater(num: Int) extends Iterator[List[Integer]] {
 
   override def hasNext: Boolean = hasMore
 
-  /** @return the next permutation*/
-  override def next: List[Integer] = {
+  /** @return the next permutation */
+  override def next: List[Int] = {
     counter += 1
-    if (!hasMore) throw new NoSuchElementException("There are no more combinations")
+    if (!hasMore)
+      throw new NoSuchElementException("There are no more combinations. There were only " + numCombinations)
+
     hasMore = counter < numCombinations
-    val subset = new ArrayBuffer[Integer](num)
+    val subset = new ArrayBuffer[Int](num)
     val bits = counter.toBinaryString
     for (i <- bits.length - 1 to 0 by -1)
       if (bits.charAt(i) == '1') subset.append(bits.length - i - 1)

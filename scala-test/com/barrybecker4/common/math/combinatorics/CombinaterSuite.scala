@@ -37,6 +37,7 @@ class CombinaterSuite extends FunSuite {
   /** subsets of  1, 2, 3 */
   test("Combinations3") {
     combinater = new Combinater(3)
+    assertResult(7) { combinater.numCombinations}
     assert(combinater.hasNext)
     assertResult(List(0)) { combinater.next }
     assertResult(List(1)) { combinater.next}
