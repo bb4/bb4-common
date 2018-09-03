@@ -67,7 +67,7 @@ appMap.each { String key, Map value ->
         if (value.containsKey('exclude'))
             value['exclude'].each { pattern -> exclude pattern }
         manifest {
-            attributes 'Implementation-Title': "${key} code", 'Permissions': "$sandbox",
+            attributes 'Implementation-Title': "${key} code", 'Permissions': "sandbox",
                 'Implementation-Version': version, 'Application-Name': key,
                 provider: 'gradle'
         }
