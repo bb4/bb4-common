@@ -14,7 +14,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 /** scaladoc jar used for the whole project. Used only if appMap was not specified. */
-task scalaJar(type: Jar, dependsOn: scaladoc) {
+task scaladocJar(type: Jar, dependsOn: scaladoc) {
     description = 'Create a jar file containing all project scaladoc. Needed by Sonatype release.'
     classifier = 'scaladoc'
     from scaladoc.destinationDir
@@ -56,7 +56,7 @@ if (hasProperty('appMap')) {
 }
 
 /**
- * Create jar, javadocJar, and sourceJar for every entry in appMap (if there are any).
+ * Create jar, java/scaladocJar, and sourceJar for every entry in appMap (if there are any).
  * Consider setting the Permissions attribute to "all-permissions" if file access is needed.
  */
 appMap.each { String key, Map value ->
@@ -99,11 +99,13 @@ artifacts {
         archives jar
         archives sourcesJar
         archives javadocJar
+        archives scaladocJar
     }
 
     appMap.each { String key, Map value ->
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
+        archives tasks["${key}ScaladocJar"]
         archives tasks["${key}SourcesJar"]
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
     }
