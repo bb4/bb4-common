@@ -13,6 +13,13 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+/** scaladoc jar used for the whole project. Used only if appMap was not specified. */
+task scalaJar(type: Jar, dependsOn: scaladoc) {
+    description = 'Create a jar file containing all project scaladoc. Needed by Sonatype release.'
+    classifier = 'scaladoc'
+    from scaladoc.destinationDir
+}
+
 /** sources jar used for the whole project. Used only if appMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
@@ -43,11 +50,15 @@ if (hasProperty('appMap')) {
     jar.enabled = false
     sourcesJar.enabled = false
     javadocJar.enabled = false
+    scaladocJar.enabled = false
 } else {
     ext.appMap = new HashMap()
 }
 
-/** create jar, javadocJar, and sourceJar for every entry in appMap (if there are any). */
+/**
+ * Create jar, javadocJar, and sourceJar for every entry in appMap (if there are any).
+ * Consider setting the Permissions attribute to "all-permissions" if file access is needed.
+ */
 appMap.each { String key, Map value ->
     task "${key}Jar"(type: Jar)  {
         baseName = "bb4-${key}"
@@ -56,8 +67,8 @@ appMap.each { String key, Map value ->
         if (value.containsKey('exclude'))
             value['exclude'].each { pattern -> exclude pattern }
         manifest {
-            attributes 'Implementation-Title': "${key} code",
-                'Implementation-Version': version,
+            attributes 'Implementation-Title': "${key} code", 'Permissions': "$sandbox",
+                'Implementation-Version': version, 'Application-Name': key,
                 provider: 'gradle'
         }
     }
