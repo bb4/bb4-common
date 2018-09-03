@@ -82,6 +82,13 @@ appMap.each { String key, Map value ->
         from javadoc.destinationDir
         value['include'].each { pattern -> include pattern }
     }
+    task "${key}ScaladocJar"(type: Jar, dependsOn: scaladoc) {
+        description = "Creates a scaladoc jar file for ${key}. Needed for publishing to Sonatype."
+        classifier = 'scaladoc'
+        baseName = "bb4-${key}"
+        from javadoc.destinationDir
+        value['include'].each { pattern -> include pattern }
+    }
     task "${key}SourcesJar"(type: Jar, dependsOn: classes) {
         description = "Creates a source jar file for ${key}. Needed for publishing to Sonatype."
         classifier = 'sources'
