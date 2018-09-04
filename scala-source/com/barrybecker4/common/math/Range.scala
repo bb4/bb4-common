@@ -5,9 +5,9 @@ package com.barrybecker4.common.math
   * A double precision range.
   * @author Barry Becker
   */
-case class Range(min: Double = Double.NegativeInfinity, max: Double = Double.PositiveInfinity) {
+case class Range(min: Double = Double.NaN, max: Double = Double.NaN) {
 
-  assert(min <= max)
+  assert(min.isNaN && max.isNaN || min <= max)
 
   def this(range: Range) { this(range.min, range.max) }
 
@@ -16,14 +16,15 @@ case class Range(min: Double = Double.NegativeInfinity, max: Double = Double.Pos
 
   /** @return a new range extending this range by the value argument */
   def add(value: Double): Range = {
-    if (value < min) Range(value, max)
+    if (min.isNaN) Range(value, value)
+    else if (value < min) Range(value, max)
     else if (value > max) Range(min, value)
     else this
   }
 
   /** @return the max minus the min. */
   def getExtent: Double = {
-    if (min.isInfinite || max.isInfinite) return Double.NaN
+    if (min.isInfinite || max.isInfinite || (min.isNaN && max.isNaN)) return Double.NaN
     max - min
   }
 

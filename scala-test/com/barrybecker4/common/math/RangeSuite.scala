@@ -23,8 +23,12 @@ class RangeSuite extends FunSuite {
   test("DefaultConstruction") {
     range = Range()
     assert(range.getExtent.isNaN)
-    range = Range(2)
-    assert(range.getExtent.isNaN)
+  }
+
+  test("Add 2 to default and get 0 ragne") {
+    range = Range()
+    range = range.add(2)
+    assert(range.getExtent == 0)
   }
 
   test("TypicalConstruction") {
