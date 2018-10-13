@@ -73,13 +73,10 @@ abstract class Worker() {
     * thread was interrupted before a value was produced.
     * @return the value created by the { @code construct} method
     */
-  def get: Any = while ( {
-    true
-  }) {
+  def get: Any = while (true) {
     val thread = threadVar.get
     if (thread == null) return getValue
-    try
-      thread.join()
+    try thread.join()
     catch {
       case e: InterruptedException =>
         Thread.currentThread.interrupt() // propagate

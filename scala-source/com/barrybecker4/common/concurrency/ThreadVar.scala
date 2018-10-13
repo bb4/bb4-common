@@ -2,8 +2,7 @@
 package com.barrybecker4.common.concurrency
 
 /**
-  * Class to maintain reference to current worker thread
-  * under separate synchronization control.
+  * Class to maintain reference to current worker thread under separate synchronization control.
   */
 class ThreadVar private[concurrency](var thread: Thread) {
 

@@ -6,7 +6,7 @@ import java.util
 /**
   * An LRU cache, based on ListMap.
   * This cache has a fixed maximum number of elements (cacheSize).
-  * If the cache is full and another entry is added, the LRU (least recently used) entry is dropped.
+  * If the cache is full and another entry is added, the LRU (least recently used) entry is evicted.
   * <p>
   * This class is thread-safe. All methods of this class are synchronized.<br>
   * Author: Christian d'Heureuse (<a href="http://www.source-code.biz">www.source-code.biz</a>)<br>

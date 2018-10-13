@@ -1,10 +1,10 @@
-// Copyright by Barry G. Becker, 2013 - 2017. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013 - 2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 /**
  * This is common gradle build configuration for all bb4 projects.
  * Any project on github can include it using
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
- * Currently in the process of porting from java to scala, so both languages are fully supported.
+ * Both Java and Scala are fully supported. Most projects have been ported to Scala.
  */
 apply plugin: 'java'
 apply plugin: 'scala'
@@ -105,7 +105,7 @@ dependencies {
 
     // Scala dependencies
     compile("org.scala-lang:scala-library:$scalaVersion") { force = true }
-    testCompile 'org.scalatest:scalatest_2.12:3.0.1'
+    testCompile 'org.scalatest:scalatest_2.12:3.0.5'
     // Used to generate html unit test report (consider switching to flexmark)
     testRuntime 'org.pegdown:pegdown:1.6.0'
 }
@@ -116,6 +116,6 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+wrapper {
+    gradleVersion = '4.10.2'
 }

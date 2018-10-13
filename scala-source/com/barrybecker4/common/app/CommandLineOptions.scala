@@ -17,8 +17,7 @@ import scala.collection.immutable.ListMap
   */
 class CommandLineOptions(val args: Array[String]) {
   var ct = 0
-  private var optionsMap = ListMap[String, String]() //new mutable.LinkedHashMap[String, String]
-  //println("creating cmd line options from  s= " +  args.magnitude);
+  private var optionsMap = ListMap[String, String]()
 
   while (ct < args.length) {
     val arg = args(ct)
