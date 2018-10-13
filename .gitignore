@@ -1,9 +1,9 @@
 .idea
 .gradle
 .project
-classes/
 build/
 bin/
 *.iml
 *.class
 *.ipr
+*.iws
