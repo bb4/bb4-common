@@ -64,6 +64,9 @@ object AppContext {
     * @return the localized message label
     */
   def getLabel(key: String, params: Array[AnyRef]): String = messageContext.getLabel(key, params)
-}
 
-final class AppContext private()
+  def main(args: Array[String]): Unit = {
+    println("The bb4-common project is meant to be used as a library.")
+    println("The AppContext is used to manage global application resources like i18 and logging.")
+  }
+}
