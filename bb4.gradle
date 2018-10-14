@@ -117,10 +117,11 @@ task copyToLib(dependsOn: jar, type: Copy) {
 }
 
 // remove this deprecated version of this method once everything is 4.x or above
-task wrapperDeprecated(type: Wrapper) {
+task wrapper(type: Wrapper) {
     gradleVersion = '4.10.2'
 }
 
+/* remove until upgraded
 wrapper {
     gradleVersion = '4.10.2'
-}
+}*/
