@@ -87,7 +87,7 @@ object FileUtil {
     stream
   }
 
-  /** throws IllegalStateException if could not read the file
+  /** Read a text file. Throws IllegalStateException if could not read the file
     * @param filename name of file to read from
     * @return text within the file
     */
@@ -103,13 +103,9 @@ object FileUtil {
       }
       bldr.toString
     } catch {
-      case e: IOException =>
-        throw new IllegalStateException("Could not read " + filename, e)
+      case e: IOException => throw new IllegalStateException("Could not read " + filename, e)
     } finally {
       try if (br != null) br.close()
-      catch {
-        case ex: IOException => ex.printStackTrace()
-      }
     }
   }
 

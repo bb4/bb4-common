@@ -4,6 +4,5 @@
 build/
 bin/
 *.iml
-*.class
 *.ipr
 *.iws
