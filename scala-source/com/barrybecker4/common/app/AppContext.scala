@@ -57,7 +57,14 @@ object AppContext {
   /** @param key message key
     * @return the localized message label
     */
-  def getLabel(key: String): String = messageContext.getLabel(key)
+  def getLabel(key: String): String = {
+    if (messageContext != null)
+      messageContext.getLabel(key)
+    else {
+      println("Could not get label for " + key + " because the messageContext was null.")
+      key
+    }
+  }
 
   /** Use this version if there are parameters to the localized string
     * @param key message key

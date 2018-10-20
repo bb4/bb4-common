@@ -88,7 +88,7 @@ class MessageContext(var resourcePaths: List[String]) {
   /** Look first in the common message bundle.
     * If not found there, look in the application specific bundle if there is one.
     * @param key    the message key to find in resource bundle.
-    * @param params typically a list of string sto use a parameters to the template defined by the message from key.
+    * @param params typically a list of strings to use as parameters to the template defined by the message from key.
     * @return the localized message label
     */
   def getLabel(key: String, params: Array[AnyRef]): String = {
