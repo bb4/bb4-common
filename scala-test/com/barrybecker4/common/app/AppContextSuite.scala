@@ -13,9 +13,10 @@ class AppContextSuite extends FunSuite {
     * Verify that we get an error if the AppContext was not stubbed with a MessageContext.
     */
   test("GetLabelWhenNoMessageContext") {
-    assertThrows[NullPointerException] {
-      AppContext.getLabel("FOO")
-    }
+      assertResult("FOO") {AppContext.getLabel("FOO")}
+//    assertThrows[NullPointerException] {
+//      AppContext.getLabel("FOO")
+//    }
   }
 
   test("GetLabel") {

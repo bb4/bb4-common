@@ -105,7 +105,7 @@ object FileUtil {
     } catch {
       case e: IOException => throw new IllegalStateException("Could not read " + filename, e)
     } finally {
-      try if (br != null) br.close()
+      if (br != null) br.close()
     }
   }
 
