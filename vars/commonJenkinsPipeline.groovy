@@ -4,7 +4,7 @@
  * @param pipelineParams the are:
  *   gitUrl - the git repository url from github.
  *   language - either java or scala.
- *   deploymentTask - either publishArtifacts (default) for deploy.
+ *   deploymentTask - either publishArtifacts (default) or deploy.
  *   upstreamProjects - list of projects that should trigger us to build when they are built successfully.
  *   docPath - location of generated java or scala doc files. default is "build/docs"
  * @author Barry Becker
@@ -22,7 +22,7 @@ def call(Map pipelineParams) {
     pipeline {
         agent any
         options {
-            buildDiscarder(logRotator(numToKeepStr: '3')) // keep only recent builds
+            buildDiscarder(logRotator(numToKeepStr: '7')) // keep only recent builds
         }
         triggers {
             pollSCM('H/15 * * * *')
@@ -50,7 +50,7 @@ def call(Map pipelineParams) {
 
             stage('documentation') {
                 steps {
-                    gradleCmd("${params.language}doc")
+                    gradleCmd('${params.language}doc')
                 }
             }
 
