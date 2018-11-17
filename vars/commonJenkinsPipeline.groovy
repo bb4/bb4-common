@@ -50,7 +50,7 @@ def call(Map pipelineParams) {
 
             stage('documentation') {
                 steps {
-                    gradleCmd('${params.language}doc')
+                    gradleCmd("${params.language}doc")
                 }
             }
 
