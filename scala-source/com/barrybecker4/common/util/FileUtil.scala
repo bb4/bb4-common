@@ -72,7 +72,22 @@ object FileUtil {
     * @return a URL given the path to an existing file.
     */
   def getURL(sPath: String, failIfNotFound: Boolean): URL = {
-    val url = ClassLoaderSingleton.getClassLoader.getResource(sPath)
+    var url = ClassLoaderSingleton.getClassLoader.getResource(sPath)
+    if (url == null) {
+      // try looking for an upper-case version of the file (in an attempt to be more forgiving)
+      var lastPathSepIdx = sPath.lastIndexOf(File.separator)
+      val lastDotIdx = sPath.lastIndexOf(".")
+      if (lastPathSepIdx == -1) {
+        lastPathSepIdx = sPath.lastIndexOf("/")
+      }
+      if (lastDotIdx == -1) {
+        throw new IllegalStateException("could not find . in " + sPath)
+      } else {
+        val fname = sPath.substring(lastPathSepIdx, lastDotIdx)
+        val newPath = sPath.substring(0, lastPathSepIdx) + fname.toUpperCase() + sPath.substring(lastDotIdx)
+        url = ClassLoaderSingleton.getClassLoader.getResource(newPath)
+      }
+    }
     if (url == null && failIfNotFound) throw new IllegalArgumentException("failed to create url for  " + sPath)
     url
   }

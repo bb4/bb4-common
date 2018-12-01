@@ -27,4 +27,17 @@ class FileUtilSuite extends FunSuite {
       readTextFile("scala-test/com/barrybecker4/common/util/data/tinyUF.txt")
     }
   }
+
+  test("getUrl for tinyUF") {
+    assert(getURL("com/barrybecker4/common/util/data/tinyUF.txt") != null)
+  }
+  test("getUrl for aa") {
+    assert(getURL("com/barrybecker4/common/util/data/aa.txt") != null)
+  }
+  test("getUrl for BB") {
+    assert(getURL("com/barrybecker4/common/util/data/BB.txt") != null)
+  }
+  test("getUrl for BB when specified as bb") {
+    assert(getURL("com/barrybecker4/common/util/data/bb.txt") != null)
+  }
 }
