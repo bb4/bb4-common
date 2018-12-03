@@ -35,34 +35,38 @@ class PackageReflector() {
   }
 
   @throws[IOException]
-  private def getClassNames(packageName: String) = {
+  private def getClassNames(packageName: String): Array[String] = {
     val packagePath = packageName.replace('.', '/')
     val classLoader = ClassLoaderSingleton.getClassLoader
-    var classNames = Array[String]()
+    val classNames = ArrayBuffer[String]()
     val resources = classLoader.getResources(packagePath)
     while (resources.hasMoreElements) {
       val resource = resources.nextElement
       val dirPath = URLDecoder.decode(resource.getFile, "UTF-8")
-      if (dirPath.startsWith("file:") && dirPath.contains("!")) classNames ++ getClassNamesFromJar(dirPath, packageName)
-      else {
+      if (dirPath.startsWith("file:") && dirPath.contains("!")) {
+        classNames.appendAll(getClassNamesFromJar(dirPath, packageName))
+      } else {
         val dir = new File(dirPath)
         val names = getClassNamesFromFiles(dir.listFiles)
-        classNames ++= names
+        classNames.appendAll(names)
       }
     }
-    classNames
+    classNames.toArray
   }
 
   @throws[IOException]
-  private def getClassNamesFromJar(path: String, packageName: String): List[String] = {
+  private def getClassNamesFromJar(path: String, packageName: String): Set[String] = {
     val classNameSet = ArrayBuffer[String]()
     val split = path.split("!")
     val jar = new URL(split(0))
+    println("jar = " + jar)
     val zip = new ZipInputStream(jar.openStream)
     var entry = zip.getNextEntry
     while (entry != null) {
       if (entry.getName.endsWith(PackageReflector.CLASS_EXT)) {
-        val className = entry.getName.replaceAll("[$].*", "").replaceAll("[.]class", "").replace('/', '.')
+        val className = entry.getName
+          .replaceAll("[$].*", "")
+          .replaceAll("[.]class", "").replace('/', '.')
         if (className.startsWith(packageName)) {
           val name = className.substring(packageName.length + 1)
           if (!name.contains("."))
@@ -71,7 +75,7 @@ class PackageReflector() {
       }
       entry = zip.getNextEntry
     }
-    classNameSet.toList
+    classNameSet.toSet
   }
 
   private def getClassNamesFromFiles(files: Seq[File]) = {
