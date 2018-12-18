@@ -11,7 +11,7 @@ import java.util.concurrent.{Callable, ExecutionException, ExecutorCompletionSer
   * @tparam T - the result object
   * @author Barry Becker
   */
-@deprecated("this method will be removed once everything is converted to scala. Use parallel arrays instead",
+@deprecated("This class will be removed once everything is converted to scala. Use parallel arrays instead",
   "bb4-common 1.6")
 class CallableParallelizer[T](numThreads: Int = AbstractParallelizer.NUM_PROCESSORS)
   extends AbstractParallelizer[T](numThreads) {

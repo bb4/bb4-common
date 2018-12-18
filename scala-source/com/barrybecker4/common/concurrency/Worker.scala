@@ -2,27 +2,29 @@
 package com.barrybecker4.common.concurrency
 
 /**
-  * Worker is an abstract class that you subclass to
-  * perform (usually gui related) work in a dedicated thread.  For
-  * instructions on and examples of using this class, see:
-  *
+  * Worker is an abstract class that you subclass to perform (usually gui related) work in a dedicated thread.
+  * For instructions on and examples of using this class, see:
   * http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
   *
   * You must invoke start() on the Worker after creating it.
-  * ----
   * I have modified the original Worker class so that it no longer
   * depends on Swing (hence the new name). I sometimes want to use this
   * class in a server process. So if you are using it on the gui make sure
   * that the body of the finished method is called from SwingUtilities.invokeLater().
-  *
   */
 abstract class Worker() {
 
   /** value to return after asynchronous computation. See getValue(), setValue()   */
   private var returnValue: Any = _
 
+  val thread = new Thread(doConstruct())
+  thread.setName("Worker Thread") //NON-NLS
+
+  /** worker thread under separate synchronization control. */
+  final private val threadVar = new ThreadVar(thread)
+
   /** Start a thread that will call the construct method and then exit. */
-  val doConstruct: Runnable = () => {
+  private def doConstruct(): Runnable = () => {
     try
       returnValue = construct
     finally threadVar.clear()
@@ -31,12 +33,6 @@ abstract class Worker() {
     // it should call SwingUtilities.invokeLater()
     finished()
   }
-
-  val thread = new Thread(doConstruct)
-  thread.setName("Worker Thread") //NON-NLS
-
-  /** worker thread under separate synchronization control. */
-  final private val threadVar = new ThreadVar(thread)
 
   def isWorking: Boolean = getValue == null
 
@@ -58,7 +54,7 @@ abstract class Worker() {
     * after the construct method has returned.
     */
   def finished(): Unit = {
-    // intentionally empty
+    // intentionally do nothing
   }
 
   /** Interrupts the worker thread.  Call this method
