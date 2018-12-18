@@ -2,7 +2,7 @@
 package com.barrybecker4.common.geometry
 
 
-/** A box defined by 2 locations. The coordinates have the resolution of integers.
+/** An immutable box defined by 2 locations. The coordinates have the resolution of integers.
   * @author Barry Becker
   */
 case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
@@ -16,8 +16,8 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     colMin = colMax
     colMax = temp
   }
-  private var topLeftCorner = IntLocation(rowMin, colMin)
-  private var bottomRightCorner = IntLocation(rowMax, colMax)
+  private val topLeftCorner = IntLocation(rowMin, colMin)
+  private val bottomRightCorner = IntLocation(rowMax, colMax)
 
   /** Constructor
     * Two points that define the box.
@@ -25,8 +25,8 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @param pt1 the opposite corner of the box.
     */
   def this(pt0: Location, pt1: Location) {
-    this(Math.min(pt0.getRow, pt1.getRow), Math.min(pt0.getCol, pt1.getCol),
-         Math.max(pt0.getRow, pt1.getRow), Math.max(pt0.getCol, pt1.getCol))
+    this(Math.min(pt0.row, pt1.row), Math.min(pt0.col, pt1.col),
+         Math.max(pt0.row, pt1.row), Math.max(pt0.col, pt1.col))
   }
 
   /** Degenerate box consisting of a point in space */
@@ -42,26 +42,26 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
   }
 
   /** @return the width of the box */
-  def getWidth: Int = Math.abs(bottomRightCorner.getCol - topLeftCorner.getCol)
+  def getWidth: Int = Math.abs(bottomRightCorner.col - topLeftCorner.col)
 
   /** @return the height of the box */
-  def getHeight: Int = Math.abs(bottomRightCorner.getRow - topLeftCorner.getRow)
+  def getHeight: Int = Math.abs(bottomRightCorner.row - topLeftCorner.row)
 
   def getMaxDimension: Int = Math.max(getWidth, getHeight)
   def getTopLeftCorner: IntLocation = topLeftCorner
   def getBottomRightCorner: IntLocation = bottomRightCorner
-  def getMinRow: Int = topLeftCorner.getRow
-  def getMinCol: Int = topLeftCorner.getCol
-  def getMaxRow: Int = bottomRightCorner.getRow
-  def getMaxCol: Int = bottomRightCorner.getCol
+  def getMinRow: Int = topLeftCorner.row
+  def getMinCol: Int = topLeftCorner.col
+  def getMaxRow: Int = bottomRightCorner.row
+  def getMaxCol: Int = bottomRightCorner.col
   def getArea: Int = getWidth * getHeight
 
   /** @param pt point to check for containment in the box.
     * @return true if the box contains the specified point
     */
   def contains(pt: Location): Boolean = {
-    val row = pt.getRow
-    val col = pt.getCol
+    val row = pt.row
+    val col = pt.col
     row >= getMinRow && row <= getMaxRow && col >= getMinCol && col <= getMaxCol
   }
 
@@ -75,14 +75,14 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     */
   def expandBy(loc: IntLocation): Box = {
     var newBox = this
-    if (loc.getRow < newBox.topLeftCorner.getRow)
-      newBox = new Box(IntLocation(loc.getRow, newBox.topLeftCorner.getCol), newBox.bottomRightCorner)
-    if (loc.getRow > newBox.bottomRightCorner.getRow)
-      newBox = new Box(newBox.topLeftCorner, IntLocation(loc.getRow, newBox.bottomRightCorner.getCol))
-    if (loc.getCol < newBox.topLeftCorner.getCol)
-      newBox = new Box(IntLocation(newBox.topLeftCorner.getRow, loc.getCol), newBox.bottomRightCorner)
-    if (loc.getCol > newBox.bottomRightCorner.getCol)
-      newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.getRow, loc.getCol))
+    if (loc.row < newBox.topLeftCorner.row)
+      newBox = new Box(IntLocation(loc.row, newBox.topLeftCorner.col), newBox.bottomRightCorner)
+    if (loc.row > newBox.bottomRightCorner.row)
+      newBox = new Box(newBox.topLeftCorner, IntLocation(loc.row, newBox.bottomRightCorner.col))
+    if (loc.col < newBox.topLeftCorner.col)
+      newBox = new Box(IntLocation(newBox.topLeftCorner.row, loc.col), newBox.bottomRightCorner)
+    if (loc.col > newBox.bottomRightCorner.col)
+      newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.row, loc.col))
     newBox
   }
 
@@ -90,26 +90,26 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @return true if location is on this box's border
     */
   def isOnEdge(location: Location): Boolean =
-    location.getRow == bottomRightCorner.getRow || location.getRow == topLeftCorner.getRow ||
-    location.getCol == bottomRightCorner.getCol || location.getCol == topLeftCorner.getCol
+    location.row == bottomRightCorner.row || location.row == topLeftCorner.row ||
+    location.col == bottomRightCorner.col || location.col == topLeftCorner.col
 
   /** @param location the location to check if on corner.
     * @return true if location is on this box's border
     */
   def isOnCorner(location: Location): Boolean = location ==
     bottomRightCorner || location == topLeftCorner ||
-    ((location.getRow == bottomRightCorner.getRow && location.getCol == topLeftCorner.getCol) ||
-      (location.getRow == topLeftCorner.getRow && location.getCol == bottomRightCorner.getCol))
+    ((location.row == bottomRightCorner.row && location.col == topLeftCorner.col) ||
+      (location.row == topLeftCorner.row && location.col == bottomRightCorner.col))
 
   /** @param amount amount to expand all borders of the box by.
     * @param maxRow don't go further than this though.
     * @param maxCol don't go further than this though.
     */
   def expandGloballyBy(amount: Int, maxRow: Int, maxCol: Int): Box = {
-    val topLeft = IntLocation(Math.max(topLeftCorner.getRow - amount, 1), Math.max(topLeftCorner.getCol - amount, 1))
+    val topLeft = IntLocation(Math.max(topLeftCorner.row - amount, 1), Math.max(topLeftCorner.col - amount, 1))
     val bottomRight = IntLocation(
-      Math.min(bottomRightCorner.getRow + amount, maxRow),
-      Math.min(bottomRightCorner.getCol + amount, maxCol)
+      Math.min(bottomRightCorner.row + amount, maxRow),
+      Math.min(bottomRightCorner.col + amount, maxCol)
     )
     new Box(topLeft, bottomRight)
   }
@@ -121,14 +121,14 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
   def expandBordersToEdge(threshold: Int, maxRow: Int, maxCol: Int): Box = {
     var topLeft = topLeftCorner
     var bottomRight = bottomRightCorner
-    if (topLeftCorner.getRow <= threshold + 1)
-      topLeft = IntLocation(1, topLeftCorner.getCol)
-    if (topLeftCorner.getCol <= threshold + 1)
-      topLeft = IntLocation(topLeftCorner.getRow, 1)
-    if (maxRow - bottomRightCorner.getRow <= threshold)
-      bottomRight = IntLocation(maxRow, bottomRightCorner.getCol)
-    if (maxCol - bottomRightCorner.getCol <= threshold)
-      bottomRight = IntLocation(bottomRightCorner.getRow, maxCol)
+    if (topLeftCorner.row <= threshold + 1)
+      topLeft = IntLocation(1, topLeftCorner.col)
+    if (topLeftCorner.col <= threshold + 1)
+      topLeft = IntLocation(topLeftCorner.row, 1)
+    if (maxRow - bottomRightCorner.row <= threshold)
+      bottomRight = IntLocation(maxRow, bottomRightCorner.col)
+    if (maxCol - bottomRightCorner.col <= threshold)
+      bottomRight = IntLocation(bottomRightCorner.row, maxCol)
     new Box(topLeft, bottomRight)
   }
 

@@ -2,26 +2,24 @@
 package com.barrybecker4.common.geometry
 
 /**
-  * Represents a location location of something in byte coordinates.
+  * Represents an immutable location location of something in byte coordinates.
   * The range of bytes are only -127 to 127.
-  * Immutable. Use MutableIntLocation if you really need to modify it (rare).
-  * @param row the row coordinate (0 - 255).
-  * @param col the column coordinate (0 - 255).
+  * @param brow the row coordinate (0 - 255).
+  * @param bcol the column coordinate (0 - 255).
   * @author Barry Becker
   */
 @SerialVersionUID(1)
-case class ByteLocation(row: Byte, col: Byte) extends Location {
+case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   assert(Math.abs(row) < 128 && Math.abs(col) < 128, "row=" + row + " or col=" + col + " was out of range.")
 
   def this(irow: Int, icol: Int) {
     this(irow.toByte, icol.toByte)
   }
-
-  override def getRow: Int = row
-  override def getCol: Int = col
+  override def row: Int = brow
+  override def col: Int = bcol
   override def getX: Int = col
   override def getY: Int = row
-  override def copy = ByteLocation(row, col)
+
   override def incrementOnCopy(rowChange: Int, colChange: Int) =
     new ByteLocation(row + rowChange, col + colChange)
 }

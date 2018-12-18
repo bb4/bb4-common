@@ -1,5 +1,4 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
-
 package com.barrybecker4.common.geometry
 
 /** Represents a location of something in coordinates.
@@ -9,10 +8,12 @@ package com.barrybecker4.common.geometry
   * @param col the column coordinate (0 - 255)
   * @author Barry Becker
   */
+@deprecated("This class will soon be removed. Use immutable ByteLocation or IntLocation instead.",
+  "bb4-common 1.6")
 final class MutableIntLocation(var row: Int, var col: Int) extends Location {
 
   def this(loc: Location) {
-    this(loc.getRow, loc.getCol)
+    this(loc.row, loc.col)
   }
 
   def setRow(row: Int): Unit = {
