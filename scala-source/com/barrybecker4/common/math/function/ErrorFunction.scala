@@ -10,9 +10,10 @@ import com.barrybecker4.common.math.interpolation.LinearInterpolator
   * @author Barry Becker
   */
 object ErrorFunction {
+
   private val MAX_ERROR_FUNCTION_TABLE_VALUE = 5.3
-  /**
-    * The gaussian error function table.
+
+  /** The gaussian error function table.
     * See http://eceweb.uccs.edu/Wickert/ece3610/lecture_notes/erf_tables.pdf
     * for values of x  = 0.0, 0.1, ... MAX_ERROR_FUNCTION_TABLE_VALUE
     * Try plotting this in log scale to help understanding.

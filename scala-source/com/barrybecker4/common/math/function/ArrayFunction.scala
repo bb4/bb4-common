@@ -48,10 +48,4 @@ class ArrayFunction(val functionMap: Array[Double],
     * @return inverse function value.
     */
   override def getInverseValue(value: Double): Double = inverseInterpolator.interpolate(value)
-
-  /* create new one instead of having mutable method
-  def setInterpolationMethod(interp: InterpolationMethod): Unit = {
-    interpolator = interp.createInterpolator(functionMap)
-    inverseInterpolator = interp.createInterpolator(inverseFunctionMap)
-  }*/
 }

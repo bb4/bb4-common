@@ -25,7 +25,8 @@ class PiecewiseFunction(val xValues: Array[Double], val yValues: Array[Double]) 
   /** @param value x value to get interpolated y for.
     * @return the interpolated y value based on the key points in the arrays.
     */
-  private def getInterpolatedValue(value: Double): Double = { // first find the x value
+  private def getInterpolatedValue(value: Double): Double = {
+    // first find the x value
     var i = 0
     while (value > xValues(i)) i += 1
 

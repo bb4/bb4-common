@@ -35,8 +35,7 @@ object Base64Codec {
     new String(Base64.getEncoder.encode(byteOut.toByteArray))
   }
 
-  /**
-    * Take a String and decompress it.
+  /** Take a String and decompress it.
     * @param data the compressed string to decompress.
     * @return the decompressed string.
     */
@@ -65,7 +64,4 @@ object Base64Codec {
     }
     sBuf.toString
   }
-}
-
-final class Base64Codec private() {
 }

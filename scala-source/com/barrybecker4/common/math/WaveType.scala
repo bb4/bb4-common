@@ -1,10 +1,10 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math
 
-
 object WaveType {
   val VALUES = Array(SINE_WAVE, SQUARE_WAVE, SAWTOOTH_WAVE, TRIANGLE_WAVE3)
 }
+
 /**
   * Different sorts of wave forms.
   * @author Barry Becker

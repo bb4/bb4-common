@@ -11,11 +11,13 @@ import com.barrybecker4.common.math.interpolation.LinearInterpolator
   * @param domain the extent of the regularly spaced x axis values
   * @author Barry Becker
   */
-class HeightFunction(val yValues: Array[Double], var domain: Range = Range(0, 1.0)) extends Function {
+class HeightFunction(val yValues: Array[Double],
+                     var domain: Range = Range(0, 1.0)) extends Function {
+
   private val domainToBinFunc = new LinearFunction(1.0 / domain.getExtent, -domain.min / domain.getExtent)
+
   // a function that maps from the domain to indices within yValues.
   private[function] val interpolator = new LinearInterpolator(yValues)
-
 
   /** X axis domain */
   override def getDomain: Range = domain

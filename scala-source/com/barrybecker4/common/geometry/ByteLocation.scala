@@ -8,7 +8,6 @@ package com.barrybecker4.common.geometry
   * @param bcol the column coordinate (0 - 255).
   * @author Barry Becker
   */
-@SerialVersionUID(1)
 case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   assert(Math.abs(row) < 128 && Math.abs(col) < 128, "row=" + row + " or col=" + col + " was out of range.")
 
@@ -23,4 +22,3 @@ case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   override def incrementOnCopy(rowChange: Int, colChange: Int) =
     new ByteLocation(row + rowChange, col + colChange)
 }
-

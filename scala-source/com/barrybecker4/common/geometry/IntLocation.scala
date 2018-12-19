@@ -4,7 +4,6 @@ package com.barrybecker4.common.geometry
 /** Represents an immutable location of something in integer coordinates.
   * @author Barry Becker
   */
-@SerialVersionUID(1)
 case class IntLocation(row: Int, col: Int) extends Location {
 
   def this(loc: Location) {
