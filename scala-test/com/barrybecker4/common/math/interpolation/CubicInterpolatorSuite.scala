@@ -16,4 +16,9 @@ class CubicInterpolatorSuite extends InterpolatorSuiteBase {
   override protected def getExpectedTypicalInterpolation0_9 = 3.763
   override protected def getExpectedOnePointInterpolation = 1.0
   override protected def getExpectedInterpolation2Points0_1 = 0.1
+
+  override protected def getExpectedInterpolationExponential0 = 0
+  override protected def getExpectedInterpolationExponential0_11 = 0.025867187500000003
+  override protected def getExpectedInterpolationExponential0_85 = 0.66015625
+  override protected def getExpectedInterpolationExponential_1 = 1.0
 }

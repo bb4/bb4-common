@@ -19,7 +19,9 @@ class CosineInterpolator(function: Array[Double]) extends AbstractSmoothInterpol
     var index1 = index0 + 1
     if (len == 0) index1 = len
     val xdiff = x - index0
-    smoothInterpolate(xdiff, function(index0), function(index1), 0, 0)
+
+    if (index1 > len) function(len)
+    else smoothInterpolate(xdiff, function(index0), function(index1), 0, 0)
   }
 
   override protected def smoothInterpolate(mu: Double, y0: Double, y1: Double, y2: Double, y3: Double): Double = {

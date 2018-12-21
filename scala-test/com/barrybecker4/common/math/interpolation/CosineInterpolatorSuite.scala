@@ -16,4 +16,9 @@ class CosineInterpolatorSuite extends InterpolatorSuiteBase {
   override protected def getExpectedTypicalInterpolation0_9 = 3.7938926261462367
   override protected def getExpectedOnePointInterpolation = 1.0
   override protected def getExpectedInterpolation2Points0_1 = 0.024471741852423234
+
+  override protected def getExpectedInterpolationExponential0 = 0
+  override protected def getExpectedInterpolationExponential0_11 = 0.03613857703250722
+  override protected def getExpectedInterpolationExponential0_85 = 0.573223304703363
+  override protected def getExpectedInterpolationExponential_1 = 1.0
 }

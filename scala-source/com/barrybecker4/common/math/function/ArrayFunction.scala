@@ -20,7 +20,7 @@ class ArrayFunction(val functionMap: Array[Double],
   private val inverseInterpolator = interpMethod.createInterpolator(inverseFunctionMap)
 
   /** Alternative constructor.
-    * @param func the array representing function values.
+    * @param func the array representing function values. It must be monotonically increasing in this case.
     * @param interpMethod method to use when interpolating
     */
   def this(func: Array[Double], interpMethod: InterpolationMethod = LINEAR) {

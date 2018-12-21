@@ -9,6 +9,6 @@ class StepInterpolator(function: Array[Double]) extends AbstractInterpolator(fun
 
   override def interpolate(value: Double): Double = {
     if (value < 0 || value > 1.0) throw new IllegalArgumentException("value out of range [0, 1] :" + value)
-    function((value * function.length).toInt)
+    if (value == 1.0) function.last else function((value * function.length).toInt)
   }
 }

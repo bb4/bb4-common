@@ -1,7 +1,4 @@
-/*
- * Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
- */
-
+// Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 package com.barrybecker4.common.math.interpolation
 
 /**
@@ -19,4 +16,9 @@ class StepInterpolatorSuite extends InterpolatorSuiteBase {
   override protected def getExpectedTypicalInterpolation0_9 = 4.0
   override protected def getExpectedOnePointInterpolation = 1.0
   override protected def getExpectedInterpolation2Points0_1 = 0.0
+
+  override protected def getExpectedInterpolationExponential0 = 0
+  override protected def getExpectedInterpolationExponential0_11 = 0
+  override protected def getExpectedInterpolationExponential0_85 = 1.0
+  override protected def getExpectedInterpolationExponential_1 = 1.0
 }

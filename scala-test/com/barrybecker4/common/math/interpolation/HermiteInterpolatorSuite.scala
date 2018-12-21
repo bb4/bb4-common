@@ -15,4 +15,9 @@ class HermiteInterpolatorSuite extends InterpolatorSuiteBase {
   override protected def getExpectedTypicalInterpolation0_9 = 3.7735
   override protected def getExpectedOnePointInterpolation = 1.0
   override protected def getExpectedInterpolation2Points0_1 = 0.064
+
+  override protected def getExpectedInterpolationExponential0 = 0
+  override protected def getExpectedInterpolationExponential0_11 = 0.030894531250000006
+  override protected def getExpectedInterpolationExponential0_85 = 0.619140625
+  override protected def getExpectedInterpolationExponential_1 = 1.0
 }

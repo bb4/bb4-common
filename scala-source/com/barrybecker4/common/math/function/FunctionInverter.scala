@@ -10,7 +10,7 @@ object FunctionInverter {
 }
 
 /** Use to find the inverse of a given function
-  * @param functionMap the range values of the function to invert assuming domain is [0,1]
+  * @param functionMap the monotonically increasing values of the function to invert assuming domain is [0,1]
   * @author Barry Becker
   */
 class FunctionInverter(var functionMap: Array[Double]) {
@@ -20,36 +20,37 @@ class FunctionInverter(var functionMap: Array[Double]) {
   assert(functionMap(lengthm1) == 1.0, functionMap(lengthm1) + " was not = 1.0")
 
   /** Creates an inverse of the function specified with the same precision as the passed in function.
-    * Assumes that function func is monotonic and maps [xRange] into [yRange].
+    * Assumes that function func is monotonically increasing and maps [xRange] into [yRange].
     * This can be quite inaccurate if there are not that many sample points.
     * @param xRange the extent of the domain
-    * @return inverse error function for specified range
+    * @return inverse function for specified range
     */
   def createInverseFunction(xRange: Range): Array[Double] = {
     val invFunc = new Array[Double](length)
     var j = 0
     val xMax = xRange.max
     for (i <- 0 until length) {
-      val xval = i.toDouble / lengthm1
-      while (j < lengthm1 && functionMap(j) <= xval) {
+      val xVal = i.toDouble / lengthm1
+      while (j < lengthm1 && functionMap(j) <= xVal) {
         j += 1
-        if (functionMap(j - 1) > functionMap(j) + MathUtil.EPS) throw new IllegalStateException(functionMap(j - 1) +
-          " was not less than " + functionMap(j) +
-          ". That means the function was not monotonic as we assumed for func=" + functionMap.mkString(", ") +
-          " at position=" + j)
+        if (functionMap(j - 1) > functionMap(j) + MathUtil.EPS)
+          throw new IllegalStateException(functionMap(j - 1) +
+            " was not less than " + functionMap(j) +
+            ". That means the function was not monotonically increasing, as we assumed for " +
+            "func=" + functionMap.mkString(", ") + " at position=" + j)
       }
       invFunc(i) = xRange.min
       if (j > 0) {
         val fm1 = functionMap(j - 1)
-        assert(xval >= fm1)
+        assert(xVal >= fm1)
         var denom = functionMap(j) - fm1
-        val nume = xval - fm1
+        val numerator = xVal - fm1
         assert(denom >= 0)
         if (denom == 0) {
-          assert(nume == 0)
+          assert(numerator == 0)
           denom = 1.0
         }
-        val y = ((j - 1).toDouble + nume / denom) / lengthm1.toDouble
+        val y = ((j - 1).toDouble + numerator / denom) / lengthm1.toDouble
         invFunc(i) = xRange.min + y * xRange.getExtent
         assert(invFunc(i) < xMax + FunctionInverter.EPS_BIG, invFunc(i) + " was not less than " + xMax)
       }

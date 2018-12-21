@@ -18,7 +18,7 @@ abstract class AbstractSmoothInterpolator private[interpolation](function: Array
     val y1 = function(index0)
     var y0 = y1
     var y2 = y1
-    if (len > 0) y2 = function(index1)
+    if (len > 0) y2 = if (index1 > len) function(len) else function(index1)
     var y3 = y2
     if (index0 > 0) y0 = function(index0 - 1)
     if (index1 < len) y3 = function(index1 + 1)

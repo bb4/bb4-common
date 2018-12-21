@@ -8,6 +8,7 @@ import org.scalatest.FunSuite
   * @author Barry Becker
   */
 abstract class InterpolatorSuiteBase extends FunSuite {
+
   /** interpolation class under test. */
   protected var interpolator: Interpolator = _
   implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.000001)
@@ -57,6 +58,21 @@ abstract class InterpolatorSuiteBase extends FunSuite {
   }
 
   protected def getExpectedInterpolation2Points0_1: Double // 0.1
+
+  test("InterpolateInExponential") {
+    val func = Array(0, 1/16.0, 2/16.0, 1/4.0, 1/2.0, 1.0)
+    interpolator = createInterpolator(func)
+    assert(getExpectedInterpolationExponential0 === interpolator.interpolate(0.0))
+    assert(getExpectedInterpolationExponential0_11 === interpolator.interpolate(0.11))
+    assert(getExpectedInterpolationExponential0_85 === interpolator.interpolate(0.85))
+    assert(getExpectedInterpolationExponential_1 === interpolator.interpolate(1.0))
+  }
+
+  protected def getExpectedInterpolationExponential0: Double
+  protected def getExpectedInterpolationExponential0_11: Double
+  protected def getExpectedInterpolationExponential0_85: Double
+  protected def getExpectedInterpolationExponential_1: Double
+
 
   test("InterpolateOutOfRangeClosePositive") {
     val func = Array(1.0, 2.0)
