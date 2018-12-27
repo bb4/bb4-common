@@ -116,6 +116,8 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
-wrapper {
-    gradleVersion = '4.10.2'
+if (rootProject == project) { // https://github.com/gradle/gradle/issues/5816
+    wrapper {
+        gradleVersion = '4.10.2'
+    }
 }
