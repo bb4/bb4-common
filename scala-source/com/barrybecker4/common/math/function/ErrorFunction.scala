@@ -6,7 +6,7 @@ import com.barrybecker4.common.math.Range
 import com.barrybecker4.common.math.interpolation.LinearInterpolator
 
 /**
-  * The function takes the log of a value in the specified base, then scales it.
+  * Gaussian error function
   * @author Barry Becker
   */
 object ErrorFunction {

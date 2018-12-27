@@ -17,7 +17,7 @@ import scala.collection.mutable.{ArrayBuffer, ListBuffer}
   */
 class Combinater(num: Int) extends Iterator[List[Int]] {
 
-  val numCombinations = Math.pow(2, num).toLong - 1
+  val numCombinations: Long = Math.pow(2, num).toLong - 1
   // val numCombinations = (1 to num).map(x => MathUtil.combination(num, x).longValue()).sum
 
   if (numCombinations >= Long.MaxValue - 1)
