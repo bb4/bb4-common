@@ -161,7 +161,7 @@ def jarPomConfig = {
         developer {
             id 'barrybecker4'
             name 'Barry Becker'
-            email 'barrybecker4@yahoo.com'
+            email 'barrybecker4@gmail.com'
         }
     }
 }
