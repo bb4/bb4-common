@@ -101,11 +101,11 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 
 // when copying the html, {version} is replaced with ${project.version}
-task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir")  {
+task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir") {
     from "source/html"
     into "$projectDistributionDir"
     include '*.*'
-    filter(ReplaceTokens, tokens: [version: "${project.version}"])
+    filter(ReplaceTokens, tokens: [version: project.version])
 }
 
 // Copy XMl schema files to the dist directory so they can be referenced with an http namespace.
