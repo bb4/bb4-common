@@ -97,6 +97,8 @@ appMap.each { String key, Map value ->
 ext.distributionDir = "dist"
 ext.projectDistributionDir = "$distributionDir/${project.name}"
 ext.schemaDistributionDir = "$distributionDir/schema"
+import org.apache.tools.ant.filters.ReplaceTokens
+
 
 // when copying the html, {version} is replaced with ${project.version}
 task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir")  {
