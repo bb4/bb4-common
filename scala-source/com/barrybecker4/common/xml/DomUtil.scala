@@ -22,7 +22,7 @@ import scala.collection.mutable.ListBuffer
   */
 object DomUtil {
   /** This URL is where I keep all my published xsd's (xml schemas) and dtd's (doc type definitions) */
-  private val SCHEMA_LOCATION = "http://barrybecker4.com/schema/"
+  private val SCHEMA_LOCATION = "http://barrybecker4.com/bb4-projects/schema/"
 
   private val ROOT_ELEMENT = "rootElement"
   private val USE_ELEMENT = "use"

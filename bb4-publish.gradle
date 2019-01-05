@@ -1,7 +1,7 @@
-// Copyright by Barry G. Becker, 2013 - 2017. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013 - 2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 /**
- * This common gradle build file is used to publish bb4 artifacts.
+ * This common gradle build file is used to publish bb4 artifacts to Sonatype, and also deploy them to a website.
  * Any project on github can include it using
  * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
  */
@@ -37,8 +37,8 @@ javadoc.doLast {
 }
 
 /**
- * If a project has multiple apps, it should define them
- * in a map called appMap before applying this bb4-publish.gradle file.
+ * If a project has multiple apps, it should define them in a map called appMap before
+ * applying this bb4-publish.gradle file.
  * Skip building the default jars that contain everything if there is a specific list.
  */
 if (hasProperty('appMap')) {
