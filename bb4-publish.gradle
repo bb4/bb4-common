@@ -27,11 +27,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-// remove this
-task showProject() {
-    println  "project.name = ${project.name}"
-}
-
 javadoc.doLast {
     description = 'Copy images from source to javadoc in case they are referenced by documentation'
     copy {
@@ -99,22 +94,30 @@ appMap.each { String key, Map value ->
             value['exclude'].each { pattern -> exclude pattern }
     }
 }
+ext.distributionDir = "dist"
+ext.projectDistributionDir = "$distributionDir/${project.name}"
+ext.schemaDistributionDir = "$distributionDir/schema"
 
-ext.distributionDir ="dist/${project.name}"
-
-task deployHtml(type: Copy, description: "Copy html related files to $distributionDir")  {
+// when copying the html {version} should be replaced with ${version}
+task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir")  {
     from "source/html"
-    into "$distributionDir"
+    into "$projectDistributionDir"
     include '*.*'
+}
+
+// Copy XMl schema files to the dist directory so they can be referenced with an http namespace.
+task deploySchemas(type:Copy, description: "Copy schema files to $schemaDistributionDir") {
+    from fileTree("$project.projectDir").include("**/*.dtd", "**/*.xsd").files
+    into "$schemaDistributionDir"
 }
 
 task deployZip(type: Copy, description: "Copy zip of jars and run scripts")  {
     from "build/distributions"
-    into "$distributionDir"
+    into "$projectDistributionDir"
     include 'bb4-*.zip'
 }
 
-task deploy(dependsOn: [build, deployHtml, deployZip],
+task deploy(dependsOn: [build, deployHtml, deploySchemas, deployZip],
         description: "Deploys all web-deployment files to $distributionDir so they can be bulk copied to a website") {
 }
 
