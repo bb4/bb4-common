@@ -124,6 +124,25 @@ task deploy(dependsOn: [build, deployHtml, deploySchemas, deployZip],
         description: "Deploys all web-deployment files to $distributionDir so they can be bulk copied to a website") {
 }
 
+// Make sure everything in lib is in CLASSPATH (see https://gist.github.com/jlmelville/2bfe9277e9e2c0ff79b6)
+tasks.withType(CreateStartScripts).each { task ->
+    task.doLast {
+        task.windowsScript.write task.windowsScript.text.replaceFirst(/(set CLASSPATH=%APP_HOME%\\lib\\).*/, { "${it[1]}*" })
+        task.unixScript.write task.unixScript.text.replaceFirst(/(CLASSPATH=.APP_HOME\/lib\/).*/, { "CLASSPATH=\$(echo \$APP_HOME/lib/*.jar | tr ' ' ':')" })
+    }
+}
+
+// make sure that all generated jar files (from appMap) also get into the distributionDir
+applicationDistribution.from("build/libs") {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude "*.asc"
+    exclude "*-sources.jar"
+    exclude "*-scaladoc.jar"
+    exclude "*-javadoc.jar"
+    into "lib"
+}
+
+
 /**
  * These artifacts need to be published so other projects can depend on them.
  * The default jar is only included if there is not an explicit appMap.
