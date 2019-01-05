@@ -3,7 +3,7 @@
 /**
  * This common gradle build file is used to publish bb4 artifacts to Sonatype, and also deploy them to a website.
  * Any project on github can include it using
- * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4-publish.gradle'
+ * apply from: 'https://raw.githubusercontent.com/bb4/bb4-common/master/bb4-publish.gradle'
  */
 
 /** javadoc jar used for the whole project. Used only if appMap was not specified. */
