@@ -110,6 +110,11 @@ dependencies {
     testRuntime 'org.pegdown:pegdown:1.6.0'
 }
 
+// Have the clean task also delete the dist dir if it is there
+clean.doFirst {
+    delete "${rootDir}/dist/"
+}
+
 task copyToLib(dependsOn: jar, type: Copy) {
     description = "Copies the downloaded dependencies to the lib directory so they can be deployed"
     into "build/libs"
