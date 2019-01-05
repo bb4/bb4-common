@@ -104,7 +104,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir") {
     from "source/html"
     into "$projectDistributionDir"
-    include '*.*'
+    include '**/*.*'
     filter(ReplaceTokens, tokens: [version: project.version])
 }
 
