@@ -105,7 +105,9 @@ task deployHtml(type: Copy, description: "Copy html related files to $projectDis
     from "source/html"
     into "$projectDistributionDir"
     include '**/*.*'
-    filter(ReplaceTokens, tokens: [version: project.version])
+    filesNotMatching(["**/*.png", "**/*.jpg"]) {
+        it.filter(ReplaceTokens, tokens: [version: project.version])
+    }
 }
 
 // Copy XMl schema files to the dist directory so they can be referenced with an http namespace.
