@@ -1,0 +1,31 @@
+/* common CSS for deployed bb4 projects */
+
+html {
+    overflow-x: none;
+}
+
+body {
+    color: #000000;
+    font-family: arial;
+    font-size: 14;
+    background-color: #FDFFFE;
+    padding-left: 12px;
+    padding-right: 14px;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+table, tbody {
+   text-align: left;
+   font-size:16;
+   border-collapse: collapse;
+}
+
+table td {
+    vertical-align: top;
+    padding: 5px;
+    border: 1px solid #88a099;
+}

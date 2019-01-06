@@ -28,3 +28,4 @@ jar {
 }
 
 apply from: 'bb4-publish.gradle'
+apply from: 'bb4-deploy.gradle'

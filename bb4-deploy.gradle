@@ -1,0 +1,58 @@
+// Copyright by Barry G. Becker, 2018 - 2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+
+/**
+ * This common gradle build file is used to deploy bb4 artifacts to a website.
+ * Any project on github can include it using
+ * apply from: 'https://raw.githubusercontent.com/bb4/bb4-common/master/bb4-deploy.gradle'
+ */
+
+// This is the staging directory where all website content will be placed
+ext.distributionDir = "dist"
+ext.projectDistributionDir = "$distributionDir/${project.name}"
+ext.schemaDistributionDir = "$distributionDir/schema"
+import org.apache.tools.ant.filters.ReplaceTokens
+
+
+// when copying the html, {version} is replaced with ${project.version}
+task deployHtml(type: Copy, description: "Copy html related files to $projectDistributionDir") {
+    from "source/html"
+    into "$projectDistributionDir"
+    include '**/*.*'
+    filesNotMatching(["**/*.png", "**/*.jpg"]) {
+        it.filter(ReplaceTokens, tokens: [version: project.version])
+    }
+}
+
+// Copy XMl schema files to the dist directory so they can be referenced with an http namespace.
+task deploySchemas(type:Copy, description: "Copy schema files to $schemaDistributionDir") {
+    from fileTree("$project.projectDir").include("**/*.dtd", "**/*.xsd").files
+    into "$schemaDistributionDir"
+}
+
+task deployZip(type: Copy, description: "Copy zip of jars and run scripts")  {
+    from "build/distributions"
+    into "$projectDistributionDir"
+    include 'bb4-*.zip'
+}
+
+task deploy(dependsOn: [build, deployHtml, deploySchemas, deployZip],
+        description: "Deploys all web-deployment files to $distributionDir so they can be bulk copied to a website") {
+}
+
+// Make sure everything in lib is in CLASSPATH (see https://gist.github.com/jlmelville/2bfe9277e9e2c0ff79b6)
+tasks.withType(CreateStartScripts).each { task ->
+    task.doLast {
+        task.windowsScript.write task.windowsScript.text.replaceFirst(/(set CLASSPATH=%APP_HOME%\\lib\\).*/, { "${it[1]}*" })
+        task.unixScript.write task.unixScript.text.replaceFirst(/(CLASSPATH=.APP_HOME\/lib\/).*/, { "CLASSPATH=\$(echo \$APP_HOME/lib/*.jar | tr ' ' ':')" })
+    }
+}
+
+// make sure that all generated jar files (from appMap) also get into the distributionDir
+applicationDistribution.from("build/libs") {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude "*.asc"
+    exclude "*-sources.jar"
+    exclude "*-scaladoc.jar"
+    exclude "*-javadoc.jar"
+    into "lib"
+}
