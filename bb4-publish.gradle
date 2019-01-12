@@ -6,21 +6,21 @@
  * apply from: 'https://raw.githubusercontent.com/bb4/bb4-common/master/bb4-publish.gradle'
  */
 
-/** javadoc jar used for the whole project. Used only if appMap was not specified. */
+/** javadoc jar used for the whole project. Used only if jarMap was not specified. */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
 
-/** scaladoc jar used for the whole project. Used only if appMap was not specified. */
+/** scaladoc jar used for the whole project. Used only if jarMap was not specified. */
 task scaladocJar(type: Jar, dependsOn: scaladoc) {
     description = 'Create a jar file containing all project scaladoc. Needed by Sonatype release.'
     classifier = 'scaladoc'
     from scaladoc.destinationDir
 }
 
-/** sources jar used for the whole project. Used only if appMap was not specified. */
+/** sources jar used for the whole project. Used only if jarMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
     classifier = 'sources'
@@ -37,24 +37,23 @@ javadoc.doLast {
 }
 
 /**
- * If a project has multiple apps, it should define them in a map called appMap before
+ * If a project has multiple apps, it should define them in a map called jarMap before
  * applying this bb4-publish.gradle file.
  * Skip building the default jars that contain everything if there is a specific list.
  */
-if (hasProperty('appMap')) {
+if (hasProperty('jarMap')) {
     jar.enabled = false
     sourcesJar.enabled = false
     javadocJar.enabled = false
     scaladocJar.enabled = false
 } else {
-    ext.appMap = new HashMap()
+    ext.jarMap = new LinkedHashMap()
 }
 
 /**
- * Create jar, java/scaladocJar, and sourceJar for every entry in appMap (if there are any).
- * Consider setting the Permissions attribute to "all-permissions" if file access is needed.
+ * Create jar, java/scaladocJar, and sourceJar for every entry in jarMap (if there are any).
  */
-appMap.each { String key, Map value ->
+jarMap.each { String key, Map value ->
     task "${key}Jar"(type: Jar)  {
         baseName = "bb4-${key}"
         from sourceSets.main.output
@@ -63,7 +62,6 @@ appMap.each { String key, Map value ->
             value['exclude'].each { pattern -> exclude pattern }
         manifest {
             attributes 'Implementation-Title': "${key} code",
-                    //'Permissions': "sandbox",
                     'Implementation-Version': version,
                     'Application-Name': "${key}",
                     'Built-By': System.properties['user.name'],
@@ -97,17 +95,17 @@ appMap.each { String key, Map value ->
 
 /**
  * These artifacts need to be published so other projects can depend on them.
- * The default jar is only included if there is not an explicit appMap.
+ * The default jar is only included if there is not an explicit jarMap.
  */
 artifacts {
-    if (appMap.size() == 0) {
+    if (jarMap.size() == 0) {
         archives jar
         archives sourcesJar
         archives javadocJar
         archives scaladocJar
     }
 
-    appMap.each { String key, Map value ->
+    jarMap.each { String key, Map value ->
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
         archives tasks["${key}ScaladocJar"]
@@ -116,7 +114,7 @@ artifacts {
     }
 }
 
-/** release jars need to be signed when published to sonatype so the publisher can be verified. */
+/** release jars need to be signed when published to Sonatype so the publisher can be verified. */
 signing {
     required {
         isReleaseVersion
@@ -155,7 +153,7 @@ def jarPomConfig = {
     developers {
         developer {
             id 'barrybecker4'
-            name 'Barry Becker'
+            name 'Barry G. Becker'
             email 'barrybecker4@gmail.com'
         }
     }
@@ -187,8 +185,8 @@ final def archives = uploadArchives {
 
             pom.project jarPomConfig
 
-            // creates filters for each jar produced by appMap entries (if any)
-            appMap.each { String key, Map value ->
+            // creates filters for each jar produced by jarMap entries (if any)
+            jarMap.each { String key, Map value ->
                 def jarName = "bb4-$key"
                 def jarPom = addFilter("${key}Jar") { artifact, file ->
                     artifact.name == jarName
