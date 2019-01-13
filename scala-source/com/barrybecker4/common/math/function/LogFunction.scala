@@ -12,7 +12,8 @@ object LogFunction {
   * The function takes the log of a value in the specified base, then scales it.
   * @param base         logarithm base.
   * @param scale        amount to scale after taking the logarithm.
-  * @param positiveOnly if true then clamp negative log values at 0.
+  * @param positiveOnly If true then log of a non-positive number is NaN and -log(x) when x between 0 and 1.
+  *                     If false, then return log(-x)
   * @author Barry Becker
   */
 class LogFunction(val scale: Double,
@@ -22,14 +23,14 @@ class LogFunction(val scale: Double,
   private val baseConverter = Math.log(base)
 
   override def getValue(value: Double): Double = {
-    var logValue = .0
-    if (value <= 0) {
-      if (positiveOnly)
-        throw new IllegalArgumentException("Cannot take the log of a number (" + value + ") that is <=0")
-      logValue = Math.signum(value) * Math.log(-value)
-    }
-    else logValue = if (positiveOnly) Math.max(0, Math.log(value))
-    else Math.log(value)
+    val logValue =
+      if (value <= 0) {
+        if (positiveOnly) Double.NaN
+        else Math.signum(value) * Math.log(-value)
+      }
+      else {
+        if (positiveOnly) Math.max(0, Math.log(value)) else Math.log(value)
+      }
     scale * logValue / baseConverter
   }
 

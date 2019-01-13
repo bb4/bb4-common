@@ -10,47 +10,55 @@ import org.scalatest.FunSuite
 class LogFunctionSuite extends FunSuite {
   /** instance under test */
   private var func: LogFunction = _
-  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.000001)
+  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.00001)
 
   test("TypicalFunc") {
     func = new LogFunction(10.0)
-    assert(0 === func.getValue(1))
-    assert(10.0 === func.getValue(10))
-    assert(19.0309 === func.getValue(80))
-    assert(20.0 === func.getValue(100))
-    assert(30.0 === func.getValue(1000))
+    assertResult(0) { func.getValue(1)}
+    assertResult(10.0){ func.getValue(10) }
+    assertResult(19.030899869919434){ func.getValue(80) }
+    assertResult(20.0){ func.getValue(100) }
+    assertResult(29.999999999999996){ func.getValue(1000) }
   }
 
   test("Base2FuncWithSmallValues") {
     func = new LogFunction(0.1, 2.0, false)
-    assert(0 === func.getValue(1))
-    assert(0.3321928 === func.getValue(10))
-    assert(0.3 === func.getValue(8))
-    assert(0.4 === func.getValue(16))
-    assert(-0.3 === func.getValue(0.125))
-    assert(0.664385618 === func.getValue(100))
-    assert(0.996578428 === func.getValue(1000))
+    assertResult(0){ func.getValue(1) }
+    assertResult(0.3321928094887363){ func.getValue(10) }
+    assertResult(0.3){ func.getValue(8) }
+    assertResult(0.39999999999999997){ func.getValue(16) }
+    assertResult(-0.3){ func.getValue(0.125) }
+    assertResult(0.6643856189774726){ func.getValue(100) }
+    assertResult(0.9965784284662088){ func.getValue(1000) }
   }
 
   test("Base2FuncNeverLessThan0") {
     func = new LogFunction(0.1, 2.0, true)
-    assert(0 === func.getValue(1))
-    assert(0.4 === func.getValue(16))
-    assert(0.0 === func.getValue(0.125))
-    assert(0.6643856 === func.getValue(100))
+    assertResult(0){ func.getValue(1) }
+    assertResult(0.39999999999999997){ func.getValue(16) }
+    assertResult(0.0){ func.getValue(0.125) }
+    assertResult(0.6643856189774726){ func.getValue(100) }
+  }
+
+  test("Base3Func positive only") {
+    func = new LogFunction(1.0, 3.0, true)
+    assertResult(0){ func.getValue(0.333) }
+    assert(func.getValue(-0.333).isNaN)
+    assert(func.getValue(-27).isNaN)
+    assert(func.getValue(0).isNaN)
   }
 
   test("FuncWithNegativeValuesPassedIn") {
     func = new LogFunction(10.0)
-    assert(0 === func.getValue(1))
-    assert(-10.0 === func.getValue(-10))
-    assert(-19.0309 === func.getValue(-80))
-    assert(-20.0 === func.getValue(-100))
-    assert(30.0 === func.getValue(1000))
+    assertResult(0){ func.getValue(1) }
+    assertResult(-10.0) { func.getValue(-10) }
+    assertResult(-19.030899869919434) { func.getValue(-80) }
+    assertResult(-20.0) { func.getValue(-100) }
+    assertResult(29.999999999999996){ func.getValue(1000) }
   }
 
   test("FuncWithZeroScale") {
     func = new LogFunction(0.0)
-    assert(-0.0 === func.getValue(10))
+    assertResult(-0.0){ func.getValue(10) }
   }
 }
