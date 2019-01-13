@@ -20,7 +20,32 @@ task deployHtml(type: Copy, description: "Copy html related files to $projectDis
     include '**/*.*'
     filesNotMatching(["**/*.png", "**/*.jpg"]) {
         it.filter(ReplaceTokens, tokens: [version: project.version])
+        it.filter { String line ->
+            line.contains('@table_rows@') ? createTableRows(line.substring(0, line.indexOf("@table_rows@"))) : line
+        }
     }
+}
+
+// Use the properties for each app in the appMap to populate the html table rows.
+def createTableRows(indent) {
+    if (hasProperty('appMap')) {
+        def rows = ""
+        ext.appMap.each { String key, Map value ->
+            def tr = indent + "<tr>\n" +
+                indent + "  <td>\n" +
+                indent + "    <h3>" + value.title + "</h3><br/>\n" +
+                indent + "    " + value.command + "\n" +
+                indent + "  </td>\n" +
+                indent + "  <td style=\"vertical-align: top;\">\n" +
+                indent + '    <img src="images/' + key + '.jpg" title="' + value.title +
+                    '" alt="' + value.title + '" style="width: 285px; height: 185px;">\n' +
+                indent + "  </td>\n" +
+                indent + "</tr>\n"
+            rows += tr
+        }
+        return rows
+    }
+    else return null
 }
 
 // Copy XMl schema files to the dist directory so they can be referenced with an http namespace.

@@ -97,9 +97,7 @@ class MessageContext(var resourcePaths: List[String]) {
     var found = false
     val numBundles = messagesBundles.size
     var ct = 0
-    while ( {
-      !found && ct < numBundles
-    }) {
+    while (!found && ct < numBundles) {
       val bundle = messagesBundles(ct)
       ct += 1
       if (bundle.containsKey(key)) {
@@ -120,7 +118,6 @@ class MessageContext(var resourcePaths: List[String]) {
   }
 
   private def initMessageBundles(locale: LocaleType): Unit = {
-    //import scala.collection.JavaConversions._
     for (path <- resourcePaths) {
       val bundle = ResourceBundle.getBundle(path, locale.locale)
       if (bundle == null) throw new IllegalArgumentException("Messages bundle for " + path + " was not found.")
