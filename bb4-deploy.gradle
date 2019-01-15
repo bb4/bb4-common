@@ -33,13 +33,13 @@ def createTableRows(indent) {
         ext.appMap.each { String key, Map value ->
             def tr = indent + "<tr>\n" +
                 indent + "  <td>\n" +
-                indent + "    <h3>" + value.title + "</h3><br/>\n" +
-                indent + "    <pre>" + value.command + "</pre><br/>\n" +
-                indent + "    <p>" + value.longDescription + "<p/>\n" +
+                indent + "    <h3>" + value.title + "</h3>\n" +
+                indent + "    <pre>" + value.command + "</pre>\n" +
+                indent + "    <p>" + value.longDescription + "</p>\n" +
                 indent + "  </td>\n" +
                 indent + "  <td style=\"vertical-align: top;\">\n" +
                 indent + '    <img src="images/' + key + '.jpg" title="' + value.title +
-                    '" alt="' + value.title + '" style="width: 285px; height: 185px;">\n' +
+                    '" alt="' + value.title + '">\n' +
                 indent + "  </td>\n" +
                 indent + "</tr>\n"
             rows += tr
