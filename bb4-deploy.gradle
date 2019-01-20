@@ -19,7 +19,7 @@ task deployHtml(type: Copy, description: "Copy html related files to $projectDis
     from "source/html"
     into "$projectDistributionDir"
     include '**/*.*'
-    filesNotMatching(["**/*.png", "**/*.jpg"]) {
+    filesNotMatching(["**/*.png", "**/*.jpg", "**/*.PNG", "**/*.JPG"]) {
         it.filter(ReplaceTokens, tokens: [version: project.version])
         it.filter { String line ->
             line.contains('@table_rows@') ? createTableRows(line.substring(0, line.indexOf("@table_rows@"))) : line
