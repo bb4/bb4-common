@@ -106,7 +106,8 @@ object DomUtil {
     */
   def getAttribute(node: Node, attribName: String): String = {
     val attributeVal = getAttribute(node, attribName, null)
-    assert(attributeVal != null, "no attribute named '" + attribName + "' for node '" + node.getNodeName + "' val=" + node.getNodeValue)
+    assert(attributeVal != null,
+      s"no attribute named '$attribName' for node '${node.getNodeName}' val='${node.getNodeValue}'")
     attributeVal
   }
 

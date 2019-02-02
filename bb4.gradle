@@ -1,4 +1,4 @@
-// Copyright by Barry G. Becker, 2013 - 2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G. Becker, 2013 - 2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 
 /**
  * This is common gradle build configuration for all bb4 projects.
@@ -103,7 +103,7 @@ dependencies {
 
     // Java dependencies
     compile "java3d:vecmath:$vecmathVersion"
-    testCompile 'junit:junit:4.11'
+    testCompile 'junit:junit:4.12'
 
     // Scala dependencies
     compile("org.scala-lang:scala-library:$scalaVersion") { force = true }

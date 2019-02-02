@@ -5,9 +5,8 @@ package com.barrybecker4.common.concurrency
   * @author Barry Becker
   */
 object ThreadUtil {
-  /**
-    * Cause this thread to sleep for specified amount of time while other threads run.
-    *
+
+  /** Cause this thread to sleep for specified amount of time while other threads run.
     * @param millis number of seconds to sleep
     */
   def sleep(millis: Int): Unit = {
