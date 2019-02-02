@@ -3,7 +3,7 @@
 /**
  * This is common gradle build configuration for all bb4 projects.
  * Any project on github can include it using
- * apply from: 'https://raw.github.com/barrybecker4/bb4-common/master/bb4.gradle'
+ * apply from: 'https://raw.githubusercontent.com/bb4/bb4-common/master/bb4.gradle'
  * Both Java and Scala are fully supported. Most projects have been ported to Scala.
  */
 apply plugin: 'java'
@@ -65,8 +65,10 @@ sourceSets {
 repositories {
     mavenCentral()
 
-    // this is where bb4 release artifacts will come from
+    // this is where thirdparty and bb4 release artifacts will come from
     maven { url "http://repo1.maven.org/maven2/" }
+    // Sonatype repo also has released bb4 artifacts
+    //maven { url "https://oss.sonatype.org/content/repositories/releases" }
     // this is where SNAPSHOT releases will come from
     maven { url "https://oss.sonatype.org/content/groups/staging" }
     // some thirdparty jars from here
@@ -123,6 +125,6 @@ task copyToLib(dependsOn: jar, type: Copy) {
 
 if (rootProject == project) { // https://github.com/gradle/gradle/issues/5816
     wrapper {
-        gradleVersion = '4.10.2'
+        gradleVersion = '5.0'
     }
 }
