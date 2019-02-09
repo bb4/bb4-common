@@ -18,7 +18,7 @@ project.archivesBaseName = 'bb4-common'
 mainClassName = 'com.barrybecker4.common.app.AppContext'
 
 dependencies {
-    compile 'commons-codec:commons-codec:1.8'
+    //compile 'commons-codec:commons-codec:1.8' used to need this for base64
 }
 
 jar {
