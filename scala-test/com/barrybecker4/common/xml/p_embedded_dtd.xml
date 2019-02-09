@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugins [
+    <!ELEMENT plugins   (game)*>
+    <!ELEMENT game    EMPTY>
+
+    <!ATTLIST plugins
+            date        CDATA      #IMPLIED
+            author      NMTOKENS   #IMPLIED
+            >
+
+    <!ATTLIST game
+            name             ID       #REQUIRED
+            msgKey           NMTOKENS #REQUIRED
+            type             NMTOKENS #REQUIRED
+            msgBundleBase    CDATA    #REQUIRED
+            panelClass       CDATA    #REQUIRED
+            controllerClass  CDATA    #REQUIRED
+            default          NMTOKENS #IMPLIED
+            >
+ ]>
+
+
+<plugins date="10/19/2004" author="Barry Becker">
+
+    <game name="checkers"
+          msgKey="CHECKERS"
+          type="TWO_PLAYER_GAME"
+          msgBundleBase="com.barrybecker4.game.twoplayer.checkers.resources.checkersMessages"
+          panelClass="com.barrybecker4.game.twoplayer.checkers.ui.CheckersPanel"
+          controllerClass="com.barrybecker4.game.twoplayer.checkers.CheckersController" />
+    <game name="chess"
+          msgKey="CHESS"
+          type="TWO_PLAYER_GAME"
+          msgBundleBase="com.barrybecker4.game.twoplayer.chess.resources.chessMessages"
+          panelClass="com.barrybecker4.game.twoplayer.chess.ui.ChessPanel"
+          controllerClass="com.barrybecker4.game.twoplayer.chess.ChessController" />
+
+</plugins>

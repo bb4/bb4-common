@@ -11,9 +11,9 @@ class PackageReflectorSuite extends FunSuite {
   private var reflector = new PackageReflector
 
   test("GetClasses") {
-    val classes = reflector.getClasses("com.barrybecker4.common.xml")
-    assertResult(4) { classes.size }
-    assertResult("DomUtil$, DomUtil, XmlErrorHandler$, XmlErrorHandler") {
+    val classes = reflector.getClasses("com.barrybecker4.common.testsupport")
+    assertResult(2) { classes.size }
+    assertResult("package$, package") {
       classes.map(_.getSimpleName).mkString(", ")
     }
   }

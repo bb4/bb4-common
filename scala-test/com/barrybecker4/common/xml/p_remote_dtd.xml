@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Use this url until
+https://forum.infinityfree.net/t/sax-parser-exception-for-dtd-hosted-by-infinityfree-but-not-other-providers/12495
+is fixed -->
+<!DOCTYPE plugins SYSTEM "https://raw.githubusercontent.com/bb4/bb4-games/master/source/com/barrybecker4/game/plugins2012.dtd">
+<!--DOCTYPE plugins SYSTEM "http://www.barrybecker4.com/bb4-projects/schema/plugins2012.dtd"-->
+
+
+<plugins date="10/19/2004" author="Barry Becker">
+
+    <game name="checkers"
+          msgKey="CHECKERS"
+          type="TWO_PLAYER_GAME"
+          msgBundleBase="com.barrybecker4.game.twoplayer.checkers.resources.checkersMessages"
+          panelClass="com.barrybecker4.game.twoplayer.checkers.ui.CheckersPanel"
+          controllerClass="com.barrybecker4.game.twoplayer.checkers.CheckersController" />
+    <game name="chess"
+          msgKey="CHESS"
+          type="TWO_PLAYER_GAME"
+          msgBundleBase="com.barrybecker4.game.twoplayer.chess.resources.chessMessages"
+          panelClass="com.barrybecker4.game.twoplayer.chess.ui.ChessPanel"
+          controllerClass="com.barrybecker4.game.twoplayer.chess.ChessController" />
+
+</plugins>

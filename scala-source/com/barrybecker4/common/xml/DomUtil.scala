@@ -148,19 +148,22 @@ object DomUtil {
     attribs
   }
 
-  /** Print a text representation of the dom hierarchy.
+  /** Create a String representation of the dom hierarchy.
     * @param root  document root node
     * @param level level to print to
+    * @return the DOM formatted as a string
     */
-  def printTree(root: Node, level: Int): Unit = {
+  def toString(root: Node, level: Int): String = {
     val l = root.getChildNodes
-    for (i <- 0 until level) print("    ")
+    var result = ""
+    for (i <- 0 until level) result += "    "
 
     val attribMap = root.getAttributes
     val attribs = getAttributeList(attribMap)
-    println("Node: <" + root.getNodeName + ">  " + attribs)
+    result += "Node: <" + root.getNodeName + ">  " + attribs + "\n"
     for (i <- 0 until l.getLength)
-      printTree(l.item(i), level + 1)
+      result += toString(l.item(i), level + 1)
+    result
   }
 
   /** Parse an xml file and return a cleaned up Document object.
