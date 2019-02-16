@@ -15,23 +15,28 @@
     <p>
         After you download the indicated zip file, unzip it to any location.
         If the command to run has no parameters, you can just double click the run script in the file explorer.
-        Otherwise, open a shell of some sort (cmd, bash, git-bash, etc) and cd into the bin directory, then
+        Otherwise, open a shell of some sort (cmd, bash, git-bash, PowerShell, etc) and cd into the bin directory, then
         enter the indicated command. On Windows, you need to use the *.bat version of the script to run.
         On Mac, cygwin, or Linux, you will likely need to prefix the command with "./"
         since it is probably not in your path.
     </p>
     <h3>Internationalization</h3>
     <p>
-        All of these applications are internationalized and, to a degree, localized. In order to set the locale that
-        you want, you can specify <pre>-locale "&lt;locale&gt;"</pre> on the command line when invoking. Currently supported
-        locales are "ENGLISH", "GERMAN", VIETNAMESE", and "JAPANESE".
+        All of these applications are internationalized, and, to a degree, localized. In order to set the locale
+        that you want, you can specify <pre>-locale "&lt;locale&gt;"</pre> as an additional argument
+        on the command line when invoking.
+        Currently supported locales are "ENGLISH", "GERMAN", VIETNAMESE", and "JAPANESE".
     </p>
     <h3>History</h3>
     <p>
-        I used to deploy this application as applets or using WebStart, but that fell out of favor,
+        I used to deploy these applications as applets and WebStart apps.
+        However, that technology fell out of favor and is no longer support by most browsers or recent Java versions,
         so now I use a zip file containing executable jar files and associated run scripts.
-        Applets are no longer supported in most major browsers, and recent versions of Java have
-        completely dropped WebStart without providing an alternative.
+    </p>
+    <p>
+        I recently ported all my projects from Java to Scala.
+        It was surprisingly easy to do since Scala is completely interoperable with Java,
+        and there is nice support for converting from Java to Scala in the Intellij IDE.
         Scala is a JVM based language that produces class files that can be run on a JVM just as java is.
     </p>
     <h3>Additional Notes</h3>
