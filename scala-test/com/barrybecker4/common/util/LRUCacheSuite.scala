@@ -3,6 +3,7 @@ package com.barrybecker4.common.util
 
 import LRUCacheSuite._
 import org.scalatest.FunSuite
+
 /**
   * Test LRUCache behavior.
   * @author Barry Becker

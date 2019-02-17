@@ -16,8 +16,8 @@ case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   }
   override def row: Int = brow
   override def col: Int = bcol
-  override def getX: Int = col
-  override def getY: Int = row
+  override def getX: Int = brow
+  override def getY: Int = bcol
 
   override def incrementOnCopy(rowChange: Int, colChange: Int) =
     new ByteLocation(row + rowChange, col + colChange)

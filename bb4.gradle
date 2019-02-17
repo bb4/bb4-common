@@ -125,7 +125,7 @@ task copyToLib(dependsOn: jar, type: Copy) {
 
 if (rootProject == project) { // https://github.com/gradle/gradle/issues/5816
     wrapper {
-        gradleVersion = '5.0'
+        gradleVersion = '4.10.2'
     }
 }
 

@@ -10,10 +10,13 @@ import com.barrybecker4.common.i18n.MessageContext
 object AppContext {
   /** logger object. */
   private var logger: ILog = _
+
   /** if greater than 0, then debug mode is on. the higher the number, the more info that is printed.  */
   private val DEBUG: Int = 0
+
   /** now the variable forms of the above defaults */
   private var debug: Int = DEBUG
+
   private var messageContext: MessageContext = _
 
   /** Initialize the app context once a the start of a program
