@@ -32,6 +32,7 @@ def createTableRows(indent) {
     if (hasProperty('appMap')) {
         def rows = ""
         ext.appMap.each { String key, Map value ->
+            def imageName = value.containsKey("imageName") ? value.imageName : key + '.jpg'
             if (!value.containsKey("deploy") || value.deploy) {
                 def tr = indent + "<tr>\n" +
                         indent + "  <td>\n" +
@@ -40,7 +41,7 @@ def createTableRows(indent) {
                         indent + "    <p>" + value.longDescription + "</p>\n" +
                         indent + "  </td>\n" +
                         indent + "  <td style=\"vertical-align: top;\">\n" +
-                        indent + '    <img src="images/' + key + '.jpg" title="' + value.title +
+                        indent + '    <img src="images/' + imageName + '" title="' + value.title +
                         '" alt="' + value.title + '">\n' +
                         indent + "  </td>\n" +
                         indent + "</tr>\n"
