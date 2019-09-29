@@ -25,7 +25,7 @@ object UnionFind {
     */
   def main(args: Array[String]): Unit = {
     val uf = UnionFind.create(System.in)
-    println(uf.getCount + " components")
+    println(s"${uf.getCount} components")
   }
 }
 

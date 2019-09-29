@@ -10,9 +10,9 @@ import org.scalatest.FunSuite
 class MathUtilSuite extends FunSuite {
   test("PositiveGCD") {
     assertResult(21) {MathUtil.gcd(21, 42)}
-    assertResult(1) {MathUtil.gcd(21, 4l)}
+    assertResult(1) {MathUtil.gcd(21, 4L)}
     assertResult(2) {MathUtil.gcd(2L, 4L)}
-    assertResult(1) {MathUtil.gcd(41, 2l)}
+    assertResult(1) {MathUtil.gcd(41, 2L)}
     assertResult(20) {MathUtil.gcd(420L, 40L)}
     assertResult(20L) {MathUtil.gcd(40L, 420L)}
   }

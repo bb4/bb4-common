@@ -2,6 +2,8 @@
 package com.barrybecker4.common.math.function
 
 import com.barrybecker4.common.math.Range
+
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
@@ -57,7 +59,7 @@ class CountFunction(val initialYValue: Double) extends Function {
   /** @param xValue x value
     * @return an interpolated y values for a specified x
     */
-  private def getValue(xValue: Double, xVals: Seq[Double], yVals: Seq[Double]): Double = {
+  private def getValue(xValue: Double, xVals: mutable.Seq[Double], yVals: mutable.Seq[Double]): Double = {
     // first find the x value
     var i: Int = 0
     while (i < xVals.size && xValue > xVals(i)) {

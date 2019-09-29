@@ -17,7 +17,7 @@ class FunctionInverter(var functionMap: Array[Double]) {
 
   private val length = functionMap.length
   private val lengthm1 = length - 1
-  assert(functionMap(lengthm1) == 1.0, functionMap(lengthm1) + " was not = 1.0")
+  assert(functionMap(lengthm1) == 1.0, s"${functionMap(lengthm1)} was not = 1.0")
 
   /** Creates an inverse of the function specified with the same precision as the passed in function.
     * Assumes that function func is monotonically increasing and maps [xRange] into [yRange].
@@ -34,10 +34,11 @@ class FunctionInverter(var functionMap: Array[Double]) {
       while (j < lengthm1 && functionMap(j) <= xVal) {
         j += 1
         if (functionMap(j - 1) > functionMap(j) + MathUtil.EPS)
-          throw new IllegalStateException(functionMap(j - 1) +
-            " was not less than " + functionMap(j) +
-            ". That means the function was not monotonically increasing, as we assumed for " +
-            "func=" + functionMap.mkString(", ") + " at position=" + j)
+          throw new IllegalStateException(
+            s"""${functionMap(j - 1)}
+               | was not less than ${functionMap(j)}
+               | . That means the function was not monotonically increasing, as we assumed for
+               |  func= ${functionMap.mkString(", ")} at position= $j)""".stripMargin)
       }
       invFunc(i) = xRange.min
       if (j > 0) {
@@ -52,10 +53,10 @@ class FunctionInverter(var functionMap: Array[Double]) {
         }
         val y = ((j - 1).toDouble + numerator / denom) / lengthm1.toDouble
         invFunc(i) = xRange.min + y * xRange.getExtent
-        assert(invFunc(i) < xMax + FunctionInverter.EPS_BIG, invFunc(i) + " was not less than " + xMax)
+        assert(invFunc(i) < xMax + FunctionInverter.EPS_BIG, s"${invFunc(i)} was not less than $xMax")
       }
     }
-    assert(invFunc(lengthm1) > xMax - FunctionInverter.EPS_BIG, invFunc(lengthm1) + " was not greater than " + xMax)
+    assert(invFunc(lengthm1) > xMax - FunctionInverter.EPS_BIG, s"${invFunc(lengthm1)} was not greater than $xMax")
     invFunc(lengthm1) = xMax
     invFunc
   }

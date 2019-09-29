@@ -31,7 +31,7 @@ class FunctionInverterSuite extends FunSuite {
     verify(func, Array(0.0, 0.7, 0.8, 0.9, 0.9142, 0.9285, 0.9428, 0.95714, 0.971428, 0.9857, 1.0))
   }
 
-  def testLinearFunction() {
+  def testLinearFunction(): Unit = {
     val func = Array[Double](0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
     verify(func, Array(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
   }

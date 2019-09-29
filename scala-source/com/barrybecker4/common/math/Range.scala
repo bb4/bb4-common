@@ -40,5 +40,5 @@ case class Range(min: Double = Double.NaN, max: Double = Double.NaN) {
     (value - min) / getExtent
   }
 
-  override def toString: String = this.min + " to " + this.max
+  override def toString: String = s"$min to $max"
 }

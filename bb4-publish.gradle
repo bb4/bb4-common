@@ -9,21 +9,21 @@
 /** javadoc jar used for the whole project. Used only if jarMap was not specified. */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
 /** scaladoc jar used for the whole project. Used only if jarMap was not specified. */
 task scaladocJar(type: Jar, dependsOn: scaladoc) {
     description = 'Create a jar file containing all project scaladoc. Needed by Sonatype release.'
-    classifier = 'scaladoc'
+    archiveClassifier = 'scaladoc'
     from scaladoc.destinationDir
 }
 
 /** sources jar used for the whole project. Used only if jarMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -102,13 +102,13 @@ artifacts {
         archives jar
         archives sourcesJar
         archives javadocJar
-        archives scaladocJar
+        ////archives scaladocJar
     }
 
     jarMap.each { String key, Map value ->
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
-        archives tasks["${key}ScaladocJar"]
+        ////archives tasks["${key}ScaladocJar"]
         archives tasks["${key}SourcesJar"]
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
     }

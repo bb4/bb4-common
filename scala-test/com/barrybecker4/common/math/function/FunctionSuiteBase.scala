@@ -15,7 +15,7 @@ abstract class FunctionSuiteBase extends FunSuite with BeforeAndAfterEach {
   protected var function: InvertibleFunction = _
   implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.00000000000001)
 
-  override def beforeEach() {
+  override def beforeEach(): Unit = {
     function = createFunction
   }
 

@@ -75,5 +75,5 @@ case class Vector(data: IndexedSeq[Double]) {
     if (this.size != b.size) throw new IllegalArgumentException("Dimensions don't match")
 
   /** @return a string representation of the vector */
-  override def toString: String = data.foldLeft("") {(acc, x) => acc + (x + " ")}
+  override def toString: String = data.foldLeft("") {(acc, x) => acc + (s"$x ")}
 }

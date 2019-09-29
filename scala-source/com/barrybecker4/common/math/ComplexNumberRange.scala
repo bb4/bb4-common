@@ -19,5 +19,5 @@ case class ComplexNumberRange(point1: ComplexNumber, point2: ComplexNumber) {
   def getInterpolatedPosition(realRatio: Double, imaginaryRatio: Double) =
     new ComplexNumber(point1.real + extent.real * realRatio, point1.imaginary + extent.imaginary * imaginaryRatio)
 
-  override def toString: String = point1 + " to " + point2
+  override def toString: String = s"$point1 to $point2"
 }

@@ -12,7 +12,7 @@ class LinearInterpolator(function: Array[Double]) extends AbstractInterpolator(f
     val len = function.length - 1
     val x = value * len.toDouble
     val index0 = x.toInt
-    if (x > len) throw new IllegalArgumentException(index0 + " is >= " + len + ". x = " + x)
+    if (x > len) throw new IllegalArgumentException(s"$index0 is >= $len. x = $x")
     var index1 = if (index0 < len) index0 + 1
     else len
     if (len == 0) index1 = len

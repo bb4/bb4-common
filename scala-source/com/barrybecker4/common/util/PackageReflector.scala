@@ -35,7 +35,7 @@ class PackageReflector() {
   }
 
   @throws[IOException]
-  private def getClassNames(packageName: String): Array[String] = {
+  private def getClassNames(packageName: String): IndexedSeq[String] = {
     val packagePath = packageName.replace('.', '/')
     val classLoader = ClassLoaderSingleton.getClassLoader
     val classNames = ArrayBuffer[String]()
@@ -47,11 +47,11 @@ class PackageReflector() {
         classNames.appendAll(getClassNamesFromJar(dirPath, packageName))
       } else {
         val dir = new File(dirPath)
-        val names = getClassNamesFromFiles(dir.listFiles)
+        val names = getClassNamesFromFiles(dir.listFiles.toIndexedSeq)
         classNames.appendAll(names)
       }
     }
-    classNames.toArray
+    classNames.toIndexedSeq
   }
 
   @throws[IOException]
@@ -78,8 +78,8 @@ class PackageReflector() {
     classNameSet.toSet
   }
 
-  private def getClassNamesFromFiles(files: Seq[File]) = {
-    var classNames = Seq[String]()
+  private def getClassNamesFromFiles(files: IndexedSeq[File]): IndexedSeq[String] = {
+    var classNames = IndexedSeq[String]()
     for (file <- files) {
       if (file.getName.endsWith(PackageReflector.CLASS_EXT)) {
         val className = file.getName.substring(0, file.getName.length - PackageReflector.CLASS_EXT.length)

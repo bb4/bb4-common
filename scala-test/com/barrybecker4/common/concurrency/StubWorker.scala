@@ -14,7 +14,7 @@ class StubWorker(n: Int) extends Worker {
     total
   }
 
-  override def finished() {
+  override def finished(): Unit = {
     println("finished")
   }
 }

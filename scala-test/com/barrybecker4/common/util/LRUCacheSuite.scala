@@ -1,4 +1,4 @@
-/* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
+/* Copyright by Barry G. Becker, 2000-2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
 import LRUCacheSuite._
@@ -18,7 +18,6 @@ object LRUCacheSuite {
 
 class LRUCacheSuite extends FunSuite {
 
-
   test("NumEntries(") {
     val lruCache = createCache()
     assertResult(3) { lruCache.numEntries }
@@ -34,24 +33,19 @@ class LRUCacheSuite extends FunSuite {
     lruCache.put("4", FOUR)
     // Since 2 is getting accessed now, it moves to the front of the list.
     // 2 4 3
-    assertResult(TWO) { lruCache.get("2") }
+    assertResult(TWO) { lruCache("2") }
     lruCache.put("5", FIVE)
     // 5 2 4
     lruCache.put("4", "second four")
     // 4 5 2
     // Verify cache content.
-    assert(lruCache.get("4") == "second four")
-    assert(lruCache.get("5") == FIVE)
-    assert(lruCache.get("2") == TWO)
-    assert(lruCache.get("1") == null)
-    // List cache content.
-    val content = new StringBuilder
-    import scala.collection.JavaConversions._
-    for (e <- lruCache.getAll) {
-      content.append("[").append(e.getKey).append(" : ").append(e.getValue).append("]")
-    }
+    assert(lruCache("4") == "second four")
+    assert(lruCache("5") == FIVE)
+    assert(lruCache("2") == TWO)
+    assert(lruCache.get("1").isEmpty)
+
     val expectedContent = "[4 : second four][5 : five][2 : two]"
-    assertResult(expectedContent) { content.toString }
+    assertResult(expectedContent) { lruCache.toString }
   }
 
   @throws[Exception]
