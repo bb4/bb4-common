@@ -4,28 +4,24 @@ package com.barrybecker4.common.util
 import java.io.InputStream
 import java.util.Scanner
 
+/** Reads in a sequence of pairs of integers (between 0 and N-1) from standard in. Each integer represents an object.
+  * If the objects are in different components, merge the two components and print the pair to standard output.
+  */
+object UnionFind extends App {
 
-object UnionFind {
+  val uf = UnionFind.create(System.in)
+  println(s"${uf.getCount} components")
+
   def create(in: InputStream): UnionFind = {
     val stdIn = new Scanner(in)
     val n = stdIn.nextInt
     val uf = new UnionFind(n)
-    while ( {
-      stdIn.hasNext
-    }) {
+    while (stdIn.hasNext) {
       val p = stdIn.nextInt
       val q = stdIn.nextInt
       if (!uf.connected(p, q)) uf.union(p, q)
     }
     uf
-  }
-
-  /** Reads in a sequence of pairs of integers (between 0 and N-1) from standard in. Each integer represents an object.
-    * If the objects are in different components, merge the two components and print the pair to standard output.
-    */
-  def main(args: Array[String]): Unit = {
-    val uf = UnionFind.create(System.in)
-    println(s"${uf.getCount} components")
   }
 }
 
@@ -53,27 +49,22 @@ class UnionFind(n: Int) {
   private val size = Array.ofDim[Int](n)
   // number of components
   private var count = n
-  var i = 0
 
-  while (i < n) {
+  for (i <- 0 until n) {
     parent(i) = i
     size(i) = 1
-    i += 1
   }
 
   /** @return the number of components (between 1 and N) */
   def getCount: Int = count
 
-  /** Returns the component identifier for the component containing site <tt>p</tt>.
-    * @param site the integer representing one site
+  /** @param site the integer representing one site
     * @return the component identifier for the component containing site <tt>p</tt>
     */
   def find(site: Int): Int = {
     var p = site
     validate(p)
-    while ( {
-      p != parent(p)
-    }) p = parent(p)
+    while (p != parent(p)) p = parent(p)
     p
   }
 
@@ -83,8 +74,7 @@ class UnionFind(n: Int) {
     if (p < 0 || p >= N) throw new IndexOutOfBoundsException("index " + p + " is not between 0 and " + N)
   }
 
-  /** Are the two sites <tt>p</tt> and <tt>q</tt> in the same component?
-    * @param p the integer representing one site
+  /** @param p the integer representing one site
     * @param q the integer representing the other site
     * @return <tt>true</tt> if the two sites <tt>p</tt> and <tt>q</tt>
     *         are in the same component, and <tt>false</tt> otherwise

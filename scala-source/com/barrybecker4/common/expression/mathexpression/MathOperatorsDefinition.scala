@@ -4,7 +4,6 @@ package com.barrybecker4.common.expression.mathexpression
 import com.barrybecker4.common.expression.{Operator, OperatorsDefinition, TreeNode}
 import scala.collection.mutable.ListBuffer
 
-
 object MathOperatorsDefinition {
 
   /** Defines the order of precedence for the operators

@@ -25,8 +25,7 @@ abstract class Worker() {
 
   /** Start a thread that will call the construct method and then exit. */
   private def doConstruct(): Runnable = () => {
-    try
-      returnValue = construct
+    try returnValue = construct
     finally threadVar.clear()
     // old: SwingUtilities.invokeLater(doFinished);
     // Now call directly, but if the body of finished is in the ui,
@@ -39,8 +38,7 @@ abstract class Worker() {
   /** @return the value produced by the worker thread, or null if it hasn't been constructed yet. */
   protected def getValue: Any = returnValue
 
-  /**
-    * Compute the value to be returned by the get method.
+  /** Compute the value to be returned by the get method.
     * @return the result. Must not be null.
     */
   def construct: Any

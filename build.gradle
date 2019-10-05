@@ -17,10 +17,6 @@ apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-
 project.archivesBaseName = 'bb4-common'
 mainClassName = 'com.barrybecker4.common.app.AppContext'
 
-dependencies {
-    //compile 'commons-codec:commons-codec:1.8' used to need this for base64
-}
-
 jar {
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',

@@ -20,8 +20,7 @@ abstract class ExpressionParser(var opDef: OperatorsDefinition) {
     makeTreeFromNodes(nodes)
   }
 
-  /**
-    * Recursive method to find all the tree nodes for the terms at the current parenthesized level.
+  /** Recursive method to find all the tree nodes for the terms at the current parenthesized level.
     * For example, given this expression
     * 2x^3 +  5(x + 3x^2) / (x - 1)
     * the items in []'s represent the array of nodes returned.
@@ -63,8 +62,7 @@ abstract class ExpressionParser(var opDef: OperatorsDefinition) {
   protected def processSubExpression(exp: String, pos: Int, token: String,
                                      closingParenPos: Int, nodes: ListBuffer[TreeNode]): String
 
-  /**
-    * The token may represent several nodes because of implicit multiplication.
+  /** The token may represent several nodes because of implicit multiplication.
     * For example,
     * -4x should become  [-4] [times] [x]
     * -x should become [-1] [times] [x]
