@@ -69,8 +69,9 @@ repositories {
     maven { url "http://repo1.maven.org/maven2/" }
     // Sonatype repo also has released bb4 artifacts
     //maven { url "https://oss.sonatype.org/content/repositories/releases" }
-    // this is where SNAPSHOT releases will come from
+    // The SNAPSHOT releases should come from one of these next two (did it change?)
     maven { url "https://oss.sonatype.org/content/groups/staging" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/"}
     // some thirdparty jars from here
     maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
 }
