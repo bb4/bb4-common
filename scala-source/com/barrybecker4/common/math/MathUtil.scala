@@ -4,7 +4,7 @@ package com.barrybecker4.common.math
 import java.math.BigInteger
 import javax.vecmath.Point2d
 import scala.util.Random
-import MathUtil.{bigFactorial, bigPermutation}
+
 
 /**
   * Some supplemental mathematics routines.

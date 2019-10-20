@@ -132,10 +132,8 @@ class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(
   private def reduceNodes(ops: Array[Operator], nodes: ListBuffer[TreeNode]) = {
     var index = 1
     if (nodes.size == 2) throw new Error("Missing operand : " + nodes)
-    while ( {
-      index < nodes.size
-    }) if (isOperator(nodes(index), ops)) {
-      nodes(index).children = ListBuffer(nodes(index - 1), nodes(index + 1))
+    while (index < nodes.size) if (isOperator(nodes(index), ops)) {
+      nodes(index).children = Seq(nodes(index - 1), nodes(index + 1))
       if (nodes.size < index + 1) throw new Error("Not enough operands for operator in nodes=" + nodes)
       //System.out.println("before splice : " + nodes);
       splice(nodes, index - 1, 3, nodes(index))
