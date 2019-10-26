@@ -15,9 +15,9 @@ import com.barrybecker4.common.testsupport.strip
 class MathExpressionParserSuite extends FunSuite {
   val opDef = new MathOperatorsDefinition
   /** instance under test */
-  private var parser = new MathExpressionParser(opDef)
+  private val parser = new MathExpressionParser(opDef)
   /** used to verify parsed tree */
-  private var serializer = new TreeSerializer
+  private val serializer = new TreeSerializer
 
 
   test("XOnlyExp")  {

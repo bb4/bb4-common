@@ -1,13 +1,13 @@
 /* common CSS for deployed bb4 projects */
 
 html {
-    overflow-x: none;
+    overflow-x: visible;
 }
 
 body {
     color: #000000;
-    font-family: arial;
-    font-size: 14;
+    font-family: arial, sans-serif;
+    font-size: 14px;
     background-color: #FDFFFE;
     padding-left: 12px;
     padding-right: 14px;
@@ -20,7 +20,7 @@ h1 {
 
 table, tbody {
    text-align: left;
-   font-size:16;
+    font-size: 16px;
    border-collapse: collapse;
 }
 

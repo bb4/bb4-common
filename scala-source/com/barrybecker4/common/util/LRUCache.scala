@@ -59,7 +59,7 @@ class LRUCache[K, V](var cacheSize: Int) {
   def getAllKeys: Set[K] = map.keySet
 
   override def toString: String = {
-    var content = new StringBuilder()
+    val content = new StringBuilder()
     for (k <- map.keySet)
       content.append("[").append(k).append(" : ").append(map(k)).append("]")
     content.toString()

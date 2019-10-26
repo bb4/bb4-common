@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math.interpolation
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.FunSuite
 
 /**
@@ -11,7 +11,7 @@ abstract class InterpolatorSuiteBase extends FunSuite {
 
   /** interpolation class under test. */
   protected var interpolator: Interpolator = _
-  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.000001)
+  implicit val doubleEq: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.000001)
 
   protected def createInterpolator(func: Array[Double]): Interpolator
 

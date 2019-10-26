@@ -2,7 +2,7 @@
 package com.barrybecker4.common
 
 class Watch {
-  final private var start = System.currentTimeMillis
+  final private val start = System.currentTimeMillis
 
   /** @return the elapsed time (in seconds) since this object was created. */
   def getElapsedTime: Double = (System.currentTimeMillis - start) / 1000.0

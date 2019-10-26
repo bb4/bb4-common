@@ -9,7 +9,7 @@
 /** javadoc jar used for the whole project. Used only if jarMap was not specified. */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
-    classifier = 'javadoc'   // swtich to archiveClassifier once all projects upgraded to new gradle version
+    classifier = 'javadoc'   // switch to archiveClassifier once all projects upgraded to new gradle version
     from javadoc.destinationDir
 }
 
@@ -102,7 +102,7 @@ artifacts {
         archives jar
         archives sourcesJar
         archives javadocJar
-        ////archives scaladocJar
+        ////archives scaladocJar  // this should be fixed in gradle 6.0
     }
 
     jarMap.each { String key, Map value ->

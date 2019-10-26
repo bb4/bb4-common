@@ -50,7 +50,7 @@ class LRUCacheSuite extends FunSuite {
 
   @throws[Exception]
   def createCache(): LRUCache[String, String] = {
-    var lruCache = new LRUCache[String, String](3)
+    val lruCache = new LRUCache[String, String](3)
     lruCache.put("1", ONE) // 1
     lruCache.put("2", TWO) // 2 1
     lruCache.put("3", THREE) // 3 2 1
