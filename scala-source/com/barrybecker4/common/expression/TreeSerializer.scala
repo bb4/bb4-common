@@ -7,6 +7,7 @@ package com.barrybecker4.common.expression
   * @author Barry Becker
   */
 class TreeSerializer {
+
   def serialize(node: TreeNode): String = {
     var serialized = ""
     if (node != null) serialized = traverse(node)

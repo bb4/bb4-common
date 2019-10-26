@@ -3,6 +3,7 @@ package com.barrybecker4.common.expression.mathexpression
 
 import com.barrybecker4.common.expression.{Operator, OperatorsDefinition, TreeNode}
 import scala.collection.mutable.ListBuffer
+import MathOperatorsDefinition.SYMBOLS
 
 object MathOperatorsDefinition {
 
@@ -14,6 +15,8 @@ object MathOperatorsDefinition {
     Array[Operator](TIMES, DIVIDE),
     Array[Operator](PLUS, MINUS)
   )
+
+  private val SYMBOLS: Set[Char] = Set(PLUS, MINUS, TIMES, DIVIDE, EXPONENT).map(_.symbol)
 }
 
 /**
@@ -25,8 +28,7 @@ class MathOperatorsDefinition extends OperatorsDefinition {
   override def getOperatorPrecedence: Array[Array[Operator]] = MathOperatorsDefinition.OPERATOR_PRECEDENCE
 
   /** @return true if the specified character is an operator */
-  override def isOperator(ch: Char): Boolean =
-    ch == PLUS.symbol || ch == MINUS.symbol || ch == TIMES.symbol || ch == DIVIDE.symbol || ch == EXPONENT.symbol
+  override def isOperator(ch: Char): Boolean = SYMBOLS.contains(ch)
 
   /** @return true if the last node is an operator or there were no previous nodes  */
   override def isLastNodeOperator(nodes: ListBuffer[TreeNode]): Boolean =

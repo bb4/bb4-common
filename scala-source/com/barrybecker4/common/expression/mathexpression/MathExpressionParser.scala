@@ -13,13 +13,14 @@ import scala.collection.mutable.ListBuffer
   */
 class MathExpressionParser(opDef: OperatorsDefinition) extends ExpressionParser(opDef) {
 
-  /** Recursive method to find all the tree nodes for the terms a the current level.
+  /** Recursive method to find all the tree nodes for the terms at the current level.
     * For example, given this expression
     * 2x^3 +  5(x + 3x^2) / (x - 1)
     * the items in []'s represent the array of nodes returned.
     * [2] [*] [x] [^] [3] [+] [5][*][x + 3x^2] [/] [x - 1]
-    * The parts that were in {()'s become their own subtrees via recursive calls.
-    * throws an Error if there is a syntax error causing the expression to be invalid
+    * The parts that were in ()'s become their own subtrees via recursive calls.
+    * Throws an Error if there is a syntax error causing the expression to be invalid
+    *
     * @param exp the expression to get the nodes at the current level for
     * @return array of nodes representing terms that the current level.
     */
