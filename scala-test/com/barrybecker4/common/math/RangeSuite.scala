@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.FunSuite
 
 
@@ -17,7 +17,7 @@ class RangeSuite extends FunSuite {
   private var range: Range = _
 
   val epsilon = 1e-6f
-  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(RangeSuite.TOL)
+  implicit val doubleEq: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(RangeSuite.TOL)
 
 
   test("DefaultConstruction") {

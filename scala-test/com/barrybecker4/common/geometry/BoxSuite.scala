@@ -31,7 +31,7 @@ class BoxSuite extends FunSuite {
   }
 
   test("MaxDimension") {
-    var box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     assertResult(3) { box.getMaxDimension }
   }
 

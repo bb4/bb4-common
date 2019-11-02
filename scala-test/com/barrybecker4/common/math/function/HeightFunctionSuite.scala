@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math.function
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.FunSuite
 import com.barrybecker4.common.math.Range
 
@@ -9,8 +9,8 @@ import com.barrybecker4.common.math.Range
   * @author Barry Becker
   */
 class HeightFunctionSuite extends FunSuite {
-  
-  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.000001)
+
+  implicit val doubleEq: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.000001)
   /** instance under test */
   private var func: HeightFunction = _
 

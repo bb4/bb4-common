@@ -4,7 +4,7 @@
 
 package com.barrybecker4.common.math.function
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.FunSuite
 
 /**
@@ -13,7 +13,8 @@ import org.scalatest.FunSuite
 class CountFunctionSuite extends FunSuite {
   /** instance under test */
   private var func: CountFunction = _
-  private implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.0000001)
+  private implicit val doubleEq: Equality[Double] =
+    TolerantNumerics.tolerantDoubleEquality(0.0000001)
 
   test("BehaviorAfterConstruction")  {
     func = new CountFunction(0.3)

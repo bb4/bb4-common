@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math.function
 
-import org.scalactic.TolerantNumerics
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest.FunSuite
 
 /**
@@ -10,7 +10,7 @@ import org.scalatest.FunSuite
 class LogFunctionSuite extends FunSuite {
   /** instance under test */
   private var func: LogFunction = _
-  implicit val doubleEq = TolerantNumerics.tolerantDoubleEquality(0.00001)
+  implicit val doubleEq: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.00001)
 
   test("TypicalFunc") {
     func = new LogFunction(10.0)

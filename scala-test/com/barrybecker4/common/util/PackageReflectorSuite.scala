@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
   * @author Barry Becker
   */
 class PackageReflectorSuite extends FunSuite {
-  private var reflector = new PackageReflector
+  private val reflector = new PackageReflector
 
   test("GetClasses") {
     val classes = reflector.getClasses("com.barrybecker4.common.testsupport")
