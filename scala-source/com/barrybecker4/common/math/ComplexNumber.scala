@@ -1,4 +1,4 @@
-/* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
+/* Copyright by Barry G. Becker, 2000-2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.math
 
 /**
@@ -22,6 +22,16 @@ object ComplexNumber {
   /** @return result of Multiplying two complex numbers.*/
   def multiply(c1: ComplexNumber, c2: ComplexNumber) =
     ComplexNumber(c1.real * c2.real - c1.imaginary * c2.imaginary, c1.real * c2.imaginary + c1.imaginary * c2.real)
+
+  /** See https://www.math.toronto.edu/mathnet/questionCorner/complexexp.html
+    * @return the result of raising a to some complex number c. Here, a is a real number.
+    * If a were complex, the calculation would be much more complex.
+    */
+  def pow(a: Double, c: ComplexNumber): ComplexNumber = {
+    val a1 = Math.pow(a, c.real)
+    val clna = c.imaginary * Math.log(a)
+    ComplexNumber(a1 * Math.cos(clna), a1 * Math.sin(clna))
+  }
 }
 
 case class ComplexNumber(real: Double, imaginary: Double) {
@@ -39,6 +49,15 @@ case class ComplexNumber(real: Double, imaginary: Double) {
 
   /** @return result of multiplying this Complex times another one.  */
   def multiply(other: ComplexNumber): ComplexNumber = ComplexNumber.multiply(this, other)
+
+  /** @return result of dividing this Complex times another one.  */
+  def divide(other: ComplexNumber): ComplexNumber = ComplexNumber.multiply(this, other.reciprocal)
+
+  /** @return the distance from the origin on the complex plane */
+  def magnitude: Double = real * real + imaginary * imaginary
+
+  /** @return the reciprocal - which is 1/c */
+  def reciprocal: ComplexNumber = ComplexNumber(real / magnitude, -imaginary / magnitude)
 
   /** @param exponent integer power to raise to
     * @return raise this complex number to the specified exponent (power).
