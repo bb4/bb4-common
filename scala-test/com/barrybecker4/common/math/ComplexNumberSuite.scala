@@ -98,4 +98,14 @@ class ComplexNumberSuite extends FunSuite {
     assertResult(ComplexNumber(0.9230769230769231, -0.3846153846153846)) {
       ComplexNumber(3, 2).divide(ComplexNumber(2, 3)) }
   }
+
+  test("3 ^ 2 ") {
+    assertResult(ComplexNumber(9, 0)) {
+      ComplexNumber(3, 0).pow(2) }
+  }
+
+  test("(3 + 0.1i) ^ 3 ") {
+    assertResult(ComplexNumber(26.91, 2.6990000000000003)) {
+      ComplexNumber(3, 0.1).pow(3) }
+  }
 }

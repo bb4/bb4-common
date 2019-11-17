@@ -6,6 +6,9 @@ package com.barrybecker4.common.math
   * @author Barry Becker
   */
 object ComplexNumber {
+
+  val NaN: ComplexNumber = ComplexNumber(Double.NaN, Double.NaN)
+
   /** @return the result of dividing c1 by c2. */
   def divide(c1: ComplexNumber, c2: ComplexNumber): ComplexNumber = {
     val r = (c1.real * c2.real + c1.imaginary * c2.imaginary) / (c2.real * c2.real + c2.imaginary * c2.imaginary)
@@ -53,11 +56,23 @@ case class ComplexNumber(real: Double, imaginary: Double) {
   /** @return result of dividing this Complex times another one.  */
   def divide(other: ComplexNumber): ComplexNumber = ComplexNumber.multiply(this, other.reciprocal)
 
+  /** @return this complex number raised to the power n, where n is an integer */
+  def pow(n: Int): ComplexNumber = {
+    var v = this
+    for (i <- 1 until n) {
+      v = v.multiply(this)
+    }
+    v
+  }
+
   /** @return the distance from the origin on the complex plane */
   def magnitude: Double = real * real + imaginary * imaginary
 
   /** @return the reciprocal - which is 1/c */
   def reciprocal: ComplexNumber = ComplexNumber(real / magnitude, -imaginary / magnitude)
+
+  def isNaN: Boolean = real.isNaN || imaginary.isNaN
+  def isInfinite: Boolean = real.isInfinite || imaginary.isInfinite
 
   /** @param exponent integer power to raise to
     * @return raise this complex number to the specified exponent (power).
