@@ -12,8 +12,8 @@ class ComplexNumberSuite extends FunSuite {
     assertResult("1.0 + 1.0i") {ComplexNumber(1, 1).toString}
     assertResult("1.3 - 2.3i") {ComplexNumber(1.3, -2.3).toString}
     assertResult("0.1i") {ComplexNumber(0, 0.1).toString}
-    assertResult("10.0") {ComplexNumber(10.0, 0).toString}
-    assertResult("0.0") {ComplexNumber(0, 0).toString}
+    assertResult("10.0") {ComplexNumber(10.0).toString}
+    assertResult("0.0") {ComplexNumber(0).toString}
   }
 
   test("times") {  // should be 2i
@@ -41,7 +41,7 @@ class ComplexNumberSuite extends FunSuite {
       ComplexNumber.pow(5, ComplexNumber(3, 2)) }
   }
   test("4^(3+0i)") {
-    assertResult(ComplexNumber(64, 0)) { ComplexNumber.pow(4, ComplexNumber(3, 0)) }
+    assertResult(ComplexNumber(64, 0)) { ComplexNumber.pow(4, ComplexNumber(3)) }
   }
   test("3^(0+i)") {
     assertResult(ComplexNumber(0.4548324228266097, 0.8905770416677471)) {
@@ -101,11 +101,38 @@ class ComplexNumberSuite extends FunSuite {
 
   test("3 ^ 2 ") {
     assertResult(ComplexNumber(9, 0)) {
-      ComplexNumber(3, 0).pow(2) }
+      ComplexNumber(3).pow(2) }
   }
 
   test("(3 + 0.1i) ^ 3 ") {
     assertResult(ComplexNumber(26.91, 2.6990000000000003)) {
       ComplexNumber(3, 0.1).pow(3) }
+  }
+
+  test("i ^ i = e ^ -pi/2") {
+    assertResult(ComplexNumber.pow(ComplexNumber.i, ComplexNumber.i)) {
+      ComplexNumber(Math.exp(-Math.PI/2.0))
+    }
+  }
+
+  test("(2 + 0.1i) ^ (2 + 0.1i) ") {
+    val v = ComplexNumber(2, 0.1)
+    assertResult(ComplexNumber(3.932933294546521, 0.6725091090273414)) {
+      ComplexNumber.pow(v, v)
+    }
+  }
+
+  test("Complex sin(pi/2, pi/2)") {
+    val v = ComplexNumber(Math.PI / 2.0, Math.PI / 2.0)
+    assertResult(ComplexNumber(2.5091784786580567, 1.409139167295973E-16)) {
+      ComplexNumber.sin(v)
+    }
+  }
+
+  test("Complex sin(pi/2)") {
+    val v = ComplexNumber(Math.PI / 2.0)
+    assertResult(ComplexNumber(1)) {
+      ComplexNumber.sin(v)
+    }
   }
 }
