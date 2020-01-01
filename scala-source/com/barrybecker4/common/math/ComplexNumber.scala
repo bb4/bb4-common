@@ -63,11 +63,20 @@ object ComplexNumber {
     Math.atan(z.imaginary / z.real)
 
   /** See https://proofwiki.org/wiki/Sine_of_Complex_Number
-    * sin(a+bi) = sina coshb+icosa sinhb
+    * sin(a+bi) = sina coshb + i cosa sinhb
     */
   def sin(c: ComplexNumber): ComplexNumber = {
     val realPart = Math.sin(c.real) * Math.cosh(c.imaginary)
     val imgPart = Math.cos(c.real) * Math.sinh(c.imaginary)
+    ComplexNumber(realPart, imgPart)
+  }
+
+  /** See https://proofwiki.org/wiki/Cosine_of_Complex_Number
+    * cos(a+bi) = cosa coshb − i sina sinhb
+    */
+  def cos(c: ComplexNumber): ComplexNumber = {
+    val realPart = Math.cos(c.real) * Math.cosh(c.imaginary)
+    val imgPart = -Math.sin(c.real) * Math.sinh(c.imaginary)
     ComplexNumber(realPart, imgPart)
   }
 }
