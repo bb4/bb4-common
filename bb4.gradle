@@ -76,6 +76,11 @@ repositories {
     maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
 }
 
+run {
+    // allows keyboard input from cmd line
+    standardInput = System.in
+}
+
 // Suppress javadoc warning when using java 8.
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
