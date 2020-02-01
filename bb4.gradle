@@ -66,7 +66,7 @@ repositories {
     mavenCentral()
 
     // this is where thirdparty and bb4 release artifacts will come from
-    maven { url "http://repo1.maven.org/maven2/" }
+    maven { url "https://repo1.maven.org/maven2/" }
     // Sonatype repo also has released bb4 artifacts
     //maven { url "https://oss.sonatype.org/content/repositories/releases" }
     // The SNAPSHOT releases should come from one of these next two (did it change?)

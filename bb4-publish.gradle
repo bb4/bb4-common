@@ -102,7 +102,7 @@ artifacts {
         archives jar
         archives sourcesJar
         archives javadocJar
-        ////archives scaladocJar  // this should be fixed in gradle 6.0
+        //// archives scaladocJar  // this will be fixed in gradle 6.2
     }
 
     jarMap.each { String key, Map value ->
