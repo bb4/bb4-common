@@ -15,6 +15,6 @@ class SimpleProfiler() extends Profiler {
 
   super.add(SimpleProfiler.ROOT)
 
-  def start(): Unit = start(SimpleProfiler.ROOT)
-  def stop(): Unit = stop(SimpleProfiler.ROOT)
+  def start(): Unit = super.start(SimpleProfiler.ROOT)
+  def stop(): Unit = super.stop(SimpleProfiler.ROOT)
 }
