@@ -1,13 +1,13 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
 /**
   * @author Barry Becker
   */
-class Base64CodecSuite extends FunSuite {
+class Base64CodecSuite extends AnyFunSuite {
   test("Compress") {
     val str = "test/com/barrybecker4/common/util"
     val compressed = Base64Codec.compress(str)

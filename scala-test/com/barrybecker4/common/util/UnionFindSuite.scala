@@ -3,7 +3,7 @@ package com.barrybecker4.common.util
 
 import java.io.FileInputStream
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import UnionFindSuite._
 
 /**
@@ -13,7 +13,7 @@ object UnionFindSuite  {
   protected val PATH = "scala-test/com/barrybecker4/common/util/"
 }
 
-class UnionFindSuite extends FunSuite {
+class UnionFindSuite extends AnyFunSuite {
 
   test("Tiny") {
     val uf = UnionFind.create(new FileInputStream(PATH + "data/tinyUF.txt"))

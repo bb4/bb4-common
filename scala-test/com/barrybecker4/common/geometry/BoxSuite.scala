@@ -1,13 +1,13 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.geometry
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
 /**
   * @author Barry Becker
   */
-class BoxSuite extends FunSuite {
+class BoxSuite extends AnyFunSuite {
 
   test("Construction") {
     val box = new Box(IntLocation(2, 3), IntLocation(4, 4))

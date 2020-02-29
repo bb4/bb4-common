@@ -5,22 +5,23 @@
 // See https://docs.gradle.org/5.0/userguide/plugins.html#sec:plugins_block
 //     https://plugins.gradle.org/plugin/com.github.maiflai.scalatest
 plugins {
-    id "com.github.maiflai.scalatest" version "0.25" // needed to run scala tests
+    id "com.github.maiflai.scalatest" version "0.26" // needed to run scala tests
 }
 defaultTasks 'build'
 
 description = 'Common bb4 java code. Library project.'
 group = 'com.barrybecker4'
-version = '1.6-SNAPSHOT'
+
 apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-common/master/bb4.gradle'
 
 project.archivesBaseName = 'bb4-common'
 mainClassName = 'com.barrybecker4.common.app.AppContext'
 
 jar {
+    archiveVersion='1.6-SNAPSHOT'
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',
-            'Implementation-Version': version,
+            'Implementation-Version': archiveVersion,
             provider: 'gradle'
     }
 }

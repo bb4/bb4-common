@@ -102,13 +102,13 @@ artifacts {
         archives jar
         archives sourcesJar
         archives javadocJar
-        //// archives scaladocJar  // this will be fixed in gradle 6.2
+        archives scaladocJar
     }
 
     jarMap.each { String key, Map value ->
         archives tasks["${key}Jar"]
         archives tasks["${key}JavadocJar"]
-        ////archives tasks["${key}ScaladocJar"]
+        archives tasks["${key}ScaladocJar"]
         archives tasks["${key}SourcesJar"]
         archives file("build/libs/bb4-${key}-${version}.jar.asc")
     }
@@ -144,17 +144,17 @@ def jarPomConfig = {
 
     licenses {
         license {
-            name 'The MIT license'
-            url 'http://www.opensource.org/licenses/MIT'
-            distribution 'repo'
+            name = 'The MIT license'
+            url = 'http://www.opensource.org/licenses/MIT'
+            distribution = 'repo'
         }
     }
 
     developers {
         developer {
-            id 'barrybecker4'
-            name 'Barry G. Becker'
-            email 'barrybecker4@gmail.com'
+            id = 'barrybecker4'
+            name = 'Barry G. Becker'
+            email = 'barrybecker4@gmail.com'
         }
     }
 }

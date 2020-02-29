@@ -2,11 +2,11 @@
 package com.barrybecker4.common.xml
 
 import com.barrybecker4.common.util.FileUtil
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import org.w3c.dom.{Document, Node}
 
 
-class DomUtilSuite extends FunSuite {
+class DomUtilSuite extends AnyFunSuite {
 
   private val PREFIX = "com/barrybecker4/common/xml/"
 
@@ -17,7 +17,7 @@ class DomUtilSuite extends FunSuite {
     println("doc = " + xmlDocument)
     assertResult("plugins") { xmlDocument.getDocumentElement.getTagName }
 
-    val result = DomUtil.toString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
+    val result = DomUtil.asString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
     assert(result.startsWith("    Node: <plugins>  author=\"Barry Becker\"  date=\"10/19/2004\""))
   }
 
@@ -29,7 +29,7 @@ class DomUtilSuite extends FunSuite {
     println("doc = " + xmlDocument)
     assertResult("plugins") { xmlDocument.getDocumentElement.getTagName }
 
-    val result = DomUtil.toString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
+    val result = DomUtil.asString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
     assert(result.startsWith("    Node: <plugins>  author=\"Barry Becker\"  date=\"10/19/2004\""))
   }
 
@@ -41,7 +41,7 @@ class DomUtilSuite extends FunSuite {
     println("doc = " + xmlDocument)
     assertResult("web-app") { xmlDocument.getDocumentElement.getTagName }
 
-    val result = DomUtil.toString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
+    val result = DomUtil.asString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
     assert(result.startsWith("    Node: <web-app>"))
   }
 }

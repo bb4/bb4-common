@@ -1,10 +1,10 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.format
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
-class FormatUtilSuite extends FunSuite {
+class FormatUtilSuite extends AnyFunSuite {
 
   test("small number formatting") {
     assertResult("0.00000003456")  { FormatUtil.formatNumber(0.00000003456) }

@@ -2,14 +2,14 @@
 
 package com.barrybecker4.common.util
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import FileUtil._
 
 
 /**
   * @author Barry Becker
   */
-class FileUtilSuite extends FunSuite {
+class FileUtilSuite extends AnyFunSuite {
   test("FilesInDirectory (relative)") {
     val dir = "scala-test/com/barrybecker4/common/util"
     val files = getFilesInDirectory(dir)

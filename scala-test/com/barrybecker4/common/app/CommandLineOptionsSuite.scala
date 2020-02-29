@@ -1,12 +1,12 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.app
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 /**
   * @author Barry Becker
   */
-class CommandLineOptionsSuite extends FunSuite {
+class CommandLineOptionsSuite extends AnyFunSuite {
 
   test("CommandLineOptionsToString") {
     val testArgs = Array("-a", "b", "-c", "dog", "-e", "-f", "-type", "foo", "-h")

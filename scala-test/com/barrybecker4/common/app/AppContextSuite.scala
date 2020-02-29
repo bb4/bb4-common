@@ -2,12 +2,12 @@
 package com.barrybecker4.common.app
 
 import com.barrybecker4.common.i18n.StubMessageContext
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 /**
   * @author Barry Becker
   */
-class AppContextSuite extends FunSuite {
+class AppContextSuite extends AnyFunSuite {
 
   /**
     * Verify that we get an error if the AppContext was not stubbed with a MessageContext.

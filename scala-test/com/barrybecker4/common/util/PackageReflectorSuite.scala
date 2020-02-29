@@ -1,13 +1,13 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
 /**
   * @author Barry Becker
   */
-class PackageReflectorSuite extends FunSuite {
+class PackageReflectorSuite extends AnyFunSuite {
   private val reflector = new PackageReflector
 
   test("GetClasses") {

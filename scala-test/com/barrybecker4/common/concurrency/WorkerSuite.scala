@@ -1,9 +1,9 @@
 /* Copyright by Barry G. Becker, 2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.concurrency
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class WorkerSuite extends FunSuite {
+class WorkerSuite extends AnyFunSuite {
 
   val worker = new StubWorker(64000)
 

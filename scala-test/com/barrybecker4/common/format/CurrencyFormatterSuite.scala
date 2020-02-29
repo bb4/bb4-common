@@ -1,9 +1,9 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.format
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class CurrencyFormatterSuite extends FunSuite {
+class CurrencyFormatterSuite extends AnyFunSuite {
 
   val fmtr = new CurrencyFormatter
 

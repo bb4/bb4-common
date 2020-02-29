@@ -153,7 +153,7 @@ object DomUtil {
     * @param level level to print to
     * @return the DOM formatted as a string
     */
-  def toString(root: Node, level: Int): String = {
+  def asString(root: Node, level: Int): String = {
     val l = root.getChildNodes
     var result = ""
     for (i <- 0 until level) result += "    "
@@ -162,7 +162,7 @@ object DomUtil {
     val attribs = getAttributeList(attribMap)
     result += "Node: <" + root.getNodeName + ">  " + attribs + "\n"
     for (i <- 0 until l.getLength)
-      result += toString(l.item(i), level + 1)
+      result += asString(l.item(i), level + 1)
     result
   }
 

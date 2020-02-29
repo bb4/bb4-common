@@ -4,13 +4,13 @@ package com.barrybecker4.common.i18n
 import java.io.FileNotFoundException
 import java.util.MissingResourceException
 import com.barrybecker4.common.app.ILog
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
 /**
   * @author Barry Becker
   */
-class MessageContextSuite extends FunSuite {
+class MessageContextSuite extends AnyFunSuite {
   /** instance under test */
   private var context: MessageContext = _
 

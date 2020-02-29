@@ -2,7 +2,7 @@
 package com.barrybecker4.common.util
 
 import LRUCacheSuite._
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 /**
   * Test LRUCache behavior.
@@ -16,7 +16,7 @@ object LRUCacheSuite {
   private val FIVE = "five"
 }
 
-class LRUCacheSuite extends FunSuite {
+class LRUCacheSuite extends AnyFunSuite {
 
   test("NumEntries(") {
     val lruCache = createCache()

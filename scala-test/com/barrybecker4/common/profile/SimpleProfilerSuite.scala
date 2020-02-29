@@ -3,13 +3,13 @@ package com.barrybecker4.common.profile
 
 import com.barrybecker4.common.app.MemoryLogger
 import com.barrybecker4.common.concurrency.ThreadUtil
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 
 /**
   * @author Barry Becker
   */
-class SimpleProfilerSuite extends FunSuite {
+class SimpleProfilerSuite extends AnyFunSuite {
 
   test("ProfilerTime") {
     val profiler = new SimpleProfiler()
