@@ -29,6 +29,18 @@ ext {
     vecmathVersion = '1.3.1'
 }
 
+jar {
+    archiveFileName = "${project.archivesBaseName}-${project.version}.jar"
+    manifest {
+        attributes 'Implementation-Title': project.description,
+                'Implementation-Version': project.version,
+                'Build-By': "Barry G Becker",
+                'Build-Jdk' : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                provider: 'gradle'
+
+    }
+}
+
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 if (!hasProperty('sonatypeUsername')) {
     ext.sonatypeUsername = ''
@@ -111,7 +123,7 @@ configurations.all {
 // Since Gradle 6 only implementation, api, compileOnly and runtimeOnly configurations should be used
 dependencies {
 
-    implementation("org.scala-lang:scala-library:2.13.1") //$scalaVersion")
+    implementation("org.scala-lang:scala-library:$scalaVersion")
     implementation "java3d:vecmath:$vecmathVersion"
 
     testImplementation 'junit:junit:4.12'

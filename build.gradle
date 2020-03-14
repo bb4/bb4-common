@@ -1,7 +1,7 @@
-// Copyright by Barry G. Becker, 2013 - 2019. Licensed under MIT License: http://www.opensource.org/licenses/MIT
-// @author Barry Becker
+// Copyright by Barry G. Becker, 2013 - 2020. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// @author Barry G Becker
 
-// May be able to move this plugins block to bb4.gradle after move to gradle 5.7 or higher
+// May be able to move this plugins block to bb4.gradle after move to gradle 7 or higher
 // See https://docs.gradle.org/5.0/userguide/plugins.html#sec:plugins_block
 //     https://plugins.gradle.org/plugin/com.github.maiflai.scalatest
 plugins {
@@ -12,21 +12,9 @@ defaultTasks 'build'
 description = 'Common bb4 java code. Library project.'
 group = 'com.barrybecker4'
 project.version = '1.6-SNAPSHOT'
+project.archivesBaseName = 'bb4-common'
 
 apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-common/master/bb4.gradle'
-
-
-project.archivesBaseName = 'bb4-common'
 mainClassName = 'com.barrybecker4.common.app.AppContext'
-
-jar {
-    archiveFileName = "${archivesBaseName}-${project.version}.jar"
-    manifest {
-        attributes 'Implementation-Title': 'Common code for all bb4 applications',
-            'Implementation-Version': archiveVersion,
-            provider: 'gradle'
-    }
-}
-
 apply from: 'bb4-publish.gradle'
 apply from: 'bb4-deploy.gradle'
