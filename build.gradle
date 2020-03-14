@@ -11,14 +11,16 @@ defaultTasks 'build'
 
 description = 'Common bb4 java code. Library project.'
 group = 'com.barrybecker4'
+project.version = '1.6-SNAPSHOT'
 
 apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-common/master/bb4.gradle'
+
 
 project.archivesBaseName = 'bb4-common'
 mainClassName = 'com.barrybecker4.common.app.AppContext'
 
 jar {
-    archiveVersion='1.6-SNAPSHOT'
+    archiveFileName = "${archivesBaseName}-${project.version}.jar"
     manifest {
         attributes 'Implementation-Title': 'Common code for all bb4 applications',
             'Implementation-Version': archiveVersion,
