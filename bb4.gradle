@@ -137,6 +137,7 @@ task copyToLib(dependsOn: jar, type: Copy) {
     from configurations.runtime
 }
 
+project.archivesBaseName = project.ext.archivesBaseName
 mainClassName = project.ext.mainClass
 
 jar {

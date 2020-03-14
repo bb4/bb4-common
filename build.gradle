@@ -9,11 +9,14 @@ plugins {
 }
 defaultTasks 'build'
 
-description = 'Common bb4 java code. Library project.'
+description = 'A library project containing bb4 common code'
 group = 'com.barrybecker4'
 project.version = '1.6-SNAPSHOT'
-project.archivesBaseName = 'bb4-common'
-ext.mainClass = 'com.barrybecker4.common.app.AppContext'
+ext {
+    archivesBaseName = 'bb4-common'
+    mainClass = 'com.barrybecker4.common.app.AppContext'
+}
+
 
 apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-common/master/bb4.gradle'
 apply from: 'bb4-publish.gradle'
