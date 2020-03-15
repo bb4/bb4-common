@@ -83,7 +83,7 @@ tasks.withType(CreateStartScripts).each { task ->
 
 // make sure that all generated jar files (from jarMap) also get into the distributionDir
 applicationDistribution.from("build/libs") {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy.WARN  // warn if duplicates
     exclude "*.asc"
     exclude "*-sources.jar"
     exclude "*-scaladoc.jar"
