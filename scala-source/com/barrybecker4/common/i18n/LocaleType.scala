@@ -5,7 +5,7 @@ import java.util.Locale
 
 
 object LocaleType {
-  val VALUES = Array(ENGLISH, GERMAN, JAPANESE, VIETNAMESE)
+  val VALUES: Array[LocaleType] = Array(ENGLISH, GERMAN, JAPANESE, VIETNAMESE)
   def valueOf(theType: String): LocaleType = {
     theType match {
       case "ENGLISH" => ENGLISH

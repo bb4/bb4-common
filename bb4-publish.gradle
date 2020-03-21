@@ -9,21 +9,21 @@
 /** javadoc jar used for the whole project. Used only if jarMap was not specified. */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     description = 'Create a jar file containing all project javadoc. Needed by Sonatype release.'
-    classifier = 'javadoc'   // switch to archiveClassifier once all projects upgraded to new gradle version
+    archiveClassifier.set('javadoc')
     from javadoc.destinationDir
 }
 
 /** scaladoc jar used for the whole project. Used only if jarMap was not specified. */
 task scaladocJar(type: Jar, dependsOn: scaladoc) {
     description = 'Create a jar file containing all project scaladoc. Needed by Sonatype release.'
-    classifier = 'scaladoc'
+    archiveClassifier.set('scaladoc')
     from scaladoc.destinationDir
 }
 
 /** sources jar used for the whole project. Used only if jarMap was not specified. */
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Create a jar file containing all project sources. Needed by Sonatype release.'
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 

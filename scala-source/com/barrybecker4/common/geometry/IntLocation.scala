@@ -12,5 +12,6 @@ case class IntLocation(row: Int, col: Int) extends Location {
 
   override def getX: Int = col
   override def getY: Int = row
-  override def incrementOnCopy(rowChange: Int, colChange: Int) = IntLocation(row + rowChange, col + colChange)
+  override def incrementOnCopy(rowChange: Int, colChange: Int): IntLocation =
+    IntLocation(row + rowChange, col + colChange)
 }

@@ -1,10 +1,10 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
-package com.barrybecker4.common.i18n
+package com.barrybecker4.common.testsupport.i18n
 
+import com.barrybecker4.common.i18n.MessageContext
 
 /**
   * Used for testing to provide a fake message context.
-  * This should probably go in a separate testsupport package, but that does not exist yet.
   * @author Barry Becker
   */
 final class StubMessageContext() extends MessageContext("") {
