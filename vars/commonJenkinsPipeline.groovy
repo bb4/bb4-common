@@ -1,5 +1,5 @@
 /**
- * Shared Jenkinsfile pipline for all bb4 projects.
+ * Shared Jenkinsfile pipeline for all bb4 projects.
  * See https://jenkins.io/doc/book/pipeline/shared-libraries/
  * @param pipelineParams the are:
  *   gitUrl - the git repository url from github.
@@ -26,6 +26,7 @@ def call(Map pipelineParams) {
         }
         triggers {
             pollSCM('H/15 * * * *')
+            upstream(upstreamProjects: '', threshold: hudson.model.Result.SUCCESS)
             //upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
