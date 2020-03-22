@@ -25,9 +25,12 @@ def call(Map pipelineParams) {
             buildDiscarder(logRotator(numToKeepStr: '7')) // keep only recent builds
         }
         triggers {
-            pollSCM('H/15 * * * *')
-            upstream(upstreamProjects: 'x-no-build-x', threshold: hudson.model.Result.SUCCESS)
-            //upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
+            //pollSCM('H/15 * * * *')
+//            upstream(
+//                    upstreamProjects: params.upstreamProjects == '' ? '-none-' : params.upstreamProjects,
+//                    threshold: hudson.model.Result.SUCCESS
+//            )
+            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
         stages {
