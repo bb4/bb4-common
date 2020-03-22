@@ -30,7 +30,7 @@ def call(Map pipelineParams) {
 //                    upstreamProjects: params.upstreamProjects == '' ? '-none-' : params.upstreamProjects,
 //                    threshold: hudson.model.Result.SUCCESS
 //            )
-            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
+            //upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
         stages {
