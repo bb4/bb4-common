@@ -1,6 +1,16 @@
 // Copyright by Barry G. Becker, 2013 - 2020. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry G Becker
 
+buildscript {
+    repositories {
+        // retrieve the shared gradle build scripts from here
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/"}
+    }
+    dependencies {
+        classpath 'com.barrybecker4:bb4-gradle:1.6-SNAPSHOT'
+    }
+}
+
 // May be able to move this plugins block to bb4.gradle after move to gradle 7 or higher
 // See https://docs.gradle.org/5.0/userguide/plugins.html#sec:plugins_block
 //     https://plugins.gradle.org/plugin/com.github.maiflai.scalatest
@@ -17,7 +27,6 @@ ext {
     mainClass = 'com.barrybecker4.common.app.AppContext'
 }
 
-
-apply from: 'bb4.gradle' // 'https://raw.githubusercontent.com/barrybecker4/bb4-common/master/bb4.gradle'
-apply from: 'bb4-publish.gradle'
-apply from: 'bb4-deploy.gradle'
+apply from: project.buildscript.classLoader.getResource('bb4.gradle').toURI()
+apply from: project.buildscript.classLoader.getResource('bb4-publish.gradle').toURI()
+apply from: project.buildscript.classLoader.getResource('bb4-deploy.gradle').toURI()
