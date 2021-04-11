@@ -10,7 +10,8 @@ import javax.xml.transform.stream.StreamResult
 import java.io._
 import java.net.URL
 import org.w3c.dom._
-import org.xml.sax.SAXException
+import org.xml.sax.{SAXException, SAXParseException}
+
 import java.util.logging.Level
 import java.util.logging.Logger
 import scala.collection.mutable.ListBuffer
@@ -168,9 +169,9 @@ object DomUtil {
 
   /** Parse an xml file and return a cleaned up Document object.
     * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
-    * @param stream  some input stream.
+    * @param stream some input stream.
     * @param replaceUseWithDeepCopy if true then replace each use with a deep copy of what it refers to
-    * @param xsdUri  location of the schema to use for validation.
+    * @param xsdUri location of the schema to use for validation.
     * @return the parsed file as a Document
     */
   private def parseXML(stream: InputStream, replaceUseWithDeepCopy: Boolean, xsdUri: String) = {
@@ -195,11 +196,24 @@ object DomUtil {
         // Error generated during parsing)
         var x: Exception = sxe
         if (sxe.getException != null) x = sxe.getException
-        x.printStackTrace()
+        //x.printStackTrace()
       case pce@(_: ParserConfigurationException | _: IOException) =>
         pce.printStackTrace()
     }
     document
+  }
+
+  // for debugging
+  private def printInputStream(iStream: InputStream): Unit = {
+    import java.io.BufferedReader
+    val in = new BufferedReader(new InputStreamReader(iStream))
+    var line = in.readLine()
+    println("-----  <start> -----")
+    while (line != null) {
+      println(line)
+      line = in.readLine()
+    }
+    println("-----  <end> -----")
   }
 
   /** @param url url that points to the xml document to parse

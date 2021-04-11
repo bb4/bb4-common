@@ -42,6 +42,7 @@ class DomUtilSuite extends AnyFunSuite {
     assertResult("web-app") { xmlDocument.getDocumentElement.getTagName }
 
     val result = DomUtil.asString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
+
     assert(result.startsWith("    Node: <web-app>"))
   }
 }
