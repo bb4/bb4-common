@@ -24,19 +24,19 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @param pt0 one corner of the box
     * @param pt1 the opposite corner of the box.
     */
-  def this(pt0: Location, pt1: Location) {
+  def this(pt0: Location, pt1: Location) = {
     this(Math.min(pt0.row, pt1.row), Math.min(pt0.col, pt1.col),
          Math.max(pt0.row, pt1.row), Math.max(pt0.col, pt1.col))
   }
 
   /** Degenerate box consisting of a point in space */
-  def this(pt0: Location) { this(pt0, pt0) }
+  def this(pt0: Location) = { this(pt0, pt0) }
 
   /** Constructs a box with dimensions of oldBox, but expanded by the specified point
     * @param oldBox box to base initial dimensions on.
     * @param point  point to expand new box by.
     */
-  def this(oldBox: Box, point: Location) {
+  def this(oldBox: Box, point: Location) = {
     this(oldBox.getTopLeftCorner, oldBox.getBottomRightCorner)
     expandBy(point)
   }

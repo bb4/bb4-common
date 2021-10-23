@@ -6,7 +6,7 @@ package com.barrybecker4.common.geometry
   */
 case class IntLocation(row: Int, col: Int) extends Location {
 
-  def this(loc: Location) {
+  def this(loc: Location) = {
     this(loc.row, loc.col)
   }
 

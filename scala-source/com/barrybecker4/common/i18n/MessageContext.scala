@@ -32,7 +32,7 @@ class MessageContext(var resourcePaths: List[String]) {
   private var currentLocale = MessageContext.DEFAULT_LOCALE
 
   /** @param resourcePath path to message bundle*/
-  def this(resourcePath: String) {
+  def this(resourcePath: String) = {
     this(List(resourcePath))
   }
 

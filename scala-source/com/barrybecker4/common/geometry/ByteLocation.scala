@@ -11,7 +11,7 @@ package com.barrybecker4.common.geometry
 case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   assert(Math.abs(row) < 128 && Math.abs(col) < 128, "row=" + row + " or col=" + col + " was out of range.")
 
-  def this(irow: Int, icol: Int) {
+  def this(irow: Int, icol: Int) = {
     this(irow.toByte, icol.toByte)
   }
   override def row: Int = brow

@@ -180,7 +180,7 @@ object DomUtil {
     factory.setIgnoringComments(true)
     try {
       factory.setNamespaceAware(true)
-      factory.setValidating(true)
+      factory.setValidating(false) //was true, but does not work with xsd
       if (xsdUri != null) {
         factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
           "http://www.w3.org/2001/XMLSchema")
