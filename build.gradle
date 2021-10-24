@@ -5,9 +5,10 @@ buildscript {
     repositories {
         // retrieve the shared gradle build scripts from here
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/"}
+        maven { url "https://oss.sonatype.org/content/repositories/releases" }
     }
     dependencies {
-        classpath 'com.barrybecker4:bb4-gradle:1.6-SNAPSHOT'
+        classpath 'com.barrybecker4:bb4-gradle:1.6.2'
     }
 }
 
@@ -21,7 +22,7 @@ defaultTasks 'build'
 
 description = 'A library project containing bb4 common code'
 group = 'com.barrybecker4'
-project.version = '1.6-SNAPSHOT'
+project.version = '1.6'
 ext {
     archivesBaseName = 'bb4-common'
     mainClass = 'com.barrybecker4.common.app.AppContext'
