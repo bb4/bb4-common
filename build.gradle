@@ -1,4 +1,4 @@
-// Copyright by Barry G. Becker, 2013 - 2020. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G Becker, 2013 - 2021. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry G Becker
 
 buildscript {
@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases" }
     }
     dependencies {
-        classpath 'com.barrybecker4:bb4-gradle:1.6.2'
+        classpath 'com.barrybecker4:bb4-gradle:1.7-SNAPSHOT'
     }
 }
 
