@@ -20,7 +20,7 @@ class SimpleProfilerSuite extends AnyFunSuite {
     val entry = profiler.getEntry(SimpleProfiler.ROOT)
     val elapsed = entry.getTime
     // any elapsed time is acceptable, as different machines perform differently.
-    assert((elapsed - 19) <= 20, "Invalid elapsed time = " + elapsed)
+    assert((elapsed - 19) <= 22, "Invalid elapsed time = " + elapsed)
   }
 
   test("ProfilerTimeWhenDisabled") {
