@@ -9,17 +9,25 @@ import java.util.Scanner
   */
 object UnionFind extends App {
 
-  val uf = UnionFind.create(System.in)
-  println(s"${uf.getCount} components")
-
   def create(in: InputStream): UnionFind = {
-    val stdIn = new Scanner(in)
-    val n = stdIn.nextInt
+    create(new Scanner(in))
+  }
+
+  def create(stdIn: Scanner): UnionFind = {
+    val n = stdIn.nextInt()
     val uf = new UnionFind(n)
     while (stdIn.hasNext) {
-      val p = stdIn.nextInt
-      val q = stdIn.nextInt
+      val p = stdIn.nextInt()
+      val q = stdIn.nextInt()
       if (!uf.connected(p, q)) uf.union(p, q)
+    }
+    uf
+  }
+
+  def create(n: Int, data: List[(Int, Int)]): UnionFind = {
+    val uf = new UnionFind(n)
+    for (pair <- data) {
+      if (!uf.connected(pair._1, pair._2)) uf.union(pair._1, pair._2)
     }
     uf
   }

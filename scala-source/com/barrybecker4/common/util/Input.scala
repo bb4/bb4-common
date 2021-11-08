@@ -30,7 +30,7 @@ object Input {
   def getLong(prompt: String, min: Long, max: Long): Long = {
     var value: Long = 0
     var valid: Boolean = false
-    do {
+    while (!valid) { // give them another chance if not valid.
       println(prompt)
       val inp = new InputStreamReader(System.in)
       val br = new BufferedReader(inp)
@@ -51,7 +51,7 @@ object Input {
           println("Hey! What kind of number is that? ")
           valid = false
       }
-    } while (!valid) // give them another chance if not valid.
+    }
     value
   }
 
@@ -65,7 +65,7 @@ object Input {
   def getBigInteger(prompt: String): BigInteger = {
     var value = new BigInteger("0")
     var valid = false
-    do {
+    while (!valid) {
       println(prompt)
       val inp = new InputStreamReader(System.in)
       val br = new BufferedReader(inp)
@@ -77,7 +77,7 @@ object Input {
           println("That was not a valid number. Try again.")
           valid = false
       }
-    } while (!valid)
+    }
     value
   }
 

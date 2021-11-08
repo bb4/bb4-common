@@ -1,8 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
-import java.io.FileInputStream
-
+import java.io.{FileInputStream, InputStream}
 import org.scalatest.funsuite.AnyFunSuite
 import UnionFindSuite._
 
@@ -16,12 +15,14 @@ object UnionFindSuite  {
 class UnionFindSuite extends AnyFunSuite {
 
   test("Tiny") {
-    val uf = UnionFind.create(new FileInputStream(PATH + "data/tinyUF.txt"))
+    val is: InputStream = new FileInputStream(PATH + "data/tinyUF.txt")
+    val uf = UnionFind.create(is)
     assertResult(2) {uf.getCount}
   }
 
   test("Medium") {
-    val uf = UnionFind.create(new FileInputStream(PATH + "data/mediumUF.txt"))
+    val is: InputStream = new FileInputStream(PATH + "data/mediumUF.txt")
+    val uf = UnionFind.create(is)
     assertResult(3) {uf.getCount}
   }
 
