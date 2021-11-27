@@ -7,11 +7,11 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath 'com.barrybecker4:bb4-gradle:1.7-SNAPSHOT'
+        classpath 'com.barrybecker4:bb4-gradle:1.7'
     }
 }
 
-// May be able to move this plugins block to bb4.gradle after move to gradle 7 or higher
+// May be able to move this plugins block to bb4.gradle after move to gradle 8 or higher
 // See https://docs.gradle.org/5.0/userguide/plugins.html#sec:plugins_block
 //     https://plugins.gradle.org/plugin/com.github.maiflai.scalatest
 plugins {
@@ -21,7 +21,7 @@ defaultTasks 'build'
 
 description = 'A library project containing bb4 common code'
 group = 'com.barrybecker4'
-project.version = '1.7-SNAPSHOT'
+project.version = '1.7'
 ext {
     archivesBaseName = 'bb4-common'
     mainClass = 'com.barrybecker4.common.app.AppContext'
