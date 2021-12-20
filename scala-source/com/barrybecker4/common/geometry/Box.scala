@@ -85,6 +85,10 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
       newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.row, loc.col))
     newBox
   }
+  
+  def scaleBy(scale: Int): Box = {
+    Box(scale * rowMin, scale * colMin, scale * rowMax, scale * colMax)
+  }
 
   /** @param location the location to check if on border.
     * @return true if location is on this box's border

@@ -89,7 +89,7 @@ class UnionFind(n: Int) {
     */
   def connected(p: Int, q: Int): Boolean = find(p) == find(q)
 
-  /** Merges the component containing site<tt>p</tt> with the component
+  /** Merges the component containing site <tt>p</tt> with the component
     * containing site <tt>q</tt>.
     * @param p the integer representing one site
     * @param q the integer representing the other site

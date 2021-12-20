@@ -30,6 +30,13 @@ class BoxSuite extends AnyFunSuite {
     assertResult(6) { box.getArea }
   }
 
+  test("scaling") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val scaledBox = box.scaleBy(3)
+    assertResult(6) { scaledBox.getWidth }
+    assertResult(54) { scaledBox.getArea }
+  }
+
   test("MaxDimension") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     assertResult(3) { box.getMaxDimension }
