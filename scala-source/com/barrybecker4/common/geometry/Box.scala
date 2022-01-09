@@ -1,4 +1,4 @@
-/* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
+/* Copyright by Barry G. Becker, 2000-2021. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.geometry
 
 
@@ -64,6 +64,12 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     val col = pt.col
     row >= getMinRow && row <= getMaxRow && col >= getMinCol && col <= getMaxCol
   }
+
+  /** @param box the box to check if contained in this one.
+    * @return true if box is completely contained in this box
+    */
+  def contains(box: Box): Boolean =
+    contains(box.getTopLeftCorner) && contains(box.getBottomRightCorner)
 
   /** Note that the corner locations are immutable so we create new objects for them if they change.
     * @param loc location to expand out box by.
@@ -134,6 +140,21 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     if (maxCol - bottomRightCorner.col <= threshold)
       bottomRight = IntLocation(bottomRightCorner.row, maxCol)
     new Box(topLeft, bottomRight)
+  }
+
+  /** @param box the box to intersect with
+    * @return the intersection of this box with another. None if no intersection area.
+    */
+  def intersectWith(box: Box): Option[Box] = {
+    val topLeftY = Math.max(this.getTopLeftCorner.getY, box.getTopLeftCorner.getY)
+    val bottomRightY = Math.min(this.getBottomRightCorner.getY, box.getBottomRightCorner.getY)
+    if (topLeftY > bottomRightY) return None
+
+    val topLeftX = Math.max(this.getTopLeftCorner.getX, box.getTopLeftCorner.getX)
+    val bottomRightX = Math.min(this.getBottomRightCorner.getX, box.getBottomRightCorner.getX)
+    if (topLeftX > bottomRightX) return None
+
+    Some(Box(topLeftY, topLeftX, bottomRightY, bottomRightX))
   }
 
   override def toString: String = {
