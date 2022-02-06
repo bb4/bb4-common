@@ -1,7 +1,8 @@
 package com.barrybecker4.common.app
 
-import java.text.NumberFormat
 import com.barrybecker4.common.i18n.MessageContext
+
+import java.text.NumberFormat
 
 /**
   * Manage application context such as logging, debugging, resources.

@@ -1,19 +1,16 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.xml
 
-import javax.xml.parsers.DocumentBuilder
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.ParserConfigurationException
-import javax.xml.transform._
-import javax.xml.transform.dom.DOMSource
-import javax.xml.transform.stream.StreamResult
-import java.io._
-import java.net.URL
-import org.w3c.dom._
+import org.w3c.dom.*
 import org.xml.sax.{SAXException, SAXParseException}
 
-import java.util.logging.Level
-import java.util.logging.Logger
+import java.io.*
+import java.net.URL
+import java.util.logging.{Level, Logger}
+import javax.xml.parsers.{DocumentBuilder, DocumentBuilderFactory, ParserConfigurationException}
+import javax.xml.transform.*
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
 import scala.collection.mutable.ListBuffer
 
 

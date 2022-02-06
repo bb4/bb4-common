@@ -1,10 +1,10 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
+import com.barrybecker4.common.format.FormatUtil
+
 import java.io.{BufferedReader, IOException, InputStreamReader}
 import java.math.BigInteger
-
-import com.barrybecker4.common.format.FormatUtil
 
 /**
   * Convenience methods for getting user input entered from the keyboard.

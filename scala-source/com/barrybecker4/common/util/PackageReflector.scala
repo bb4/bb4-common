@@ -1,10 +1,11 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
 package com.barrybecker4.common.util
 
+import com.barrybecker4.common.app.ClassLoaderSingleton
+
 import java.io.{File, IOException}
 import java.net.{URL, URLDecoder}
 import java.util.zip.ZipInputStream
-import com.barrybecker4.common.app.ClassLoaderSingleton
 import scala.collection.mutable.ArrayBuffer
 
 
