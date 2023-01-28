@@ -1,4 +1,4 @@
-// Copyright by Barry G Becker, 2013 - 2021. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+// Copyright by Barry G Becker, 2013 - 2023. Licensed under MIT License: http://www.opensource.org/licenses/MIT
 // @author Barry G Becker
 
 buildscript {
@@ -7,7 +7,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
     dependencies {
-        classpath 'com.barrybecker4:bb4-gradle:1.7'
+        classpath 'com.barrybecker4:bb4-gradle:1.8-SNAPSHOT'
     }
 }
 
@@ -15,7 +15,7 @@ buildscript {
 // See https://docs.gradle.org/5.0/userguide/plugins.html#sec:plugins_block
 //     https://plugins.gradle.org/plugin/com.github.maiflai.scalatest
 plugins {
-    id "com.github.maiflai.scalatest" version "0.31" // needed to run scala tests
+    id "com.github.maiflai.scalatest" version "0.32" // needed to run scala tests
 }
 defaultTasks 'build'
 
