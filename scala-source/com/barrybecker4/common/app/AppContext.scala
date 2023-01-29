@@ -40,8 +40,6 @@ object AppContext {
     messageContext = context
   }
 
-  def isInitialized: Boolean = logger != null
-
   /** @return the level of debugging in effect */
   def getDebugMode: Int = debug
 
