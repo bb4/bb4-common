@@ -45,15 +45,15 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
   def getWidth: Int = Math.abs(bottomRightCorner.col - topLeftCorner.col)
 
   /** @return the height of the box */
-  def getHeight: Int = Math.abs(bottomRightCorner.row - topLeftCorner.row)
+  private def getHeight: Int = Math.abs(bottomRightCorner.row - topLeftCorner.row)
 
   def getMaxDimension: Int = Math.max(getWidth, getHeight)
   def getTopLeftCorner: IntLocation = topLeftCorner
   def getBottomRightCorner: IntLocation = bottomRightCorner
-  def getMinRow: Int = topLeftCorner.row
-  def getMinCol: Int = topLeftCorner.col
-  def getMaxRow: Int = bottomRightCorner.row
-  def getMaxCol: Int = bottomRightCorner.col
+  private def getMinRow: Int = topLeftCorner.row
+  private def getMinCol: Int = topLeftCorner.col
+  private def getMaxRow: Int = bottomRightCorner.row
+  private def getMaxCol: Int = bottomRightCorner.col
   def getArea: Int = getWidth * getHeight
 
   /** @param pt point to check for containment in the box.

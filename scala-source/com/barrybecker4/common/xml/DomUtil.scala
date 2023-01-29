@@ -114,7 +114,7 @@ object DomUtil {
     * @param attribName   name of attribute to get
     * @param defaultValue the default to use if requested attribute not there
     */
-  def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
+  private def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
     val attribMap = node.getAttributes
     var attributeVal: String = null
     if (attribMap == null) return null
@@ -132,7 +132,7 @@ object DomUtil {
     * @param attributeMap maps names to nodes
     * @return list of attributes
     */
-  def getAttributeList(attributeMap: NamedNodeMap): String = {
+  private def getAttributeList(attributeMap: NamedNodeMap): String = {
     var attribs = ""
     if (attributeMap != null) {
       attributeMap.getLength
@@ -233,7 +233,7 @@ object DomUtil {
     * @param replaceUseWithDeepCopy if true, replace element references with deep copies.
     * @return the xml document DOM object
     */
-  def parseXMLFile(file: File, replaceUseWithDeepCopy: Boolean): Document = {
+  private def parseXMLFile(file: File, replaceUseWithDeepCopy: Boolean): Document = {
     try {
       val str = new FileInputStream(file)
       return parseXML(str, replaceUseWithDeepCopy, null)

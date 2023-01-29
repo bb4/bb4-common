@@ -36,7 +36,7 @@ abstract class Worker() {
   def isWorking: Boolean = getValue == null
 
   /** @return the value produced by the worker thread, or null if it hasn't been constructed yet. */
-  protected def getValue: Any = returnValue
+   private def getValue: Any = returnValue
 
   /** Compute the value to be returned by the get method.
     * @return the result. Must not be null.

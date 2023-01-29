@@ -18,12 +18,12 @@ class PackageReflectorSuite extends AnyFunSuite {
     }
   }
 
-  /* not working
+  /* not working */
   test("GetClassesFromJar") {
     val classes = reflector.getClasses("org.junit.runner")
-    assertResult(9) { classes.size }
-    assertResult("Computer") { classes.head.getSimpleName }
-  }*/
+    assertResult(12) { classes.size }
+    assertResult("JUnitCommandLineParseResult") { classes.head.getSimpleName }
+  }
 
   test("GetClassesWhenNone") {
     val classes = reflector.getClasses("com.invalid")

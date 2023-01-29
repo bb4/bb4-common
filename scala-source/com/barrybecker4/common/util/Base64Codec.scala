@@ -10,7 +10,7 @@ import java.util.zip.{Deflater, DeflaterOutputStream, Inflater, InflaterInputStr
   * @author Barry Becker
   */
 object Base64Codec {
-  val CONVERTER_UTF8 = "UTF8"
+  private val CONVERTER_UTF8 = "UTF8"
 
   /** Take a String and compress it.
     * See @decompress for reversing the compression.

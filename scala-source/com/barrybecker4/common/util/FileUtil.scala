@@ -5,7 +5,6 @@ import com.barrybecker4.common.app.ClassLoaderSingleton
 
 import java.io.*
 import java.net.URL
-import java.security.AccessControlException
 
 /**
   * Miscellaneous commonly used file related static utility methods.
@@ -16,22 +15,13 @@ object FileUtil {
   /** Get the correct file separator whether on windows (\) or linux (/).
     * Getting error in applets if trying to use System.getProperty("file.separator")
     */
-  val FILE_SEPARATOR = "/"
+  private val FILE_SEPARATOR = "/"
 
   /**
     * Try not to use this. If this is called from an applet, it will give a security exception.
     * @return home directory. Assumes running as an Application.
     */
-  def getHomeDir: String = {
-    var home = FILE_SEPARATOR
-    try
-      home = System.getProperty("user.dir") + FILE_SEPARATOR
-    catch {
-      case e: AccessControlException =>
-        println("You do not have access to user.dir. This can happen when running as an applet. " + e.getMessage)
-    }
-    home
-  }
+  def getHomeDir: String = System.getProperty("user.dir") + FILE_SEPARATOR
 
   /** Tries to create the specified directory if it does not exist.
     * Throws IOException if any problem creating the specified directory
