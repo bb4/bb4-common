@@ -114,7 +114,7 @@ object DomUtil {
     * @param attribName   name of attribute to get
     * @param defaultValue the default to use if requested attribute not there
     */
-  private def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
+  def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
     val attribMap = node.getAttributes
     var attributeVal: String = null
     if (attribMap == null) return null
