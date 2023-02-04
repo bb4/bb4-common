@@ -27,8 +27,8 @@ def call(Map pipelineParams) {
         triggers {
             // every 10 minutes, every hour.
             pollSCM('H/10 * * * *')
-            // This should build automatically when an upstream project is built successfully
-            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
+            // This should build automatically when an upstream project is built successfully, but does it too much
+            //upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
         stages {
