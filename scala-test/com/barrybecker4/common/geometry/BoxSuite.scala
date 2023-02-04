@@ -51,6 +51,13 @@ class BoxSuite extends AnyFunSuite {
     assertResult(3) { box.getMaxDimension }
   }
 
+  test("get Dimensions") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    assertResult((2, 3)) {
+      (box.getWidth, box.getHeight)
+    }
+  }
+
   test("IsOnCorner") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     assert(box.isOnCorner(IntLocation(2, 3)))

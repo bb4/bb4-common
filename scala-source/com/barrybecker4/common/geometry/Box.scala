@@ -45,7 +45,7 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
   def getWidth: Int = Math.abs(bottomRightCorner.col - topLeftCorner.col)
 
   /** @return the height of the box */
-  private def getHeight: Int = Math.abs(bottomRightCorner.row - topLeftCorner.row)
+  def getHeight: Int = Math.abs(bottomRightCorner.row - topLeftCorner.row)
 
   def getMaxDimension: Int = Math.max(getWidth, getHeight)
   def getTopLeftCorner: IntLocation = topLeftCorner
