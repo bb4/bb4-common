@@ -1,7 +1,7 @@
 /**
  * Shared Jenkinsfile pipeline for all bb4 projects.
  * See https://jenkins.io/doc/book/pipeline/shared-libraries/
- * @param pipelineParams the are:
+ * @param pipelineParams They are:
  *   gitUrl - the git repository url from github.
  *   language - either java or scala.
  *   deploymentTask - either publishArtifacts (default) or deploy.
@@ -25,8 +25,10 @@ def call(Map pipelineParams) {
             buildDiscarder(logRotator(numToKeepStr: '7')) // keep only recent builds
         }
         triggers {
-            pollSCM('H/15 * * * *')
-            //upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
+            // every 10 minutes, every hour.
+            pollSCM('H/10 * * * *')
+            // This should build automatically when an upstream project is built successfully
+            upstream(upstreamProjects: params.upstreamProjects, threshold: hudson.model.Result.SUCCESS)
         }
 
         stages {
