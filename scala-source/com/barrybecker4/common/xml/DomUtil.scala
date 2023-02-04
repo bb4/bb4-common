@@ -132,7 +132,7 @@ object DomUtil {
     * @param attributeMap maps names to nodes
     * @return list of attributes
     */
-  private def getAttributeList(attributeMap: NamedNodeMap): String = {
+  def getAttributeList(attributeMap: NamedNodeMap): String = {
     var attribs = ""
     if (attributeMap != null) {
       attributeMap.getLength
