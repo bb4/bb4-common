@@ -30,7 +30,7 @@ class ProfilerEntry(val name: String) {
     totalTime += System.currentTimeMillis - startTime
 
   def getTime: Long = totalTime
-  private def getTimeInSeconds: Double = totalTime.toDouble / 1000.0
+  def getTimeInSeconds: Double = totalTime.toDouble / 1000.0
 
   def resetAll(): Unit = {
     totalTime = 0
