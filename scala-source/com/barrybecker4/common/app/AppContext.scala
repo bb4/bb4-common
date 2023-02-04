@@ -20,6 +20,8 @@ object AppContext {
 
   private var messageContext: MessageContext = _
 
+  def isInitialized: Boolean = logger != null
+
   /** Initialize the app context once a the start of a program
     * @param localeName    name of the locale to use (ENGLISH, GERMAN, etc)
     * @param resourcePaths locations of the properties file in the classpath pointing to message bundles
