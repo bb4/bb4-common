@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 
 
 object MessageContext {
-  private val DEFAULT_LOCALE: LocaleType = ENGLISH
+  val DEFAULT_LOCALE: LocaleType = ENGLISH
 }
 
 /**

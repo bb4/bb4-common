@@ -15,7 +15,7 @@ object FileUtil {
   /** Get the correct file separator whether on windows (\) or linux (/).
     * Getting error in applets if trying to use System.getProperty("file.separator")
     */
-  private val FILE_SEPARATOR = "/"
+  val FILE_SEPARATOR = "/"
 
   /**
     * Try not to use this. If this is called from an applet, it will give a security exception.
