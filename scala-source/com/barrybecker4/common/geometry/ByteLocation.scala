@@ -6,7 +6,6 @@ package com.barrybecker4.common.geometry
   * The range of bytes are only -127 to 127.
   * @param brow the row coordinate (0 - 255).
   * @param bcol the column coordinate (0 - 255).
-  * @author Barry Becker
   */
 case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   assert(Math.abs(row) < 128 && Math.abs(col) < 128, "row=" + row + " or col=" + col + " was out of range.")
