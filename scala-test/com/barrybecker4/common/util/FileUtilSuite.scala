@@ -13,13 +13,13 @@ class FileUtilSuite extends AnyFunSuite {
   test("FilesInDirectory (relative)") {
     val dir = "scala-test/com/barrybecker4/common/util"
     val files = getFilesInDirectory(dir)
-    assertResult(5) {files.length }
+    assertResult(6) {files.length }
   }
 
   test("FilesInDirectory (absolute - from root)") {
     val dir = FileUtil.getHomeDir + "scala-test/com/barrybecker4/common/util"
     val files = getFilesInDirectory(dir)
-    assertResult(5) { files.length }
+    assertResult(6) { files.length }
   }
 
   test("read text from file") {
