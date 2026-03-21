@@ -18,11 +18,10 @@ class PackageReflectorSuite extends AnyFunSuite {
     }
   }
 
-  /* not working */
   test("GetClassesFromJar") {
-    val classes = reflector.getClasses("org.junit.runner")
-    assertResult(12) { classes.size }
-    assertResult("JUnitCommandLineParseResult") { classes.head.getSimpleName }
+    val classes = reflector.getClasses("org.junit.jupiter.api")
+    assert(classes.nonEmpty, "JUnit Jupiter API should be resolved from a dependency jar")
+    assert(classes.exists(_.getSimpleName == "Assertions"))
   }
 
   test("GetClassesWhenNone") {

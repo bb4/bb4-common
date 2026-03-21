@@ -1,0 +1,12 @@
+// Copyright by Barry G Becker, 2013 - 2026. Licensed under MIT License: http://www.opensource.org/licenses/MIT
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        // bb4-gradle 2.0-SNAPSHOT (and other Central Portal snapshots); OSSRH EOL — not oss.sonatype.org
+        maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
+    }
+}
+
+rootProject.name = 'bb4-common'
