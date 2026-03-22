@@ -1,4 +1,5 @@
 .idea
+.metals/
 .gradle
 .project
 build/
@@ -6,3 +7,4 @@ bin/
 *.iml
 *.ipr
 *.iws
+.vscode/settings.json

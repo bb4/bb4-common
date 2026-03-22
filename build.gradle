@@ -5,7 +5,6 @@ plugins {
     id 'com.barrybecker4.bb4.scala-library' version '2.0-SNAPSHOT'
     id 'com.barrybecker4.bb4.publish' version '2.0-SNAPSHOT'
     id 'com.barrybecker4.bb4.application' version '2.0-SNAPSHOT'
-    id 'com.github.maiflai.scalatest' version '0.33'
 }
 
 description = 'A library project containing bb4 common code'
