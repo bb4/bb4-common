@@ -5,6 +5,8 @@ import java.io.*
 import java.util.Base64
 import java.util.zip.{Deflater, DeflaterOutputStream, Inflater, InflaterInputStream}
 
+import scala.util.Using
+
 /**
   * Utility methods for Base64 compression and decompression.
   * @author Barry Becker
@@ -20,40 +22,41 @@ object Base64Codec {
   def compress(data: String): String = {
     val byteOut = new ByteArrayOutputStream(512)
     val deflater = new Deflater
-    val oStream = new DeflaterOutputStream(byteOut, deflater)
     try {
-      oStream.write(data.getBytes(CONVERTER_UTF8))
-      oStream.flush()
-      oStream.close()
+      Using.resource(new DeflaterOutputStream(byteOut, deflater)) { oStream =>
+        oStream.write(data.getBytes(CONVERTER_UTF8))
+        oStream.flush()
+      }
+      new String(Base64.getEncoder.encode(byteOut.toByteArray))
     } catch {
       case e: UnsupportedEncodingException =>
         throw new IllegalArgumentException("Unsupported encoding exception :" + e.getMessage, e)
       case e: IOException =>
         throw new IllegalStateException("io error :" + e.getMessage, e)
     }
-    new String(Base64.getEncoder.encode(byteOut.toByteArray))
   }
 
   /** Take a String and decompress it.
     * @param data the compressed string to decompress.
     * @return the decompressed string.
     */
-  def decompress(data: String): String = { // convert from string to bytes for decompressing
+  def decompress(data: String): String = {
     val compressedDat = Base64.getDecoder.decode(data.getBytes)
-    val in = new ByteArrayInputStream(compressedDat)
     val inflater = new Inflater
-    val iStream = new InflaterInputStream(in, inflater)
-    val cBuffer = new Array[Char](4096)
-    val sBuf = new StringBuilder
     try {
-      val iReader = new InputStreamReader(iStream, CONVERTER_UTF8)
-      var done = false
-      while (!done) {
-        val numRead = iReader.read(cBuffer)
-        println("numRead= " + numRead + " cbuf= " + cBuffer + " s=" + new String(cBuffer))
-        if (numRead == -1) {
-          done = true
-        } else sBuf.append(new String(cBuffer, 0, numRead))
+      Using.resource(new ByteArrayInputStream(compressedDat)) { bin =>
+        Using.resource(new InflaterInputStream(bin, inflater)) { iStream =>
+          Using.resource(new InputStreamReader(iStream, CONVERTER_UTF8)) { iReader =>
+            val cBuffer = new Array[Char](4096)
+            val sBuf = new StringBuilder
+            var n = iReader.read(cBuffer)
+            while (n != -1) {
+              sBuf.append(new String(cBuffer, 0, n))
+              n = iReader.read(cBuffer)
+            }
+            sBuf.toString
+          }
+        }
       }
     } catch {
       case e: UnsupportedEncodingException =>
@@ -61,6 +64,5 @@ object Base64Codec {
       case e: IOException =>
         throw new IllegalStateException("io error :" + e.getMessage, e)
     }
-    sBuf.toString
   }
 }

@@ -2,7 +2,7 @@
 package com.barrybecker4.common.xml
 
 import org.w3c.dom.*
-import org.xml.sax.{SAXException, SAXParseException}
+import org.xml.sax.SAXException
 
 import java.io.*
 import java.net.URL
@@ -37,12 +37,9 @@ object DomUtil {
 
       val root = document.createElement(ROOT_ELEMENT)
       document.appendChild(root)
-      // normalize text representation
-      // getDocumentElement() returns the document's root node
       document.getDocumentElement.normalize()
     } catch {
       case pce: ParserConfigurationException =>
-        // Parser with specified options can't be built
         pce.printStackTrace()
     }
     document
@@ -62,10 +59,16 @@ object DomUtil {
     null
   }
 
+  private def isWhitespaceOnlyTextNode(n: Node): Boolean = {
+    val name = n.getNodeName
+    name != null && name.startsWith("#text") && {
+      val text = n.getNodeValue
+      text != null && text.matches("[ \\t\n\\x0B\\f\\r]*")
+    }
+  }
+
   /** Go through the dom hierarchy and remove spurious text nodes and also
     * replace "use" nodes with a deep copy of what they refer to.
-    * @param root     root of document
-    * @param document the xml document
     */
   private def postProcessDocument(root: Node, document: Document, replaceUseWithDeepCopy: Boolean): Unit = {
     val l = root.getChildNodes
@@ -74,33 +77,36 @@ object DomUtil {
     while (i < l.getLength) {
       val n = l.item(i)
       val name = n.getNodeName
-      if (name != null && name.startsWith("#text")) { // delete if nothing by whitespace
-        val text = n.getNodeValue
-        if (text.matches("[ \\t\n\\x0B\\f\\r]*"))
-          deleteList.append(n)
-      }
+      if (isWhitespaceOnlyTextNode(n))
+        deleteList.append(n)
       postProcessDocument(n, document, replaceUseWithDeepCopy)
-      if (name != null && USE_ELEMENT == name) { // substitute the element with the specified id
-        val attrs = n.getAttributes
-        val attr = attrs.item(0)
-        assert("ref" == attr.getNodeName, "attr name=" + attr.getNodeName)
-        val attrValue = attr.getNodeValue
-        val element = document.getElementById(attrValue)
-        val clonedElement = element.cloneNode(replaceUseWithDeepCopy)
-        // Still need to recursively clean the node that was replaced
-        // since it might also contain use nodes.
-        postProcessDocument(clonedElement, document, replaceUseWithDeepCopy)
-        root.replaceChild(clonedElement, n)
-      }
+      if (name != null && USE_ELEMENT == name)
+        substituteUseElement(root, n, document, replaceUseWithDeepCopy)
       i += 1
     }
     deleteList.foreach(c => root.removeChild(c))
   }
 
+  private def substituteUseElement(
+      root: Node,
+      n: Node,
+      document: Document,
+      replaceUseWithDeepCopy: Boolean): Unit = {
+    val attrs = n.getAttributes
+    val attr = attrs.item(0)
+    assert("ref" == attr.getNodeName, "attr name=" + attr.getNodeName)
+    val attrValue = attr.getNodeValue
+    val element = document.getElementById(attrValue)
+    if (element == null)
+      throw new IllegalStateException(
+        "No element with id '" + attrValue + "' for <use> reference")
+    val clonedElement = element.cloneNode(replaceUseWithDeepCopy)
+    postProcessDocument(clonedElement, document, replaceUseWithDeepCopy)
+    root.replaceChild(clonedElement, n)
+  }
+
   /** Get the value for an attribute.
     * Error if the attribute does not exist.
-    * @param node       node to get attribute from
-    * @param attribName attribute to get
     */
   def getAttribute(node: Node, attribName: String): String = {
     val attributeVal = getAttribute(node, attribName, null)
@@ -109,11 +115,7 @@ object DomUtil {
     attributeVal
   }
 
-  /** Get the value for an attribute. If not found, defaultValue is used.
-    * @param node         node to get attribute on
-    * @param attribName   name of attribute to get
-    * @param defaultValue the default to use if requested attribute not there
-    */
+  /** Get the value for an attribute. If not found, defaultValue is used. */
   def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
     val attribMap = node.getAttributes
     var attributeVal: String = null
@@ -128,14 +130,10 @@ object DomUtil {
     attributeVal
   }
 
-  /** A concatenated list of the node's attributes.
-    * @param attributeMap maps names to nodes
-    * @return list of attributes
-    */
+  /** A concatenated list of the node's attributes. */
   def getAttributeList(attributeMap: NamedNodeMap): String = {
     var attribs = ""
     if (attributeMap != null) {
-      attributeMap.getLength
       var i = 0
       while (i < attributeMap.getLength) {
         val n = attributeMap.item(i)
@@ -146,16 +144,16 @@ object DomUtil {
     attribs
   }
 
-  /** Create a String representation of the dom hierarchy.
-    * @param root  document root node
-    * @param level level to print to
-    * @return the DOM formatted as a string
-    */
+  private def indentPrefix(level: Int): String = {
+    val b = new StringBuilder
+    for (_ <- 0 until level) b.append("    ")
+    b.toString
+  }
+
+  /** Create a String representation of the dom hierarchy. */
   def asString(root: Node, level: Int): String = {
     val l = root.getChildNodes
-    var result = ""
-    for (i <- 0 until level) result += "    "
-
+    var result = indentPrefix(level)
     val attribMap = root.getAttributes
     val attribs = getAttributeList(attribMap)
     result += "Node: <" + root.getNodeName + ">  " + attribs + "\n"
@@ -164,53 +162,38 @@ object DomUtil {
     result
   }
 
-  /** Parse an xml file and return a cleaned up Document object.
-    * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
-    * @param stream some input stream.
-    * @param replaceUseWithDeepCopy if true then replace each use with a deep copy of what it refers to
-    * @param xsdUri location of the schema to use for validation.
-    * @return the parsed file as a Document
-    */
-  private def parseXML(stream: InputStream, replaceUseWithDeepCopy: Boolean, xsdUri: String) = {
-    var document: Document = null
+  private def newDocumentBuilder(xsdUri: String): DocumentBuilder = {
     val factory = DocumentBuilderFactory.newInstance
     factory.setIgnoringComments(true)
-    try {
-      factory.setNamespaceAware(true)
-      factory.setValidating(false) //was true, but does not work with xsd
-      if (xsdUri != null) {
-        factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
-          "http://www.w3.org/2001/XMLSchema")
-        factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri)
-      }
-      val builder = factory.newDocumentBuilder
-      builder.setErrorHandler(new XmlErrorHandler)
-      document = builder.parse(stream)
-      postProcessDocument(document, document, replaceUseWithDeepCopy)
-      //printTree(document, 0);
-    } catch {
-      case sxe: SAXException =>
-        // Error generated during parsing)
-        var x: Exception = sxe
-        if (sxe.getException != null) x = sxe.getException
-        //x.printStackTrace()
-      case pce@(_: ParserConfigurationException | _: IOException) =>
-        pce.printStackTrace()
+    factory.setNamespaceAware(true)
+    factory.setValidating(false)
+    if (xsdUri != null) {
+      factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+        "http://www.w3.org/2001/XMLSchema")
+      factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri)
     }
-    document
+    factory.newDocumentBuilder
   }
 
-  // for debugging
-  private def printInputStream(iStream: InputStream): Unit = {
-    import java.io.BufferedReader
-    val in = new BufferedReader(new InputStreamReader(iStream))
-    var line = in.readLine()
-    println("-----  <start> -----")
-    while (line != null) {
-      println(line)
-      line = in.readLine()
-    }
-    println("-----  <end> -----")
+  private def parseXML(stream: InputStream, replaceUseWithDeepCopy: Boolean, xsdUri: String): Document = {
+    val builder =
+      try newDocumentBuilder(xsdUri)
+      catch {
+        case pce: ParserConfigurationException =>
+          throw new IllegalStateException("XML parser configuration failed", pce)
+      }
+    builder.setErrorHandler(new XmlErrorHandler)
+    val document =
+      try builder.parse(stream)
+      catch {
+        case sxe: SAXException =>
+          val cause = if (sxe.getException != null) sxe.getException else sxe
+          throw new IllegalStateException("XML parse failed", cause)
+        case ioe: IOException =>
+          throw new IllegalStateException("XML read failed", ioe)
+      }
+    postProcessDocument(document, document, replaceUseWithDeepCopy)
+    document
   }
 
   /** @param url url that points to the xml document to parse
@@ -244,11 +227,7 @@ object DomUtil {
     null
   }
 
-  /** Write out the xml document to a file.
-    * @param destinationFileName file to write xml to
-    * @param document            xml document to write.
-    * @param schema              of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
-    */
+  /** Write out the xml document to a file. */
   def writeXMLFile(destinationFileName: String, document: Document, schema: String): Unit = {
     var output: OutputStream = null
     try {
@@ -260,28 +239,26 @@ object DomUtil {
     }
   }
 
-  /** @param oStream  stream to write xml to.
-    * @param document the xml document to be written to the specified output stream
-    * @param schema   of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
-    */
-  private def writeXML(oStream: OutputStream, document: Document, schema: String): Unit = {
+  private def newTransformer(schema: String): Transformer = {
     val transformerFactory = TransformerFactory.newInstance
-    var transformer: Transformer = null
     try {
-      transformer = transformerFactory.newTransformer
+      val transformer = transformerFactory.newTransformer
       transformer.setOutputProperty(OutputKeys.INDENT, "yes")
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4")
       if (schema != null) transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, DomUtil.SCHEMA_LOCATION + schema)
+      transformer
     } catch {
       case ex: TransformerConfigurationException =>
         Logger.getLogger(getClass.getName).log(Level.SEVERE, null, ex)
+        throw ex
     }
+  }
+
+  private def writeXML(oStream: OutputStream, document: Document, schema: String): Unit = {
+    val transformer = newTransformer(schema)
     val source = new DOMSource(document)
-    // takes some OutputStream or Writer
-    val result = new StreamResult(oStream) // replace out with FileOutputStream
-    assert(transformer != null)
-    try // replace out with FileOutputStream  // System.out
-      transformer.transform(source, result)
+    val result = new StreamResult(oStream)
+    try transformer.transform(source, result)
     catch {
       case ex: TransformerException => Logger.getLogger(getClass.getName).log(Level.SEVERE, null, ex)
     }

@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 
 
 object MessageContext {
-  val DEFAULT_LOCALE: LocaleType = ENGLISH
+  val DEFAULT_LOCALE: LocaleType = LocaleType.ENGLISH
 }
 
 /**
@@ -92,31 +92,34 @@ class MessageContext(var resourcePaths: List[String]) {
     * @param params typically a list of strings to use as parameters to the template defined by the message from key.
     * @return the localized message label
     */
-  def getLabel(key: String, params: Array[AnyRef]): String = {
-    var label = key
+  def getLabel(key: String, params: Array[AnyRef]): String =
+    findLabelTemplate(key) match {
+      case Some(template) => formatLabel(template, params)
+      case None =>
+        val msg = "Could not find label for " + key + " among " + resourcePaths.toString // NON-NLS
+        log(0, msg)
+        throw new MissingResourceException(msg, resourcePaths.toString, key)
+    }
+
+  private def findLabelTemplate(key: String): Option[String] = {
     if (messagesBundles.isEmpty) initMessageBundles(currentLocale)
-    var found = false
-    val numBundles = messagesBundles.size
-    var ct = 0
-    while (!found && ct < numBundles) {
-      val bundle = messagesBundles(ct)
-      ct += 1
+    var i = 0
+    while (i < messagesBundles.size) {
+      val bundle = messagesBundles(i)
       if (bundle.containsKey(key)) {
-        label = bundle.getString(key)
-        if (params != null) {
-          val formatter = new MessageFormat(label, currentLocale.locale)
-          label = formatter.format(params)
-        }
-        found = true
+        return Some(bundle.getString(key))
       }
+      i += 1
     }
-    if (!found) {
-      val msg = "Could not find label for " + key + " among " + resourcePaths.toString // NON-NLS
-      log(0, msg)
-      throw new MissingResourceException(msg, resourcePaths.toString, key)
-    }
-    label
+    None
   }
+
+  private def formatLabel(label: String, params: Array[AnyRef]): String =
+    if (params == null) label
+    else {
+      val formatter = new MessageFormat(label, currentLocale.locale)
+      formatter.format(params)
+    }
 
   private def initMessageBundles(locale: LocaleType): Unit = {
     for (path <- resourcePaths) {
@@ -127,29 +130,31 @@ class MessageContext(var resourcePaths: List[String]) {
     JComponent.setDefaultLocale(locale.locale)
   }
 
-  /** Looks up a LocaleType for a given locale name.
-    * Throws IllegalAccessError if the name is not a member of the enumeration
-    * @param finf fail if not found.
-    * @return locale the name of a local. Something like ENGLISH, GERMAN, etc
+  /** Looks up a LocaleType for a given locale name (enum constant name, e.g. ENGLISH).
+    * @param finf if true, throw when the name is unknown; if false, return [[LocaleType.ENGLISH]] after logging.
+    * @return locale for the name
     */
   def getLocale(name: String, finf: Boolean): LocaleType = {
-    var theType: LocaleType = ENGLISH // english is the default
-    try
-      theType = LocaleType.valueOf(name)
-    catch {
-      case e: IllegalAccessError =>
-        log(0, "***************")
-        log(0, name + " is not a valid locale. We currently only support: ") // NON-NLS
-
-        val values = LocaleType.VALUES
-        for (newVar <- values) {
-          log(0, newVar.toString)
+    LocaleType.fromString(name) match {
+      case Some(t) => t
+      case None =>
+        logInvalidLocaleName(name, finf)
+        if (finf) {
+          throw new IllegalArgumentException(
+            "Unknown locale '" + name + "'. Use one of: " + LocaleType.values.mkString(", "))
         }
-        log(0, "Defaulting to English.")
-        log(0, "***************")
-        assert(!finf)
-        throw e
+        LocaleType.ENGLISH
     }
-    theType
+  }
+
+  private def logInvalidLocaleName(name: String, finf: Boolean): Unit = {
+    if (logger == null) return
+    log(0, "***************")
+    log(0, name + " is not a valid locale. We currently only support: ") // NON-NLS
+    for (v <- LocaleType.values) {
+      log(0, v.toString)
+    }
+    if (!finf) log(0, "Defaulting to English.")
+    log(0, "***************")
   }
 }

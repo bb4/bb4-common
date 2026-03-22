@@ -5,6 +5,9 @@ import com.barrybecker4.common.util.FileUtil
 import org.scalatest.funsuite.AnyFunSuite
 import org.w3c.dom.{Document, Node}
 
+import java.io.File
+import java.nio.file.Files
+
 
 class DomUtilSuite extends AnyFunSuite {
 
@@ -44,5 +47,13 @@ class DomUtilSuite extends AnyFunSuite {
     val result = DomUtil.asString(xmlDocument.getDocumentElement.asInstanceOf[Node], 1)
 
     assert(result.startsWith("    Node: <web-app>"))
+  }
+
+  test("parse malformed XML file throws IllegalStateException") {
+    val f = File.createTempFile("bad", ".xml")
+    try {
+      Files.writeString(f.toPath, "<not>")
+      assertThrows[IllegalStateException](DomUtil.parseXMLFile(f))
+    } finally f.delete()
   }
 }

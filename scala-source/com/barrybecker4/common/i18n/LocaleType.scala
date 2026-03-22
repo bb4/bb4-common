@@ -3,30 +3,25 @@ package com.barrybecker4.common.i18n
 
 import java.util.Locale
 
-
-object LocaleType {
-  val VALUES: Array[LocaleType] = Array(ENGLISH, GERMAN, JAPANESE, VIETNAMESE)
-  def valueOf(theType: String): LocaleType = {
-    theType match {
-      case "ENGLISH" => ENGLISH
-      case "GERMAN" => GERMAN
-      case "JAPANESE" => JAPANESE
-      case "VIETNAMESE" => VIETNAMESE
-    }
-  }
-}
+import scala.util.Try
 
 /**
-  * Enum for the currently supported locales.
+  * Supported locales for i18n.
   * These are probably the most challenging to support. That is one of the reasons why they were selected.
   * @author Barry Becker
   */
-sealed class LocaleType(val locale: Locale)
+enum LocaleType(val locale: Locale):
+  case ENGLISH extends LocaleType(new Locale("en", "US"))
+  case GERMAN extends LocaleType(new Locale("de", "DE"))
+  case JAPANESE extends LocaleType(new Locale("ja", "JP"))
+  case VIETNAMESE extends LocaleType(new Locale("vi"))
 
-case object ENGLISH extends LocaleType(new Locale("en", "US"))
-case object GERMAN extends LocaleType(new Locale("de", "DE"))
-case object JAPANESE extends LocaleType(new Locale("ja", "JP"))
-case object VIETNAMESE extends LocaleType(new Locale("vi"))
+object LocaleType {
 
+  /** Same as [[values]] (Scala enum), kept for existing call sites. */
+  val VALUES: Array[LocaleType] = values
 
-
+  /** @return locale constant matching enum name (e.g. ENGLISH), or None */
+  def fromString(name: String): Option[LocaleType] =
+    Try(LocaleType.valueOf(name.trim)).toOption
+}

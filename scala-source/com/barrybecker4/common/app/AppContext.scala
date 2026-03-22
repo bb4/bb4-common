@@ -74,7 +74,14 @@ object AppContext {
     * @param key message key
     * @return the localized message label
     */
-  def getLabel(key: String, params: Array[AnyRef]): String = messageContext.getLabel(key, params)
+  def getLabel(key: String, params: Array[AnyRef]): String = {
+    if (messageContext != null)
+      messageContext.getLabel(key, params)
+    else {
+      println("Could not get label for " + key + " because the messageContext was null.")
+      key
+    }
+  }
 
   def main(args: Array[String]): Unit = {
     println("The bb4-common project is meant to be used as a library.")

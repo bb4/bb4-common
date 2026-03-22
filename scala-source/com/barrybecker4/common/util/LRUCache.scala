@@ -42,11 +42,8 @@ class LRUCache[K, V](var cacheSize: Int) {
   def put(key: K, value: V): Unit = {
     map.put(key, value)
     if (map.size > cacheSize) {
-      println(s"${map.size} is greater than $cacheSize so removing eldest")
       removeEldestEntry()
     }
-    println(s"after putting $key:$value we have")
-    println(map.mkString(", "))
   }
 
   /** Clears the cache. */

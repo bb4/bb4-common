@@ -13,6 +13,16 @@ object FormatUtil {
   private val NUM_FORMAT = new DecimalFormat("###,###.##")
   private val INT_FORMAT = new DecimalFormat("#,###")
 
+  /** Minimum and maximum fraction digits for [[NUM_FORMAT]] for the given magnitude. */
+  private def fractionDigitsFor(absnum: Double): (Int, Int) = {
+    if (absnum > 1000.0) (0, 0)
+    else if (absnum > 100.0) (1, 1)
+    else if (absnum > 1.0) (1, 3)
+    else if (absnum > 0.0001) (2, 5)
+    else if (absnum > 0.000001) (3, 8)
+    else (6, 11)
+  }
+
   /**
     * Show a reasonable number of significant digits.
     * Synchronized because if changes the fract digits in the global format.
@@ -23,30 +33,9 @@ object FormatUtil {
     val absnum = Math.abs(num)
     if (absnum == 0) return "0"
     if (absnum > 10000000.0 || absnum < 0.000000001) return EXP_FORMAT.format(num)
-    if (absnum > 1000.0) {
-      NUM_FORMAT.setMinimumFractionDigits(0)
-      NUM_FORMAT.setMaximumFractionDigits(0)
-    }
-    else if (absnum > 100.0) {
-      NUM_FORMAT.setMinimumFractionDigits(1)
-      NUM_FORMAT.setMaximumFractionDigits(1)
-    }
-    else if (absnum > 1.0) {
-      NUM_FORMAT.setMinimumFractionDigits(1)
-      NUM_FORMAT.setMaximumFractionDigits(3)
-    }
-    else if (absnum > 0.0001) {
-      NUM_FORMAT.setMinimumFractionDigits(2)
-      NUM_FORMAT.setMaximumFractionDigits(5)
-    }
-    else if (absnum > 0.000001) {
-      NUM_FORMAT.setMinimumFractionDigits(3)
-      NUM_FORMAT.setMaximumFractionDigits(8)
-    }
-    else {
-      NUM_FORMAT.setMinimumFractionDigits(6)
-      NUM_FORMAT.setMaximumFractionDigits(11)
-    }
+    val (minFract, maxFract) = fractionDigitsFor(absnum)
+    NUM_FORMAT.setMinimumFractionDigits(minFract)
+    NUM_FORMAT.setMaximumFractionDigits(maxFract)
     NUM_FORMAT.format(num)
   }
 

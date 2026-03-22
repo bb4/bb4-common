@@ -12,6 +12,14 @@ import java.math.BigInteger
   * @author Barry Becker
   */
 object Input {
+
+  @throws[IOException]
+  private def readLineAfterPrompt(prompt: String): String = {
+    println(prompt)
+    val br = new BufferedReader(new InputStreamReader(System.in))
+    br.readLine
+  }
+
   /**
     * Get a number from the user.
     * @param prompt query string to prompt the user for a response.
@@ -30,11 +38,8 @@ object Input {
   def getLong(prompt: String, min: Long, max: Long): Long = {
     var value: Long = 0
     var valid: Boolean = false
-    while (!valid) { // give them another chance if not valid.
-      println(prompt)
-      val inp = new InputStreamReader(System.in)
-      val br = new BufferedReader(inp)
-      val str = br.readLine
+    while (!valid) {
+      val str = readLineAfterPrompt(prompt)
       try {
         value = str.toLong
         valid = true
@@ -47,7 +52,7 @@ object Input {
           valid = false
         }
       } catch {
-        case nfe: NumberFormatException =>
+        case _: NumberFormatException =>
           println("Hey! What kind of number is that? ")
           valid = false
       }
@@ -66,14 +71,11 @@ object Input {
     var value = new BigInteger("0")
     var valid = false
     while (!valid) {
-      println(prompt)
-      val inp = new InputStreamReader(System.in)
-      val br = new BufferedReader(inp)
       try {
-        value = new BigInteger(br.readLine)
+        value = new BigInteger(readLineAfterPrompt(prompt))
         valid = true
       } catch {
-        case e: NumberFormatException =>
+        case _: NumberFormatException =>
           println("That was not a valid number. Try again.")
           valid = false
       }
@@ -86,10 +88,5 @@ object Input {
     * @return input string.
     */
   @throws[IOException]
-  def getString(prompt: String): String = {
-    println(prompt)
-    val inp = new InputStreamReader(System.in)
-    val br = new BufferedReader(inp)
-    br.readLine
-  }
+  def getString(prompt: String): String = readLineAfterPrompt(prompt)
 }

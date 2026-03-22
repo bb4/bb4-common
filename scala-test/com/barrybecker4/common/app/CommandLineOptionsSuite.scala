@@ -38,4 +38,14 @@ class CommandLineOptionsSuite extends AnyFunSuite {
     val options = new CommandLineOptions(testArgs)
     assertResult("{abc -> null, c -> dog, efg -> null}") { options.toString }
   }
+
+  test("getValueForOptionWithDefaultWhenMissing") {
+    val options = new CommandLineOptions(Array("-a", "b"))
+    assertResult("fallback") { options.getValueForOption("missing", "fallback") }
+  }
+
+  test("getValueForOptionWithDefaultWhenPresent") {
+    val options = new CommandLineOptions(Array("-a", "b"))
+    assertResult("b") { options.getValueForOption("a", "fallback") }
+  }
 }

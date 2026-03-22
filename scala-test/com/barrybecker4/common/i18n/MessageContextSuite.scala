@@ -3,6 +3,7 @@ package com.barrybecker4.common.i18n
 
 import java.io.FileNotFoundException
 import java.util.MissingResourceException
+
 import com.barrybecker4.common.app.ILog
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -31,6 +32,26 @@ class MessageContextSuite extends AnyFunSuite {
     assertThrows[MissingResourceException] {
       context = new MessageContext("com.barrybecker4.common.invalid.message")
       context.getLabel("FOO")
+    }
+  }
+
+  test("getLocale valid enum name") {
+    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    context.setLogger(new MyLogger)
+    assertResult(LocaleType.GERMAN) { context.getLocale("GERMAN", finf = true) }
+  }
+
+  test("getLocale unknown with finf false returns English") {
+    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    context.setLogger(new MyLogger)
+    assertResult(LocaleType.ENGLISH) { context.getLocale("NOSUCH", finf = false) }
+  }
+
+  test("getLocale unknown with finf true throws") {
+    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    context.setLogger(new MyLogger)
+    assertThrows[IllegalArgumentException] {
+      context.getLocale("NOSUCH", finf = true)
     }
   }
 

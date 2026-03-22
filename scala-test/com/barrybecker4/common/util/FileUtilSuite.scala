@@ -40,4 +40,16 @@ class FileUtilSuite extends AnyFunSuite {
   test("getUrl for BB when specified as bb") {
     assert(getURL("com/barrybecker4/common/util/data/bb.txt") != null)
   }
+
+  test("uppercaseFilenameResourceVariant uppercases basename only, preserves extension") {
+    assertResult(Some("FOO.txt")) {
+      FileUtil.uppercaseFilenameResourceVariant("foo.txt")
+    }
+  }
+
+  test("uppercaseFilenameResourceVariant without extension returns None") {
+    assertResult(None) {
+      FileUtil.uppercaseFilenameResourceVariant("foo")
+    }
+  }
 }

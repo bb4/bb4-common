@@ -53,31 +53,35 @@ object FileUtil {
   }
 
   /** @return a URL given the path to a file */
-  def getURL(sPath: String): URL = getURL(sPath,  failIfNotFound = true)
+  def getURL(sPath: String): URL = getURL(sPath, failIfNotFound = true)
 
   /** @param sPath          the file path to get URL for
     * @param failIfNotFound throws IllegalArgumentException if not found in path
     * @return a URL given the path to an existing file.
     */
   def getURL(sPath: String, failIfNotFound: Boolean): URL = {
-    var url = ClassLoaderSingleton.getClassLoader.getResource(sPath)
-    if (url == null) {
-      // try looking for an upper-case version of the file (in an attempt to be more forgiving)
-      var lastPathSepIdx = sPath.lastIndexOf(File.separator)
-      val lastDotIdx = sPath.lastIndexOf(".")
-      if (lastPathSepIdx == -1) {
-        lastPathSepIdx = sPath.lastIndexOf("/")
-      }
-      if (lastDotIdx == -1) {
-        throw new IllegalStateException("could not find . in " + sPath)
-      } else {
-        val fname = sPath.substring(lastPathSepIdx, lastDotIdx)
-        val newPath = sPath.substring(0, lastPathSepIdx) + fname.toUpperCase() + sPath.substring(lastDotIdx)
-        url = ClassLoaderSingleton.getClassLoader.getResource(newPath)
-      }
+    val loader = ClassLoaderSingleton.getClassLoader
+    val primary = Option(loader.getResource(sPath))
+    val variant =
+      uppercaseFilenameResourceVariant(sPath).flatMap(p => Option(loader.getResource(p)))
+    (primary orElse variant) match {
+      case Some(url) => url
+      case None if failIfNotFound =>
+        throw new IllegalArgumentException("failed to create url for  " + sPath)
+      case None => null
     }
-    if (url == null && failIfNotFound) throw new IllegalArgumentException("failed to create url for  " + sPath)
-    url
+  }
+
+  /** Upper-case basename segment before the last dot (e.g. foo.bar -> FOO.bar). None if no extension. */
+  private[util] def uppercaseFilenameResourceVariant(sPath: String): Option[String] = {
+    val lastDotIdx = sPath.lastIndexOf('.')
+    if (lastDotIdx <= 0) return None
+    val sepIdx = math.max(sPath.lastIndexOf(File.separatorChar), sPath.lastIndexOf('/'))
+    val nameStart = if (sepIdx >= 0) sepIdx + 1 else 0
+    val base = sPath.substring(nameStart, lastDotIdx)
+    val ext = sPath.substring(lastDotIdx)
+    val dir = if (sepIdx >= 0) sPath.substring(0, nameStart) else ""
+    Some(dir + base.toUpperCase + ext)
   }
 
   /** @param sPath          the file path to get URL for

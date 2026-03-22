@@ -4,17 +4,16 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class BoundedPriorityQueueSuite extends AnyFunSuite {
 
-  implicit val order: Ordering[Int] = (a, b) => a.compareTo(b)
-  //val sortByWeight: Ordering[Path] = (a, b) => a.weight.compareTo(b.weight)
+  given order: Ordering[Int] = (a, b) => a.compareTo(b)
 
   test("Test empty queue") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     assert(queue.isEmpty)
     assert(queue.size == 0)
   }
 
   test("Add elements to queue without exceeding maxSize") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 1
     queue += 2
     queue += 3
@@ -23,7 +22,7 @@ class BoundedPriorityQueueSuite extends AnyFunSuite {
   }
 
   test("Add elements to queue exceeding maxSize") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 5
     queue += 2
     queue += 4
@@ -34,7 +33,7 @@ class BoundedPriorityQueueSuite extends AnyFunSuite {
   }
 
   test("Dequeue elements from queue") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 1
     queue += 3
     queue += 2
@@ -48,7 +47,7 @@ class BoundedPriorityQueueSuite extends AnyFunSuite {
   }
 
   test("Clear the queue") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 1
     queue += 2
     queue += 3
@@ -58,14 +57,14 @@ class BoundedPriorityQueueSuite extends AnyFunSuite {
   }
 
   test("Add multiple elements at once") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue.addAll(Seq(5, 1, 3, 2, 4))
     assert(queue.size == 3)
     assert(queue.toList.sorted == List(3, 4, 5))
   }
 
   test("Check iterator") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 1
     queue += 2
     queue += 3
@@ -74,7 +73,7 @@ class BoundedPriorityQueueSuite extends AnyFunSuite {
   }
 
   test("Check knownSize") {
-    val queue = new BoundedPriorityQueue[Int](3)(order)
+    val queue = new BoundedPriorityQueue[Int](3)
     queue += 1
     queue += 2
     assert(queue.knownSize == 2)

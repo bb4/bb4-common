@@ -48,7 +48,9 @@ class PackageReflector() {
         classNames.appendAll(getClassNamesFromJar(dirPath, packageName))
       } else {
         val dir = new File(dirPath)
-        val names = getClassNamesFromFiles(dir.listFiles.toIndexedSeq)
+        val fileArr = dir.listFiles
+        val names = getClassNamesFromFiles(
+          if (fileArr == null) IndexedSeq.empty else fileArr.toIndexedSeq)
         classNames.appendAll(names)
       }
     }
@@ -60,7 +62,6 @@ class PackageReflector() {
     val classNameSet = ArrayBuffer[String]()
     val split = path.split("!")
     val jar = new URL(split(0))
-    println("jar = " + jar)
     val zip = new ZipInputStream(jar.openStream)
     var entry = zip.getNextEntry
     while (entry != null) {

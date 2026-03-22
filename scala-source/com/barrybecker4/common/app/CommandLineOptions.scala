@@ -16,21 +16,7 @@ import scala.collection.immutable.ListMap
   * @author Barry Becker
   */
 class CommandLineOptions(val args: Array[String]) {
-  var ct = 0
-  private var optionsMap = ListMap[String, String]()
-
-  while (ct < args.length) {
-    val arg = args(ct)
-    assert(arg.charAt(0) == '-', "Command line Options must start with - and then be followed by an optional value")
-    val option = arg.substring(1).trim
-    var value: String = null
-    if (ct < args.length - 1 && args(ct + 1).charAt(0) != '-') {
-      value = args(ct + 1).trim
-      ct += 1
-    }
-    optionsMap += option -> value
-    ct += 1
-  }
+  private val optionsMap: ListMap[String, String] = CommandLineOptions.parseArgs(args)
 
   def getOptions: Set[_] = optionsMap.keySet
   def contains(option: String): Boolean = optionsMap.contains(option)
@@ -45,5 +31,27 @@ class CommandLineOptions(val args: Array[String]) {
     * @param defaultValue if option not found.
     * @return value for the arg (may be null if no value for the arg)
     */
-  def getValueForOption(option: String, defaultValue: String): String = optionsMap(option)
+  def getValueForOption(option: String, defaultValue: String): String =
+    optionsMap.get(option).getOrElse(defaultValue)
+}
+
+object CommandLineOptions {
+
+  private def parseArgs(args: Array[String]): ListMap[String, String] = {
+    var ct = 0
+    var optionsMap = ListMap[String, String]()
+    while (ct < args.length) {
+      val arg = args(ct)
+      assert(arg.charAt(0) == '-', "Command line Options must start with - and then be followed by an optional value")
+      val option = arg.substring(1).trim
+      var value: String = null
+      if (ct < args.length - 1 && args(ct + 1).charAt(0) != '-') {
+        value = args(ct + 1).trim
+        ct += 1
+      }
+      optionsMap += option -> value
+      ct += 1
+    }
+    optionsMap
+  }
 }

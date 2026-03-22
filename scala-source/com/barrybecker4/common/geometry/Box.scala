@@ -5,17 +5,7 @@ package com.barrybecker4.common.geometry
 /** An immutable box defined by 2 locations. The coordinates have the resolution of integers.
   * @author Barry Becker
   */
-case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: Int) {
-  if (rowMin > rowMax) {
-    val temp = rowMin
-    rowMin = rowMax
-    rowMax = temp
-  }
-  if (colMin > colMax) {
-    val temp = colMin
-    colMin = colMax
-    colMax = temp
-  }
+case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
   private val topLeftCorner = IntLocation(rowMin, colMin)
   private val bottomRightCorner = IntLocation(rowMax, colMax)
 
@@ -31,15 +21,6 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
 
   /** Degenerate box consisting of a point in space */
   def this(pt0: Location) = { this(pt0, pt0) }
-
-  /** Constructs a box with dimensions of oldBox, but expanded by the specified point
-    * @param oldBox box to base initial dimensions on.
-    * @param point  point to expand new box by.
-    */
-  def this(oldBox: Box, point: Location) = {
-    this(oldBox.getTopLeftCorner, oldBox.getBottomRightCorner)
-    expandBy(point)
-  }
 
   /** @return the width of the box */
   def getWidth: Int = Math.abs(bottomRightCorner.col - topLeftCorner.col)
@@ -80,7 +61,7 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     * @return new Box that includes the specified loc. Box unchanged if loc withing box.
     */
   def expandBy(loc: IntLocation): Box = {
-    var newBox = this
+    var newBox: Box = this
     if (loc.row < newBox.topLeftCorner.row)
       newBox = new Box(IntLocation(loc.row, newBox.topLeftCorner.col), newBox.bottomRightCorner)
     if (loc.row > newBox.bottomRightCorner.row)
@@ -91,7 +72,7 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
       newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.row, loc.col))
     newBox
   }
-  
+
   def scaleBy(scale: Int): Box = {
     Box(scale * rowMin, scale * colMin, scale * rowMax, scale * colMax)
   }
@@ -164,4 +145,16 @@ case class Box(var rowMin: Int, var colMin: Int, var rowMax: Int, var colMax: In
     buf.append(bottomRightCorner)
     buf.toString
   }
+}
+
+object Box {
+
+  def apply(rowMin: Int, colMin: Int, rowMax: Int, colMax: Int): Box = {
+    val (r0, r1) = if (rowMin <= rowMax) (rowMin, rowMax) else (rowMax, rowMin)
+    val (c0, c1) = if (colMin <= colMax) (colMin, colMax) else (colMax, colMin)
+    new Box(r0, c0, r1, c1)
+  }
+
+  /** Same as [[Box.expandBy]] from an existing box and point (replaces the old auxiliary constructor). */
+  def apply(oldBox: Box, point: Location): Box = oldBox.expandBy(point)
 }
