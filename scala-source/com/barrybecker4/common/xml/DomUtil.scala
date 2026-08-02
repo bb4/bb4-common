@@ -96,13 +96,40 @@ object DomUtil {
     val attr = attrs.item(0)
     assert("ref" == attr.getNodeName, "attr name=" + attr.getNodeName)
     val attrValue = attr.getNodeValue
-    val element = document.getElementById(attrValue)
+    val element = findElementById(document, attrValue)
     if (element == null)
       throw new IllegalStateException(
         "No element with id '" + attrValue + "' for <use> reference")
     val clonedElement = element.cloneNode(replaceUseWithDeepCopy)
     postProcessDocument(clonedElement, document, replaceUseWithDeepCopy)
     root.replaceChild(clonedElement, n)
+  }
+
+  /**
+    * Resolve an id to an element. Prefers Document.getElementById when a DTD/schema
+    * typed the attribute as ID; otherwise walks the tree matching an "id" attribute.
+    * Needed because we disable loading external DTDs (see newDocumentBuilder).
+    */
+  private def findElementById(document: Document, id: String): Element = {
+    val typed = document.getElementById(id)
+    if (typed != null) typed
+    else findElementByIdAttribute(document.getDocumentElement, id)
+  }
+
+  private def findElementByIdAttribute(node: Node, id: String): Element = {
+    if (node == null) return null
+    if (node.getNodeType == Node.ELEMENT_NODE) {
+      val element = node.asInstanceOf[Element]
+      if (id == element.getAttribute("id")) return element
+    }
+    val children = node.getChildNodes
+    var i = 0
+    while (i < children.getLength) {
+      val found = findElementByIdAttribute(children.item(i), id)
+      if (found != null) return found
+      i += 1
+    }
+    null
   }
 
   /** Get the value for an attribute.

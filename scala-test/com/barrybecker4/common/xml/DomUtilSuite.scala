@@ -56,4 +56,26 @@ class DomUtilSuite extends AnyFunSuite {
       assertThrows[IllegalStateException](DomUtil.parseXMLFile(f))
     } finally f.delete()
   }
+
+  test("substitute use refs without external DTD ID typing") {
+    val f = File.createTempFile("use-refs", ".xml")
+    try {
+      Files.writeString(f.toPath,
+        """<?xml version="1.0"?>
+          |<!DOCTYPE hierarchy SYSTEM "https://example.invalid/missing.dtd">
+          |<hierarchy>
+          |  <node id="leaf" label="leaf"/>
+          |  <node id="parent" label="parent">
+          |    <use ref="leaf"/>
+          |  </node>
+          |</hierarchy>
+          |""".stripMargin)
+      val doc = DomUtil.parseXMLFile(f)
+      val asText = DomUtil.asString(doc.getDocumentElement.asInstanceOf[Node], 0)
+      assert(asText.contains("id=\"leaf\""), asText)
+      assert(!asText.contains("<use>"), "use elements should be substituted away: " + asText)
+      // parent should now have a cloned leaf child (two leaf id occurrences)
+      assert(asText.split("id=\"leaf\"").length - 1 == 2, asText)
+    } finally f.delete()
+  }
 }
