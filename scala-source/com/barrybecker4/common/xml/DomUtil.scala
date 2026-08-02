@@ -2,7 +2,7 @@
 package com.barrybecker4.common.xml
 
 import org.w3c.dom.*
-import org.xml.sax.SAXException
+import org.xml.sax.{InputSource, SAXException}
 
 import java.io.*
 import java.net.URL
@@ -167,6 +167,13 @@ object DomUtil {
     factory.setIgnoringComments(true)
     factory.setNamespaceAware(true)
     factory.setValidating(false)
+    // Otherwise the parser still fetches external DTDs (DOCTYPE SYSTEM) and mis-resolves relative URIs
+    // from bare InputStreams or jar: URLs — see JDK/Xerces nonvalidating/load-external-dtd.
+    try {
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
+    } catch {
+      case _: ParserConfigurationException => ()
+    }
     if (xsdUri != null) {
       factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
         "http://www.w3.org/2001/XMLSchema")
@@ -175,7 +182,7 @@ object DomUtil {
     factory.newDocumentBuilder
   }
 
-  private def parseXML(stream: InputStream, replaceUseWithDeepCopy: Boolean, xsdUri: String): Document = {
+  private def parseXML(inputSource: InputSource, replaceUseWithDeepCopy: Boolean, xsdUri: String): Document = {
     val builder =
       try newDocumentBuilder(xsdUri)
       catch {
@@ -184,7 +191,7 @@ object DomUtil {
       }
     builder.setErrorHandler(new XmlErrorHandler)
     val document =
-      try builder.parse(stream)
+      try builder.parse(inputSource)
       catch {
         case sxe: SAXException =>
           val cause = if (sxe.getException != null) sxe.getException else sxe
@@ -202,7 +209,9 @@ object DomUtil {
   def parseXML(url: URL): Document = try {
     val urlc = url.openConnection
     val is = urlc.getInputStream
-    parseXML(is, replaceUseWithDeepCopy = true, null)
+    val inputSource = new InputSource(is)
+    inputSource.setSystemId(url.toExternalForm)
+    parseXML(inputSource, replaceUseWithDeepCopy = true, null)
   } catch {
     case e: IOException => throw new IllegalArgumentException("Failed to open " + url.getPath, e)
   }
@@ -219,7 +228,9 @@ object DomUtil {
   private def parseXMLFile(file: File, replaceUseWithDeepCopy: Boolean): Document = {
     try {
       val str = new FileInputStream(file)
-      return parseXML(str, replaceUseWithDeepCopy, null)
+      val inputSource = new InputSource(str)
+      inputSource.setSystemId(file.toURI.toString)
+      return parseXML(inputSource, replaceUseWithDeepCopy, null)
     } catch {
       case e: FileNotFoundException =>
         e.printStackTrace()

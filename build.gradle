@@ -2,14 +2,14 @@
 // @author Barry G Becker
 
 plugins {
-    id 'com.barrybecker4.bb4.scala-library' version '2.0-SNAPSHOT'
-    id 'com.barrybecker4.bb4.publish' version '2.0-SNAPSHOT'
-    id 'com.barrybecker4.bb4.application' version '2.0-SNAPSHOT'
+    id 'com.barrybecker4.bb4.scala-library' version '2.0.0'
+    id 'com.barrybecker4.bb4.publish' version '2.0.0'
+    id 'com.barrybecker4.bb4.application' version '2.0.0'
 }
 
 description = 'A library project containing bb4 common code'
 group = 'com.barrybecker4'
-version = '2.0-SNAPSHOT'
+version = '2.0.0'
 
 bb4 {
     archivesBaseName.set('bb4-common')
