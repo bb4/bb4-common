@@ -2,7 +2,7 @@
 This library project contains common scala code for all bb4 projects.
 The bb4-common jar file along with the corresponding source and scaladoc will be published to Sonatype so other projects depend on them.
 
-**Build conventions:** this repo uses [bb4-gradle](https://github.com/barrybecker4/bb4-gradle) **2.0-SNAPSHOT** via the Gradle `plugins { }` DSL. `settings.gradle` adds **`https://central.sonatype.com/repository/maven-snapshots/`** to `pluginManagement` so Gradle can resolve that SNAPSHOT (OSSRH is EOL). Optionally, for local plugin work without publishing, use `mavenLocal()` there and run `./gradlew publishToMavenLocal` in bb4-gradle.
+**Build conventions:** this repo uses [bb4-gradle](https://github.com/barrybecker4/bb4-gradle) **2.1-SNAPSHOT** via the Gradle `plugins { }` DSL. `settings.gradle` adds **`https://central.sonatype.com/repository/maven-snapshots/`** to `pluginManagement` so Gradle can resolve that SNAPSHOT (OSSRH is EOL). Optionally, for local plugin work without publishing, use `mavenLocal()` there and run `./gradlew publishToMavenLocal` in bb4-gradle.
 
 To use, include this dependency in your gradle file
 
