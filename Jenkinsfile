@@ -1,4 +1,0 @@
-commonJenkinsPipeline(
-    language: 'scala',
-    upstreamProjects: ''
-)
