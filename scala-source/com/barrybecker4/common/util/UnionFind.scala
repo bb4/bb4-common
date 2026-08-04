@@ -7,7 +7,7 @@ import java.util.Scanner
 /** Reads in a sequence of pairs of integers (between 0 and N-1) from standard in. Each integer represents an object.
   * If the objects are in different components, merge the two components and print the pair to standard output.
   */
-object UnionFind extends App {
+object UnionFind {
 
   def create(in: InputStream): UnionFind = {
     create(new Scanner(in))

@@ -11,10 +11,10 @@ import scala.util.Try
   * @author Barry Becker
   */
 enum LocaleType(val locale: Locale):
-  case ENGLISH extends LocaleType(new Locale("en", "US"))
-  case GERMAN extends LocaleType(new Locale("de", "DE"))
-  case JAPANESE extends LocaleType(new Locale("ja", "JP"))
-  case VIETNAMESE extends LocaleType(new Locale("vi"))
+  case ENGLISH extends LocaleType(Locale.of("en", "US"))
+  case GERMAN extends LocaleType(Locale.of("de", "DE"))
+  case JAPANESE extends LocaleType(Locale.of("ja", "JP"))
+  case VIETNAMESE extends LocaleType(Locale.of("vi"))
 
 object LocaleType {
 
