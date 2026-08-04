@@ -11,10 +11,10 @@ import com.barrybecker4.common.app.ILog
   * @author Barry Becker
   */
 class Profiler() {
-  final private var hmEntries = Map[String, ProfilerEntry]()
-  final private var topLevelEntries = List[ProfilerEntry]()
+  private var hmEntries = Map[String, ProfilerEntry]()
+  private var topLevelEntries = List[ProfilerEntry]()
   private var enabled = true
-  private var logger: ILog = _
+  private var logger: Option[ILog] = None
 
   /** add a top level entry.
     * @param name of the top level entry
@@ -31,7 +31,6 @@ class Profiler() {
     */
   def add(name: String, parent: String): Unit = {
     val par = getEntry(parent)
-    assert(par != null, "invalid parent: " + parent)
     val e = new ProfilerEntry(name)
     par.addChild(e)
     hmEntries += name -> e
@@ -60,7 +59,7 @@ class Profiler() {
   /** Pretty print all the performance statistics. */
   def print(): Unit = {
     if (!enabled) return
-    for (entry <- topLevelEntries) entry.print("", logger)
+    for (entry <- topLevelEntries) entry.print("", logger.orNull)
   }
 
   /** turn on/off profiling */
@@ -70,8 +69,11 @@ class Profiler() {
   def isEnabled: Boolean = enabled
 
   def setLogger(logger: ILog): Unit =
-    this.logger = logger
+    this.logger = Option(logger)
 
   def printMessage(message: String): Unit =
-    if (logger != null) logger.print(message) else println(message)
+    logger match {
+      case Some(log) => log.print(message)
+      case None => println(message)
+    }
 }

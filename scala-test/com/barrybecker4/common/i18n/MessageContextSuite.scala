@@ -12,17 +12,15 @@ import org.scalatest.funsuite.AnyFunSuite
   * @author Barry Becker
   */
 class MessageContextSuite extends AnyFunSuite {
-  /** instance under test */
-  private var context: MessageContext = _
 
   test("ConstructionWithValidPath") {
-    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext("com.barrybecker4.common.i18n.message")
     assertResult("bar") { context.getLabel("FOO") }
   }
 
   test("GetLabelWhenLabelMissing") {
     assertThrows[MissingResourceException] {
-      context = new MessageContext("com.barrybecker4.common.i18n.message")
+      val context = new MessageContext("com.barrybecker4.common.i18n.message")
       context.setLogger(new MyLogger)
       context.getLabel("INVALID")
     }
@@ -30,25 +28,25 @@ class MessageContextSuite extends AnyFunSuite {
 
   test("ConstructionWithInvalidPath") {
     assertThrows[MissingResourceException] {
-      context = new MessageContext("com.barrybecker4.common.invalid.message")
+      val context = new MessageContext("com.barrybecker4.common.invalid.message")
       context.getLabel("FOO")
     }
   }
 
   test("getLocale valid enum name") {
-    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
     assertResult(LocaleType.GERMAN) { context.getLocale("GERMAN", finf = true) }
   }
 
   test("getLocale unknown with finf false returns English") {
-    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
     assertResult(LocaleType.ENGLISH) { context.getLocale("NOSUCH", finf = false) }
   }
 
   test("getLocale unknown with finf true throws") {
-    context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
     assertThrows[IllegalArgumentException] {
       context.getLocale("NOSUCH", finf = true)

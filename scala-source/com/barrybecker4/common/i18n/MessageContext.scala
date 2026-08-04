@@ -24,8 +24,8 @@ class MessageContext(var resourcePaths: List[String]) {
   /** the list of bundles to look for messages in */
   private val messagesBundles = ArrayBuffer[ResourceBundle]()
 
-  /** logger object. Use console by default. */
-  private var logger: ILog = _
+  /** logger object. Must be set before logging. */
+  private var logger: Option[ILog] = None
 
   /** debug level */
   private var debug = 0
@@ -52,12 +52,14 @@ class MessageContext(var resourcePaths: List[String]) {
   /** @param logger the logging device. Determines where the output goes. */
   def setLogger(logger: ILog): Unit = {
     assert(logger != null)
-    this.logger = logger
+    this.logger = Some(logger)
   }
 
   private def log(logLevel: Int, message: String): Unit = {
-    if (logger == null) throw new RuntimeException("Set a logger on the MessageContext before calling log.")
-    logger.print(logLevel, debug, message)
+    logger match {
+      case Some(log) => log.print(logLevel, debug, message)
+      case None => throw new RuntimeException("Set a logger on the MessageContext before calling log.")
+    }
   }
 
   /** Set or change the current locale.
@@ -103,15 +105,9 @@ class MessageContext(var resourcePaths: List[String]) {
 
   private def findLabelTemplate(key: String): Option[String] = {
     if (messagesBundles.isEmpty) initMessageBundles(currentLocale)
-    var i = 0
-    while (i < messagesBundles.size) {
-      val bundle = messagesBundles(i)
-      if (bundle.containsKey(key)) {
-        return Some(bundle.getString(key))
-      }
-      i += 1
-    }
-    None
+    messagesBundles.iterator
+      .find(_.containsKey(key))
+      .map(_.getString(key))
   }
 
   private def formatLabel(label: String, params: Array[AnyRef]): String =
@@ -148,7 +144,7 @@ class MessageContext(var resourcePaths: List[String]) {
   }
 
   private def logInvalidLocaleName(name: String, finf: Boolean): Unit = {
-    if (logger == null) return
+    if (logger.isEmpty) return
     log(0, "***************")
     log(0, name + " is not a valid locale. We currently only support: ") // NON-NLS
     for (v <- LocaleType.values) {

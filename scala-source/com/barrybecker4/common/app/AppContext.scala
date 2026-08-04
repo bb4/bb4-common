@@ -10,7 +10,7 @@ import java.text.NumberFormat
   */
 object AppContext {
   /** logger object. */
-  private var logger: ILog = _
+  private var logger: Option[ILog] = None
 
   /** if greater than 0, then debug mode is on. the higher the number, the more info that is printed.  */
   private val DEBUG: Int = 0
@@ -18,9 +18,9 @@ object AppContext {
   /** now the variable forms of the above defaults */
   private var debug: Int = DEBUG
 
-  private var messageContext: MessageContext = _
+  private var messageContext: Option[MessageContext] = None
 
-  def isInitialized: Boolean = logger != null
+  def isInitialized: Boolean = logger.isDefined
 
   /** Initialize the app context once a the start of a program
     * @param localeName    name of the locale to use (ENGLISH, GERMAN, etc)
@@ -30,16 +30,17 @@ object AppContext {
   def initialize(localeName: String, resourcePaths: List[String], logger: ILog): Unit = {
     assert(resourcePaths != null)
     assert(logger != null)
-    AppContext.logger = logger
-    messageContext = new MessageContext(resourcePaths)
-    messageContext.setLogger(AppContext.logger)
-    messageContext.setDebugMode(debug)
-    messageContext.setLocale(localeName)
+    AppContext.logger = Some(logger)
+    val context = new MessageContext(resourcePaths)
+    messageContext = Some(context)
+    context.setLogger(logger)
+    context.setDebugMode(debug)
+    context.setLocale(localeName)
   }
 
   /** Allow setting a custom message context for testing purposes */
   def injectMessageContext(context: MessageContext): Unit = {
-    messageContext = context
+    messageContext = Option(context)
   }
 
   /** @return the level of debugging in effect */
@@ -52,36 +53,35 @@ object AppContext {
 
   /** Log a message using the internal logger object */
   def log(logLevel: Int, message: String): Unit = {
-    assert(logger != null, "Must set a logger before logging")
-    logger.print(logLevel, getDebugMode, message)
+    assert(logger.isDefined, "Must set a logger before logging")
+    logger.get.print(logLevel, getDebugMode, message)
   }
 
-  def getCurrencyFormat: NumberFormat = NumberFormat.getCurrencyInstance(messageContext.getLocale)
+  def getCurrencyFormat: NumberFormat =
+    NumberFormat.getCurrencyInstance(messageContext.get.getLocale)
 
   /** @param key message key
     * @return the localized message label
     */
-  def getLabel(key: String): String = {
-    if (messageContext != null)
-      messageContext.getLabel(key)
-    else {
-      println("Could not get label for " + key + " because the messageContext was null.")
-      key
+  def getLabel(key: String): String =
+    messageContext match {
+      case Some(ctx) => ctx.getLabel(key)
+      case None =>
+        println("Could not get label for " + key + " because the messageContext was null.")
+        key
     }
-  }
 
   /** Use this version if there are parameters to the localized string
     * @param key message key
     * @return the localized message label
     */
-  def getLabel(key: String, params: Array[AnyRef]): String = {
-    if (messageContext != null)
-      messageContext.getLabel(key, params)
-    else {
-      println("Could not get label for " + key + " because the messageContext was null.")
-      key
+  def getLabel(key: String, params: Array[AnyRef]): String =
+    messageContext match {
+      case Some(ctx) => ctx.getLabel(key, params)
+      case None =>
+        println("Could not get label for " + key + " because the messageContext was null.")
+        key
     }
-  }
 
   def main(args: Array[String]): Unit = {
     println("The bb4-common project is meant to be used as a library.")
