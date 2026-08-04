@@ -15,7 +15,7 @@ package com.barrybecker4.common.concurrency
 abstract class Worker() {
 
   /** value to return after asynchronous computation. See getValue(), setValue()   */
-  private var returnValue: Any = _
+  private var returnValue: Any = null
 
   val thread = new Thread(doConstruct())
   thread.setName("Worker Thread") //NON-NLS
