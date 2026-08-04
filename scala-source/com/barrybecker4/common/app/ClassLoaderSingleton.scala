@@ -7,31 +7,28 @@ package com.barrybecker4.common.app
   * @author Barry Becker
   */
 object ClassLoaderSingleton {
-  private var cls: ClassLoaderSingleton = _
-  private var loader: ClassLoader = _
+  private var instance: Option[ClassLoaderSingleton] = None
+  private var loader: Option[ClassLoader] = None
 
   def getClassLoader: ClassLoader = {
-    if (cls == null) {
-      loader = Thread.currentThread.getContextClassLoader
-      cls = new ClassLoaderSingleton
+    if (instance.isEmpty) {
+      loader = Some(Thread.currentThread.getContextClassLoader)
+      instance = Some(new ClassLoaderSingleton)
     }
-    loader
+    loader.get
   }
 
   /** @param className the class to load.
     * @return the loaded class.
     */
-  def loadClass(className: String): Class[_] = {
-    var theClass: Class[_] = null
+  def loadClass(className: String): Class[?] =
     try
-      theClass = Class.forName(className)
+      Class.forName(className)
     catch {
       case e: ClassNotFoundException =>
         throw new IllegalArgumentException(
           s"Unable to find the class $className. Verify that it is in the classpath.", e)
     }
-    theClass
-  }
 }
 
 class ClassLoaderSingleton

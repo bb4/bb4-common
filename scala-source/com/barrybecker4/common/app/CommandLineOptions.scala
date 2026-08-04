@@ -18,7 +18,7 @@ import scala.collection.immutable.ListMap
 class CommandLineOptions(val args: Array[String]) {
   private val optionsMap: ListMap[String, String] = CommandLineOptions.parseArgs(args)
 
-  def getOptions: Set[_] = optionsMap.keySet
+  def getOptions: Set[String] = optionsMap.keySet
   def contains(option: String): Boolean = optionsMap.contains(option)
   override def toString: String = "{" + optionsMap.mkString(", ") + "}"
 

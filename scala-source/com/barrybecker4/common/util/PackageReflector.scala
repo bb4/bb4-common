@@ -4,7 +4,7 @@ package com.barrybecker4.common.util
 import com.barrybecker4.common.app.ClassLoaderSingleton
 
 import java.io.{File, IOException}
-import java.net.{URL, URLDecoder}
+import java.net.{URI, URLDecoder}
 import java.util.zip.ZipInputStream
 import scala.collection.mutable.ArrayBuffer
 
@@ -30,7 +30,7 @@ class PackageReflector() {
     */
   @throws[ClassNotFoundException]
   @throws[IOException]
-  def getClasses(packageName: String): Seq[Class[_]] = {
+  def getClasses(packageName: String): Seq[Class[?]] = {
     val files = getClassNames(packageName)
     getClassesFromNames(packageName, files)
   }
@@ -61,7 +61,7 @@ class PackageReflector() {
   private def getClassNamesFromJar(path: String, packageName: String): Set[String] = {
     val classNameSet = ArrayBuffer[String]()
     val split = path.split("!")
-    val jar = new URL(split(0))
+    val jar = URI.create(split(0)).toURL
     val zip = new ZipInputStream(jar.openStream)
     var entry = zip.getNextEntry
     while (entry != null) {
@@ -80,20 +80,15 @@ class PackageReflector() {
     classNameSet.toSet
   }
 
-  private def getClassNamesFromFiles(files: IndexedSeq[File]): IndexedSeq[String] = {
-    var classNames = IndexedSeq[String]()
-    for (file <- files) {
-      if (file.getName.endsWith(PackageReflector.CLASS_EXT)) {
-        val className = file.getName.substring(0, file.getName.length - PackageReflector.CLASS_EXT.length)
-        classNames :+= className
-      }
+  private def getClassNamesFromFiles(files: IndexedSeq[File]): IndexedSeq[String] =
+    files.collect {
+      case file if file.getName.endsWith(PackageReflector.CLASS_EXT) =>
+        file.getName.substring(0, file.getName.length - PackageReflector.CLASS_EXT.length)
     }
-    classNames
-  }
 
   @throws[ClassNotFoundException]
-  private def getClassesFromNames(packageName: String, classNames: Seq[String]): Seq[Class[_]] = {
-    val classes = ArrayBuffer[Class[_]]()
+  private def getClassesFromNames(packageName: String, classNames: Seq[String]): Seq[Class[?]] = {
+    val classes = ArrayBuffer[Class[?]]()
     for (className <- classNames) {
       classes.append(Class.forName(packageName + '.' + className))
     }
