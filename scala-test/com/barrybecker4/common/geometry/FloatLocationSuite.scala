@@ -11,8 +11,9 @@ class FloatLocationSuite extends AnyFunSuite {
 
   test("distance") {
     val loc = FloatLocation(2.3f, 3.5f)
-    assertResult(2.8178004862628763) { loc.distance(FloatLocation(1, 1)) }
-    assertResult(2.8178004862628763) { loc.distance(FloatLocation(1f, 1f)) }
+    val expected = 2.8178004862628763
+    assert(Math.abs(loc.distance(FloatLocation(1, 1)) - expected) < 1e-9)
+    assert(Math.abs(loc.distance(FloatLocation(1f, 1f)) - expected) < 1e-9)
   }
 
   test("midPoint") {
