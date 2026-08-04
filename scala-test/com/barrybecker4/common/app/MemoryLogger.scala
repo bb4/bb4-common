@@ -9,7 +9,7 @@ import java.io.FileNotFoundException
   * @author Barry Becker
   */
 class MemoryLogger(sbuilder: Option[StringBuilder] = None) extends ILog {
-  private var bldr: StringBuilder = if (sbuilder.isDefined) sbuilder.get else null
+  private var bldr: StringBuilder = sbuilder.orNull
 
   override def setDestination(logDestination: Int): Unit = {}
   override def getDestination = 0

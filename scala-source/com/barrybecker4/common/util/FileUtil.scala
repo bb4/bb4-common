@@ -40,17 +40,16 @@ object FileUtil {
     * @param filename including the full path
     * @return new PrintWriter instance. Returns null if there was a problem creating it.
     */
-  def createPrintWriter(filename: String): PrintWriter = {
-    var outfile: PrintWriter = null
+  def createPrintWriter(filename: String): PrintWriter =
     try
-      outfile = new PrintWriter(
+      new PrintWriter(
         new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false), "UTF-8"))
       )
     catch {
-      case e: IOException => e.printStackTrace()
+      case e: IOException =>
+        e.printStackTrace()
+        null
     }
-    outfile
-  }
 
   /** @return a URL given the path to a file */
   def getURL(sPath: String): URL = getURL(sPath, failIfNotFound = true)
@@ -99,20 +98,21 @@ object FileUtil {
     * @return text within the file
     */
   def readTextFile(filename: String): String = {
-    var br: BufferedReader = null
     val bldr = new StringBuilder(1000)
     try {
-      br = new BufferedReader(new FileReader(filename))
-      var sCurrentLine: String = br.readLine()
-      while (sCurrentLine != null) {
-        bldr.append(sCurrentLine).append('\n')
-        sCurrentLine = br.readLine()
+      val br = new BufferedReader(new FileReader(filename))
+      try {
+        var sCurrentLine: String = br.readLine()
+        while (sCurrentLine != null) {
+          bldr.append(sCurrentLine).append('\n')
+          sCurrentLine = br.readLine()
+        }
+        bldr.toString
+      } finally {
+        br.close()
       }
-      bldr.toString
     } catch {
       case e: IOException => throw new IllegalStateException("Could not read " + filename, e)
-    } finally {
-      if (br != null) br.close()
     }
   }
 

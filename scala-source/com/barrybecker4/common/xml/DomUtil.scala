@@ -145,30 +145,23 @@ object DomUtil {
   /** Get the value for an attribute. If not found, defaultValue is used. */
   def getAttribute(node: Node, attribName: String, defaultValue: String): String = {
     val attribMap = node.getAttributes
-    var attributeVal: String = null
     if (attribMap == null) return null
-    var i = 0
-    while (i < attribMap.getLength) {
-      val attr = attribMap.item(i)
-      if (attr.getNodeName == attribName) attributeVal = attr.getNodeValue
-      i += 1
-    }
-    if (attributeVal == null) attributeVal = defaultValue
-    attributeVal
+    val found = (0 until attribMap.getLength)
+      .map(attribMap.item)
+      .find(_.getNodeName == attribName)
+      .map(_.getNodeValue)
+    found.getOrElse(defaultValue)
   }
 
   /** A concatenated list of the node's attributes. */
   def getAttributeList(attributeMap: NamedNodeMap): String = {
-    var attribs = ""
-    if (attributeMap != null) {
-      var i = 0
-      while (i < attributeMap.getLength) {
+    if (attributeMap == null) return ""
+    (0 until attributeMap.getLength)
+      .map(i => {
         val n = attributeMap.item(i)
-        attribs += n.getNodeName + "=\"" + n.getNodeValue + "\"  "
-        i += 1
-      }
-    }
-    attribs
+        n.getNodeName + "=\"" + n.getNodeValue + "\"  "
+      })
+      .mkString
   }
 
   private def indentPrefix(level: Int): String = {

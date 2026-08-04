@@ -26,13 +26,8 @@ class LRUCache[K, V](var cacheSize: Int) {
     map(key)
   }
 
-  private def access(key: K): Unit = {
-    if (map.contains(key)) {
-      val v: Option[V] = map.remove(key)
-      if (v.nonEmpty)
-        map.put(key, v.get)  // make sure it shows as recently accessed
-    }
-  }
+  private def access(key: K): Unit =
+    map.remove(key).foreach(v => map.put(key, v))
 
   /** Adds an entry to this cache.
     * If the cache is full, the LRU (least recently used) entry is dropped.

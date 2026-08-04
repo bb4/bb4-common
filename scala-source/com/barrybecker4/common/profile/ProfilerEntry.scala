@@ -18,7 +18,7 @@ class ProfilerEntry(val name: String) {
   private var startTime: Long = 0
   /** the total time used by this named code section while the app was running  */
   private var totalTime: Long = 0
-  final private var children = List[ProfilerEntry]()
+  private var children = List[ProfilerEntry]()
 
   def addChild(child: ProfilerEntry): Unit =
     children :+= child
@@ -42,16 +42,16 @@ class ProfilerEntry(val name: String) {
   def print(indent: String, logger: ILog): Unit = {
     val text = indent + getFormattedTime
     if (logger == null) println(text) else logger.println(text)
-    var totalChildTime: Long = 0
+    val totalChildTime = children.map(_.getTime).sum
 
     for (pe <- children) {
-      totalChildTime += pe.getTime
       pe.print(indent + ProfilerEntry.INDENT, logger)
     }
     assert(totalChildTime <= totalTime,
       "The sum of the child times(" + totalChildTime + ") cannot be greater than the parent time (" +
         totalTime + ") for entry '" + name + "'. " + "child entries =" + children)
   }
+
 
   override def toString: String = getFormattedTime
 

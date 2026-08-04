@@ -120,7 +120,6 @@ class MessageContext(var resourcePaths: List[String]) {
   private def initMessageBundles(locale: LocaleType): Unit = {
     for (path <- resourcePaths) {
       val bundle = ResourceBundle.getBundle(path, locale.locale)
-      if (bundle == null) throw new IllegalArgumentException("Messages bundle for " + path + " was not found.")
       messagesBundles.append(bundle)
     }
     JComponent.setDefaultLocale(locale.locale)

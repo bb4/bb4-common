@@ -44,11 +44,11 @@ object CommandLineOptions {
       val arg = args(ct)
       assert(arg.charAt(0) == '-', "Command line Options must start with - and then be followed by an optional value")
       val option = arg.substring(1).trim
-      var value: String = null
-      if (ct < args.length - 1 && args(ct + 1).charAt(0) != '-') {
-        value = args(ct + 1).trim
-        ct += 1
-      }
+      val value =
+        if (ct < args.length - 1 && args(ct + 1).charAt(0) != '-') {
+          ct += 1
+          args(ct).trim
+        } else null
       optionsMap += option -> value
       ct += 1
     }
