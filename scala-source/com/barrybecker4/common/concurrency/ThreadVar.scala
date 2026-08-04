@@ -4,22 +4,23 @@ package com.barrybecker4.common.concurrency
 /**
   * Class to maintain reference to current worker thread under separate synchronization control.
   */
-class ThreadVar private[concurrency](var thread: Thread) {
+class ThreadVar private[concurrency](initial: Thread) {
 
-  assert(thread != null)
+  assert(initial != null)
+  private var thread: Option[Thread] = Some(initial)
 
-  private[concurrency] def get = thread
+  private[concurrency] def get: Thread = thread.orNull
 
   private[concurrency] def clear(): Unit = synchronized {
-    thread = null
+    thread = None
   }
 
   private[concurrency] def interrupt(): Unit = synchronized {
-    if (thread != null) thread.interrupt()
-    thread = null
+    thread.foreach(_.interrupt())
+    thread = None
   }
 
   private[concurrency] def start(): Unit = synchronized {
-    if (thread != null) thread.start()
+    thread.foreach(_.start())
   }
 }
