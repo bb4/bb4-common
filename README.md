@@ -1,6 +1,6 @@
 # bb4-common
 
-📊 [Build status for all bb4 projects](https://github.com/bb4)
+📊 [Build status for all bb4 projects](https://github.com/bb4/.github)
 
 This library project contains common scala code for all bb4 projects.
 The bb4-common jar file along with the corresponding source and scaladoc will be published to Sonatype so other projects depend on them.
