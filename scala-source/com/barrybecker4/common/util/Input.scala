@@ -1,6 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.util
 
+import com.barrybecker4.common.app.AppContext
 import com.barrybecker4.common.format.FormatUtil
 
 import java.io.{BufferedReader, IOException, InputStreamReader}
@@ -50,16 +51,16 @@ object Input {
         value = str.toLong
         valid = true
         if (value < min) {
-          println("You must enter a number greater than " + FormatUtil.formatNumber(min))
+          println(AppContext.getLabel("INPUT_NUMBER_TOO_SMALL", Array(FormatUtil.formatNumber(min))))
           valid = false
         }
         else if (value > max) {
-          println("That number is too big! It must be smaller than " + FormatUtil.formatNumber(max))
+          println(AppContext.getLabel("INPUT_NUMBER_TOO_LARGE", Array(FormatUtil.formatNumber(max))))
           valid = false
         }
       } catch {
         case _: NumberFormatException =>
-          println("Hey! What kind of number is that? ")
+          println(AppContext.getLabel("INPUT_NUMBER_INVALID"))
           valid = false
       }
     }
@@ -82,7 +83,7 @@ object Input {
         valid = true
       } catch {
         case _: NumberFormatException =>
-          println("That was not a valid number. Try again.")
+          println(AppContext.getLabel("INPUT_BIGINT_INVALID"))
           valid = false
       }
     }

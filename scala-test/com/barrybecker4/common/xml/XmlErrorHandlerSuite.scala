@@ -1,6 +1,8 @@
 /* Copyright by Barry G. Becker, 2000-2021. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.xml
 
+import com.barrybecker4.common.app.AppContext
+import com.barrybecker4.common.i18n.{LocaleType, MessageContext}
 import org.scalatest.funsuite.AnyFunSuite
 import org.xml.sax.SAXParseException
 
@@ -8,6 +10,10 @@ import java.io.{ByteArrayOutputStream, PrintStream}
 
 
 class XmlErrorHandlerSuite extends AnyFunSuite {
+
+  private def warningLabel: String = AppContext.getLabel("XML_SAX_WARNING")
+  private def errorLabel: String = AppContext.getLabel("XML_SAX_ERROR")
+  private def fatalLabel: String = AppContext.getLabel("XML_SAX_FATAL")
 
   private def captureOutput(testCode: => Unit): String = {
     val outputStream = new ByteArrayOutputStream()
@@ -62,7 +68,7 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
       handler.warning(exception)
     }
     
-    assert(output.contains("Warning"))
+    assert(output.contains(warningLabel))
     assert(output.contains("line 10"))
     assert(output.contains("column 5"))
   }
@@ -90,7 +96,7 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
       }
     }
     
-    assert(output.contains("Error"))
+    assert(output.contains(errorLabel))
     assert(output.contains("line 20"))
     assert(output.contains("column 15"))
   }
@@ -122,7 +128,7 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
       }
     }
     
-    assert(output.contains("Fatal Error while"))
+    assert(output.contains(fatalLabel))
     assert(output.contains("line 30"))
     assert(output.contains("column 25"))
   }
@@ -232,9 +238,28 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
       }
     }
     
-    assert(output.contains("Warning"))
-    assert(output.contains("Error"))
-    assert(output.contains("Fatal Error while"))
+    assert(output.contains(warningLabel))
+    assert(output.contains(errorLabel))
+    assert(output.contains(fatalLabel))
+  }
+
+  test("warning uses German labels when MessageContext locale is German") {
+    val ctx = new MessageContext(MessageContext.COMMON_BUNDLE)
+    ctx.setLocale(LocaleType.GERMAN)
+    AppContext.injectMessageContext(ctx)
+    try {
+      val handler = new XmlErrorHandler
+      val exception = createException("Test warning", 10, 5)
+      val output = captureOutput {
+        handler.warning(exception)
+      }
+      assert(output.contains("Warning_g"))
+      assert(output.contains("line 10"))
+      assert(output.contains("column 5"))
+      assert(output.contains("_g"))
+    } finally {
+      AppContext.injectMessageContext(null)
+    }
   }
 
   test("exception message is printed in stack trace on stderr") {

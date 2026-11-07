@@ -38,7 +38,7 @@ class CurrencyFormatterSuite extends AnyFunSuite {
   }
 
   test("uses AppContext locale for currency symbol") {
-    val ctx = new MessageContext("com.barrybecker4.common.i18n.message")
+    val ctx = new MessageContext(MessageContext.COMMON_BUNDLE)
     ctx.setLocale(LocaleType.GERMAN)
     AppContext.injectMessageContext(ctx)
     try {
@@ -51,7 +51,7 @@ class CurrencyFormatterSuite extends AnyFunSuite {
   }
 
   test("constructor locale overrides AppContext") {
-    val ctx = new MessageContext("com.barrybecker4.common.i18n.message")
+    val ctx = new MessageContext(MessageContext.COMMON_BUNDLE)
     ctx.setLocale(LocaleType.GERMAN)
     AppContext.injectMessageContext(ctx)
     try {

@@ -11,13 +11,13 @@ import org.scalatest.funsuite.AnyFunSuite
 class MessageContextSuite extends AnyFunSuite {
 
   test("ConstructionWithValidPath") {
-    val context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext(MessageContext.COMMON_BUNDLE)
     assertResult("bar") { context.getLabel("FOO") }
   }
 
   test("GetLabelWhenLabelMissing") {
     assertThrows[MissingResourceException] {
-      val context = new MessageContext("com.barrybecker4.common.i18n.message")
+      val context = new MessageContext(MessageContext.COMMON_BUNDLE)
       context.setLogger(new MyLogger)
       context.getLabel("INVALID")
     }
@@ -31,19 +31,19 @@ class MessageContextSuite extends AnyFunSuite {
   }
 
   test("getLocale valid enum name") {
-    val context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext(MessageContext.COMMON_BUNDLE)
     context.setLogger(new MyLogger)
     assertResult(LocaleType.GERMAN) { context.getLocaleOrThrow("GERMAN") }
   }
 
   test("getLocale unknown with throwIfNotFound false returns English") {
-    val context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext(MessageContext.COMMON_BUNDLE)
     context.setLogger(new MyLogger)
     assertResult(LocaleType.ENGLISH) { context.getLocaleOrDefault("NOSUCH") }
   }
 
   test("getLocale unknown with throwIfNotFound true throws") {
-    val context = new MessageContext("com.barrybecker4.common.i18n.message")
+    val context = new MessageContext(MessageContext.COMMON_BUNDLE)
     context.setLogger(new MyLogger)
     assertThrows[IllegalArgumentException] {
       context.getLocaleOrThrow("NOSUCH")

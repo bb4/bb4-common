@@ -9,13 +9,11 @@ import org.scalatest.funsuite.AnyFunSuite
 class AppContextSuite extends AnyFunSuite {
 
   /**
-    * Verify that we get an error if the AppContext was not stubbed with a MessageContext.
+    * When no MessageContext was injected, fall back to the common bundle in the JAR.
     */
   test("GetLabelWhenNoMessageContext") {
-      assertResult("FOO") {AppContext.getLabel("FOO")}
-//    assertThrows[NullPointerException] {
-//      AppContext.getLabel("FOO")
-//    }
+    AppContext.injectMessageContext(null)
+    assertResult("bar") { AppContext.getLabel("FOO") }
   }
 
   test("GetLabel") {

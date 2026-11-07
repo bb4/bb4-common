@@ -12,6 +12,10 @@ To use, include this dependency in your build.gradle file
 
 `implementation 'com.barrybecker4:bb4-common:<version>'`
 
+## Internationalization
+
+User-visible library strings live in `com.barrybecker4.common.i18n.message` (`MessageContext.COMMON_BUNDLE`). Applications should still call `AppContext.initialize(locale, List(MessageContext.COMMON_BUNDLE, …), logger)` so the active locale and app-specific bundles are set. Library helpers that call `AppContext.getLabel` also work without initialization by falling back to the English common bundle shipped in the JAR.
+
 ## Running bb4 applications
 
 This repo is a **library** published to Sonatype; consumers add the dependency above. It is not an application you run on its own.

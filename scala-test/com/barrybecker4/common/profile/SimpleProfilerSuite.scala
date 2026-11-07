@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.profile
 
-import com.barrybecker4.common.app.MemoryLogger
+import com.barrybecker4.common.app.{AppContext, MemoryLogger}
 import com.barrybecker4.common.concurrency.ThreadUtil
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -39,6 +39,7 @@ class SimpleProfilerSuite extends AnyFunSuite {
     ThreadUtil.sleep(10)
     profiler.stop()
     profiler.print()
-    assert(logger.toString.startsWith("Time for totalTime : "), "Unexpected message = " + logger.toString)
+    val expectedPrefix = AppContext.getLabel("PROFILER_TIME_LINE", Array("totalTime", "X")).split("X").head
+    assert(logger.toString.startsWith(expectedPrefix), "Unexpected message = " + logger.toString)
   }
 }

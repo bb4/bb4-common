@@ -11,6 +11,9 @@ import scala.collection.mutable.ArrayBuffer
 
 object MessageContext {
   val DEFAULT_LOCALE: LocaleType = LocaleType.ENGLISH
+
+  /** Base name of the shared message bundle shipped in the bb4-common JAR. */
+  val COMMON_BUNDLE: String = "com.barrybecker4.common.i18n.message"
 }
 
 /**
