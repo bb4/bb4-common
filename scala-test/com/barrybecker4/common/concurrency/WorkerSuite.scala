@@ -13,6 +13,6 @@ class WorkerSuite extends AnyFunSuite {
       println("working...")
       ThreadUtil.sleep(1)
     }
-    assertResult(2048032000) {worker.get}
+    assertResult(Some(2048032000)) { worker.get }
   }
 }

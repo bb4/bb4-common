@@ -55,12 +55,13 @@ class BoundedPriorityQueue[A](maxSize: Int)(using ord: Ordering[A])
   override def clear(): Unit = { backingQueue.clear() }
 
   private def maybeReplaceLowest(a: A): Boolean = {
-    val head = backingQueue.peek()
-    if (head != null && ord.gt(a, head)) {
-      backingQueue.poll()
-      backingQueue.offer(a)
-    } else {
-      false
+    Option(backingQueue.peek()) match {
+      case Some(head) if ord.gt(a, head) =>
+        backingQueue.poll()
+        backingQueue.offer(a)
+        true
+      case _ =>
+        false
     }
   }
 }

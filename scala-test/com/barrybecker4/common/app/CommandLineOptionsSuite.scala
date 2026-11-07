@@ -11,7 +11,9 @@ class CommandLineOptionsSuite extends AnyFunSuite {
   test("CommandLineOptionsToString") {
     val testArgs = Array("-a", "b", "-c", "dog", "-e", "-f", "-type", "foo", "-h")
     val options = new CommandLineOptions(testArgs)
-    assertResult("{a -> b, c -> dog, e -> null, f -> null, type -> foo, h -> null}") { options.toString }
+    assertResult("{a -> Some(b), c -> Some(dog), e -> None, f -> None, type -> Some(foo), h -> None}") {
+      options.toString
+    }
   }
 
   test("EmptyCommandLineOptions") {
@@ -30,13 +32,13 @@ class CommandLineOptionsSuite extends AnyFunSuite {
   test("CommandLineOptionsWithSpace") {
     val testArgs = Array("-a", " b", "-c ", "dog")
     val options = new CommandLineOptions(testArgs)
-    assertResult("{a -> b, c -> dog}") { options.toString }
+    assertResult("{a -> Some(b), c -> Some(dog)}") { options.toString }
   }
 
   test("CommandLineOptionsWithoutValues") {
     val testArgs = Array("-abc", "-c", "dog", "-efg")
     val options = new CommandLineOptions(testArgs)
-    assertResult("{abc -> null, c -> dog, efg -> null}") { options.toString }
+    assertResult("{abc -> None, c -> Some(dog), efg -> None}") { options.toString }
   }
 
   test("getValueForOptionWithDefaultWhenMissing") {

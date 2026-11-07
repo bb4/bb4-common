@@ -59,7 +59,7 @@ class Profiler() {
   /** Pretty print all the performance statistics. */
   def print(): Unit = {
     if (!enabled) return
-    for (entry <- topLevelEntries) entry.print("", logger.orNull)
+    for (entry <- topLevelEntries) entry.print("", logger)
   }
 
   /** turn on/off profiling */

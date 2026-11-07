@@ -86,7 +86,7 @@ class MessageContext(var resourcePaths: List[String]) {
     * @param key the message key to find in resource bundle.
     * @return the localized message label
     */
-  def getLabel(key: String): String = getLabel(key, null)
+  def getLabel(key: String): String = getLabel(key, None)
 
   /** Look first in the common message bundle.
     * If not found there, look in the application specific bundle if there is one.
@@ -95,6 +95,9 @@ class MessageContext(var resourcePaths: List[String]) {
     * @return the localized message label
     */
   def getLabel(key: String, params: Array[AnyRef]): String =
+    getLabel(key, Option(params))
+
+  def getLabel(key: String, params: Option[Array[AnyRef]]): String =
     findLabelTemplate(key) match {
       case Some(template) => formatLabel(template, params)
       case None =>
@@ -110,11 +113,10 @@ class MessageContext(var resourcePaths: List[String]) {
       .map(_.getString(key))
   }
 
-  private def formatLabel(label: String, params: Array[AnyRef]): String =
-    if (params == null) label
-    else {
+  private def formatLabel(label: String, params: Option[Array[AnyRef]]): String =
+    params.fold(label) { p =>
       val formatter = new MessageFormat(label, currentLocale.locale)
-      formatter.format(params)
+      formatter.format(p)
     }
 
   private def initMessageBundles(locale: LocaleType): Unit = {

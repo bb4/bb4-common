@@ -14,8 +14,8 @@ package com.barrybecker4.common.concurrency
   */
 abstract class Worker() {
 
-  /** value to return after asynchronous computation. See getValue(), setValue()   */
-  private var returnValue: Any = null
+  /** value to return after asynchronous computation */
+  private var returnValue: Option[Any] = None
 
   val thread = new Thread(doConstruct())
   thread.setName("Worker Thread") //NON-NLS
@@ -25,7 +25,7 @@ abstract class Worker() {
 
   /** Start a thread that will call the construct method and then exit. */
   private def doConstruct(): Runnable = () => {
-    try returnValue = construct
+    try returnValue = Some(construct)
     finally threadVar.clear()
     // old: SwingUtilities.invokeLater(doFinished);
     // Now call directly, but if the body of finished is in the ui,
@@ -33,13 +33,10 @@ abstract class Worker() {
     finished()
   }
 
-  def isWorking: Boolean = getValue == null
-
-  /** @return the value produced by the worker thread, or null if it hasn't been constructed yet. */
-   private def getValue: Any = returnValue
+  def isWorking: Boolean = returnValue.isEmpty
 
   /** Compute the value to be returned by the get method.
-    * @return the result. Must not be null.
+    * @return the result (must be non-null if present).
     */
   def construct: Any
 
@@ -63,18 +60,23 @@ abstract class Worker() {
   }
 
   /** Return the value created by the construct method.
-    * Returns null if either the constructing thread or the current
+    * Returns None if either the constructing thread or the current
     * thread was interrupted before a value was produced.
-    * @return the value created by the { @code construct} method
     */
-  def get: Any = while (true) {
-    val thread = threadVar.get
-    if (thread == null) return getValue
-    try thread.join()
-    catch {
-      case e: InterruptedException =>
-        Thread.currentThread.interrupt() // propagate
-        return null
-    }
+  def get: Option[Any] = {
+    def awaitResult(): Option[Any] =
+      threadVar.get match {
+        case None => returnValue
+        case Some(thread) =>
+          try {
+            thread.join()
+            awaitResult()
+          } catch {
+            case _: InterruptedException =>
+              Thread.currentThread.interrupt()
+              None
+          }
+      }
+    awaitResult()
   }
 }
