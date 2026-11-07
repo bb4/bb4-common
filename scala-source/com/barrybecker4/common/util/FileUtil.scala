@@ -15,9 +15,15 @@ object FileUtil {
     */
   val FILE_SEPARATOR = "/"
 
-  /**
-    * Try not to use this. If this is called from an applet, it will give a security exception.
-    * @return home directory. Assumes running as an Application.
+  /** Returns the current working directory with a trailing file separator.
+    * 
+    * Uses `System.getProperty("user.dir")`, which resolves to the directory from which
+    * the JVM was launched. This is a simple utility for tests and internal use.
+    * 
+    * Note: Despite the name, this returns the working directory (user.dir), not the
+    * user's home directory (user.home).
+    * 
+    * @return current working directory with trailing separator
     */
   def getHomeDir: String = System.getProperty("user.dir") + FILE_SEPARATOR
 
