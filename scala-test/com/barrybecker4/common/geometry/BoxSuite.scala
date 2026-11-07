@@ -92,6 +92,24 @@ class BoxSuite extends AnyFunSuite {
     assertResult(new Box(IntLocation(2, 1), IntLocation(7, 5))) { newBox }
   }
 
+  test("ExpandBy with location already inside (should return same box)") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBox = box.expandBy(IntLocation(3, 4))
+    assertResult(box) { newBox }
+    assert(box eq newBox, "Should return the same Box instance when location is already inside")
+  }
+
+  test("ExpandBy with location on boundary (should return same box)") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    val newBoxCorner = box.expandBy(IntLocation(2, 3))
+    assertResult(box) { newBoxCorner }
+    assert(box eq newBoxCorner, "Should return the same Box instance when location is on corner")
+    
+    val newBoxEdge = box.expandBy(IntLocation(4, 5))
+    assertResult(box) { newBoxEdge }
+    assert(box eq newBoxEdge, "Should return the same Box instance when location is on edge")
+  }
+
   test("ExpandGlobally") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     val newBox = box.expandGloballyBy(3, 6, 5)

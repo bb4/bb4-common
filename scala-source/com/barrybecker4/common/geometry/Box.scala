@@ -60,16 +60,16 @@ case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
     * @return new Box that includes the specified loc. Box unchanged if loc withing box.
     */
   def expandBy(loc: IntLocation): Box = {
-    var newBox: Box = this
-    if (loc.row < newBox.topLeftCorner.row)
-      newBox = new Box(IntLocation(loc.row, newBox.topLeftCorner.col), newBox.bottomRightCorner)
-    if (loc.row > newBox.bottomRightCorner.row)
-      newBox = new Box(newBox.topLeftCorner, IntLocation(loc.row, newBox.bottomRightCorner.col))
-    if (loc.col < newBox.topLeftCorner.col)
-      newBox = new Box(IntLocation(newBox.topLeftCorner.row, loc.col), newBox.bottomRightCorner)
-    if (loc.col > newBox.bottomRightCorner.col)
-      newBox = new Box(newBox.topLeftCorner, IntLocation(newBox.bottomRightCorner.row, loc.col))
-    newBox
+    val newMinRow = Math.min(topLeftCorner.row, loc.row)
+    val newMinCol = Math.min(topLeftCorner.col, loc.col)
+    val newMaxRow = Math.max(bottomRightCorner.row, loc.row)
+    val newMaxCol = Math.max(bottomRightCorner.col, loc.col)
+    
+    if (newMinRow == topLeftCorner.row && newMinCol == topLeftCorner.col &&
+        newMaxRow == bottomRightCorner.row && newMaxCol == bottomRightCorner.col)
+      this
+    else
+      Box(newMinRow, newMinCol, newMaxRow, newMaxCol)
   }
 
   def scaleBy(scale: Int): Box = {
