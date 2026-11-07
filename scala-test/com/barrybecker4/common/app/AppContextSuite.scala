@@ -5,7 +5,6 @@ import com.barrybecker4.common.testsupport.i18n.StubMessageContext
 import org.scalatest.funsuite.AnyFunSuite
 
 /**
-  * @author Barry Becker
   */
 class AppContextSuite extends AnyFunSuite {
 

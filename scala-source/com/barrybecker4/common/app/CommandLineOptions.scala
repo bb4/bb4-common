@@ -13,33 +13,31 @@ import scala.collection.immutable.ListMap
   * java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
   * Note: verbose and -safe are options and do not have values.
   * @param args an array of command line arguments. May be empty, but not null.
-  * @author Barry Becker
   */
 class CommandLineOptions(val args: Array[String]) {
-  private val optionsMap: ListMap[String, String] = CommandLineOptions.parseArgs(args)
+  private val optionsMap: ListMap[String, Option[String]] = CommandLineOptions.parseArgs(args)
 
   def getOptions: Set[String] = optionsMap.keySet
   def contains(option: String): Boolean = optionsMap.contains(option)
   override def toString: String = "{" + optionsMap.mkString(", ") + "}"
 
   /** @param option some string representing the option
-    * @return value for the option (may be null if no value for the option)
+    * @return value for the option, or None if the flag has no value
     */
-  def getValueForOption(option: String): String = optionsMap(option)
+  def getValueForOption(option: String): Option[String] = optionsMap(option)
 
   /** @param option       the command line option.
-    * @param defaultValue if option not found.
-    * @return value for the arg (may be null if no value for the arg)
+    * @param defaultValue if option not found or has no value.
     */
   def getValueForOption(option: String, defaultValue: String): String =
-    optionsMap.get(option).getOrElse(defaultValue)
+    optionsMap.get(option).flatten.getOrElse(defaultValue)
 }
 
 object CommandLineOptions {
 
-  private def parseArgs(args: Array[String]): ListMap[String, String] = {
+  private def parseArgs(args: Array[String]): ListMap[String, Option[String]] = {
     var ct = 0
-    var optionsMap = ListMap[String, String]()
+    var optionsMap = ListMap[String, Option[String]]()
     while (ct < args.length) {
       val arg = args(ct)
       assert(arg.charAt(0) == '-', "Command line Options must start with - and then be followed by an optional value")
@@ -47,8 +45,8 @@ object CommandLineOptions {
       val value =
         if (ct < args.length - 1 && args(ct + 1).charAt(0) != '-') {
           ct += 1
-          args(ct).trim
-        } else null
+          Some(args(ct).trim)
+        } else None
       optionsMap += option -> value
       ct += 1
     }

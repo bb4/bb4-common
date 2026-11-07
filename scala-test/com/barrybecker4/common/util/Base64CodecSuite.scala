@@ -4,9 +4,6 @@ package com.barrybecker4.common.util
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class Base64CodecSuite extends AnyFunSuite {
   test("Compress") {
     val str = "test/com/barrybecker4/common/util"

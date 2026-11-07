@@ -9,7 +9,6 @@ object SimpleProfiler {
 /**
   * Use this class to get a single performance number for your application.
   * This profiler just contains a single top level entry for a single timing number.
-  * @author Barry Becker
   */
 class SimpleProfiler() extends Profiler {
 

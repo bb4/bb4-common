@@ -6,9 +6,6 @@ import com.barrybecker4.common.concurrency.ThreadUtil
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class SimpleProfilerSuite extends AnyFunSuite {
 
   test("ProfilerTime") {

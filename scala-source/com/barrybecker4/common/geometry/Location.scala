@@ -5,7 +5,9 @@ import java.awt.geom.Point2D
 
 /** Represents a location location of something in coordinates.
   * Immutable. Use MutableIntLocation if you really need to modify it (rare).
-  * @author Barry Becker
+  *
+  * Concrete subtypes that may be Java-serialized must declare an explicit
+  * `serialVersionUID` (Scala `@SerialVersionUID`); it is not inherited from this trait.
   */
 trait Location extends Serializable {
   def row: Int

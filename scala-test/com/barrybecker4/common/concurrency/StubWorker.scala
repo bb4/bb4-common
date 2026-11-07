@@ -4,7 +4,7 @@ package com.barrybecker4.common.concurrency
 class StubWorker(n: Int) extends Worker {
 
   /** Compute the value to be returned by the get method.
-    * @return the result. Must not be null.
+    * @return the result.
     */
   override def construct: Long = {
     var total: Long = 0

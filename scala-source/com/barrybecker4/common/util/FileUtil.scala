@@ -8,8 +8,6 @@ import java.net.URL
 
 /**
   * Miscellaneous commonly used file related static utility methods.
-  *
-  * @author Barry Becker
   */
 object FileUtil {
   /** Get the correct file separator whether on windows (\) or linux (/).
@@ -38,37 +36,34 @@ object FileUtil {
 
   /** Create a PrintWriter with utf8 encoding.
     * @param filename including the full path
-    * @return new PrintWriter instance. Returns null if there was a problem creating it.
+    * @return new PrintWriter instance, or None if there was a problem creating it.
     */
-  def createPrintWriter(filename: String): PrintWriter =
+  def createPrintWriter(filename: String): Option[PrintWriter] =
     try
-      new PrintWriter(
-        new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false), "UTF-8"))
+      Some(
+        new PrintWriter(
+          new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false), "UTF-8"))
+        )
       )
     catch {
       case e: IOException =>
         e.printStackTrace()
-        null
+        None
     }
 
   /** @return a URL given the path to a file */
-  def getURL(sPath: String): URL = getURL(sPath, failIfNotFound = true)
+  def getURL(sPath: String): URL =
+    getURLOption(sPath).getOrElse(throw new IllegalArgumentException("failed to create url for  " + sPath))
 
-  /** @param sPath          the file path to get URL for
-    * @param failIfNotFound throws IllegalArgumentException if not found in path
-    * @return a URL given the path to an existing file.
+  /** @param sPath the file path to get URL for
+    * @return a URL if the resource exists on the classpath
     */
-  def getURL(sPath: String, failIfNotFound: Boolean): URL = {
+  def getURLOption(sPath: String): Option[URL] = {
     val loader = ClassLoaderSingleton.getClassLoader
     val primary = Option(loader.getResource(sPath))
     val variant =
       uppercaseFilenameResourceVariant(sPath).flatMap(p => Option(loader.getResource(p)))
-    (primary orElse variant) match {
-      case Some(url) => url
-      case None if failIfNotFound =>
-        throw new IllegalArgumentException("failed to create url for  " + sPath)
-      case None => null
-    }
+    primary orElse variant
   }
 
   /** Upper-case basename segment before the last dot (e.g. foo.bar -> FOO.bar). None if no extension. */

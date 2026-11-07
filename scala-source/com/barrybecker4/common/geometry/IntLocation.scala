@@ -2,8 +2,9 @@
 package com.barrybecker4.common.geometry
 
 /** Represents an immutable location of something in integer coordinates.
-  * @author Barry Becker
   */
+// Note: changing serialVersionUID breaks deserialization of stored IntLocation objects.
+@SerialVersionUID(1L)
 case class IntLocation(row: Int, col: Int) extends Location {
 
   def this(loc: Location) = {

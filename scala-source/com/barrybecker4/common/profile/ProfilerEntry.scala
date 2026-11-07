@@ -12,7 +12,6 @@ object ProfilerEntry {
 /**
   * Represents the timing numbers for a named region of the code.
   * @param name the name of this profiler entry
-  * @author Barry Becker
   */
 class ProfilerEntry(val name: String) {
   private var startTime: Long = 0
@@ -37,11 +36,11 @@ class ProfilerEntry(val name: String) {
     for (p <- children) p.resetAll()
   }
 
-  def print(): Unit = print("", null)
+  def print(): Unit = print("", None)
 
-  def print(indent: String, logger: ILog): Unit = {
+  def print(indent: String, logger: Option[ILog]): Unit = {
     val text = indent + getFormattedTime
-    if (logger == null) println(text) else logger.println(text)
+    logger.fold(println(text))(_.println(text))
     val totalChildTime = children.map(_.getTime).sum
 
     for (pe <- children) {

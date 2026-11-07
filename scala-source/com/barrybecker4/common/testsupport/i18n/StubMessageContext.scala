@@ -5,7 +5,6 @@ import com.barrybecker4.common.i18n.MessageContext
 
 /**
   * Used for testing to provide a fake message context.
-  * @author Barry Becker
   */
 final class StubMessageContext() extends MessageContext("") {
 

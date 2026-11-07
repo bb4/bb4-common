@@ -8,7 +8,6 @@ import scala.util.Try
 /**
   * Supported locales for i18n.
   * These are probably the most challenging to support. That is one of the reasons why they were selected.
-  * @author Barry Becker
   */
 enum LocaleType(val locale: Locale):
   case ENGLISH extends LocaleType(Locale.of("en", "US"))

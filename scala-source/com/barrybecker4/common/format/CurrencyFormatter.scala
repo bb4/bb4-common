@@ -8,9 +8,7 @@ object CurrencyFormatter {
   private val CURRENCY_SYMBOL = Currency.getInstance(Locale.US).getSymbol
 }
 
-/**
-  * @author Barry Becker
-  */
+
 class CurrencyFormatter extends INumberFormatter {
 
   override def format(number: Double): String = {

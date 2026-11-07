@@ -6,7 +6,6 @@ import java.text.DecimalFormat
 
 /**
   * Miscellaneous commonly used static utility methods.
-  * @author Barry Becker
   */
 object FormatUtil {
   private val EXP_FORMAT = new DecimalFormat("0.###E0") //NON-NLS

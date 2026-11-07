@@ -6,7 +6,6 @@ import java.text.NumberFormat
 
 /**
   * Manage application context such as logging, debugging, resources.
-  * @author Barry Becker
   */
 object AppContext {
   /** logger object. */

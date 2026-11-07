@@ -8,9 +8,6 @@ import com.barrybecker4.common.app.ILog
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class MessageContextSuite extends AnyFunSuite {
 
   test("ConstructionWithValidPath") {

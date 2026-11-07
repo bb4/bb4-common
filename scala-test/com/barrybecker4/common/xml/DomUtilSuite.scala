@@ -70,7 +70,7 @@ class DomUtilSuite extends AnyFunSuite {
           |  </node>
           |</hierarchy>
           |""".stripMargin)
-      val doc = DomUtil.parseXMLFile(f)
+      val doc = DomUtil.parseXMLFile(f).get
       val asText = DomUtil.asString(doc.getDocumentElement.asInstanceOf[Node], 0)
       assert(asText.contains("id=\"leaf\""), asText)
       assert(!asText.contains("<use>"), "use elements should be substituted away: " + asText)

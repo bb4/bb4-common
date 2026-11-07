@@ -13,14 +13,12 @@ import scala.collection.mutable.ArrayBuffer
   * Use to find all classes in a specified package on the classpath.
   * It will find the classes whether they are classes in the project or jar file dependencies.
   * Could be useful in a plugin implementation.
-  * @author Barry Becker
   */
 object PackageReflector {
   private val CLASS_EXT = ".class"
 }
 
 /** Used to find classes in packages.
-  * @author Barry Becker
   */
 class PackageReflector() {
 

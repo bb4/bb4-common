@@ -15,7 +15,7 @@ class LRUCache[K, V](var cacheSize: Int) {
   /** Retrieves an entry from the cache.
     * The retrieved entry becomes the MRU (most recently used) entry.
     * @param key the key whose associated value is to be returned.
-    * @return the value associated to this key, or null if no value with this key exists in the cache.
+    * @return the value associated with this key, if present in the cache.
     */
   def get(key: K): Option[V] = {
     access(key)

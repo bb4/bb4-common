@@ -9,7 +9,7 @@ class ThreadVar private[concurrency](initial: Thread) {
   assert(initial != null)
   private var thread: Option[Thread] = Some(initial)
 
-  private[concurrency] def get: Thread = thread.orNull
+  private[concurrency] def get: Option[Thread] = thread
 
   private[concurrency] def clear(): Unit = synchronized {
     thread = None

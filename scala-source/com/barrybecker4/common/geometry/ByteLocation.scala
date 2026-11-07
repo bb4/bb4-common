@@ -7,6 +7,8 @@ package com.barrybecker4.common.geometry
   * @param brow the row coordinate (0 - 255).
   * @param bcol the column coordinate (0 - 255).
   */
+// Note: changing serialVersionUID breaks deserialization of stored ByteLocation objects.
+@SerialVersionUID(1L)
 case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   assert(Math.abs(row) < 128 && Math.abs(col) < 128, "row=" + row + " or col=" + col + " was out of range.")
 

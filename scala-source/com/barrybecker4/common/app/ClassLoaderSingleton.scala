@@ -4,19 +4,20 @@ package com.barrybecker4.common.app
 
 /** Allows getting a class loader from a static context.
   * It also avoids the same class being loaded multiple times by different loaders.
-  * @author Barry Becker
   */
 object ClassLoaderSingleton {
   private var instance: Option[ClassLoaderSingleton] = None
   private var loader: Option[ClassLoader] = None
 
-  def getClassLoader: ClassLoader = {
-    if (instance.isEmpty) {
-      loader = Some(Thread.currentThread.getContextClassLoader)
-      instance = Some(new ClassLoaderSingleton)
+  def getClassLoader: ClassLoader =
+    instance match {
+      case None =>
+        loader = Some(Thread.currentThread.getContextClassLoader)
+        instance = Some(new ClassLoaderSingleton)
+        loader.get
+      case Some(_) =>
+        loader.get
     }
-    loader.get
-  }
 
   /** @param className the class to load.
     * @return the loaded class.

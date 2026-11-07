@@ -6,9 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import FileUtil._
 
 
-/**
-  * @author Barry Becker
-  */
 class FileUtilSuite extends AnyFunSuite {
   test("FilesInDirectory (relative)") {
     val dir = "scala-test/com/barrybecker4/common/util"
@@ -29,16 +26,16 @@ class FileUtilSuite extends AnyFunSuite {
   }
 
   test("getUrl for tinyUF") {
-    assert(getURL("com/barrybecker4/common/util/data/tinyUF.txt") != null)
+    assert(getURLOption("com/barrybecker4/common/util/data/tinyUF.txt").isDefined)
   }
   test("getUrl for aa") {
-    assert(getURL("com/barrybecker4/common/util/data/aa.txt") != null)
+    assert(getURLOption("com/barrybecker4/common/util/data/aa.txt").isDefined)
   }
   test("getUrl for BB") {
-    assert(getURL("com/barrybecker4/common/util/data/BB.txt") != null)
+    assert(getURLOption("com/barrybecker4/common/util/data/BB.txt").isDefined)
   }
   test("getUrl for BB when specified as bb") {
-    assert(getURL("com/barrybecker4/common/util/data/bb.txt") != null)
+    assert(getURLOption("com/barrybecker4/common/util/data/bb.txt").isDefined)
   }
 
   test("uppercaseFilenameResourceVariant uppercases basename only, preserves extension") {
