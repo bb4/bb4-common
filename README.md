@@ -12,6 +12,14 @@ To use, include this dependency in your build.gradle file
 
 `implementation 'com.barrybecker4:bb4-common:<version>'`
 
+## Running bb4 applications
+
+This repo is a **library** published to Sonatype; consumers add the dependency above. It is not an application you run on its own.
+
+To build, test, and run bb4 **applications** (games, puzzles, simulations, and similar), see the [Building bb4 Projects](https://github.com/bb4/bb4-common/wiki/Building-bb4-Projects) wiki. Installers and zip bundles for end users come from each application’s GitHub Releases (native `.dmg` / `.msi` / `.deb` where available, or a zip with `bin/` run scripts). Many apps accept `-locale "<locale>"` on the command line (`ENGLISH`, `GERMAN`, `VIETNAMESE`, `JAPANESE`).
+
+Shared HTML used in legacy zip-based distribution trees (for example `bb4-common.css` and run instructions linked from application index pages) lives in [bb4-website](https://github.com/bb4/bb4-website/tree/master/source/html/barrybecker4/bb4-projects/bb4-common) and on [barrybecker4.org](https://barrybecker4.org/bb4-projects/bb4-common/run-instructions.html).
+
 ## Building from source
 
 Requires **JDK 25+** for the Gradle daemon (bb4-gradle 2.1). 
