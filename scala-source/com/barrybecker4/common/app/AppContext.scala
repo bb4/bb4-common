@@ -1,8 +1,9 @@
 package com.barrybecker4.common.app
 
-import com.barrybecker4.common.i18n.MessageContext
+import com.barrybecker4.common.i18n.{LocaleType, MessageContext}
 
 import java.text.NumberFormat
+import java.util.Locale
 
 /**
   * Manage application context such as logging, debugging, resources.
@@ -18,6 +19,16 @@ object AppContext {
   private var debug: Int = DEBUG
 
   private var messageContext: Option[MessageContext] = None
+
+  /** English common-bundle context used when initialize / inject have not run. */
+  private lazy val defaultMessageContext: MessageContext = {
+    val context = new MessageContext(MessageContext.COMMON_BUNDLE)
+    context.setLocale(LocaleType.ENGLISH)
+    context
+  }
+
+  private def activeMessageContext: MessageContext =
+    messageContext.getOrElse(defaultMessageContext)
 
   def isInitialized: Boolean = logger.isDefined
 
@@ -56,34 +67,28 @@ object AppContext {
     logger.get.print(logLevel, getDebugMode, message)
   }
 
+  /** Locale from the active message context (injected/initialized, else English fallback). */
+  def getLocale: Locale =
+    activeMessageContext.getLocale
+
   def getCurrencyFormat: NumberFormat =
-    NumberFormat.getCurrencyInstance(messageContext.get.getLocale)
+    NumberFormat.getCurrencyInstance(getLocale)
 
   /** @param key message key
     * @return the localized message label
     */
   def getLabel(key: String): String =
-    messageContext match {
-      case Some(ctx) => ctx.getLabel(key)
-      case None =>
-        println("Could not get label for " + key + " because the messageContext was null.")
-        key
-    }
+    activeMessageContext.getLabel(key)
 
   /** Use this version if there are parameters to the localized string
     * @param key message key
     * @return the localized message label
     */
   def getLabel(key: String, params: Array[AnyRef]): String =
-    messageContext match {
-      case Some(ctx) => ctx.getLabel(key, params)
-      case None =>
-        println("Could not get label for " + key + " because the messageContext was null.")
-        key
-    }
+    activeMessageContext.getLabel(key, params)
 
   def main(args: Array[String]): Unit = {
-    println("The bb4-common project is meant to be used as a library.")
-    println("The AppContext is used to manage global application resources like i18 and logging.")
+    println(getLabel("APP_LIBRARY_BANNER_1"))
+    println(getLabel("APP_LIBRARY_BANNER_2"))
   }
 }

@@ -1,33 +1,30 @@
 package com.barrybecker4.common.util
 
-import scala.collection.{Set, mutable}
+import java.util as ju
+
+import scala.collection.Set
+import scala.jdk.CollectionConverters.*
 
 /**
-  * An LRU cache, based on LinkedHashMap (try switching to immutable ListMap).
-  * This cache has a fixed maximum number of elements (cacheSize).
+  * An LRU cache backed by Java's access-order [[ju.LinkedHashMap]].
+  * This cache has a fixed maximum number of entries (cacheSize).
   * If the cache is full and another entry is added, the LRU (least recently used) entry is evicted.
   * @param cacheSize the maximum number of entries that will be kept in this cache.
   */
 class LRUCache[K, V](var cacheSize: Int) {
 
-  private val map = new mutable.LinkedHashMap[K, V]()
+  private val map = new ju.LinkedHashMap[K, V](cacheSize, 0.75f, true)
 
   /** Retrieves an entry from the cache.
     * The retrieved entry becomes the MRU (most recently used) entry.
     * @param key the key whose associated value is to be returned.
     * @return the value associated with this key, if present in the cache.
     */
-  def get(key: K): Option[V] = {
-    access(key)
-    map.get(key)
-  }
-  def apply(key: K): V = {
-    access(key)
-    map(key)
-  }
+  def get(key: K): Option[V] =
+    val value = map.get(key)
+    if value != null || map.containsKey(key) then Some(value) else None
 
-  private def access(key: K): Unit =
-    map.remove(key).foreach(v => map.put(key, v))
+  def apply(key: K): V = get(key).get
 
   /** Adds an entry to this cache.
     * If the cache is full, the LRU (least recently used) entry is dropped.
@@ -36,28 +33,30 @@ class LRUCache[K, V](var cacheSize: Int) {
     */
   def put(key: K, value: V): Unit = {
     map.put(key, value)
-    if (map.size > cacheSize) {
-      removeEldestEntry()
-    }
+    if map.size() > cacheSize then removeEldestEntry()
   }
 
   /** Clears the cache. */
   def clear(): Unit = map.clear()
 
   /** @return the number of entries currently in the cache.*/
-  def numEntries: Int = map.size
+  def numEntries: Int = map.size()
 
   /** @return all cache keys. */
-  def getAllKeys: Set[K] = map.keySet
+  def getAllKeys: Set[K] = map.keySet().asScala.toSet
 
   override def toString: String = {
     val content = new StringBuilder()
-    for (k <- map.keySet)
-      content.append("[").append(k).append(" : ").append(map(k)).append("]")
+    val snapshot = new ju.ArrayList(map.entrySet())
+    var i = 0
+    val n = snapshot.size()
+    while i < n do
+      val entry = snapshot.get(i)
+      content.append("[").append(entry.getKey).append(" : ").append(entry.getValue).append("]")
+      i += 1
     content.toString()
   }
 
   private def removeEldestEntry(): Unit =
-    map.remove(map.head._1)
+    map.remove(map.keySet().iterator().next())
 }
-

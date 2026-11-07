@@ -15,7 +15,7 @@ package com.barrybecker4.common.concurrency
 abstract class Worker() {
 
   /** value to return after asynchronous computation */
-  private var returnValue: Option[Any] = None
+  @volatile private var returnValue: Option[Any] = None
 
   val thread = new Thread(doConstruct())
   thread.setName("Worker Thread") //NON-NLS
@@ -27,9 +27,6 @@ abstract class Worker() {
   private def doConstruct(): Runnable = () => {
     try returnValue = Some(construct)
     finally threadVar.clear()
-    // old: SwingUtilities.invokeLater(doFinished);
-    // Now call directly, but if the body of finished is in the ui,
-    // it should call SwingUtilities.invokeLater()
     finished()
   }
 
@@ -63,20 +60,19 @@ abstract class Worker() {
     * Returns None if either the constructing thread or the current
     * thread was interrupted before a value was produced.
     */
-  def get: Option[Any] = {
-    def awaitResult(): Option[Any] =
-      threadVar.get match {
-        case None => returnValue
-        case Some(thread) =>
-          try {
-            thread.join()
-            awaitResult()
-          } catch {
-            case _: InterruptedException =>
-              Thread.currentThread.interrupt()
-              None
-          }
-      }
-    awaitResult()
-  }
+  def get: Option[Any] =
+    threadVar.get match {
+      case None => returnValue
+      case Some(workerThread) =>
+        try {
+          workerThread.join()
+          // Thread has terminated; construct's finally block has set returnValue and cleared threadVar.
+          // Do not spin on threadVar — if clear did not run, join already completed and returnValue is authoritative.
+          returnValue
+        } catch {
+          case _: InterruptedException =>
+            Thread.currentThread.interrupt()
+            None
+        }
+    }
 }

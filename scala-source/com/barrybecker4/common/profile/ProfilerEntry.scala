@@ -1,7 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.profile
 
-import com.barrybecker4.common.app.ILog
+import com.barrybecker4.common.app.{AppContext, ILog}
 import com.barrybecker4.common.format.FormatUtil
 
 
@@ -46,9 +46,9 @@ class ProfilerEntry(val name: String) {
     for (pe <- children) {
       pe.print(indent + ProfilerEntry.INDENT, logger)
     }
-    assert(totalChildTime <= totalTime,
+    assert(totalChildTime <= totalTime, // NON-NLS
       "The sum of the child times(" + totalChildTime + ") cannot be greater than the parent time (" +
-        totalTime + ") for entry '" + name + "'. " + "child entries =" + children)
+        totalTime + ") for entry '" + name + "'. " + "child entries =" + children) // NON-NLS
   }
 
 
@@ -56,6 +56,6 @@ class ProfilerEntry(val name: String) {
 
   private def getFormattedTime = {
     val seconds = getTimeInSeconds
-    "Time for " + name + " : " + FormatUtil.formatNumber(seconds) + " seconds"
+    AppContext.getLabel("PROFILER_TIME_LINE", Array(name, FormatUtil.formatNumber(seconds)))
   }
 }

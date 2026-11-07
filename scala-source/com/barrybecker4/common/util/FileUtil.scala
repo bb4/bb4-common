@@ -42,20 +42,13 @@ object FileUtil {
 
   /** Create a PrintWriter with utf8 encoding.
     * @param filename including the full path
-    * @return new PrintWriter instance, or None if there was a problem creating it.
+    * @return new PrintWriter instance
     */
-  def createPrintWriter(filename: String): Option[PrintWriter] =
-    try
-      Some(
-        new PrintWriter(
-          new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false), "UTF-8"))
-        )
-      )
-    catch {
-      case e: IOException =>
-        e.printStackTrace()
-        None
-    }
+  @throws[IOException]
+  def createPrintWriter(filename: String): PrintWriter =
+    new PrintWriter(
+      new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename, false), "UTF-8"))
+    )
 
   /** @return a URL given the path to a file */
   def getURL(sPath: String): URL =
