@@ -1,6 +1,9 @@
 /**
  * Shared Jenkinsfile pipeline for all bb4 projects.
  * See https://jenkins.io/doc/book/pipeline/shared-libraries/
+ *
+ * Agents must provide JDK 25+ for the Gradle daemon (bb4-gradle 2.1 toolchain baseline).
+ *
  * @param pipelineParams They are:
  *   gitUrl - the git repository url from github.
  *   language - either java or scala.
