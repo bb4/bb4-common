@@ -63,10 +63,12 @@ class PackageReflector() {
     val zip = new ZipInputStream(jar.openStream)
     var entry = zip.getNextEntry
     while (entry != null) {
-      if (entry.getName.endsWith(PackageReflector.CLASS_EXT)) {
+      if (
+        !entry.getName.contains("$") && entry.getName.endsWith(PackageReflector.CLASS_EXT)
+      ) {
         val className = entry.getName
-          .replaceAll("[$].*", "")
-          .replaceAll("[.]class", "").replace('/', '.')
+          .replaceAll("[.]class", "")
+          .replace('/', '.')
         if (className.startsWith(packageName)) {
           val name = className.substring(packageName.length + 1)
           if (!name.contains("."))
