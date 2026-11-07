@@ -70,6 +70,7 @@ class InputSuite extends AnyFunSuite {
       val result = Input.getLong("Enter a number:", 10, 100)
       assertResult(10L) { result }
     }
+  }
 
   test("getLong with range accepts maximum value") {
     withSystemIn("100\n") {
