@@ -1,7 +1,11 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.format
 
+import com.barrybecker4.common.app.AppContext
+import com.barrybecker4.common.i18n.{LocaleType, MessageContext}
 import org.scalatest.funsuite.AnyFunSuite
+
+import java.util.Locale
 
 class CurrencyFormatterSuite extends AnyFunSuite {
 
@@ -26,6 +30,36 @@ class CurrencyFormatterSuite extends AnyFunSuite {
     assertResult("$1.235E8") {fmtr.format(123456750.0)}
     assertResult("$3.249E15") {fmtr.format(3249139980984750.0)}
     assertResult("$2.139E24") {fmtr.format(2139042130948210394213050.0)}
+  }
+
+  test("uses locale-specific currency symbol") {
+    val german = new CurrencyFormatter(Locale.GERMANY)
+    assertResult("€5.0") { german.format(5.0) }
+  }
+
+  test("uses AppContext locale for currency symbol") {
+    val ctx = new MessageContext("com.barrybecker4.common.i18n.message")
+    ctx.setLocale(LocaleType.GERMAN)
+    AppContext.injectMessageContext(ctx)
+    try {
+      val localized = new CurrencyFormatter()
+      assertResult("€5.0") { localized.format(5.0) }
+      assertResult("€") { CurrencyFormatter.CURRENCY_SYMBOL }
+    } finally {
+      AppContext.injectMessageContext(null)
+    }
+  }
+
+  test("constructor locale overrides AppContext") {
+    val ctx = new MessageContext("com.barrybecker4.common.i18n.message")
+    ctx.setLocale(LocaleType.GERMAN)
+    AppContext.injectMessageContext(ctx)
+    try {
+      val explicit = new CurrencyFormatter(Locale.US)
+      assertResult("$250.0") { explicit.format(250.0) }
+    } finally {
+      AppContext.injectMessageContext(null)
+    }
   }
 
 }

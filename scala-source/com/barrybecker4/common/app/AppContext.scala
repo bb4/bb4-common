@@ -3,6 +3,7 @@ package com.barrybecker4.common.app
 import com.barrybecker4.common.i18n.MessageContext
 
 import java.text.NumberFormat
+import java.util.Locale
 
 /**
   * Manage application context such as logging, debugging, resources.
@@ -56,8 +57,12 @@ object AppContext {
     logger.get.print(logLevel, getDebugMode, message)
   }
 
+  /** Locale from the active message context, or US English when the context is not set. */
+  def getLocale: Locale =
+    messageContext.fold(Locale.US)(_.getLocale)
+
   def getCurrencyFormat: NumberFormat =
-    NumberFormat.getCurrencyInstance(messageContext.get.getLocale)
+    NumberFormat.getCurrencyInstance(getLocale)
 
   /** @param key message key
     * @return the localized message label
