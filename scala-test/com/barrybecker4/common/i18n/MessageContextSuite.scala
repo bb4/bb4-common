@@ -33,20 +33,20 @@ class MessageContextSuite extends AnyFunSuite {
   test("getLocale valid enum name") {
     val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
-    assertResult(LocaleType.GERMAN) { context.getLocale("GERMAN", finf = true) }
+    assertResult(LocaleType.GERMAN) { context.getLocaleOrThrow("GERMAN") }
   }
 
-  test("getLocale unknown with finf false returns English") {
+  test("getLocale unknown with throwIfNotFound false returns English") {
     val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
-    assertResult(LocaleType.ENGLISH) { context.getLocale("NOSUCH", finf = false) }
+    assertResult(LocaleType.ENGLISH) { context.getLocaleOrDefault("NOSUCH") }
   }
 
-  test("getLocale unknown with finf true throws") {
+  test("getLocale unknown with throwIfNotFound true throws") {
     val context = new MessageContext("com.barrybecker4.common.i18n.message")
     context.setLogger(new MyLogger)
     assertThrows[IllegalArgumentException] {
-      context.getLocale("NOSUCH", finf = true)
+      context.getLocaleOrThrow("NOSUCH")
     }
   }
 

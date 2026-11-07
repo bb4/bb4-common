@@ -50,4 +50,14 @@ class UnionFindSuite extends AnyFunSuite {
     uf.union(0, 1)
     assert(uf.connected(4, 3))
   }
+
+  test("find rejects invalid index") {
+    val uf = new UnionFind(3)
+    assertThrows[IllegalArgumentException] {
+      uf.find(-1)
+    }
+    assertThrows[IllegalArgumentException] {
+      uf.find(3)
+    }
+  }
 }

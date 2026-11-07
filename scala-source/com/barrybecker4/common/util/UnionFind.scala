@@ -79,7 +79,7 @@ class UnionFind(n: Int) {
   /** validate that p is a valid index */
   private def validate(p: Int): Unit = {
     val N = parent.length
-    if (p < 0 || p >= N) throw new IndexOutOfBoundsException("index " + p + " is not between 0 and " + N)
+    require(p >= 0 && p < N, s"index $p is not between 0 and $N")
   }
 
   /** @param p the integer representing one site

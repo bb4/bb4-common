@@ -65,7 +65,7 @@ class MessageContext(var resourcePaths: List[String]) {
     * @param localeName name locale to use (something like ENGLISH, GERMAN, etc)
     */
   def setLocale(localeName: String): Unit = {
-    setLocale(getLocale(localeName, finf = true))
+    setLocale(getLocaleOrThrow(localeName))
   }
 
   /** Set or change the current locale.
@@ -126,16 +126,22 @@ class MessageContext(var resourcePaths: List[String]) {
     JComponent.setDefaultLocale(locale.locale)
   }
 
+  def getLocaleOrDefault(name: String): LocaleType =
+    getLocale(name, throwIfNotFound = false)
+
+  def getLocaleOrThrow(name: String): LocaleType =
+    getLocale(name, throwIfNotFound = true)
+
   /** Looks up a LocaleType for a given locale name (enum constant name, e.g. ENGLISH).
-    * @param finf if true, throw when the name is unknown; if false, return [[LocaleType.ENGLISH]] after logging.
+    * @param throwIfNotFound if true, throw when the name is unknown; if false, return [[LocaleType.ENGLISH]] after logging.
     * @return locale for the name
     */
-  def getLocale(name: String, finf: Boolean): LocaleType = {
+  def getLocale(name: String, throwIfNotFound: Boolean): LocaleType = {
     LocaleType.fromString(name) match {
       case Some(t) => t
       case None =>
-        logInvalidLocaleName(name, finf)
-        if (finf) {
+        logInvalidLocaleName(name, throwIfNotFound)
+        if (throwIfNotFound) {
           throw new IllegalArgumentException(
             "Unknown locale '" + name + "'. Use one of: " + LocaleType.values.mkString(", "))
         }
@@ -143,14 +149,14 @@ class MessageContext(var resourcePaths: List[String]) {
     }
   }
 
-  private def logInvalidLocaleName(name: String, finf: Boolean): Unit = {
+  private def logInvalidLocaleName(name: String, throwIfNotFound: Boolean): Unit = {
     if (logger.isEmpty) return
     log(0, "***************")
     log(0, name + " is not a valid locale. We currently only support: ") // NON-NLS
     for (v <- LocaleType.values) {
       log(0, v.toString)
     }
-    if (!finf) log(0, "Defaulting to English.")
+    if (!throwIfNotFound) log(0, "Defaulting to English.")
     log(0, "***************")
   }
 }
