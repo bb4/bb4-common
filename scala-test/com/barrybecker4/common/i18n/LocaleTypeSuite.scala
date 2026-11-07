@@ -6,10 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import java.util.Locale
 
 
-/**
-  * Tests for LocaleType enum and fromString parsing.
-  * @author Barry Becker
-  */
 class LocaleTypeSuite extends AnyFunSuite {
 
   test("ENGLISH has correct locale") {

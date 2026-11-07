@@ -4,10 +4,6 @@ package com.barrybecker4.common.app
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * Tests for ClassLoaderSingleton initialization and caching behavior.
-  * @author Barry Becker
-  */
 class ClassLoaderSingletonSuite extends AnyFunSuite {
 
   test("getClassLoader returns non-null") {

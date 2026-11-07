@@ -4,9 +4,6 @@ package com.barrybecker4.common.geometry
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class ByteLocationSuite extends AnyFunSuite {
 
   test("Construction with valid byte values") {
@@ -32,54 +29,60 @@ class ByteLocationSuite extends AnyFunSuite {
   }
 
   test("Int constructor with valid values") {
-    val loc = ByteLocation(10, 20)
+    val loc = new ByteLocation(10, 20)
     assertResult(10) { loc.row }
     assertResult(20) { loc.col }
   }
 
   test("Int constructor with negative values") {
-    val loc = ByteLocation(-10, -20)
+    val loc = new ByteLocation(-10, -20)
     assertResult(-10) { loc.row }
     assertResult(-20) { loc.col }
   }
 
   test("Int constructor at boundary values") {
-    val loc1 = ByteLocation(127, 127)
+    val loc1 = new ByteLocation(127, 127)
     assertResult(127) { loc1.row }
     assertResult(127) { loc1.col }
     
-    val loc2 = ByteLocation(-127, -127)
+    val loc2 = new ByteLocation(-127, -127)
     assertResult(-127) { loc2.row }
     assertResult(-127) { loc2.col }
   }
 
-  test("Int constructor with value 128 truncates to -128") {
-    // Int 128 converts to Byte -128 via toByte, then assertion checks abs(-128) < 128
+  test("Int constructor with value 128 truncates to -128 and fails assertion") {
+    // Int 128 converts to Byte -128 via toByte, then assertion checks abs(-128) < 128, which is false
     // This documents current truncation behavior (related to issue #53)
     assertThrows[AssertionError] {
-      ByteLocation(128, 0)
+      new ByteLocation(128, 0)
     }
   }
 
   test("Int constructor with value -128 fails assertion") {
     // -128 as a byte has abs(-128) = 128, which is not < 128
     assertThrows[AssertionError] {
-      ByteLocation(-128, 0)
+      new ByteLocation(-128, 0)
     }
   }
 
-  test("Int constructor with large positive value truncates and may fail assertion") {
+  test("Int constructor with large positive value 200 truncates to -56") {
     // 200 as Int.toByte = -56, which passes assertion since abs(-56) < 128
-    val loc = ByteLocation(200, 0)
+    // This documents current truncation behavior (related to issue #53)
+    val loc = new ByteLocation(200, 0)
     assertResult(-56) { loc.row }
   }
 
-  test("Int constructor with out-of-range values fails assertion") {
+  test("Int constructor with value 256 truncates to 0 and passes") {
+    // 256.toByte = 0, so ByteLocation(0, 10) passes assertion
+    // This documents current truncation behavior (related to issue #53)
+    val loc = new ByteLocation(256, 10)
+    assertResult(0) { loc.row }
+    assertResult(10) { loc.col }
+  }
+
+  test("Int constructor with col=128 truncates and fails assertion") {
     assertThrows[AssertionError] {
-      ByteLocation(0, 128)
-    }
-    assertThrows[AssertionError] {
-      ByteLocation(256, 10)
+      new ByteLocation(0, 128)
     }
   }
 
@@ -90,14 +93,14 @@ class ByteLocationSuite extends AnyFunSuite {
   }
 
   test("incrementOnCopy with positive values") {
-    val loc = ByteLocation(10, 20)
+    val loc = new ByteLocation(10, 20)
     val incremented = loc.incrementOnCopy(5, 3)
     assertResult(15) { incremented.row }
     assertResult(23) { incremented.col }
   }
 
   test("incrementOnCopy with negative values") {
-    val loc = ByteLocation(10, 20)
+    val loc = new ByteLocation(10, 20)
     val incremented = loc.incrementOnCopy(-5, -10)
     assertResult(5) { incremented.row }
     assertResult(10) { incremented.col }

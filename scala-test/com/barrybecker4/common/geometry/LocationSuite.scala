@@ -6,10 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import java.awt.geom.Point2D
 
 
-/**
-  * Tests for the Location trait behavior through its implementations.
-  * @author Barry Becker
-  */
 class LocationSuite extends AnyFunSuite {
 
   test("equals reflexivity") {

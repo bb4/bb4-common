@@ -4,9 +4,6 @@ package com.barrybecker4.common.geometry
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class IntLocationSuite extends AnyFunSuite {
 
   test("Construction with positive values") {
@@ -29,7 +26,7 @@ class IntLocationSuite extends AnyFunSuite {
 
   test("Construction from Location") {
     val source = ByteLocation(5, 10)
-    val loc = IntLocation(source)
+    val loc = new IntLocation(source)
     assertResult(5) { loc.row }
     assertResult(10) { loc.col }
   }

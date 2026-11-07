@@ -7,10 +7,6 @@ import org.xml.sax.SAXParseException
 import java.io.{ByteArrayOutputStream, PrintStream}
 
 
-/**
-  * Tests for XmlErrorHandler behavior with different error types.
-  * @author Barry Becker
-  */
 class XmlErrorHandlerSuite extends AnyFunSuite {
 
   private def captureOutput(testCode: => Unit): String = {
@@ -24,6 +20,40 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
       outputStream.toString("UTF-8")
     } finally {
       System.setOut(originalOut)
+    }
+  }
+
+  private def captureStderr(testCode: => Unit): String = {
+    val errorStream = new ByteArrayOutputStream()
+    val printStream = new PrintStream(errorStream)
+    val originalErr = System.err
+    try {
+      System.setErr(printStream)
+      testCode
+      printStream.flush()
+      errorStream.toString("UTF-8")
+    } finally {
+      System.setErr(originalErr)
+    }
+  }
+
+  private def captureBoth(testCode: => Unit): (String, String) = {
+    val outStream = new ByteArrayOutputStream()
+    val errStream = new ByteArrayOutputStream()
+    val outPrint = new PrintStream(outStream)
+    val errPrint = new PrintStream(errStream)
+    val originalOut = System.out
+    val originalErr = System.err
+    try {
+      System.setOut(outPrint)
+      System.setErr(errPrint)
+      testCode
+      outPrint.flush()
+      errPrint.flush()
+      (outStream.toString("UTF-8"), errStream.toString("UTF-8"))
+    } finally {
+      System.setOut(originalOut)
+      System.setErr(originalErr)
     }
   }
 
@@ -44,15 +74,15 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     assert(output.contains("column 5"))
   }
 
-  test("warning includes stack trace") {
+  test("warning includes stack trace on stderr") {
     val handler = new XmlErrorHandler
     val exception = createException("Test warning", 10, 5)
     
-    val output = captureOutput {
+    val (stdout, stderr) = captureBoth {
       handler.warning(exception)
     }
     
-    assert(output.contains("org.xml.sax.SAXParseException"))
+    assert(stderr.contains("org.xml.sax.SAXParseException"))
   }
 
   test("error prints error message") {
@@ -68,15 +98,15 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     assert(output.contains("column 15"))
   }
 
-  test("error includes stack trace") {
+  test("error includes stack trace on stderr") {
     val handler = new XmlErrorHandler
     val exception = createException("Test error", 20, 15)
     
-    val output = captureOutput {
+    val (stdout, stderr) = captureBoth {
       handler.error(exception)
     }
     
-    assert(output.contains("org.xml.sax.SAXParseException"))
+    assert(stderr.contains("org.xml.sax.SAXParseException"))
   }
 
   test("fatalError prints fatal error message") {
@@ -92,15 +122,15 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     assert(output.contains("column 25"))
   }
 
-  test("fatalError includes stack trace") {
+  test("fatalError includes stack trace on stderr") {
     val handler = new XmlErrorHandler
     val exception = createException("Test fatal error", 30, 25)
     
-    val output = captureOutput {
+    val (stdout, stderr) = captureBoth {
       handler.fatalError(exception)
     }
     
-    assert(output.contains("org.xml.sax.SAXParseException"))
+    assert(stderr.contains("org.xml.sax.SAXParseException"))
   }
 
   test("warning does not throw exception") {
@@ -182,14 +212,14 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     assert(output.contains("Fatal Error while"))
   }
 
-  test("exception message is printed in stack trace") {
+  test("exception message is printed in stack trace on stderr") {
     val handler = new XmlErrorHandler
     val exception = createException("Custom error message", 42, 7)
     
-    val output = captureOutput {
+    val (stdout, stderr) = captureBoth {
       handler.error(exception)
     }
     
-    assert(output.contains("Custom error message"))
+    assert(stderr.contains("Custom error message"))
   }
 }

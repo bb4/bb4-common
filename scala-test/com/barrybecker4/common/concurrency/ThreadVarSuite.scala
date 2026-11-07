@@ -7,10 +7,6 @@ import java.util.concurrent.{CountDownLatch, TimeUnit}
 import scala.collection.mutable
 
 
-/**
-  * Tests for ThreadVar concurrency and synchronization behavior.
-  * @author Barry Becker
-  */
 class ThreadVarSuite extends AnyFunSuite {
 
   test("Construction requires non-null thread") {
@@ -22,14 +18,14 @@ class ThreadVarSuite extends AnyFunSuite {
   test("get returns initial thread") {
     val thread = new Thread(() => {})
     val threadVar = new ThreadVar(thread)
-    assertResult(thread) { threadVar.get }
+    assertResult(Some(thread)) { threadVar.get }
   }
 
   test("clear sets thread to None") {
     val thread = new Thread(() => {})
     val threadVar = new ThreadVar(thread)
     threadVar.clear()
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
   test("interrupt interrupts thread and clears reference") {
@@ -47,7 +43,7 @@ class ThreadVarSuite extends AnyFunSuite {
     threadVar.interrupt()
     thread.join(1000)
     assert(wasInterrupted)
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
   test("start calls start on thread") {
@@ -59,14 +55,13 @@ class ThreadVarSuite extends AnyFunSuite {
     assert(threadRan)
   }
 
-  test("multiple starts do not throw exception") {
-    // Thread.start() throws if called twice, but ThreadVar.start() should handle its reference safely
+  test("start then clear leaves thread in None state") {
     val thread = new Thread(() => {})
     val threadVar = new ThreadVar(thread)
     threadVar.start()
     thread.join(1000)
-    // After thread completes, calling start again on the same ThreadVar does nothing harmful
-    // (The underlying Thread will throw if started again, but that's expected thread behavior)
+    threadVar.clear()
+    assertResult(None) { threadVar.get }
   }
 
   test("clear is thread-safe") {
@@ -81,7 +76,7 @@ class ThreadVarSuite extends AnyFunSuite {
     }
     threads.foreach(_.start())
     assert(latch.await(5, TimeUnit.SECONDS))
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
   test("interrupt is thread-safe") {
@@ -166,17 +161,17 @@ class ThreadVarSuite extends AnyFunSuite {
     
     assert(latch.await(5, TimeUnit.SECONDS))
     targetThread.join(1000)
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
-  test("get after clear returns null") {
+  test("get after clear returns None") {
     val thread = new Thread(() => {})
     val threadVar = new ThreadVar(thread)
     threadVar.clear()
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
-  test("get after interrupt returns null") {
+  test("get after interrupt returns None") {
     val thread = new Thread(() => {
       try {
         Thread.sleep(10000)
@@ -188,7 +183,7 @@ class ThreadVarSuite extends AnyFunSuite {
     thread.start()
     threadVar.interrupt()
     thread.join(1000)
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
   test("clear after interrupt does not throw") {
@@ -204,7 +199,7 @@ class ThreadVarSuite extends AnyFunSuite {
     threadVar.interrupt()
     thread.join(1000)
     threadVar.clear()
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 
   test("interrupt after clear does not throw") {
@@ -212,6 +207,6 @@ class ThreadVarSuite extends AnyFunSuite {
     val threadVar = new ThreadVar(thread)
     threadVar.clear()
     threadVar.interrupt()
-    assertResult(null) { threadVar.get }
+    assertResult(None) { threadVar.get }
   }
 }
