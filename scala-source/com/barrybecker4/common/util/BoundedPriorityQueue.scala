@@ -27,6 +27,8 @@ import scala.jdk.CollectionConverters.*
   * Wraps the original PriorityQueue and modifies it such that only the top K elements are retained.
   * The top K elements are defined by a context Ordering[A].
   */
+// Note: changing serialVersionUID breaks deserialization of stored BoundedPriorityQueue objects.
+@SerialVersionUID(1L)
 class BoundedPriorityQueue[A](maxSize: Int)(using ord: Ordering[A])
   extends Iterable[A] with mutable.Growable[A] with Serializable {
 
