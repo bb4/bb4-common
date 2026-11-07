@@ -7,8 +7,15 @@ import java.io.{BufferedReader, IOException, InputStreamReader}
 import java.math.BigInteger
 
 /**
-  * Convenience methods for getting user input entered from the keyboard.
-  * Consider using Scanner instead of this class.
+  * Interactive console input with prompts, validation, and re-prompting until the user
+  * enters acceptable values.
+  *
+  * Use this object for simple command-line programs that read from `System.in` and need
+  * typed values in a range or arbitrary-precision integers without wiring your own retry
+  * loop. For reading and parsing tokens from arbitrary streams (files, pipes, tests) or
+  * when you want full control over parsing and error handling, prefer
+  * [[https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html java.util.Scanner]]
+  * or Scala's `scala.io.StdIn`.
   */
 object Input {
 
@@ -61,7 +68,7 @@ object Input {
 
   /** Get a potentially huge number from the user.
     * Continues to ask until a valid number provided.
-    * There is mo limit to the amount of precision.
+    * There is no limit to the amount of precision.
     * @param prompt query string to prompt the user for a response.
     * @return an big integer number
     */
