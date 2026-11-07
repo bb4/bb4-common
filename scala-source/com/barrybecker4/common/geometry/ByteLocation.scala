@@ -2,7 +2,7 @@
 package com.barrybecker4.common.geometry
 
 /**
-  * Represents an immutable location location of something in byte coordinates.
+  * Represents an immutable location of something in byte coordinates.
   * The range of bytes are only -127 to 127.
   * @param brow the row coordinate (0 - 255).
   * @param bcol the column coordinate (0 - 255).
@@ -17,8 +17,8 @@ case class ByteLocation(brow: Byte, bcol: Byte) extends Location {
   }
   override def row: Int = brow
   override def col: Int = bcol
-  override def getX: Int = brow
-  override def getY: Int = bcol
+  override def getX: Int = bcol
+  override def getY: Int = brow
 
   override def incrementOnCopy(rowChange: Int, colChange: Int) =
     new ByteLocation(row + rowChange, col + colChange)

@@ -2,7 +2,7 @@ package com.barrybecker4.common.geometry
 
 
 /**
-  * Represents an immutable location location of something in Float coordinates.
+  * Represents an immutable location of something in Float coordinates.
   * @param x the x-axis coordinate.
   * @param y the y-axis coordinate.
   */

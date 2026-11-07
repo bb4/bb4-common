@@ -86,10 +86,10 @@ class ByteLocationSuite extends AnyFunSuite {
     }
   }
 
-  test("getX returns brow (axis quirk documented in issue #66)") {
+  test("getX returns col, getY returns row") {
     val loc = ByteLocation(5, 10)
-    assertResult(5) { loc.getX }
-    assertResult(10) { loc.getY }
+    assertResult(10) { loc.getX }
+    assertResult(5) { loc.getY }
   }
 
   test("incrementOnCopy with positive values") {
@@ -167,10 +167,9 @@ class ByteLocationSuite extends AnyFunSuite {
     assertResult(5.0) { loc1.getDistanceFrom(loc2) }
   }
 
-  test("getDistanceFrom Point2D (axis quirk documented in issue #66)") {
-    val loc = ByteLocation(3, 4)
-    val point = new java.awt.geom.Point2D.Double(3.0, 4.0)
-    // Current implementation uses row-X, col-Y in distance calculation
+  test("getDistanceFrom Point2D with matching Cartesian coordinates") {
+    val loc = ByteLocation(3, 8)
+    val point = new java.awt.geom.Point2D.Double(8.0, 3.0)
     assertResult(0.0) { loc.getDistanceFrom(point) }
   }
 

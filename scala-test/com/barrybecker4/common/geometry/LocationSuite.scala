@@ -106,14 +106,13 @@ class LocationSuite extends AnyFunSuite {
   test("getDistanceFrom Point2D at origin") {
     val loc = IntLocation(3, 4)
     val point = new Point2D.Double(0.0, 0.0)
-    // Note: Current implementation uses row-X, col-Y pairing (see issue #66)
-    val expected = Math.sqrt(3.0 * 3.0 + 4.0 * 4.0)
+    val expected = Math.sqrt(4.0 * 4.0 + 3.0 * 3.0)
     assertResult(expected) { loc.getDistanceFrom(point) }
   }
 
-  test("getDistanceFrom Point2D same coordinates") {
+  test("getDistanceFrom Point2D same Cartesian position") {
     val loc = IntLocation(5, 10)
-    val point = new Point2D.Double(5.0, 10.0)
+    val point = new Point2D.Double(10.0, 5.0)
     assertResult(0.0) { loc.getDistanceFrom(point) }
   }
 

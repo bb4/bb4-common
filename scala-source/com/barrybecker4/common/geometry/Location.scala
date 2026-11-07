@@ -3,8 +3,8 @@ package com.barrybecker4.common.geometry
 
 import java.awt.geom.Point2D
 
-/** Represents a location location of something in coordinates.
-  * Immutable. Use MutableIntLocation if you really need to modify it (rare).
+/** Represents a location of something in coordinates.
+  * Immutable. `getX` / `getY` use Cartesian mapping: x = column, y = row (see [[IntLocation]]).
   *
   * Concrete subtypes that may be Java-serialized must declare an explicit
   * `serialVersionUID` (Scala `@SerialVersionUID`); it is not inherited from this trait.
@@ -28,7 +28,7 @@ trait Location extends Serializable {
   override def hashCode: Int = 100 * row + col
 
   /** @param loc another location to measure distance from.
-    * @return the euclidean distance from this location to another.
+    * @return the Euclidean distance from this location to another.
     */
   def getDistanceFrom(loc: Location): Double = {
     val xDif = Math.abs(col - loc.col)
@@ -37,11 +37,11 @@ trait Location extends Serializable {
   }
 
   /** @param loc another arbitrary floating point location to measure distance from.
-    * @return the euclidean distance from this location to another.
+    * @return the Euclidean distance from this location to another.
     */
   def getDistanceFrom(loc: Point2D): Double = {
-    val xDif = Math.abs(row - loc.getX)
-    val yDif = Math.abs(col - loc.getY)
+    val xDif = Math.abs(col - loc.getX)
+    val yDif = Math.abs(row - loc.getY)
     Math.sqrt(xDif * xDif + yDif * yDif)
   }
 
