@@ -6,18 +6,9 @@ package com.barrybecker4.common.app
   * It also avoids the same class being loaded multiple times by different loaders.
   */
 object ClassLoaderSingleton {
-  private var instance: Option[ClassLoaderSingleton] = None
-  private var loader: Option[ClassLoader] = None
+  private lazy val loader: ClassLoader = Thread.currentThread.getContextClassLoader
 
-  def getClassLoader: ClassLoader =
-    instance match {
-      case None =>
-        loader = Some(Thread.currentThread.getContextClassLoader)
-        instance = Some(new ClassLoaderSingleton)
-        loader.get
-      case Some(_) =>
-        loader.get
-    }
+  def getClassLoader: ClassLoader = loader
 
   /** @param className the class to load.
     * @return the loaded class.
@@ -31,5 +22,3 @@ object ClassLoaderSingleton {
           s"Unable to find the class $className. Verify that it is in the classpath.", e)
     }
 }
-
-class ClassLoaderSingleton
