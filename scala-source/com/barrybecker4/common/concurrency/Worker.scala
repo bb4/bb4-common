@@ -27,9 +27,6 @@ abstract class Worker() {
   private def doConstruct(): Runnable = () => {
     try returnValue = Some(construct)
     finally threadVar.clear()
-    // old: SwingUtilities.invokeLater(doFinished);
-    // Now call directly, but if the body of finished is in the ui,
-    // it should call SwingUtilities.invokeLater()
     finished()
   }
 
