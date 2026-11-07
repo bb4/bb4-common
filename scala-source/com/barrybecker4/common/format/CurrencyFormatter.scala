@@ -1,18 +1,11 @@
 /** Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT  */
 package com.barrybecker4.common.format
 
-import java.util.{Currency, Locale}
-
-
 object CurrencyFormatter {
-  private val CURRENCY_SYMBOL = Currency.getInstance(Locale.US).getSymbol
+  val CURRENCY_SYMBOL: String = NumberFormatter.US_CURRENCY_SYMBOL
 }
 
-
-class CurrencyFormatter extends INumberFormatter {
-
-  override def format(number: Double): String = {
-    val formattedNumber = FormatUtil.formatNumber(number)
-    CurrencyFormatter.CURRENCY_SYMBOL + formattedNumber
-  }
+final class CurrencyFormatter extends INumberFormatter {
+  inline override def format(number: Double): String =
+    NumberFormatter.currency.format(number)
 }
