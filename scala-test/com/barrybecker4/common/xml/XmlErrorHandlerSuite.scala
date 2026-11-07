@@ -83,7 +83,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Test error", 20, 15)
     
     val output = captureOutput {
-      handler.error(exception)
+      try {
+        handler.error(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(output.contains("Error"))
@@ -96,7 +100,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Test error", 20, 15)
     
     val (stdout, stderr) = captureBoth {
-      handler.error(exception)
+      try {
+        handler.error(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(stderr.contains("org.xml.sax.SAXParseException"))
@@ -107,7 +115,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Test fatal error", 30, 25)
     
     val output = captureOutput {
-      handler.fatalError(exception)
+      try {
+        handler.fatalError(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(output.contains("Fatal Error while"))
@@ -120,7 +132,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Test fatal error", 30, 25)
     
     val (stdout, stderr) = captureBoth {
-      handler.fatalError(exception)
+      try {
+        handler.fatalError(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(stderr.contains("org.xml.sax.SAXParseException"))
@@ -135,21 +151,25 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     }
   }
 
-  test("error does not throw exception") {
+  test("error rethrows exception") {
     val handler = new XmlErrorHandler
     val exception = createException("Test error", 20, 15)
     
     captureOutput {
-      handler.error(exception)
+      assertThrows[SAXParseException] {
+        handler.error(exception)
+      }
     }
   }
 
-  test("fatalError does not throw exception") {
+  test("fatalError rethrows exception") {
     val handler = new XmlErrorHandler
     val exception = createException("Test fatal error", 30, 25)
     
     captureOutput {
-      handler.fatalError(exception)
+      assertThrows[SAXParseException] {
+        handler.fatalError(exception)
+      }
     }
   }
 
@@ -170,7 +190,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Test error", 99999, 88888)
     
     val output = captureOutput {
-      handler.error(exception)
+      try {
+        handler.error(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(output.contains("line 99999"))
@@ -196,8 +220,16 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     
     val output = captureOutput {
       handler.warning(createException("A warning", 5, 1))
-      handler.error(createException("An error", 10, 2))
-      handler.fatalError(createException("A fatal error", 15, 3))
+      try {
+        handler.error(createException("An error", 10, 2))
+      } catch {
+        case _: SAXParseException => // expected
+      }
+      try {
+        handler.fatalError(createException("A fatal error", 15, 3))
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(output.contains("Warning"))
@@ -210,7 +242,11 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
     val exception = createException("Custom error message", 42, 7)
     
     val (stdout, stderr) = captureBoth {
-      handler.error(exception)
+      try {
+        handler.error(exception)
+      } catch {
+        case _: SAXParseException => // expected
+      }
     }
     
     assert(stderr.contains("Custom error message"))
