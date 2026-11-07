@@ -11,21 +11,16 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
 
   private def captureOutput(testCode: => Unit): String = {
     val outputStream = new ByteArrayOutputStream()
-    val printStream = new PrintStream(outputStream)
-    val originalOut = System.out
-    try {
-      System.setOut(printStream)
+    val printStream = new PrintStream(outputStream, true, "UTF-8")
+    Console.withOut(printStream) {
       testCode
-      printStream.flush()
-      outputStream.toString("UTF-8")
-    } finally {
-      System.setOut(originalOut)
     }
+    outputStream.toString("UTF-8")
   }
 
   private def captureStderr(testCode: => Unit): String = {
     val errorStream = new ByteArrayOutputStream()
-    val printStream = new PrintStream(errorStream)
+    val printStream = new PrintStream(errorStream, true, "UTF-8")
     val originalErr = System.err
     try {
       System.setErr(printStream)
@@ -40,19 +35,17 @@ class XmlErrorHandlerSuite extends AnyFunSuite {
   private def captureBoth(testCode: => Unit): (String, String) = {
     val outStream = new ByteArrayOutputStream()
     val errStream = new ByteArrayOutputStream()
-    val outPrint = new PrintStream(outStream)
-    val errPrint = new PrintStream(errStream)
-    val originalOut = System.out
+    val outPrint = new PrintStream(outStream, true, "UTF-8")
+    val errPrint = new PrintStream(errStream, true, "UTF-8")
     val originalErr = System.err
     try {
-      System.setOut(outPrint)
       System.setErr(errPrint)
-      testCode
-      outPrint.flush()
+      Console.withOut(outPrint) {
+        testCode
+      }
       errPrint.flush()
       (outStream.toString("UTF-8"), errStream.toString("UTF-8"))
     } finally {
-      System.setOut(originalOut)
       System.setErr(originalErr)
     }
   }
