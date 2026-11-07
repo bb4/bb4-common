@@ -1,9 +1,7 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT*/
 package com.barrybecker4.common.concurrency
 
-/**
-  * @author Barry Becker
-  */
+
 object ThreadUtil {
 
   /** Cause this thread to sleep for specified amount of time while other threads run.

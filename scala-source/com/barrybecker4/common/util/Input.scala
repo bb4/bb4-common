@@ -9,7 +9,6 @@ import java.math.BigInteger
 /**
   * Convenience methods for getting user input entered from the keyboard.
   * Consider using Scanner instead of this class.
-  * @author Barry Becker
   */
 object Input {
 

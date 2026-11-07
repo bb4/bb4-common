@@ -17,7 +17,6 @@ import scala.util.Using
 
 /**
   * Static utility methods for manipulating an XML dom.
-  * @author Barry Becker
   */
 object DomUtil {
   /** This URL is where I keep all my published xsd's (xml schemas) and dtd's (doc type definitions) */

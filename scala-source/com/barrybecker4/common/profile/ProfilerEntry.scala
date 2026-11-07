@@ -12,7 +12,6 @@ object ProfilerEntry {
 /**
   * Represents the timing numbers for a named region of the code.
   * @param name the name of this profiler entry
-  * @author Barry Becker
   */
 class ProfilerEntry(val name: String) {
   private var startTime: Long = 0

@@ -8,8 +8,6 @@ import java.awt.geom.Point2D
   *
   * Concrete subtypes that may be Java-serialized must declare an explicit
   * `serialVersionUID` (Scala `@SerialVersionUID`); it is not inherited from this trait.
-  *
-  * @author Barry Becker
   */
 trait Location extends Serializable {
   def row: Int

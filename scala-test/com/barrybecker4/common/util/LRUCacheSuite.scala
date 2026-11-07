@@ -6,7 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 
 /**
   * Test LRUCache behavior.
-  * @author Barry Becker
   */
 object LRUCacheSuite {
   private val ONE = "one"

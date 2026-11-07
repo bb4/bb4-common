@@ -4,9 +4,6 @@ package com.barrybecker4.common.util
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class PackageReflectorSuite extends AnyFunSuite {
   private val reflector = new PackageReflector
 

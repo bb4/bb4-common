@@ -4,9 +4,6 @@ package com.barrybecker4.common.geometry
 import org.scalatest.funsuite.AnyFunSuite
 
 
-/**
-  * @author Barry Becker
-  */
 class FloatLocationSuite extends AnyFunSuite {
 
   test("distance") {

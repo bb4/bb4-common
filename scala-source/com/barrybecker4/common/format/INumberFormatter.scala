@@ -3,7 +3,6 @@ package com.barrybecker4.common.format
 
 /**
   * Knows how to format something.
-  * @author Barry Becker
   */
 trait INumberFormatter {
   def format(number: Double): String

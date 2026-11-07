@@ -6,9 +6,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import FileUtil._
 
 
-/**
-  * @author Barry Becker
-  */
 class FileUtilSuite extends AnyFunSuite {
   test("FilesInDirectory (relative)") {
     val dir = "scala-test/com/barrybecker4/common/util"

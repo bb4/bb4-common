@@ -4,7 +4,6 @@ package com.barrybecker4.common.app
 
 /** Allows getting a class loader from a static context.
   * It also avoids the same class being loaded multiple times by different loaders.
-  * @author Barry Becker
   */
 object ClassLoaderSingleton {
   private var instance: Option[ClassLoaderSingleton] = None

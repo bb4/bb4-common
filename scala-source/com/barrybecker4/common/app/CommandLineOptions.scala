@@ -13,7 +13,6 @@ import scala.collection.immutable.ListMap
   * java someProgram -p 3434 -type pente -locale en -verbose -safe -title "my title"
   * Note: verbose and -safe are options and do not have values.
   * @param args an array of command line arguments. May be empty, but not null.
-  * @author Barry Becker
   */
 class CommandLineOptions(val args: Array[String]) {
   private val optionsMap: ListMap[String, Option[String]] = CommandLineOptions.parseArgs(args)

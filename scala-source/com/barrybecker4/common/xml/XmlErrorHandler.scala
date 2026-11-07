@@ -5,7 +5,6 @@ import org.xml.sax.{ErrorHandler, SAXException, SAXParseException}
 
 /**
   * Exception to use for XML related problems.
-  * @author Barry Becker
   */
 @SuppressWarnings(Array("HardCodedStringLiteral"))
 object XmlErrorHandler {

@@ -8,7 +8,6 @@ import com.barrybecker4.common.app.ILog
   * Use this class to get performance numbers for your application to help eliminate bottlenecks.
   * It is typically subclassed in order to identify (using entries) the specific parts
   * of a program that need to be profiled.
-  * @author Barry Becker
   */
 class Profiler() {
   private var hmEntries = Map[String, ProfilerEntry]()

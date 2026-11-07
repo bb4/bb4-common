@@ -17,7 +17,6 @@ object MessageContext {
   * Manage access to localized message bundles.
   * When creating an instance specify the paths to the resource bundles to use.
   * @param resourcePaths list of paths to message bundles
-  * @author Barry Becker
   */
 class MessageContext(var resourcePaths: List[String]) {
 

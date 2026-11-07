@@ -6,7 +6,6 @@ import java.io.FileNotFoundException
 
 /**
   * Log to memory only. Mostly used in unit tests, but could have other uses.
-  * @author Barry Becker
   */
 class MemoryLogger(sbuilder: Option[StringBuilder] = None) extends ILog {
   private var bldr: StringBuilder = sbuilder.orNull

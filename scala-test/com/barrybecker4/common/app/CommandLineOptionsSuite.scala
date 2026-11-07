@@ -3,9 +3,7 @@ package com.barrybecker4.common.app
 
 import org.scalatest.funsuite.AnyFunSuite
 
-/**
-  * @author Barry Becker
-  */
+
 class CommandLineOptionsSuite extends AnyFunSuite {
 
   test("CommandLineOptionsToString") {

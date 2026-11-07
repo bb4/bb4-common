@@ -5,9 +5,7 @@ import java.io.{FileInputStream, InputStream}
 import org.scalatest.funsuite.AnyFunSuite
 import UnionFindSuite._
 
-/**
-  * @author Barry Becker
-  */
+
 object UnionFindSuite  {
   protected val PATH = "scala-test/com/barrybecker4/common/util/"
 }

@@ -8,8 +8,6 @@ import java.net.URL
 
 /**
   * Miscellaneous commonly used file related static utility methods.
-  *
-  * @author Barry Becker
   */
 object FileUtil {
   /** Get the correct file separator whether on windows (\) or linux (/).

@@ -3,7 +3,6 @@ package com.barrybecker4.common.geometry
 
 
 /** An immutable box defined by 2 locations. The coordinates have the resolution of integers.
-  * @author Barry Becker
   */
 case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
   private val topLeftCorner = IntLocation(rowMin, colMin)

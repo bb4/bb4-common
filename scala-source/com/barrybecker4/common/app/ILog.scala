@@ -6,7 +6,6 @@ import java.io.FileNotFoundException
 
 /**
   * Provide support for general logging.
-  * @author Barry Becker
   */
 trait ILog {
 

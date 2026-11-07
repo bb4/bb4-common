@@ -9,7 +9,6 @@ import scala.util.Using
 
 /**
   * Utility methods for Base64 compression and decompression.
-  * @author Barry Becker
   */
 object Base64Codec {
   private val CONVERTER_UTF8 = "UTF8"
