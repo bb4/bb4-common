@@ -60,20 +60,19 @@ abstract class Worker() {
     * Returns None if either the constructing thread or the current
     * thread was interrupted before a value was produced.
     */
-  def get: Option[Any] = {
-    def awaitResult(): Option[Any] =
-      threadVar.get match {
-        case None => returnValue
-        case Some(thread) =>
-          try {
-            thread.join()
-            awaitResult()
-          } catch {
-            case _: InterruptedException =>
-              Thread.currentThread.interrupt()
-              None
-          }
-      }
-    awaitResult()
-  }
+  def get: Option[Any] =
+    threadVar.get match {
+      case None => returnValue
+      case Some(workerThread) =>
+        try {
+          workerThread.join()
+          // Thread has terminated; construct's finally block has set returnValue and cleared threadVar.
+          // Do not spin on threadVar — if clear did not run, join already completed and returnValue is authoritative.
+          returnValue
+        } catch {
+          case _: InterruptedException =>
+            Thread.currentThread.interrupt()
+            None
+        }
+    }
 }
