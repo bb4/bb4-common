@@ -5,10 +5,12 @@
 This library project contains common scala code for all bb4 projects.
 The bb4-common jar file along with the corresponding source and scaladoc will be published to Sonatype so other projects depend on them.
 
-**Build conventions:** 
-this repo uses [bb4-gradle](https://github.com/barrybecker4/bb4-gradle) **2.1-SNAPSHOT** via the Gradle `plugins { }` DSL (Java **25**, Gradle **9.8.2**). `settings.gradle` adds **`https://central.sonatype.com/repository/maven-snapshots/`** to `pluginManagement` so Gradle can resolve that SNAPSHOT (OSSRH is EOL). Optionally, for local plugin work without publishing, use `mavenLocal()` there and run `./gradlew publishToMavenLocal` in bb4-gradle.
+**Build conventions:**
+this repo uses [bb4-gradle](https://github.com/barrybecker4/bb4-gradle) **3.0-SNAPSHOT** via `com.barrybecker4.bb4.settings` 
+and the `bb4Libs` version catalog (Java **25**, Gradle **9.1+**, wrapper **9.8.2**). 
+A sibling `../bb4-gradle` checkout is preferred for local plugin work; otherwise the plugin resolves from Maven Central snapshots.
 
-To use, include this dependency in your build.gradle file
+To use, include this dependency in your build.gradle file (catalog consumers can write `implementation bb4Libs.common`):
 
 `implementation 'com.barrybecker4:bb4-common:<version>'`
 
@@ -26,5 +28,5 @@ Shared HTML used in legacy zip-based distribution trees (for example `bb4-common
 
 ## Building from source
 
-Requires **JDK 25+** for the Gradle daemon (bb4-gradle 2.1). 
+Requires **JDK 25+** for the Gradle daemon (bb4-gradle 3.0).
 See the [Building bb4 Projects wiki](https://github.com/bb4/bb4-common/wiki/Building-bb4-Projects).
