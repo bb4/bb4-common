@@ -50,38 +50,42 @@ class ByteLocationSuite extends AnyFunSuite {
     assertResult(-127) { loc2.col }
   }
 
-  test("Int constructor with value 128 truncates to -128 and fails assertion") {
-    // Int 128 converts to Byte -128 via toByte, then assertion checks abs(-128) < 128, which is false
-    // This documents current truncation behavior (related to issue #53)
-    assertThrows[AssertionError] {
+  test("Int constructor at full signed byte range") {
+    val loc1 = new ByteLocation(-128, 127)
+    assertResult(-128) { loc1.row }
+    assertResult(127) { loc1.col }
+
+    val loc2 = new ByteLocation(127, -128)
+    assertResult(127) { loc2.row }
+    assertResult(-128) { loc2.col }
+  }
+
+  test("Int constructor rejects row 128") {
+    assertThrows[IllegalArgumentException] {
       new ByteLocation(128, 0)
     }
   }
 
-  test("Int constructor with value -128 fails assertion") {
-    // -128 as a byte has abs(-128) = 128, which is not < 128
-    assertThrows[AssertionError] {
-      new ByteLocation(-128, 0)
+  test("Int constructor rejects row -129") {
+    assertThrows[IllegalArgumentException] {
+      new ByteLocation(-129, 0)
     }
   }
 
-  test("Int constructor with large positive value 200 truncates to -56") {
-    // 200 as Int.toByte = -56, which passes assertion since abs(-56) < 128
-    // This documents current truncation behavior (related to issue #53)
-    val loc = new ByteLocation(200, 0)
-    assertResult(-56) { loc.row }
+  test("Int constructor rejects large positive row 200") {
+    assertThrows[IllegalArgumentException] {
+      new ByteLocation(200, 0)
+    }
   }
 
-  test("Int constructor with value 256 truncates to 0 and passes") {
-    // 256.toByte = 0, so ByteLocation(0, 10) passes assertion
-    // This documents current truncation behavior (related to issue #53)
-    val loc = new ByteLocation(256, 10)
-    assertResult(0) { loc.row }
-    assertResult(10) { loc.col }
+  test("Int constructor rejects row 256") {
+    assertThrows[IllegalArgumentException] {
+      new ByteLocation(256, 10)
+    }
   }
 
-  test("Int constructor with col=128 truncates and fails assertion") {
-    assertThrows[AssertionError] {
+  test("Int constructor rejects col 128") {
+    assertThrows[IllegalArgumentException] {
       new ByteLocation(0, 128)
     }
   }
