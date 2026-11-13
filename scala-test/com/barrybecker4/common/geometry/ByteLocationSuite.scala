@@ -22,10 +22,16 @@ class ByteLocationSuite extends AnyFunSuite {
     val loc1 = ByteLocation(127.toByte, 127.toByte)
     assertResult(127) { loc1.row }
     assertResult(127) { loc1.col }
-    
+
     val loc2 = ByteLocation((-127).toByte, (-127).toByte)
     assertResult(-127) { loc2.row }
     assertResult(-127) { loc2.col }
+  }
+
+  test("Preferred Int apply construction") {
+    val loc = ByteLocation(10, 20)
+    assertResult(10) { loc.row }
+    assertResult(20) { loc.col }
   }
 
   test("Int constructor with valid values") {

@@ -4,18 +4,21 @@ package com.barrybecker4.common.geometry
 
 /** An immutable box defined by 2 locations. The coordinates have the resolution of integers.
   * Corners are inclusive. Width/height are the distance between corners (not cell counts).
+  *
+  * Prefer companion construction: `Box(rowMin, colMin, rowMax, colMax)`, `Box(pt0, pt1)`,
+  * or `Box(pt)`. `new Box(...)` auxiliaries remain for Java callers.
   */
 case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
   private val topLeftCorner = IntLocation(rowMin, colMin)
   private val bottomRightCorner = IntLocation(rowMax, colMax)
 
-  /** Two points that define the box (order does not matter). */
+  /** Two points that define the box (order does not matter). Prefer `Box(pt0, pt1)`. */
   def this(pt0: Location, pt1: Location) = {
     this(Math.min(pt0.row, pt1.row), Math.min(pt0.col, pt1.col),
          Math.max(pt0.row, pt1.row), Math.max(pt0.col, pt1.col))
   }
 
-  /** Degenerate box consisting of a point in space */
+  /** Degenerate box consisting of a point in space. Prefer `Box(pt0)`. */
   def this(pt0: Location) = { this(pt0, pt0) }
 
   /** Distance between left and right columns (not number of cells). */
@@ -91,12 +94,16 @@ case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
 
 object Box {
 
+  /** Corners may be given in any order; they are normalized to min/max. */
   def apply(rowMin: Int, colMin: Int, rowMax: Int, colMax: Int): Box = {
     val (r0, r1) = if (rowMin <= rowMax) (rowMin, rowMax) else (rowMax, rowMin)
     val (c0, c1) = if (colMin <= colMax) (colMin, colMax) else (colMax, colMin)
     new Box(r0, c0, r1, c1)
   }
 
-  /** Same as [[Box.expandBy]] from an existing box and point. */
-  def apply(oldBox: Box, point: Location): Box = oldBox.expandBy(point)
+  /** Two points that define the box (order does not matter). */
+  def apply(pt0: Location, pt1: Location): Box = new Box(pt0, pt1)
+
+  /** Degenerate box consisting of a single point. */
+  def apply(pt: Location): Box = new Box(pt)
 }

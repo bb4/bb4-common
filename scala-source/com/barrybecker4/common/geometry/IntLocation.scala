@@ -1,9 +1,10 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.geometry
 
-/** Represents an immutable location of something in integer coordinates.
- * Note: changing serialVersionUID breaks deserialization of stored IntLocation objects.
- */
+/** Immutable location with integer coordinates.
+  * Prefer `IntLocation(row, col)`. Note: changing serialVersionUID breaks
+  * deserialization of stored IntLocation objects.
+  */
 @SerialVersionUID(1L)
 case class IntLocation(row: Int, col: Int) extends Location {
 
