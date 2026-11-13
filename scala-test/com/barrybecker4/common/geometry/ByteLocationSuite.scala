@@ -191,10 +191,9 @@ class ByteLocationSuite extends AnyFunSuite {
     assertResult(5.0) { loc1.getDistanceFrom(loc2) }
   }
 
-  test("getDistanceFrom Point2D with matching Cartesian coordinates") {
+  test("getDistanceFrom Cartesian with matching coordinates") {
     val loc = ByteLocation(3, 8)
-    val point = new java.awt.geom.Point2D.Double(8.0, 3.0)
-    assertResult(0.0) { loc.getDistanceFrom(point) }
+    assertResult(0.0) { loc.getDistanceFrom(8.0, 3.0) }
   }
 
   test("toString") {

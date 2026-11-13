@@ -3,8 +3,6 @@ package com.barrybecker4.common.geometry
 
 import org.scalatest.funsuite.AnyFunSuite
 
-import java.awt.geom.Point2D
-
 
 class LocationSuite extends AnyFunSuite {
 
@@ -103,24 +101,21 @@ class LocationSuite extends AnyFunSuite {
     assertResult(5.0) { loc1.getDistanceFrom(loc2) }
   }
 
-  test("getDistanceFrom Point2D at origin") {
+  test("getDistanceFrom Cartesian point at origin") {
     val loc = IntLocation(3, 4)
-    val point = new Point2D.Double(0.0, 0.0)
     val expected = Math.sqrt(4.0 * 4.0 + 3.0 * 3.0)
-    assertResult(expected) { loc.getDistanceFrom(point) }
+    assertResult(expected) { loc.getDistanceFrom(0.0, 0.0) }
   }
 
-  test("getDistanceFrom Point2D same Cartesian position") {
+  test("getDistanceFrom Cartesian same position") {
     val loc = IntLocation(5, 10)
-    val point = new Point2D.Double(10.0, 5.0)
-    assertResult(0.0) { loc.getDistanceFrom(point) }
+    assertResult(0.0) { loc.getDistanceFrom(10.0, 5.0) }
   }
 
-  test("getDistanceFrom Point2D with fractional coordinates") {
+  test("getDistanceFrom Cartesian fractional coordinates") {
     val loc = IntLocation(0, 0)
-    val point = new Point2D.Double(3.5, 4.5)
     val expected = Math.sqrt(3.5 * 3.5 + 4.5 * 4.5)
-    assert(Math.abs(loc.getDistanceFrom(point) - expected) < 1e-9)
+    assert(Math.abs(loc.getDistanceFrom(3.5, 4.5) - expected) < 1e-9)
   }
 
   test("incrementOnCopy creates new instance") {

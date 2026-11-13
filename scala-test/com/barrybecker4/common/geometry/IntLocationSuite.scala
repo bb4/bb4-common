@@ -120,10 +120,9 @@ class IntLocationSuite extends AnyFunSuite {
     assertResult(5.0) { loc1.getDistanceFrom(loc2) }
   }
 
-  test("getDistanceFrom Point2D") {
+  test("getDistanceFrom Cartesian coordinates") {
     val loc = IntLocation(0, 0)
-    val point = new java.awt.geom.Point2D.Double(3.0, 4.0)
-    assertResult(5.0) { loc.getDistanceFrom(point) }
+    assertResult(5.0) { loc.getDistanceFrom(3.0, 4.0) }
   }
 
   test("getDistanceFrom same location is zero") {

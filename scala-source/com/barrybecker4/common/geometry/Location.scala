@@ -1,8 +1,6 @@
 /* Copyright by Barry G. Becker, 2000-2018. Licensed under MIT License: http://www.opensource.org/licenses/MIT */
 package com.barrybecker4.common.geometry
 
-import java.awt.geom.Point2D
-
 /** Represents a location of something in coordinates.
   * Immutable. `getX` / `getY` use Cartesian mapping: x = column, y = row (see [[IntLocation]]).
   *
@@ -34,16 +32,16 @@ trait Location extends Serializable {
     * @return the Euclidean distance from this location to another.
     */
   def getDistanceFrom(loc: Location): Double =
-    euclidean(col - loc.col, row - loc.row)
+    getDistanceFrom(loc.getX.toDouble, loc.getY.toDouble)
 
-  /** @param loc another arbitrary floating point location to measure distance from.
-    * @return the Euclidean distance from this location to another (Cartesian: x=col, y=row).
+  /** Euclidean distance to an arbitrary Cartesian point (x = column, y = row).
+    * Callers with AWT `Point2D` should pass `point.getX` / `point.getY`.
     */
-  def getDistanceFrom(loc: Point2D): Double =
-    euclidean(col - loc.getX, row - loc.getY)
-
-  private def euclidean(dx: Double, dy: Double): Double =
+  def getDistanceFrom(x: Double, y: Double): Double = {
+    val dx = col - x
+    val dy = row - y
     Math.sqrt(dx * dx + dy * dy)
+  }
 
   /** @return an immutable copy of the original incremented by the amount specified. */
   def incrementOnCopy(rowChange: Int, colChange: Int): Location
