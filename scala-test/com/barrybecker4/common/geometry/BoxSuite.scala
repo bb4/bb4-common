@@ -129,29 +129,36 @@ class BoxSuite extends AnyFunSuite {
 
   test("ExpandGlobally") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
-    val newBox = box.expandGloballyBy(3, 6, 5)
+    val newBox = box.expandGloballyBy(3, 1, 1, 6, 5)
     assertResult(IntLocation(6, 5)) { newBox.getBottomRightCorner }
     assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
   }
 
+  test("ExpandGlobally on 0-based board") {
+    val box = new Box(IntLocation(1, 2), IntLocation(4, 4))
+    val newBox = box.expandGloballyBy(3, 0, 0, 5, 4)
+    assertResult(IntLocation(0, 0)) { newBox.getTopLeftCorner }
+    assertResult(IntLocation(5, 4)) { newBox.getBottomRightCorner }
+  }
+
   test("ExpandBordersToEdge snaps all near sides independently") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
-    val newBox = box.expandBordersToEdge(3, 6, 5)
-    // Near top (2<=4), left (3<=4), bottom (6-5<=3), and right (5-5<=3)
+    val newBox = box.expandBordersToEdge(3, 1, 1, 6, 5)
+    // Near top (2-1<=3), left (3-1<=3), bottom (6-5<=3), and right (5-5<=3)
     assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
     assertResult(IntLocation(6, 5)) { newBox.getBottomRightCorner }
   }
 
   test("ExpandBordersToEdge near corner only expands the near sides") {
     val box = new Box(IntLocation(2, 2), IntLocation(8, 8))
-    val newBox = box.expandBordersToEdge(1, 10, 10)
+    val newBox = box.expandBordersToEdge(1, 1, 1, 10, 10)
     assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
     assertResult(IntLocation(8, 8)) { newBox.getBottomRightCorner }
   }
 
   test("ExpandBordersToEdge leaves distant sides alone") {
     val box = new Box(IntLocation(5, 5), IntLocation(6, 6))
-    val newBox = box.expandBordersToEdge(1, 20, 20)
+    val newBox = box.expandBordersToEdge(1, 1, 1, 20, 20)
     assertResult(box) { newBox }
   }
 

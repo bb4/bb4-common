@@ -63,17 +63,18 @@ case class Box private (rowMin: Int, colMin: Int, rowMax: Int, colMax: Int) {
       (location.row == rowMin || location.row == rowMax) &&
       (location.col == colMin || location.col == colMax)
 
-  /** Expand all borders by `amount`, clamped to a 1-based board of size maxRow×maxCol. */
-  def expandGloballyBy(amount: Int, maxRow: Int, maxCol: Int): Box = {
+  /** Expand all borders by `amount`, clamped to the given board bounds. */
+  def expandGloballyBy(amount: Int, minRow: Int, minCol: Int, maxRow: Int, maxCol: Int): Box = {
     val (r0, c0, r1, c1) =
-      BoxExpansion.expandGlobally(rowMin, colMin, rowMax, colMax, amount, maxRow, maxCol)
+      BoxExpansion.expandGlobally(rowMin, colMin, rowMax, colMax, amount, minRow, minCol, maxRow, maxCol)
     Box(r0, c0, r1, c1)
   }
 
   /** If within `threshold` of a board edge, extend that border all the way to the edge. */
-  def expandBordersToEdge(threshold: Int, maxRow: Int, maxCol: Int): Box = {
+  def expandBordersToEdge(threshold: Int, minRow: Int, minCol: Int, maxRow: Int, maxCol: Int): Box = {
     val (r0, c0, r1, c1) =
-      BoxExpansion.snapBordersToEdge(rowMin, colMin, rowMax, colMax, threshold, maxRow, maxCol)
+      BoxExpansion.snapBordersToEdge(
+        rowMin, colMin, rowMax, colMax, threshold, minRow, minCol, maxRow, maxCol)
     Box(r0, c0, r1, c1)
   }
 

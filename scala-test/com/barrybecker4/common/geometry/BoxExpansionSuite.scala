@@ -18,28 +18,40 @@ class BoxExpansionSuite extends AnyFunSuite {
     }
   }
 
-  test("expandGlobally clamps to 1-based board") {
+  test("expandGlobally clamps to caller-supplied board bounds") {
     assertResult((1, 1, 6, 5)) {
-      BoxExpansion.expandGlobally(2, 3, 5, 5, 3, 6, 5)
+      BoxExpansion.expandGlobally(2, 3, 5, 5, 3, 1, 1, 6, 5)
+    }
+  }
+
+  test("expandGlobally clamps to a 0-based board") {
+    assertResult((0, 0, 5, 4)) {
+      BoxExpansion.expandGlobally(1, 2, 4, 4, 3, 0, 0, 5, 4)
     }
   }
 
   test("snapBordersToEdge updates min row and col independently at a corner") {
     // Previously a bug: sequential mutation reset row when also snapping col.
     assertResult((1, 1, 8, 8)) {
-      BoxExpansion.snapBordersToEdge(2, 2, 8, 8, 1, 10, 10)
+      BoxExpansion.snapBordersToEdge(2, 2, 8, 8, 1, 1, 1, 10, 10)
     }
   }
 
   test("snapBordersToEdge can snap all four sides at once") {
     assertResult((1, 1, 10, 10)) {
-      BoxExpansion.snapBordersToEdge(2, 2, 9, 9, 1, 10, 10)
+      BoxExpansion.snapBordersToEdge(2, 2, 9, 9, 1, 1, 1, 10, 10)
     }
   }
 
   test("snapBordersToEdge snaps only sides within threshold") {
     assertResult((1, 5, 6, 6)) {
-      BoxExpansion.snapBordersToEdge(2, 5, 6, 6, 1, 20, 20)
+      BoxExpansion.snapBordersToEdge(2, 5, 6, 6, 1, 1, 1, 20, 20)
+    }
+  }
+
+  test("snapBordersToEdge respects a 0-based board origin") {
+    assertResult((0, 0, 8, 8)) {
+      BoxExpansion.snapBordersToEdge(1, 1, 8, 8, 1, 0, 0, 10, 10)
     }
   }
 

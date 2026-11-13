@@ -4,8 +4,8 @@ package com.barrybecker4.common.geometry
 /** Pure coordinate helpers for expanding and intersecting axis-aligned boxes.
   * Extracted from [[Box]] so the math is small and independently testable.
   *
-  * Board-oriented helpers (`expandGlobally`, `snapBordersToEdge`) use a minimum
-  * index of 1, matching 1-based game boards.
+  * Board-oriented helpers (`expandGlobally`, `snapBordersToEdge`) clamp or snap
+  * to the caller-supplied board bounds (`minRow`/`minCol` … `maxRow`/`maxCol`).
   */
 private[geometry] object BoxExpansion {
 
@@ -16,21 +16,21 @@ private[geometry] object BoxExpansion {
     (Math.min(rowMin, row), Math.min(colMin, col),
      Math.max(rowMax, row), Math.max(colMax, col))
 
-  /** Expand all sides by `amount`, clamped to `[1, maxRow]` / `[1, maxCol]`. */
+  /** Expand all sides by `amount`, clamped to `[minRow, maxRow]` / `[minCol, maxCol]`. */
   def expandGlobally(
       rowMin: Int, colMin: Int, rowMax: Int, colMax: Int,
-      amount: Int, maxRow: Int, maxCol: Int): (Int, Int, Int, Int) =
-    (Math.max(rowMin - amount, 1), Math.max(colMin - amount, 1),
+      amount: Int, minRow: Int, minCol: Int, maxRow: Int, maxCol: Int): (Int, Int, Int, Int) =
+    (Math.max(rowMin - amount, minRow), Math.max(colMin - amount, minCol),
      Math.min(rowMax + amount, maxRow), Math.min(colMax + amount, maxCol))
 
-  /** If a side is within `threshold` of the board edge, snap that side to the edge.
+  /** If a side is within `threshold` of a board edge, snap that side to the edge.
     * Uses independent min/max updates so corner cases do not overwrite each other.
     */
   def snapBordersToEdge(
       rowMin: Int, colMin: Int, rowMax: Int, colMax: Int,
-      threshold: Int, maxRow: Int, maxCol: Int): (Int, Int, Int, Int) = {
-    val newRowMin = if (rowMin <= threshold + 1) 1 else rowMin
-    val newColMin = if (colMin <= threshold + 1) 1 else colMin
+      threshold: Int, minRow: Int, minCol: Int, maxRow: Int, maxCol: Int): (Int, Int, Int, Int) = {
+    val newRowMin = if (rowMin - minRow <= threshold) minRow else rowMin
+    val newColMin = if (colMin - minCol <= threshold) minCol else colMin
     val newRowMax = if (maxRow - rowMax <= threshold) maxRow else rowMax
     val newColMax = if (maxCol - colMax <= threshold) maxCol else colMax
     (newRowMin, newColMin, newRowMax, newColMax)
