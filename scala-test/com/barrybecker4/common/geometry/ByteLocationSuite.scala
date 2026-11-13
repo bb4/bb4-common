@@ -103,6 +103,20 @@ class ByteLocationSuite extends AnyFunSuite {
     assertResult(23) { incremented.col }
   }
 
+  test("incrementOnCopy rejects overflow past byte range") {
+    val loc = new ByteLocation(127, 0)
+    assertThrows[IllegalArgumentException] {
+      loc.incrementOnCopy(1, 0)
+    }
+  }
+
+  test("incrementOnCopy rejects underflow past byte range") {
+    val loc = new ByteLocation(-128, 0)
+    assertThrows[IllegalArgumentException] {
+      loc.incrementOnCopy(-1, 0)
+    }
+  }
+
   test("incrementOnCopy with negative values") {
     val loc = new ByteLocation(10, 20)
     val incremented = loc.incrementOnCopy(-5, -10)

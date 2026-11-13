@@ -30,20 +30,17 @@ trait Location extends Serializable {
   /** @param loc another location to measure distance from.
     * @return the Euclidean distance from this location to another.
     */
-  def getDistanceFrom(loc: Location): Double = {
-    val xDif = Math.abs(col - loc.col)
-    val yDif = Math.abs(row - loc.row)
-    Math.sqrt(xDif * xDif + yDif * yDif)
-  }
+  def getDistanceFrom(loc: Location): Double =
+    euclidean(col - loc.col, row - loc.row)
 
   /** @param loc another arbitrary floating point location to measure distance from.
-    * @return the Euclidean distance from this location to another.
+    * @return the Euclidean distance from this location to another (Cartesian: x=col, y=row).
     */
-  def getDistanceFrom(loc: Point2D): Double = {
-    val xDif = Math.abs(col - loc.getX)
-    val yDif = Math.abs(row - loc.getY)
-    Math.sqrt(xDif * xDif + yDif * yDif)
-  }
+  def getDistanceFrom(loc: Point2D): Double =
+    euclidean(col - loc.getX, row - loc.getY)
+
+  private def euclidean(dx: Double, dy: Double): Double =
+    Math.sqrt(dx * dx + dy * dy)
 
   /** @return an immutable copy of the original incremented by the amount specified. */
   def incrementOnCopy(rowChange: Int, colChange: Int): Location

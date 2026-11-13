@@ -58,8 +58,25 @@ class BoxSuite extends AnyFunSuite {
   test("IsOnCorner") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     assert(box.isOnCorner(IntLocation(2, 3)))
-    assert(!box.isOnCorner(IntLocation(3, 3)))
+    assert(box.isOnCorner(IntLocation(2, 5)))
+    assert(box.isOnCorner(IntLocation(5, 3)))
     assert(box.isOnCorner(IntLocation(5, 5)))
+    assert(!box.isOnCorner(IntLocation(3, 3)))
+    assert(!box.isOnCorner(IntLocation(2, 4)))
+    assert(!box.isOnCorner(IntLocation(1, 3)))
+  }
+
+  test("IsOnEdge") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    assert(box.isOnEdge(IntLocation(2, 4)))
+    assert(box.isOnEdge(IntLocation(5, 4)))
+    assert(box.isOnEdge(IntLocation(3, 3)))
+    assert(box.isOnEdge(IntLocation(3, 5)))
+    assert(box.isOnEdge(IntLocation(2, 3)))
+    assert(!box.isOnEdge(IntLocation(3, 4)))
+    // Aligned with an edge but outside the box must be false
+    assert(!box.isOnEdge(IntLocation(2, 100)))
+    assert(!box.isOnEdge(IntLocation(0, 3)))
   }
 
   test("ExpandBy") {
@@ -117,11 +134,45 @@ class BoxSuite extends AnyFunSuite {
     assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
   }
 
-  test("ExpandBordersToEdge") {
+  test("ExpandBordersToEdge snaps all near sides independently") {
     val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
     val newBox = box.expandBordersToEdge(3, 6, 5)
-    assertResult(IntLocation(5, 5)) { newBox.getBottomRightCorner }
-    assertResult(IntLocation(2, 1)) { newBox.getTopLeftCorner }
+    // Near top (2<=4), left (3<=4), bottom (6-5<=3), and right (5-5<=3)
+    assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
+    assertResult(IntLocation(6, 5)) { newBox.getBottomRightCorner }
+  }
+
+  test("ExpandBordersToEdge near corner only expands the near sides") {
+    val box = new Box(IntLocation(2, 2), IntLocation(8, 8))
+    val newBox = box.expandBordersToEdge(1, 10, 10)
+    assertResult(IntLocation(1, 1)) { newBox.getTopLeftCorner }
+    assertResult(IntLocation(8, 8)) { newBox.getBottomRightCorner }
+  }
+
+  test("ExpandBordersToEdge leaves distant sides alone") {
+    val box = new Box(IntLocation(5, 5), IntLocation(6, 6))
+    val newBox = box.expandBordersToEdge(1, 20, 20)
+    assertResult(box) { newBox }
+  }
+
+  test("Construction normalizes inverted corners") {
+    val box = Box(5, 8, 2, 3)
+    assertResult(IntLocation(2, 3)) { box.getTopLeftCorner }
+    assertResult(IntLocation(5, 8)) { box.getBottomRightCorner }
+  }
+
+  test("Degenerate point box") {
+    val box = new Box(IntLocation(4, 4))
+    assertResult(0) { box.getWidth }
+    assertResult(0) { box.getHeight }
+    assert(box.contains(IntLocation(4, 4)))
+    assert(box.isOnEdge(IntLocation(4, 4)))
+    assert(box.isOnCorner(IntLocation(4, 4)))
+  }
+
+  test("Box.apply expand from existing box") {
+    val box = new Box(IntLocation(2, 3), IntLocation(5, 5))
+    assertResult(box.expandBy(IntLocation(1, 10))) { Box(box, IntLocation(1, 10)) }
   }
 
   test("Box Intersection") {
