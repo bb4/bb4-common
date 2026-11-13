@@ -22,8 +22,10 @@ class Profiler() {
 
   /** add a top level entry.
     * @param name of the top level entry
+    * @throws IllegalArgumentException if an entry with this name already exists
     */
   def add(name: String): Unit = {
+    requireUniqueName(name)
     val entry = new ProfilerEntry(name)
     topLevelEntries :+= entry
     hmEntries += name -> entry
@@ -32,8 +34,10 @@ class Profiler() {
   /** Add an entry into the profiler entry hierarchy.
     * @param name   name for new entry
     * @param parent entry above us.
+    * @throws IllegalArgumentException if name already exists or parent is unknown
     */
   def add(name: String, parent: String): Unit = {
+    requireUniqueName(name)
     val par = getEntry(parent)
     val e = new ProfilerEntry(name)
     par.addChild(e)
@@ -43,27 +47,27 @@ class Profiler() {
   /** @param name the entry for whom we are to start the timing */
   def start(name: String): Unit = {
     if (!enabled) return
-    val p = getEntry(name)
-    p.start()
+    getEntry(name).start()
   }
 
   /** @param name the entry for which we are to stop the timing and increment the total time */
   def stop(name: String): Unit = {
     if (!enabled) return
-    val p = getEntry(name)
-    p.stop()
+    getEntry(name).stop()
   }
 
-  def getEntry(name: String): ProfilerEntry = hmEntries(name)
+  /** @throws IllegalArgumentException if no entry with this name was added */
+  def getEntry(name: String): ProfilerEntry =
+    hmEntries.getOrElse(name, throw new IllegalArgumentException(s"No profiler entry named '$name'"))
 
   /** reset all the timing numbers to 0 */
   def resetAll(): Unit =
-    for (entry <- topLevelEntries) entry.resetAll()
+    topLevelEntries.foreach(_.resetAll())
 
   /** Pretty print all the performance statistics. */
   def print(): Unit = {
     if (!enabled) return
-    for (entry <- topLevelEntries) entry.print("", logger)
+    topLevelEntries.foreach(_.print("", logger))
   }
 
   /** turn on/off profiling */
@@ -80,4 +84,8 @@ class Profiler() {
       case Some(log) => log.print(message)
       case None => println(message)
     }
+
+  private def requireUniqueName(name: String): Unit =
+    if (hmEntries.contains(name))
+      throw new IllegalArgumentException(s"Profiler entry '$name' already exists")
 }
