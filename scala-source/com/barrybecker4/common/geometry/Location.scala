@@ -24,8 +24,11 @@ trait Location extends Serializable {
     case _             => false
   }
 
-  /** If override equals, should also override hashCode */
-  override def hashCode: Int = 100 * row + col
+  /** If override equals, should also override hashCode.
+    * Mix row and col so map/set keys do not collide for distinct cells
+    * (e.g. old `100 * row + col` made (1,100) and (2,0) both hash to 200).
+    */
+  override def hashCode: Int = (row, col).hashCode
 
   /** @param loc another location to measure distance from.
     * @return the Euclidean distance from this location to another.

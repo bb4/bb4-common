@@ -55,23 +55,23 @@ class LocationSuite extends AnyFunSuite {
     assert(!loc.equals(42))
   }
 
-  test("hashCode formula") {
+  test("hashCode is stable for same coordinates") {
     val loc = IntLocation(10, 20)
-    assertResult(100 * 10 + 20) { loc.hashCode }
+    assertResult(loc.hashCode) { IntLocation(10, 20).hashCode }
   }
 
-  test("hashCode with negative values") {
-    val loc = IntLocation(-10, -20)
-    assertResult(100 * (-10) + (-20)) { loc.hashCode }
+  test("hashCode with negative values differs from positives") {
+    val neg = IntLocation(-10, -20)
+    val pos = IntLocation(10, 20)
+    assert(neg.hashCode != pos.hashCode)
   }
 
-  test("hashCode collision for different locations") {
-    // Locations with row=1,col=100 and row=2,col=0 both have hashCode 200
+  test("hashCode avoids 100*row+col collisions") {
+    // Old formula 100 * row + col made (1,100) and (2,0) collide at 200
     val loc1 = IntLocation(1, 100)
     val loc2 = IntLocation(2, 0)
-    assertResult(200) { loc1.hashCode }
-    assertResult(200) { loc2.hashCode }
     assert(!loc1.equals(loc2))
+    assert(loc1.hashCode != loc2.hashCode)
   }
 
   test("getDistanceFrom same location") {
