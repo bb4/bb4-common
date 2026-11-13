@@ -6,7 +6,7 @@ import scala.collection.Set
 import scala.jdk.CollectionConverters.*
 
 /**
-  * An LRU cache backed by Java's access-order [[ju.LinkedHashMap]].
+  * An LRU cache backed by Java's access-order LinkedHashMap.
   * This cache has a fixed maximum number of entries (cacheSize).
   * If the cache is full and another entry is added, the LRU (least recently used) entry is evicted.
   * @param cacheSize the maximum number of entries that will be kept in this cache.
