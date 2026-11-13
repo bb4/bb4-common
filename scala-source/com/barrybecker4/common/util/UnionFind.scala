@@ -39,7 +39,7 @@ object UnionFind {
   * methods for determining whether two objects are in the same component and the total number of components.
   * This implementation uses weighted quick union by size (without path compression).
   * Initializing a data structure with <em>N</em> objects takes linear time.
-  * Afterwards, <em>union</em>, <em>find</em>, and <em>connected</em> take
+  * Afterward, <em>union</em>, <em>find</em>, and <em>connected</em> take
   * logarithmic time (in the worst case) and <em>count</em> takes constant time.
   *
   * For additional documentation, see <a href="http://algs4.cs.princeton.edu/15uf">Section 1.5</a> of
